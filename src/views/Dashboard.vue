@@ -1,9 +1,11 @@
 <template>
     <div>
         <ul v-if="state === 'ok'" class="notification-list">
-            <li v-for="notification in notifications" :key="notification.id" :title="notification.reason">
-                <a :href="getNotificationTarget(notification)" target="_blank">{{ notification.subject.title }}</a>
-                - {{ notification.updated_at }}
+            <li v-for="n in notifications"
+                :key="n.project_id + ':' + n.target_type + ':' + n.target_id"
+                :title="n.target_type">
+                <a :href="getNotificationTarget(n)" target="_blank">{{ n.target_type }} {{ n.author.name }} {{ n.target_title }}</a>
+                - {{ n.created_at }}
             </li>
         </ul>
         <div v-else-if="state === 'no-token'">
@@ -35,8 +37,7 @@ export default {
     },
 
     beforeMount() {
-        this.fetchNotifications()
-        this.loop = setInterval(() => this.fetchNotifications(), 5000)
+        this.launchLoop()
     },
 
     mounted() {
@@ -44,6 +45,7 @@ export default {
 
     data() {
         return {
+            gitlabUrl: null,
             notifications: [],
             loop: null,
             state: 'loading',
@@ -54,7 +56,7 @@ export default {
     computed: {
         lastDate() {
             const nbNotif = this.notifications.length
-            return (nbNotif > 0) ? this.notifications[0].updated_at : null
+            return (nbNotif > 0) ? this.getDay(this.notifications[0].created_at) : null
         },
         lastMoment() {
             return moment(this.lastDate)
@@ -62,6 +64,18 @@ export default {
     },
 
     methods: {
+        async launchLoop() {
+            // get gitlab URL first
+            try {
+                const response = await axios.get(generateUrl('/apps/gitlab/url'))
+                this.gitlabUrl = response.data
+            } catch (error) {
+                console.log(error)
+            }
+            // then launch the loop
+            this.fetchNotifications()
+            this.loop = setInterval(() => this.fetchNotifications(), 5000)
+        },
         fetchNotifications() {
             const req = {}
             if (this.lastDate) {
@@ -88,8 +102,8 @@ export default {
         processNotifications(newNotifications) {
             if (this.lastDate) {
                 // just add those which are more recent than our most recent one
-                let i = 0;
-                while (i < newNotifications.length && this.lastMoment.isBefore(newNotifications[i].updated_at)) {
+                let i = 0
+                while (i < newNotifications.length && this.lastMoment.isBefore(newNotifications[i].created_at)) {
                     i++
                 }
                 if (i > 0) {
@@ -102,16 +116,19 @@ export default {
             }
         },
         filter(notifications) {
+            return notifications;
             // only keep the unread ones with specific reasons
             return notifications.filter((n) => {
-                return (n.unread && ['assign', 'mention', 'review_requested'].includes(n.reason))
+                return (['Issue'].includes(n.target_type))
             })
         },
         getNotificationTarget(n) {
-            return n.subject.url
-                .replace('api.gitlab.com', 'gitlab.com')
-                .replace('/repos/', '/')
-                .replace('/pulls/', '/pull/')
+            // for merge requests : "target_type": "MergeRequest" | "target_iid": 15,
+            // for issue comments : target_type	"Note"  | "noteable_iid": 213
+            return this.gitlabUrl + '/' + n.target_type
+        },
+        getDay(dateString) {
+            return dateString.slice(0, 10)
         }
     },
 }

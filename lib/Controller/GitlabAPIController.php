@@ -59,6 +59,15 @@ class GitlabAPIController extends Controller {
         $this->logger = $logger;
         $this->gitlabAPIService = $gitlabAPIService;
         $this->accessToken = $this->config->getUserValue($this->userId, 'gitlab', 'token', '');
+        $this->gitlabUrl = $this->config->getUserValue($this->userId, 'gitlab', 'url', 'https://gitlab.com');
+    }
+
+    /**
+     * get notification list
+     * @NoAdminRequired
+     */
+    public function getGitlabUrl() {
+        return new DataResponse($this->gitlabUrl);
     }
 
     /**
@@ -69,7 +78,7 @@ class GitlabAPIController extends Controller {
         if ($this->accessToken === '') {
             return new DataResponse($result, 400);
         }
-        $result = $this->gitlabAPIService->getNotifications($this->accessToken, $since, true);
+        $result = $this->gitlabAPIService->getNotifications($this->gitlabUrl, $this->accessToken, $since);
         if (is_array($result)) {
             $response = new DataResponse($result);
         } else {

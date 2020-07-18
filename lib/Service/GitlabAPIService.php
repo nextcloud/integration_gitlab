@@ -32,29 +32,44 @@ class GitlabAPIService {
         $this->logger = $logger;
     }
 
-    public function getNotifications($accessToken, $since = null, $participating = null) {
-        $params = [];
+    public function getNotifications($url, $accessToken, $since = null) {
+        // first get list of the projects i'm member of
+        $params = [
+            'membership' => 'true',
+        ];
+        $result = $this->request($url, $accessToken, 'projects', $params);
+        // build a project ID conversion hashtable
+        // TODO
+
+        // then get many things
+        $params = [
+            'scope' => 'all',
+        ];
         if (!is_null($since)) {
-            $params['since'] = $since;
+            $params['after'] = $since;
         }
-        if (!is_null($participating)) {
-            $params['participating'] = $participating ? 'true' : 'false';
-        }
-        $result = $this->request($accessToken, 'notifications', $params);
+        // merge requests
+        $params['target_type'] = 'merge_request';
+        $params['action'] = 'created';
+        $result = $this->request($url, $accessToken, 'events', $params);
+        // issue comments
+        $params['target_type'] = 'note';
+        $params['action'] = 'commented';
+        $result = $this->request($url, $accessToken, 'events', $params);
         return $result;
     }
 
-    public function request($accessToken, $endPoint, $params = [], $method = 'GET') {
+    public function request($url, $accessToken, $endPoint, $params = [], $method = 'GET') {
         try {
             $options = [
                 'http' => [
-                    'header'  => 'Authorization: Basic ' . base64_encode('USERID_NOT_NEEDED:' . $accessToken) .
+                    'header'  => 'Authorization: Bearer ' . $accessToken .
                         "\r\nUser-Agent: Nextcloud Gitlab integration",
                     'method' => $method,
                 ]
             ];
 
-            $url = 'https://api.gitlab.com/notifications';
+            $url = $url . '/api/v4/' . $endPoint;
             if (count($params) > 0) {
                 $paramsContent = http_build_query($params);
                 if ($method === 'GET') {

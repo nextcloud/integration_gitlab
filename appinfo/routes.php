@@ -13,5 +13,6 @@ return [
     'routes' => [
         ['name' => 'config#setConfig', 'url' => '/config', 'verb' => 'PUT'],
         ['name' => 'gitlabAPI#getNotifications', 'url' => '/notifications', 'verb' => 'GET'],
+        ['name' => 'gitlabAPI#getGitlabUrl', 'url' => '/url', 'verb' => 'GET'],
     ]
 ];
