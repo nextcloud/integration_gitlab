@@ -55,7 +55,15 @@ class GitlabAPIService {
         // issue comments
         $params['target_type'] = 'note';
         $params['action'] = 'commented';
-        $result = $this->request($url, $accessToken, 'events', $params);
+        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
+
+        $a = usort($result, function($a, $b) {
+            $a = new \Datetime($a['created_at']);
+            $ta = $a->getTimestamp();
+            $b = new \Datetime($b['created_at']);
+            $tb = $b->getTimestamp();
+            return ($ta > $tb) ? -1 : 1;
+        });
         return $result;
     }
 
