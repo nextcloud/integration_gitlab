@@ -56,7 +56,7 @@ export default {
     computed: {
         lastDate() {
             const nbNotif = this.notifications.length
-            return (nbNotif > 0) ? this.getDay(this.notifications[0].created_at) : null
+            return (nbNotif > 0) ? this.notifications[0].created_at : null
         },
         lastMoment() {
             return moment(this.lastDate)
@@ -127,9 +127,6 @@ export default {
             // for issue comments : target_type	"Note"  | "noteable_iid": 213
             return this.gitlabUrl + '/' + n.target_type
         },
-        getDay(dateString) {
-            return dateString.slice(0, 10)
-        }
     },
 }
 </script>

@@ -37,16 +37,27 @@ class GitlabAPIService {
         $params = [
             'membership' => 'true',
         ];
-        $result = $this->request($url, $accessToken, 'projects', $params);
+        $projects = $this->request($url, $accessToken, 'projects', $params);
         // build a project ID conversion hashtable
-        // TODO
+        $pidToPath = [];
+        foreach ($projects as $project) {
+            $pid = $project['id'];
+            $path = $project['path_with_namespace'];
+            $pidToPath[$pid] = $path;
+        }
+        // get current user ID
+        $user = $this->request($url, $accessToken, 'user');
 
         // then get many things
         $params = [
             'scope' => 'all',
         ];
         if (!is_null($since)) {
-            $params['after'] = $since;
+            // we get a full ISO date, the API only wants a day (non inclusive)
+            $sinceDate = new \DateTimeImmutable($since);
+            $sinceTimestamp = $sinceDate->getTimestamp();
+            $minusOneDayDate = $sinceDate->sub(new \DateInterval('P1D'));
+            $params['after'] = $minusOneDayDate->format('Y-m-d');
         }
         // merge requests
         $params['target_type'] = 'merge_request';
@@ -57,6 +68,21 @@ class GitlabAPIService {
         $params['action'] = 'commented';
         $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
 
+        // filter merged results by date
+        if (!is_null($since)) {
+            $result = array_filter($result, function($elem) use ($sinceTimestamp) {
+                $date = new \Datetime($elem['created_at']);
+                $ts = $date->getTimestamp();
+                return $ts > $sinceTimestamp;
+            });
+        }
+
+        // avoid what has been done by me
+        $result = array_filter($result, function($elem) use ($user) {
+            return $elem['author_id'] !== $user['id'];
+        });
+
+        // sort merged results by date
         $a = usort($result, function($a, $b) {
             $a = new \Datetime($a['created_at']);
             $ta = $a->getTimestamp();
@@ -64,6 +90,12 @@ class GitlabAPIService {
             $tb = $b->getTimestamp();
             return ($ta > $tb) ? -1 : 1;
         });
+
+        // add project path in results
+        foreach ($result as $k => $r) {
+            $pid = $r['project_id'];
+            $result[$k]['project_path'] = $pidToPath[$pid];
+        }
         return $result;
     }
 
