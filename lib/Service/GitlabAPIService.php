@@ -52,7 +52,11 @@ class GitlabAPIService {
         $params = [
             'scope' => 'all',
         ];
-        if (!is_null($since)) {
+        if (is_null($since)) {
+            $twoWeeksEarlier = new \DateTime();
+            $twoWeeksEarlier->sub(new \DateInterval('P14D'));
+            $params['after'] = $twoWeeksEarlier->format('Y-m-d');
+        } else {
             // we get a full ISO date, the API only wants a day (non inclusive)
             $sinceDate = new \DateTimeImmutable($since);
             $sinceTimestamp = $sinceDate->getTimestamp();

@@ -2,7 +2,7 @@
     <div id="gitlab_prefs" class="section">
             <h2>
                 <a class="icon icon-gitlab" :style="{'background-image': 'url(' + iconUrl + ')'}"></a>
-                {{ t('gitlab', 'Gitlab access') }}
+                {{ t('gitlab', 'Gitlab') }}
             </h2>
             <div class="grid-form">
                 <label for="gitlab-url">
@@ -87,9 +87,10 @@ export default {
     width: 100%;
 }
 .grid-form {
-    width: 400px;
+    width: 500px;
     display: grid;
     grid-template: 1fr / 1fr 1fr;
+    margin-left: 30px;
 }
 #gitlab_prefs .icon {
     display: inline-block;
