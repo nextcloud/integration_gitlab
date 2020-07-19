@@ -59,10 +59,22 @@ class GitlabAPIService {
             $minusOneDayDate = $sinceDate->sub(new \DateInterval('P1D'));
             $params['after'] = $minusOneDayDate->format('Y-m-d');
         }
-        // merge requests
+        // merge requests created
         $params['target_type'] = 'merge_request';
         $params['action'] = 'created';
         $result = $this->request($url, $accessToken, 'events', $params);
+        // merge requests merged
+        $params['target_type'] = 'merge_request';
+        $params['action'] = 'merged';
+        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
+        // issues created
+        $params['target_type'] = 'issue';
+        $params['action'] = 'created';
+        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
+        // issues closed
+        $params['target_type'] = 'issue';
+        $params['action'] = 'closed';
+        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
         // issue comments
         $params['target_type'] = 'note';
         $params['action'] = 'commented';

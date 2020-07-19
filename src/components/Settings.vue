@@ -99,5 +99,6 @@ export default {
     mix-blend-mode: difference;
     background-size: 23px 23px;
     height: 23px;
+    margin-bottom: -4px;
 }
 </style>
