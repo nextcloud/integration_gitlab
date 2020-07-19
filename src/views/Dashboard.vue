@@ -168,10 +168,12 @@ export default {
             return n.project_id + ':' + n.target_type + ':' + n.target_id + ':' + n.created_at
         },
         getNotificationImage(n) {
-            return generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.author.avatar_url)
+            return n.project_avatar_url ?
+                    generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project_avatar_url) :
+                    ''
         },
         getNotificationAuthorName(n) {
-            return n.author.name
+            return n.project_path
         },
         getNotificationContent(n) {
             if (n.target_type === 'Note') {
@@ -222,7 +224,7 @@ export default {
             return ''
         },
         getNotificationTitle(n) {
-            return '[' + n.target_title + ']\n\n' + this.getNotificationContent(n);
+            return '[' + n.project_path + ']\n\n**' + n.target_title + '**\n\n' + this.getNotificationContent(n);
         },
     },
 }

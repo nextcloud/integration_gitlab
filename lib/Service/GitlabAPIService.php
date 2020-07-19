@@ -40,10 +40,13 @@ class GitlabAPIService {
         $projects = $this->request($url, $accessToken, 'projects', $params);
         // build a project ID conversion hashtable
         $pidToPath = [];
+        $pidToAvatar = [];
         foreach ($projects as $project) {
             $pid = $project['id'];
             $path = $project['path_with_namespace'];
+            $avatar = $project['avatar_url'];
             $pidToPath[$pid] = $path;
+            $pidToAvatar[$pid] = $avatar;
         }
         // get current user ID
         $user = $this->request($url, $accessToken, 'user');
@@ -111,6 +114,7 @@ class GitlabAPIService {
         foreach ($result as $k => $r) {
             $pid = $r['project_id'];
             $result[$k]['project_path'] = $pidToPath[$pid];
+            $result[$k]['project_avatar_url'] = $pidToAvatar[$pid];
         }
         return $result;
     }
