@@ -95,6 +95,9 @@ export default {
     display: inline-block;
     width: 32px;
 }
+#gitlab_prefs .grid-form .icon {
+    margin-bottom: -3px;
+}
 .icon-gitlab {
     mix-blend-mode: difference;
     background-size: 23px 23px;
