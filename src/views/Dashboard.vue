@@ -2,7 +2,7 @@
     <div>
         <ul v-if="state === 'ok'" class="notification-list">
             <li v-for="n in notifications"
-                :key="n.project_id + ':' + n.target_type + ':' + n.target_id"
+                :key="getUniqueKey(n)"
                 :title="n.target_type">
                 <a :href="getNotificationTarget(n)" target="_blank">{{ n.target_type }} {{ n.author.name }} {{ n.target_title }}</a>
                 - {{ n.created_at }}
@@ -68,7 +68,7 @@ export default {
             // get gitlab URL first
             try {
                 const response = await axios.get(generateUrl('/apps/gitlab/url'))
-                this.gitlabUrl = response.data
+                this.gitlabUrl = response.data.replace(/\/+$/, '')
             } catch (error) {
                 console.log(error)
             }
@@ -123,9 +123,31 @@ export default {
             })
         },
         getNotificationTarget(n) {
-            // for merge requests : "target_type": "MergeRequest" | "target_iid": 15,
-            // for issue comments : target_type	"Note"  | "noteable_iid": 213
-            return this.gitlabUrl + '/' + n.target_type
+            const path = n.project_path
+            if (path === null) {
+                // the API does not find all projects with /projects?membership=true
+                console.error('bad path for project ' + n.project_id)
+                return this.gitlabUrl
+            } else if (n.target_type === 'MergeRequest') {
+                return this.gitlabUrl + '/' + path + '/-/merge_requests/' + n.target_iid
+            } else if (n.target_type === 'Issue') {
+                return this.gitlabUrl + '/' + path + '/-/issues/' + n.target_iid
+            } else if (n.target_type === 'Note') {
+                if (n.note.noteable_type === 'Issue') {
+                    return this.gitlabUrl + '/' + path + '/-/issues/' + n.note.noteable_iid
+                } else if (n.note.noteable_type === 'MergeRequest') {
+                    return this.gitlabUrl + '/' + path + '/-/merge_requests/' + n.note.noteable_iid
+                } else {
+                    console.warn('note on unknown noteable type')
+                    return this.gitlabUrl
+                }
+            } else {
+                console.warn('unknown target type')
+                return this.gitlabUrl
+            }
+        },
+        getUniqueKey(n) {
+            return n.project_id + ':' + n.target_type + ':' + n.target_id + ':' + n.created_at
         },
     },
 }
