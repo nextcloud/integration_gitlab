@@ -71,6 +71,15 @@ class GitlabAPIController extends Controller {
     }
 
     /**
+     * get gitlab user avatar
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function getGitlabAvatar($url) {
+        return new DataDisplayResponse($this->gitlabAPIService->getGitlabAvatar($url));
+    }
+
+    /**
      * get notification list
      * @NoAdminRequired
      */

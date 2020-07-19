@@ -115,6 +115,10 @@ class GitlabAPIService {
         return $result;
     }
 
+    public function getGitlabAvatar($url) {
+        return file_get_contents($url);
+    }
+
     public function request($url, $accessToken, $endPoint, $params = [], $method = 'GET') {
         try {
             $options = [
