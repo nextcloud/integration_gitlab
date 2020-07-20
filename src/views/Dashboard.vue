@@ -7,6 +7,15 @@
                     <Popover :open="hovered[getUniqueKey(n)]" placement="top" class="content-popover" offset="18">
                         <template>
                             <h3>{{ n.project_path }}</h3>
+                            <div class="popover-author">
+                                <Avatar
+                                    class="author-avatar"
+                                    size="24"
+                                    :url="getAuthorAvatarUrl(n)"
+                                    :tooltipMessage="n.author.name"
+                                    />
+                                <span class="popover-author-name">{{ n.author.name }}</span>
+                            </div>
                             {{ getIdentifier(n) }} {{ n.target_title }}<br/><br/>
                             {{ getNotificationContent(n) }}
                         </template>
@@ -20,9 +29,9 @@
                         </template>
                     </Popover>
                     <Avatar
-                        class="author-avatar"
+                        class="project-avatar"
                         :url="getNotificationImage(n)"
-                        :tooltipMessage="getNotificationAuthorName(n)"
+                        :tooltipMessage="getNotificationProjectName(n)"
                         />
                     <div class="notification__details">
                         <h3>
@@ -189,7 +198,12 @@ export default {
                     generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project_avatar_url) :
                     ''
         },
-        getNotificationAuthorName(n) {
+        getAuthorAvatarUrl(n) {
+            return (n.author && n.author.avatar_url) ?
+                    generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.author.avatar_url) :
+                    ''
+        },
+        getNotificationProjectName(n) {
             return n.project_path
         },
         getNotificationContent(n) {
@@ -276,7 +290,7 @@ li .notification {
         background-color: var(--color-background-hover);
         border-radius: var(--border-radius-large);
     }
-    .author-avatar {
+    .project-avatar {
         position: relative;
         margin-top: auto;
         margin-bottom: auto;
@@ -324,5 +338,9 @@ li .notification {
 .popover-container {
     width: 100%;
     height: 0px;
+}
+.popover-author-name {
+    vertical-align: top;
+    line-height: 24px;
 }
 </style>
