@@ -15,7 +15,7 @@
                     <a class="icon icon-category-auth"></a>
                     {{ t('gitlab', 'Gitlab access token') }}
                 </label>
-                <input id="gitlab-token" type="text" v-model="state.token" @input="onInput"
+                <input id="gitlab-token" type="password" v-model="state.token" @input="onInput"
                     :placeholder="t('gitlab', 'Get a token in Gitlab settings')"/>
             </div>
     </div>

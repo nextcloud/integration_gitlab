@@ -2,9 +2,23 @@
     <div>
         <ul v-if="state === 'ok'" class="notification-list">
             <li v-for="n in notifications"
-                :key="getUniqueKey(n)"
-                :title="getNotificationTitle(n)">
-                <a :href="getNotificationTarget(n)" target="_blank" class="notification">
+                :key="getUniqueKey(n)">
+                <div class="popover-container">
+                    <Popover :open="hovered[getUniqueKey(n)]" placement="top" class="content-popover" offset="18">
+                        <template>
+                            <h3>{{ n.project_path }}</h3>
+                            {{ getIdentifier(n) }} {{ n.target_title }}<br/><br/>
+                            {{ getNotificationContent(n) }}
+                        </template>
+                    </Popover>
+                </div>
+                <a :href="getNotificationTarget(n)" target="_blank" class="notification"
+                    @mouseover="$set(hovered, getUniqueKey(n), true)" @mouseleave="$set(hovered, getUniqueKey(n), false)">
+                    <Popover :open="hovered[getUniqueKey(n)]" placement="left" class="date-popover" offset="10">
+                        <template>
+                            {{ getFormattedDate(n) }}
+                        </template>
+                    </Popover>
                     <Avatar
                         class="author-avatar"
                         :url="getNotificationImage(n)"
@@ -41,16 +55,17 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
-import { Avatar } from '@nextcloud/vue'
+import { Avatar, Popover } from '@nextcloud/vue'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 import moment from '@nextcloud/moment'
+import { getLocale } from '@nextcloud/l10n'
 
 export default {
     name: 'Dashboard',
 
     props: [],
     components: {
-        Avatar
+        Avatar, Popover
     },
 
     beforeMount() {
@@ -64,10 +79,12 @@ export default {
         return {
             gitlabUrl: null,
             notifications: [],
+            locale: getLocale(),
             loop: null,
             state: 'loading',
             settingsUrl: generateUrl('/settings/user/linked-accounts'),
-            themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9'
+            themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
+            hovered: {},
         }
     },
 
@@ -78,7 +95,7 @@ export default {
         },
         lastMoment() {
             return moment(this.lastDate)
-        }
+        },
     },
 
     methods: {
@@ -223,8 +240,22 @@ export default {
             }
             return ''
         },
-        getNotificationTitle(n) {
-            return '[' + n.project_path + ']\n\n**' + n.target_title + '**\n\n' + this.getNotificationContent(n);
+        getIdentifier(n) {
+            if (n.target_type === 'MergeRequest') {
+                return '[!' + n.target_iid + ']'
+            } else if (n.target_type === 'Issue') {
+                return '[#' + n.target_iid + ']'
+            } else if (n.target_type === 'Note') {
+                if (n.note.noteable_type === 'Issue') {
+                    return '[#' + n.note.noteable_iid + ']'
+                } else if (n.note.noteable_type === 'MergeRequest') {
+                    return '[!' + n.note.noteable_iid + ']'
+                }
+            }
+            return ''
+        },
+        getFormattedDate(n) {
+            return moment(n.created_at).locale(this.locale).format('LLL')
         },
     },
 }
@@ -279,5 +310,19 @@ li .notification {
         padding: 21px;
         margin: 0;
     }
+}
+.date-popover {
+    position: relative;
+    top: 7px;
+}
+.content-popover {
+    height: 0px;
+    width: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.popover-container {
+    width: 100%;
+    height: 0px;
 }
 </style>
