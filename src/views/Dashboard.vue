@@ -107,6 +107,9 @@ export default {
             try {
                 const response = await axios.get(generateUrl('/apps/gitlab/url'))
                 this.gitlabUrl = response.data.replace(/\/+$/, '')
+                if (this.gitlabUrl === '') {
+                    this.gitlabUrl = 'https://gitlab.com'
+                }
             } catch (error) {
                 console.log(error)
             }
