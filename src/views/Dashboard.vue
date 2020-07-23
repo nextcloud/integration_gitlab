@@ -1,48 +1,42 @@
 <template>
     <div>
         <ul v-if="state === 'ok'" class="notification-list">
-            <li v-for="n in notifications"
-                :key="getUniqueKey(n)">
+            <li v-for="n in notifications" :key="getUniqueKey(n)"
+                @mouseover="$set(hovered, getUniqueKey(n), true)" @mouseleave="$set(hovered, getUniqueKey(n), false)">
                 <div class="popover-container">
-                    <Popover :open="hovered[getUniqueKey(n)]" placement="top" class="content-popover" offset="18">
+                    <Popover :open="hovered[getUniqueKey(n)]" placement="top" class="content-popover" offset="40">
                         <template>
                             <h3>{{ n.project_path }}</h3>
                             <div class="popover-author">
                                 <Avatar
                                     class="author-avatar"
-                                    size="24"
+                                    :size="24"
                                     :url="getAuthorAvatarUrl(n)"
                                     :tooltipMessage="n.author.name"
                                     />
                                 <span class="popover-author-name">{{ n.author.name }}</span>
                             </div>
+                            {{ getFormattedDate(n) }}<br/>
                             {{ getIdentifier(n) }} {{ n.target_title }}<br/><br/>
                             {{ getNotificationContent(n) }}
                         </template>
                     </Popover>
                 </div>
-                <a :href="getNotificationTarget(n)" target="_blank" class="notification"
-                    @mouseover="$set(hovered, getUniqueKey(n), true)" @mouseleave="$set(hovered, getUniqueKey(n), false)">
-                    <Popover :open="hovered[getUniqueKey(n)]" placement="left" class="date-popover" offset="10">
-                        <template>
-                            {{ getFormattedDate(n) }}
-                        </template>
-                    </Popover>
+                <a :href="getNotificationTarget(n)" target="_blank" class="notification-list__entry">
                     <Avatar
                         class="project-avatar"
                         :url="getNotificationImage(n)"
-                        :tooltipMessage="getNotificationProjectName(n)"
                         />
                     <div class="notification__details">
                         <h3>
-                            <img class="notification-icon" :src="getNotificationTypeImage(n)"/>
                             {{ n.target_title }}
                         </h3>
                         <p class="message">
-                            <span :class="'icon ' + getNotificationActionClass(n)"/>
+                            <span :class="getNotificationActionClass(n)"/>
                             {{ getNotificationContent(n) }}
                         </p>
                     </div>
+                    <img class="gitlab-notification-icon" :src="getNotificationTypeImage(n)"/>
                 </a>
             </li>
         </ul>
@@ -276,11 +270,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.notification-icon {
-    width: 16px;
-    height: 12px;
-}
-li .notification {
+li .notification-list__entry {
     display: flex;
     align-items: flex-start;
     padding: 8px;
@@ -300,6 +290,8 @@ li .notification {
         max-height: 44px;
         flex-grow: 1;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
         h3,
         .message {
             white-space: nowrap;
@@ -319,6 +311,12 @@ li .notification {
             width: 100%;
             color: var(--color-text-maxcontrast);
         }
+    }
+    img.gitlab-notification-icon {
+        float: right;
+        width: 16px;
+        height: 16px;
+        margin: 10px 0 10px 10px;
     }
     button.primary {
         padding: 21px;
