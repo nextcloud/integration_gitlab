@@ -68,7 +68,7 @@ export default {
 
     computed: {
         showOAuth() {
-            return this.state.url === '' && this.state.client_id && this.state.client_secret
+            return (this.state.url === '' || this.state.url === 'https://gitlab.com') && this.state.client_id && this.state.client_secret
         },
     },
 
