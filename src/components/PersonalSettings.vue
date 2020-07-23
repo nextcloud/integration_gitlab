@@ -80,6 +80,13 @@ export default {
             }, 2000)()
         },
         saveOptions() {
+            if (this.state.url !== '' && !this.state.url.startsWith('https://')) {
+                if (this.state.url.startsWith('http://')) {
+                    this.state.url = this.state.url.replace('http://', 'https://')
+                } else {
+                    this.state.url = 'https://' + this.state.url
+                }
+            }
             const req = {
                 values: {
                     token: this.state.token,
