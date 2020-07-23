@@ -157,11 +157,7 @@ export default {
             }
         },
         filter(notifications) {
-            return notifications;
-            // only keep the unread ones with specific reasons
-            return notifications.filter((n) => {
-                return (['Issue'].includes(n.target_type))
-            })
+            return notifications.slice(0, 7);
         },
         getNotificationTarget(n) {
             const path = n.project_path
