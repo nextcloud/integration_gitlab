@@ -4,18 +4,25 @@
                 <a class="icon icon-gitlab" :style="{'background-image': 'url(' + iconUrl + ')'}"></a>
                 {{ t('gitlab', 'Gitlab') }}
             </h2>
+            <label>
+                {{ t('gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to https://gitlab.com, create a Gitlab application in your Gitlab settings and set the ID and secret here.') }}
+                <br/>
+                {{ t('gitlab', 'Make sure you set the "redirect_uri" to') }}
+                <br/><b> {{ redirect_uri }} </b><br/>
+                {{ t('gitlab', ' and give at least read_* permissions to the application.') }}
+            </label><br/><br/>
             <div class="grid-form">
                 <label for="gitlab-client-id">
                     <a class="icon icon-category-auth"></a>
-                    {{ t('gitlab', 'Gitlab client ID') }}
+                    {{ t('gitlab', 'gitlab.com application ID') }}
                 </label>
                 <input id="gitlab-client-id" type="password" v-model="state.client_id" @input="onInput"
                     :readonly="readonly"
                     @focus="readonly = false"
-                    :placeholder="t('gitlab', 'Client ID or your gitlab.com application')" />
+                    :placeholder="t('gitlab', 'ID or your gitlab.com application')" />
                 <label for="gitlab-client-secret">
                     <a class="icon icon-category-auth"></a>
-                    {{ t('gitlab', 'Gitlab client secret') }}
+                    {{ t('gitlab', 'gitlab.com application secret') }}
                 </label>
                 <input id="gitlab-client-secret" type="password" v-model="state.client_secret" @input="onInput"
                     :readonly="readonly"
@@ -48,6 +55,7 @@ export default {
             iconUrl: imagePath('gitlab', 'app.svg'),
             // to prevent some browsers to fill fields with remembered passwords
             readonly: true,
+            redirect_uri: OC.getProtocol() + '://' + OC.getHostName() + generateUrl('/apps/gitlab/oauth-redirect')
         }
     },
 
