@@ -5,18 +5,22 @@
                 {{ t('gitlab', 'Gitlab') }}
             </h2>
             <div class="grid-form">
-                <label for="gitlab-url">
-                    <a class="icon icon-link"></a>
-                    {{ t('gitlab', 'Gitlab instance address') }}
-                </label>
-                <input id="gitlab-url" type="text" v-model="state.url" @input="onInput"
-                    :placeholder="t('gitlab', 'https://gitlab.com')"/>
-                <label for="gitlab-token">
+                <label for="gitlab-client-id">
                     <a class="icon icon-category-auth"></a>
-                    {{ t('gitlab', 'Gitlab access token') }}
+                    {{ t('gitlab', 'Gitlab client ID') }}
                 </label>
-                <input id="gitlab-token" type="password" v-model="state.token" @input="onInput"
-                    :placeholder="t('gitlab', 'Get a token in Gitlab settings')"/>
+                <input id="gitlab-client-id" type="password" v-model="state.client_id" @input="onInput"
+                    :readonly="readonly"
+                    @focus="readonly = false"
+                    :placeholder="t('gitlab', 'Client ID or your gitlab.com application')" />
+                <label for="gitlab-client-secret">
+                    <a class="icon icon-category-auth"></a>
+                    {{ t('gitlab', 'Gitlab client secret') }}
+                </label>
+                <input id="gitlab-client-secret" type="password" v-model="state.client_secret" @input="onInput"
+                    :readonly="readonly"
+                    @focus="readonly = false"
+                    :placeholder="t('gitlab', 'Client secret or your gitlab.com application')" />
             </div>
     </div>
 </template>
@@ -29,7 +33,7 @@ import { delay } from '../utils'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
 export default {
-    name: 'Settings',
+    name: 'AdminSettings',
 
     props: [],
     components: {
@@ -40,8 +44,10 @@ export default {
 
     data() {
         return {
-            state: loadState('gitlab', 'user-config'),
-            iconUrl: imagePath('gitlab', 'app.svg')
+            state: loadState('gitlab', 'admin-config'),
+            iconUrl: imagePath('gitlab', 'app.svg'),
+            // to prevent some browsers to fill fields with remembered passwords
+            readonly: true,
         }
     },
 
@@ -58,17 +64,17 @@ export default {
         saveOptions() {
             const req = {
                 values: {
-                    token: this.state.token,
-                    url: this.state.url
+                    client_id: this.state.client_id,
+                    client_secret: this.state.client_secret,
                 }
             }
-            const url = generateUrl('/apps/gitlab/config')
+            const url = generateUrl('/apps/gitlab/admin-config')
             axios.put(url, req)
                 .then(function (response) {
-                    showSuccess(t('gitlab', 'Gitlab options saved.'))
+                    showSuccess(t('gitlab', 'Gitlab admin options saved.'))
                 })
                 .catch(function (error) {
-                    showError(t('gitlab', 'Failed to save Gitlab options') +
+                    showError(t('gitlab', 'Failed to save Gitlab admin options') +
                         ': ' + error.response.request.responseText
                     )
                 })

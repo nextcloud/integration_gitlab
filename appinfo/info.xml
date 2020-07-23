@@ -20,6 +20,8 @@
         <nextcloud min-version="20" max-version="21"/>
     </dependencies>
     <settings>
+        <admin>OCA\Gitlab\Settings\Admin</admin>
+        <admin-section>OCA\Gitlab\Settings\AdminSection</admin-section>
         <personal>OCA\Gitlab\Settings\Personal</personal>
         <personal-section>OCA\Gitlab\Settings\PersonalSection</personal-section>
     </settings>

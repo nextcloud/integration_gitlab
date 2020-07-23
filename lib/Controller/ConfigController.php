@@ -65,4 +65,15 @@ class ConfigController extends Controller {
         return $response;
     }
 
+    /**
+     * set admin config values
+     */
+    public function setAdminConfig($values) {
+        foreach ($values as $key => $value) {
+            $this->config->setAppValue('gitlab', $key, $value);
+        }
+        $response = new DataResponse(1);
+        return $response;
+    }
+
 }

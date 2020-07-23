@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 	entry: {
+		adminSettings: path.join(__dirname, 'src', 'adminSettings.js'),
 		personalSettings: path.join(__dirname, 'src', 'personalSettings.js'),
 		dashboard: path.join(__dirname, 'src', 'dashboard.js'),
 	},
