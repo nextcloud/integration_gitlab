@@ -87,7 +87,8 @@ class GitlabAPIController extends Controller {
         if ($this->accessToken === '') {
             return new DataResponse($result, 400);
         }
-        $result = $this->gitlabAPIService->getNotifications($this->gitlabUrl, $this->accessToken, $since);
+        $url = $this->gitlabUrl === '' ? 'https://gitlab.com' : $this->gitlabUrl;
+        $result = $this->gitlabAPIService->getNotifications($url, $this->accessToken, $since);
         if (is_array($result)) {
             $response = new DataResponse($result);
         } else {

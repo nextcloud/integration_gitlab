@@ -42,9 +42,15 @@ class Personal implements ISettings {
         $token = $this->config->getUserValue($this->userId, 'gitlab', 'token', '');
         $url = $this->config->getUserValue($this->userId, 'gitlab', 'url', 'https://gitlab.com');
 
+        // for OAuth
+        $clientID = $this->config->getAppValue('gitlab', 'client_id', '');
+        $clientSecret = $this->config->getAppValue('gitlab', 'client_secret', '');
+
         $userConfig = [
             'token' => $token,
-            'url' => $url
+            'url' => $url,
+            'client_id' => $clientID,
+            'client_secret' => $clientSecret,
         ];
         $this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
         return new TemplateResponse('gitlab', 'personalSettings');

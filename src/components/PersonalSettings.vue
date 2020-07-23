@@ -4,13 +4,17 @@
                 <a class="icon icon-gitlab" :style="{'background-image': 'url(' + iconUrl + ')'}"></a>
                 {{ t('gitlab', 'Gitlab') }}
             </h2>
-            <div class="grid-form">
+            <div class="gitlab-grid-form">
                 <label for="gitlab-url">
                     <a class="icon icon-link"></a>
                     {{ t('gitlab', 'Gitlab instance address') }}
                 </label>
                 <input id="gitlab-url" type="text" v-model="state.url" @input="onInput"
                     :placeholder="t('gitlab', 'https://gitlab.com')"/>
+                <button id="gitlab-oauth" v-if="showOAuth" @click="onOAuthClick">
+                    {{ t('gitlab', 'Get gitlab.com access with OAuth') }}
+                </button>
+                <span v-else></span>
                 <label for="gitlab-token">
                     <a class="icon icon-category-auth"></a>
                     {{ t('gitlab', 'Gitlab access token') }}
@@ -36,6 +40,20 @@ export default {
     },
 
     mounted() {
+        const paramString = window.location.search.substr(1)
+        const urlParams = new URLSearchParams(paramString)
+        const glToken = urlParams.get('gitlabToken')
+        if (glToken === 'success') {
+            OC.dialogs.info(
+                t('gitlab', 'gitlab.com OAuth access token successfully retrieved!'),
+                t('gitlab', 'Success')
+            )
+        } else if (glToken === 'error') {
+            OC.dialogs.info(
+                t('gitlab', 'gitlab.com OAuth access token could not be obtained:') + ' ' + urlParams.get('message'),
+                t('gitlab', 'Error')
+            )
+        }
     },
 
     data() {
@@ -46,6 +64,12 @@ export default {
     },
 
     watch: {
+    },
+
+    computed: {
+        showOAuth() {
+            return this.state.url === '' && this.state.client_id && this.state.client_secret
+        },
     },
 
     methods: {
@@ -75,21 +99,49 @@ export default {
                 .then(function () {
                 })
         },
+        onOAuthClick() {
+            const redirect_endpoint = generateUrl('/apps/gitlab/oauth-redirect')
+            const redirect_uri = OC.getProtocol() + '://' + OC.getHostName() + redirect_endpoint
+            const oauth_state = Math.random().toString(36).substring(3)
+            const request_url = 'https://gitlab.com/oauth/authorize?client_id=' + encodeURIComponent(this.state.client_id) +
+                '&redirect_uri=' + encodeURIComponent(redirect_uri) +
+                '&response_type=code' +
+                '&state=' + encodeURIComponent(oauth_state) +
+                '&scope=' + encodeURIComponent('read_user read_api read_repository read_registry')
+
+            const req = {
+                values: {
+                    oauth_state: oauth_state,
+                }
+            }
+            const url = generateUrl('/apps/gitlab/config')
+            axios.put(url, req)
+                .then(function (response) {
+                    window.location.replace(request_url)
+                })
+                .catch(function (error) {
+                    showError(t('gitlab', 'Failed to save Gitlab OAuth state') +
+                        ': ' + error.response.request.responseText
+                    )
+                })
+                .then(function () {
+                })
+        }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.grid-form label {
+.gitlab-grid-form label {
     line-height: 38px;
 }
-.grid-form input {
+.gitlab-grid-form input {
     width: 100%;
 }
-.grid-form {
-    width: 500px;
+.gitlab-grid-form {
+    width: 900px;
     display: grid;
-    grid-template: 1fr / 1fr 1fr;
+    grid-template: 1fr / 233px 233px 300px;
     margin-left: 30px;
 }
 #gitlab_prefs .icon {
@@ -104,5 +156,8 @@ export default {
     background-size: 23px 23px;
     height: 23px;
     margin-bottom: -4px;
+}
+#gitlab-oauth {
+    border-radius: unset;
 }
 </style>
