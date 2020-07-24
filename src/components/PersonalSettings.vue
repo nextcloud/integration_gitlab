@@ -1,7 +1,7 @@
 <template>
     <div id="gitlab_prefs" class="section">
             <h2>
-                <a class="icon icon-gitlab" :style="{'background-image': 'url(' + iconUrl + ')'}"></a>
+                <a class="icon icon-gitlab"></a>
                 {{ t('gitlab', 'Gitlab') }}
             </h2>
             <div class="gitlab-grid-form">
@@ -53,7 +53,6 @@ export default {
     data() {
         return {
             state: loadState('gitlab', 'user-config'),
-            iconUrl: imagePath('gitlab', 'app.svg')
         }
     },
 
@@ -153,12 +152,12 @@ export default {
     margin-bottom: -3px;
 }
 .icon-gitlab {
-    mix-blend-mode: difference;
+    background-image: url(./../../img/app-dark.svg);
     background-size: 23px 23px;
     height: 23px;
     margin-bottom: -4px;
 }
-#gitlab-oauth {
-    border-radius: unset;
+body.dark .icon-gitlab {
+    background-image: url(./../../img/app.svg);
 }
 </style>
