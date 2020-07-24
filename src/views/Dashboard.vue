@@ -27,6 +27,7 @@
                         class="project-avatar"
                         :url="getNotificationImage(n)"
                         />
+                    <img class="gitlab-notification-icon" :src="getNotificationTypeImage(n)"/>
                     <div class="notification__details">
                         <h3>
                             {{ n.target_title }}
@@ -36,7 +37,6 @@
                             {{ getNotificationContent(n) }}
                         </p>
                     </div>
-                    <img class="gitlab-notification-icon" :src="getNotificationTypeImage(n)"/>
                 </a>
             </li>
         </ul>
@@ -312,10 +312,10 @@ li .notification-list__entry {
         }
     }
     img.gitlab-notification-icon {
-        float: right;
-        width: 16px;
-        height: 16px;
-        margin: 10px 0 10px 10px;
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        margin: 27px 0 10px 24px;
     }
     button.primary {
         padding: 21px;
