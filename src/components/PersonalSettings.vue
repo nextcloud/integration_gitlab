@@ -44,15 +44,9 @@ export default {
         const urlParams = new URLSearchParams(paramString)
         const glToken = urlParams.get('gitlabToken')
         if (glToken === 'success') {
-            OC.dialogs.info(
-                t('gitlab', 'gitlab.com OAuth access token successfully retrieved!'),
-                t('gitlab', 'Success')
-            )
+            showSuccess(t('gitlab', 'gitlab.com OAuth access token successfully retrieved!'))
         } else if (glToken === 'error') {
-            OC.dialogs.info(
-                t('gitlab', 'gitlab.com OAuth access token could not be obtained:') + ' ' + urlParams.get('message'),
-                t('gitlab', 'Error')
-            )
+            showError(t('gitlab', 'gitlab.com OAuth access token could not be obtained:') + ' ' + urlParams.get('message'))
         }
     },
 
