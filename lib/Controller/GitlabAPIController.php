@@ -80,15 +80,33 @@ class GitlabAPIController extends Controller {
     }
 
     /**
-     * get notification list
+     * get event list
      * @NoAdminRequired
      */
     public function getEvents($since = null) {
         if ($this->accessToken === '') {
-            return new DataResponse($result, 400);
+            return new DataResponse('', 400);
         }
         $url = $this->gitlabUrl === '' ? 'https://gitlab.com' : $this->gitlabUrl;
         $result = $this->gitlabAPIService->getEvents($url, $this->accessToken, $since);
+        if (is_array($result)) {
+            $response = new DataResponse($result);
+        } else {
+            $response = new DataResponse($result, 401);
+        }
+        return $response;
+    }
+
+    /**
+     * get todo list
+     * @NoAdminRequired
+     */
+    public function getTodos($since = null) {
+        if ($this->accessToken === '') {
+            return new DataResponse('', 400);
+        }
+        $url = $this->gitlabUrl === '' ? 'https://gitlab.com' : $this->gitlabUrl;
+        $result = $this->gitlabAPIService->getTodos($url, $this->accessToken, $since);
         if (is_array($result)) {
             $response = new DataResponse($result);
         } else {

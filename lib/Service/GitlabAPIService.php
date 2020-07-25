@@ -128,6 +128,9 @@ class GitlabAPIService {
             'state' => 'pending',
         ];
         $result = $this->request($url, $accessToken, 'todos', $params);
+        if (!is_array($result)) {
+            return $result;
+        }
 
         // filter results by date
         if (!is_null($since)) {
@@ -140,6 +143,23 @@ class GitlabAPIService {
                 $ts = $date->getTimestamp();
                 return $ts > $sinceTimestamp;
             });
+        }
+
+        // add project avatars to results
+        $projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
+        foreach ($result as $k => $todo) {
+            $pid = $todo['project']['id'];
+            if (array_key_exists($pid, $projectsInfo)) {
+                $result[$k]['project']['avatar_url'] = $projectsInfo[$pid]['avatar_url'];
+            } else {
+                // get the project avatar
+                $projectInfo = $this->request($url, $accessToken, 'projects/' . $pid);
+                $result[$k]['project']['avatar_url'] = $projectInfo['avatar_url'];
+                // cache result
+                $projectsInfo[$pid] = [
+                    'avatar_url' => $projectInfo['avatar_url']
+                ];
+            }
         }
 
         return $result;

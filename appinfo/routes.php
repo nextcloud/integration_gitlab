@@ -15,6 +15,7 @@ return [
         ['name' => 'config#setConfig', 'url' => '/config', 'verb' => 'PUT'],
         ['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
         ['name' => 'gitlabAPI#getEvents', 'url' => '/events', 'verb' => 'GET'],
+        ['name' => 'gitlabAPI#getTodos', 'url' => '/todos', 'verb' => 'GET'],
         ['name' => 'gitlabAPI#getGitlabUrl', 'url' => '/url', 'verb' => 'GET'],
         ['name' => 'gitlabAPI#getGitlabAvatar', 'url' => '/avatar', 'verb' => 'GET'],
     ]

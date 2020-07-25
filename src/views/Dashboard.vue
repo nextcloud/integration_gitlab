@@ -12,13 +12,13 @@
                                     class="author-avatar"
                                     :size="24"
                                     :url="getAuthorAvatarUrl(n)"
-                                    :tooltipMessage="n.author.name"
                                     />
-                                <span class="popover-author-name">{{ n.author.name }}</span>
+                                <span class="popover-author-name">{{ getAuthorFullName(n) }}</span>
                             </div>
                             {{ getFormattedDate(n) }}<br/>
-                            {{ getIdentifier(n) }} {{ n.target_title }}<br/><br/>
-                            {{ getNotificationContent(n) }}
+                            {{ getTargetIdentifier(n) }} {{ n.target_title }}<br/><br/>
+                            <b>{{ getNotificationContent(n) }}</b><br/>
+                            {{ getTargetContent(n) }}
                         </template>
                     </Popover>
                 </div>
@@ -30,11 +30,10 @@
                     <img class="gitlab-notification-icon" :src="getNotificationTypeImage(n)"/>
                     <div class="notification__details">
                         <h3>
-                            {{ n.target_title }}
+                            {{ getTargetTitle(n) }}
                         </h3>
                         <p class="message">
-                            <span :class="getNotificationActionClass(n)"/>
-                            {{ getNotificationContent(n) }}
+                            {{ getProjectPath(n) }}
                         </p>
                     </div>
                 </a>
@@ -94,7 +93,7 @@ export default {
     computed: {
         lastDate() {
             const nbNotif = this.notifications.length
-            return (nbNotif > 0) ? this.notifications[0].created_at : null
+            return (nbNotif > 0) ? this.notifications[0].updated_at : null
         },
         lastMoment() {
             return moment(this.lastDate)
@@ -124,7 +123,7 @@ export default {
                     since: this.lastDate
                 }
             }
-            axios.get(generateUrl('/apps/gitlab/events'), req).then((response) => {
+            axios.get(generateUrl('/apps/gitlab/todos'), req).then((response) => {
                 this.processNotifications(response.data)
                 this.state = 'ok'
             }).catch((error) => {
@@ -144,52 +143,36 @@ export default {
             if (this.lastDate) {
                 // just add those which are more recent than our most recent one
                 let i = 0
-                while (i < newNotifications.length && this.lastMoment.isBefore(newNotifications[i].created_at)) {
+                while (i < newNotifications.length && this.lastMoment.isBefore(newNotifications[i].updated_at)) {
                     i++
                 }
                 if (i > 0) {
                     const toAdd = this.filter(newNotifications.slice(0, i))
-                    this.notifications = toAdd.concat(this.notifications)
+                    this.notifications = toAdd.concat(this.notifications).slice(0, 7)
                 }
             } else {
                 // first time we don't check the date
-                this.notifications = this.filter(newNotifications)
+                this.notifications = this.filter(newNotifications).slice(0, 7)
             }
         },
         filter(notifications) {
-            return notifications.slice(0, 7);
+            return notifications
         },
         getNotificationTarget(n) {
-            const path = n.project_path
-            if (path === null) {
-                // the API does not find all projects with /projects?membership=true
-                console.error('bad path for project ' + n.project_id)
-                return this.gitlabUrl
-            } else if (n.target_type === 'MergeRequest') {
-                return this.gitlabUrl + '/' + path + '/-/merge_requests/' + n.target_iid
-            } else if (n.target_type === 'Issue') {
-                return this.gitlabUrl + '/' + path + '/-/issues/' + n.target_iid
-            } else if (n.target_type === 'Note') {
-                if (n.note.noteable_type === 'Issue') {
-                    return this.gitlabUrl + '/' + path + '/-/issues/' + n.note.noteable_iid
-                } else if (n.note.noteable_type === 'MergeRequest') {
-                    return this.gitlabUrl + '/' + path + '/-/merge_requests/' + n.note.noteable_iid
-                } else {
-                    console.error('note on unknown noteable type')
-                    return this.gitlabUrl
-                }
-            } else {
-                console.error('unknown target type')
-                return this.gitlabUrl
-            }
+            return n.target_url
         },
         getUniqueKey(n) {
-            return n.project_id + ':' + n.target_type + ':' + n.target_id + ':' + n.created_at
+            return n.id + ':' + n.updated_at
         },
         getNotificationImage(n) {
-            return n.project_avatar_url ?
-                    generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project_avatar_url) :
+            return (n.project && n.project.avatar_url) ?
+                    generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project.avatar_url) :
                     ''
+        },
+        getAuthorFullName(n) {
+            return n.author.name ?
+                (n.author.name + ' (@' + n.author.username + ')') :
+                n.author.username
         },
         getAuthorAvatarUrl(n) {
             return (n.author && n.author.avatar_url) ?
@@ -197,25 +180,21 @@ export default {
                     ''
         },
         getNotificationProjectName(n) {
-            return n.project_path
+            return n.project.path_with_namespace
         },
         getNotificationContent(n) {
-            if (n.target_type === 'Note') {
-                return n.note.body
-            } else if (n.target_type === 'Issue') {
-                if (n.action_name === 'closed') {
-                    return t('gitlab', 'Issue was closed')
-                } else if (n.action_name === 'opened') {
-                    return t('gitlab', 'Issue was created')
-                }
-            } else if (n.target_type === 'MergeRequest') {
-                if (n.action_name === 'closed') {
-                    return t('gitlab', 'Merge request was closed')
-                } else if (n.action_name === 'opened') {
-                    return t('gitlab', 'Merge request was created')
-                } else if (n.action_name === 'accepted') {
-                    return t('gitlab', 'Merge request was accepted')
-                }
+            if (n.action_name === 'mentioned') {
+                return t('gitlab', 'You were mentioned')
+            } else if (n.action_name === 'approval_required') {
+                return t('gitlab', 'Your approval is required')
+            } else if (n.action_name === 'assigned') {
+                return t('gitlab', 'You were assigned')
+            } else if (n.action_name === 'build_failed') {
+                return t('gitlab', 'A build has failed')
+            } else if (n.action_name === 'marked') {
+                return t('gitlab', 'Marked')
+            } else if (n.action_name === 'directly_addressed') {
+                return t('gitlab', 'You were directly addressed')
             }
             return ''
         },
@@ -224,45 +203,28 @@ export default {
                 return generateUrl('/svg/gitlab/merge_request?color=' + this.themingColor)
             } else if (n.target_type === 'Issue') {
                 return generateUrl('/svg/gitlab/issues?color=' + this.themingColor)
-            } else if (n.target_type === 'Note') {
-                if (n.note.noteable_type === 'Issue') {
-                    return generateUrl('/svg/gitlab/issues?color=' + this.themingColor)
-                } else if (n.note.noteable_type === 'MergeRequest') {
-                    return generateUrl('/svg/gitlab/merge_request?color=' + this.themingColor)
-                }
             }
             return generateUrl('/svg/core/actions/sound?color=' + this.themingColor)
         },
-        getNotificationActionClass(n) {
-            if (n.target_type === 'Note') {
-                return 'icon-comment'
-            } else if (['Issue', 'MergeRequest'].includes(n.target_type)) {
-                if (n.action_name === 'closed') {
-                    return 'icon-close'
-                } else if (n.action_name === 'opened') {
-                    return 'icon-add'
-                } else if (n.action_name === 'accepted') {
-                    return 'icon-checkmark-color'
-                }
-            }
-            return ''
+        getTargetContent(n) {
+            return n.body
         },
-        getIdentifier(n) {
+        getTargetTitle(n) {
+            return n.target.title
+        },
+        getProjectPath(n) {
+            return n.project.path_with_namespace
+        },
+        getTargetIdentifier(n) {
             if (n.target_type === 'MergeRequest') {
-                return '[!' + n.target_iid + ']'
+                return '[!' + n.target.iid + ']'
             } else if (n.target_type === 'Issue') {
-                return '[#' + n.target_iid + ']'
-            } else if (n.target_type === 'Note') {
-                if (n.note.noteable_type === 'Issue') {
-                    return '[#' + n.note.noteable_iid + ']'
-                } else if (n.note.noteable_type === 'MergeRequest') {
-                    return '[!' + n.note.noteable_iid + ']'
-                }
+                return '[#' + n.target.iid + ']'
             }
             return ''
         },
         getFormattedDate(n) {
-            return moment(n.created_at).locale(this.locale).format('LLL')
+            return moment(n.updated_at).locale(this.locale).format('LLL')
         },
     },
 }
