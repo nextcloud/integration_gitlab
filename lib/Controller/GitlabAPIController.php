@@ -83,12 +83,12 @@ class GitlabAPIController extends Controller {
      * get notification list
      * @NoAdminRequired
      */
-    public function getNotifications($since = null) {
+    public function getEvents($since = null) {
         if ($this->accessToken === '') {
             return new DataResponse($result, 400);
         }
         $url = $this->gitlabUrl === '' ? 'https://gitlab.com' : $this->gitlabUrl;
-        $result = $this->gitlabAPIService->getNotifications($url, $this->accessToken, $since);
+        $result = $this->gitlabAPIService->getEvents($url, $this->accessToken, $since);
         if (is_array($result)) {
             $response = new DataResponse($result);
         } else {

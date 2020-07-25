@@ -14,7 +14,7 @@ return [
         ['name' => 'config#oauthRedirect', 'url' => '/oauth-redirect', 'verb' => 'GET'],
         ['name' => 'config#setConfig', 'url' => '/config', 'verb' => 'PUT'],
         ['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
-        ['name' => 'gitlabAPI#getNotifications', 'url' => '/notifications', 'verb' => 'GET'],
+        ['name' => 'gitlabAPI#getEvents', 'url' => '/events', 'verb' => 'GET'],
         ['name' => 'gitlabAPI#getGitlabUrl', 'url' => '/url', 'verb' => 'GET'],
         ['name' => 'gitlabAPI#getGitlabAvatar', 'url' => '/avatar', 'verb' => 'GET'],
     ]

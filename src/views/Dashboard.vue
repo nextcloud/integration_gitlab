@@ -124,7 +124,7 @@ export default {
                     since: this.lastDate
                 }
             }
-            axios.get(generateUrl('/apps/gitlab/notifications'), req).then((response) => {
+            axios.get(generateUrl('/apps/gitlab/events'), req).then((response) => {
                 this.processNotifications(response.data)
                 this.state = 'ok'
             }).catch((error) => {

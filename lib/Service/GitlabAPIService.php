@@ -32,22 +32,25 @@ class GitlabAPIService {
         $this->logger = $logger;
     }
 
-    public function getNotifications($url, $accessToken, $since = null) {
-        // first get list of the projects i'm member of
+    private function getMyProjectsInfo($url, $accessToken) {
         $params = [
             'membership' => 'true',
         ];
         $projects = $this->request($url, $accessToken, 'projects', $params);
-        // build a project ID conversion hashtable
-        $pidToPath = [];
-        $pidToAvatar = [];
+        $projectsInfo = [];
         foreach ($projects as $project) {
             $pid = $project['id'];
-            $path = $project['path_with_namespace'];
-            $avatar = $project['avatar_url'];
-            $pidToPath[$pid] = $path;
-            $pidToAvatar[$pid] = $avatar;
+            $projectsInfo[$pid] = [
+                'path_with_namespace' => $project['path_with_namespace'],
+                'avatar_url' => $project['avatar_url'],
+            ];
         }
+        return $projectsInfo;
+    }
+
+    public function getEvents($url, $accessToken, $since = null) {
+        // first get list of the projects i'm member of
+        $projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
         // get current user ID
         $user = $this->request($url, $accessToken, 'user');
 
@@ -113,9 +116,32 @@ class GitlabAPIService {
         // add project path in results
         foreach ($result as $k => $r) {
             $pid = $r['project_id'];
-            $result[$k]['project_path'] = $pidToPath[$pid];
-            $result[$k]['project_avatar_url'] = $pidToAvatar[$pid];
+            $result[$k]['project_path'] = $projectsInfo[$pid]['path_with_namespace'];
+            $result[$k]['project_avatar_url'] = $projectsInfo[$pid]['avatar_url'];
         }
+        return $result;
+    }
+
+    public function getTodos($url, $accessToken, $since = null) {
+        $params = [
+            'action' => ['assigned', 'mentioned', 'build_failed', 'marked', 'approval_required', 'unmergeable', 'directly_addressed'],
+            'state' => 'pending',
+        ];
+        $result = $this->request($url, $accessToken, 'todos', $params);
+
+        // filter results by date
+        if (!is_null($since)) {
+            // we get a full ISO date, the API only wants a day (non inclusive)
+            $sinceDate = new \DateTime($since);
+            $sinceTimestamp = $sinceDate->getTimestamp();
+
+            $result = array_filter($result, function($elem) use ($sinceTimestamp) {
+                $date = new \Datetime($elem['updated_at']);
+                $ts = $date->getTimestamp();
+                return $ts > $sinceTimestamp;
+            });
+        }
+
         return $result;
     }
 
@@ -135,7 +161,17 @@ class GitlabAPIService {
 
             $url = $url . '/api/v4/' . $endPoint;
             if (count($params) > 0) {
-                $paramsContent = http_build_query($params);
+                // manage array parameters
+                $paramsContent = '';
+                foreach ($params as $key => $value) {
+                    if (is_array($value)) {
+                        foreach ($value as $oneArrayValue) {
+                            $paramsContent .= $key . '[]=' . urlencode($oneArrayValue) . '&';
+                        }
+                        unset($params[$key]);
+                    }
+                }
+                $paramsContent .= http_build_query($params);
                 if ($method === 'GET') {
                     $url .= '?' . $paramsContent;
                 } else {
