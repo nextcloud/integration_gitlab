@@ -12,6 +12,7 @@
                 <input id="gitlab-url" type="text" v-model="state.url" @input="onInput"
                     :placeholder="t('gitlab', 'Gitlab instance address')"/>
                 <button id="gitlab-oauth" v-if="showOAuth" @click="onOAuthClick">
+                    <span class="icon icon-external"/>
                     {{ t('gitlab', 'Get access with OAuth') }}
                 </button>
                 <span v-else></span>
@@ -144,6 +145,9 @@ export default {
     display: grid;
     grid-template: 1fr / 233px 233px 300px;
     margin-left: 30px;
+    button .icon {
+        margin-bottom: -1px;
+    }
 }
 #gitlab_prefs .icon {
     display: inline-block;
