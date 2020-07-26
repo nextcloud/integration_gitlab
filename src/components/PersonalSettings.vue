@@ -108,7 +108,7 @@ export default {
                 '&redirect_uri=' + encodeURIComponent(redirect_uri) +
                 '&response_type=code' +
                 '&state=' + encodeURIComponent(oauth_state) +
-                '&scope=' + encodeURIComponent('read_user read_api read_repository read_registry')
+                '&scope=' + encodeURIComponent('read_user read_api read_repository')
 
             const req = {
                 values: {
