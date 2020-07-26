@@ -10,9 +10,9 @@
                     {{ t('gitlab', 'Gitlab instance address') }}
                 </label>
                 <input id="gitlab-url" type="text" v-model="state.url" @input="onInput"
-                    :placeholder="t('gitlab', 'https://gitlab.com')"/>
+                    :placeholder="t('gitlab', 'Gitlab instance address')"/>
                 <button id="gitlab-oauth" v-if="showOAuth" @click="onOAuthClick">
-                    {{ t('gitlab', 'Get gitlab.com access with OAuth') }}
+                    {{ t('gitlab', 'Get access with OAuth') }}
                 </button>
                 <span v-else></span>
                 <label for="gitlab-token">
@@ -61,7 +61,8 @@ export default {
 
     computed: {
         showOAuth() {
-            return (this.state.url === '' || this.state.url === 'https://gitlab.com') && this.state.client_id && this.state.client_secret
+            console.log(this.state.url +' '+ this.state.oauth_instance_url)
+            return (this.state.url === this.state.oauth_instance_url) && this.state.client_id && this.state.client_secret
         },
     },
 
@@ -103,7 +104,7 @@ export default {
             const redirect_endpoint = generateUrl('/apps/gitlab/oauth-redirect')
             const redirect_uri = OC.getProtocol() + '://' + OC.getHostName() + redirect_endpoint
             const oauth_state = Math.random().toString(36).substring(3)
-            const request_url = 'https://gitlab.com/oauth/authorize?client_id=' + encodeURIComponent(this.state.client_id) +
+            const request_url = this.state.url + '/oauth/authorize?client_id=' + encodeURIComponent(this.state.client_id) +
                 '&redirect_uri=' + encodeURIComponent(redirect_uri) +
                 '&response_type=code' +
                 '&state=' + encodeURIComponent(oauth_state) +

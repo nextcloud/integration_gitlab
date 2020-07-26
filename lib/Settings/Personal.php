@@ -41,16 +41,22 @@ class Personal implements ISettings {
     public function getForm() {
         $token = $this->config->getUserValue($this->userId, 'gitlab', 'token', '');
         $url = $this->config->getUserValue($this->userId, 'gitlab', 'url', 'https://gitlab.com');
+        if ($url === '') {
+            $url = 'https://gitlab.com';
+        }
 
         // for OAuth
         $clientID = $this->config->getAppValue('gitlab', 'client_id', '');
-        $clientSecret = $this->config->getAppValue('gitlab', 'client_secret', '');
+        // don't expose the client secret to users
+        $clientSecret = ($this->config->getAppValue('gitlab', 'client_secret', '') !== '');
+        $oauthUrl = $this->config->getAppValue('gitlab', 'oauth_instance_url', '');
 
         $userConfig = [
             'token' => $token,
             'url' => $url,
             'client_id' => $clientID,
             'client_secret' => $clientSecret,
+            'oauth_instance_url' => $oauthUrl,
         ];
         $this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
         return new TemplateResponse('gitlab', 'personalSettings');

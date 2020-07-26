@@ -41,10 +41,12 @@ class Admin implements ISettings {
     public function getForm() {
         $clientID = $this->config->getAppValue('gitlab', 'client_id', '');
         $clientSecret = $this->config->getAppValue('gitlab', 'client_secret', '');
+        $oauthUrl = $this->config->getAppValue('gitlab', 'oauth_instance_url', '');
 
         $adminConfig = [
             'client_id' => $clientID,
-            'client_secret' => $clientSecret
+            'client_secret' => $clientSecret,
+            'oauth_instance_url' => $oauthUrl,
         ];
         $this->initialStateService->provideInitialState($this->appName, 'admin-config', $adminConfig);
         return new TemplateResponse('gitlab', 'adminSettings');

@@ -5,29 +5,35 @@
                 {{ t('gitlab', 'Gitlab') }}
             </h2>
             <label>
-                {{ t('gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to https://gitlab.com, create a Gitlab application in your Gitlab settings and set the ID and secret here.') }}
+                {{ t('gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to a Gitlab instance of your choice, create an application in your Gitlab settings and set the ID and secret here.') }}
                 <br/>
                 {{ t('gitlab', 'Make sure you set the "redirect_uri" to') }}
                 <br/><b> {{ redirect_uri }} </b><br/>
                 {{ t('gitlab', ' and give at least read_* permissions to the application.') }}
             </label><br/><br/>
             <div class="grid-form">
+                <label for="gitlab-oauth-instance">
+                    <a class="icon icon-link"></a>
+                    {{ t('gitlab', 'OAuth app instance address') }}
+                </label>
+                <input id="gitlab-oauth-instance" type="text" v-model="state.oauth_instance_url" @input="onInput"
+                    :placeholder="t('gitlab', 'Instance address')" />
                 <label for="gitlab-client-id">
                     <a class="icon icon-category-auth"></a>
-                    {{ t('gitlab', 'gitlab.com application ID') }}
+                    {{ t('gitlab', 'Application ID') }}
                 </label>
                 <input id="gitlab-client-id" type="password" v-model="state.client_id" @input="onInput"
                     :readonly="readonly"
                     @focus="readonly = false"
-                    :placeholder="t('gitlab', 'ID or your gitlab.com application')" />
+                    :placeholder="t('gitlab', 'ID or your Gitlab application')" />
                 <label for="gitlab-client-secret">
                     <a class="icon icon-category-auth"></a>
-                    {{ t('gitlab', 'gitlab.com application secret') }}
+                    {{ t('gitlab', 'Application secret') }}
                 </label>
                 <input id="gitlab-client-secret" type="password" v-model="state.client_secret" @input="onInput"
                     :readonly="readonly"
                     @focus="readonly = false"
-                    :placeholder="t('gitlab', 'Client secret or your gitlab.com application')" />
+                    :placeholder="t('gitlab', 'Client secret or your Gitlab application')" />
             </div>
     </div>
 </template>
@@ -73,6 +79,7 @@ export default {
                 values: {
                     client_id: this.state.client_id,
                     client_secret: this.state.client_secret,
+                    oauth_instance_url: this.state.oauth_instance_url,
                 }
             }
             const url = generateUrl('/apps/gitlab/admin-config')

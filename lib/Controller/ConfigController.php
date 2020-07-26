@@ -99,7 +99,8 @@ class ConfigController extends Controller {
 
         if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
             $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('gitlab.config.oauthRedirect');
-            $result = $this->requestOAuthAccessToken([
+            $gitlabUrl = $this->config->getUserValue($this->userId, 'gitlab', 'url', '');
+            $result = $this->requestOAuthAccessToken($gitlabUrl, [
                 'client_id' => $clientID,
                 'client_secret' => $clientSecret,
                 'code' => $code,
@@ -124,7 +125,7 @@ class ConfigController extends Controller {
         );
     }
 
-    private function requestOAuthAccessToken($params = [], $method = 'GET') {
+    private function requestOAuthAccessToken($url, $params = [], $method = 'GET') {
         try {
             $options = [
                 'http' => [
@@ -133,7 +134,7 @@ class ConfigController extends Controller {
                 ]
             ];
 
-            $url = 'https://gitlab.com/oauth/token';
+            $url = $url . '/oauth/token';
             if (count($params) > 0) {
                 $paramsContent = http_build_query($params);
                 if ($method === 'GET') {
