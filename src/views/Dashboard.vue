@@ -4,7 +4,7 @@
             <li v-for="n in notifications" :key="getUniqueKey(n)"
                 @mouseover="$set(hovered, getUniqueKey(n), true)" @mouseleave="$set(hovered, getUniqueKey(n), false)">
                 <div class="popover-container">
-                    <Popover :open="hovered[getUniqueKey(n)]" placement="top" class="content-popover" offset="40">
+                    <!--Popover :open="hovered[getUniqueKey(n)]" placement="top" class="content-popover" offset="40">
                         <template>
                             <h3>{{ n.project_path }}</h3>
                             <div class="popover-author">
@@ -20,7 +20,7 @@
                             <b>{{ getNotificationContent(n) }}</b><br/>
                             {{ getTargetContent(n) }}
                         </template>
-                    </Popover>
+                    </Popover-->
                 </div>
                 <a :href="getNotificationTarget(n)" target="_blank" class="notification-list__entry">
                     <Avatar
@@ -32,8 +32,8 @@
                         <h3>
                             {{ getTargetTitle(n) }}
                         </h3>
-                        <p class="message">
-                            {{ getProjectPath(n) }}
+                        <p class="message" :title="getSubline(n)">
+                            {{ getSubline(n) }}
                         </p>
                     </div>
                 </a>
@@ -206,6 +206,23 @@ export default {
             }
             return generateUrl('/svg/core/actions/sound?color=' + this.themingColor)
         },
+        getNotificationActionChar(n) {
+            if (['Issue', 'MergeRequest'].includes(n.target_type)) {
+                if (['approval_required', 'assigned'].includes(n.action_name)) {
+                    return '👁'
+                } else if (['directly_addressed', 'mentioned'].includes(n.action_name)) {
+                    return '🗨'
+                } else if (n.action_name === 'marked') {
+                    return '✅'
+                } else if (['build_failed', 'unmergeable'].includes(n.action_name)) {
+                    return '❎'
+                }
+            }
+            return ''
+        },
+        getSubline(n) {
+            return this.getProjectPath(n) + ' ' + this.getNotificationActionChar(n) + ' ' + this.getTargetIdentifier(n)
+        },
         getTargetContent(n) {
             return n.body
         },
@@ -217,9 +234,9 @@ export default {
         },
         getTargetIdentifier(n) {
             if (n.target_type === 'MergeRequest') {
-                return '[!' + n.target.iid + ']'
+                return '!' + n.target.iid
             } else if (n.target_type === 'Issue') {
-                return '[#' + n.target.iid + ']'
+                return '#' + n.target.iid
             }
             return ''
         },
