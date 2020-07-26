@@ -103,6 +103,8 @@ class GitlabAPIService {
         $result = array_filter($result, function($elem) use ($user) {
             return $elem['author_id'] !== $user['id'];
         });
+        // make sure it's an array and not a hastable
+        $result = array_values($result);
 
         // sort merged results by date
         $a = usort($result, function($a, $b) {
@@ -143,7 +145,13 @@ class GitlabAPIService {
                 $ts = $date->getTimestamp();
                 return $ts > $sinceTimestamp;
             });
+        } else {
+            // take 7 most recent if no date filter
+            $result = array_slice($result, 0, 7);
         }
+
+        // make sure it's an array and not a hastable
+        $result = array_values($result);
 
         // add project avatars to results
         $projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
