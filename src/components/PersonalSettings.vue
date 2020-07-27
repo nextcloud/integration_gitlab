@@ -4,6 +4,9 @@
                 <a class="icon icon-gitlab"></a>
                 {{ t('gitlab', 'Gitlab') }}
             </h2>
+            <p class="settings-hint">
+                {{ t('gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions.') }}
+            </p>
             <div class="gitlab-grid-form">
                 <label for="gitlab-url">
                     <a class="icon icon-link"></a>

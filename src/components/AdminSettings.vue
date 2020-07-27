@@ -4,13 +4,13 @@
                 <a class="icon icon-gitlab"></a>
                 {{ t('gitlab', 'Gitlab') }}
             </h2>
-            <label>
+            <p class="settings-hint">
                 {{ t('gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to a Gitlab instance of your choice, create an application in your Gitlab settings and set the ID and secret here.') }}
                 <br/>
                 {{ t('gitlab', 'Make sure you set the "redirect_uri" to') }}
                 <br/><b> {{ redirect_uri }} </b><br/>
                 {{ t('gitlab', ' and give at least read_* permissions to the application.') }}
-            </label><br/><br/>
+            </p>
             <div class="grid-form">
                 <label for="gitlab-oauth-instance">
                     <a class="icon icon-link"></a>
