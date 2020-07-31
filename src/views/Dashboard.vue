@@ -26,8 +26,7 @@
 
 <script>
 import axios from '@nextcloud/axios'
-import { generateUrl, imagePath } from '@nextcloud/router'
-import { Avatar, Popover } from '@nextcloud/vue'
+import { generateUrl } from '@nextcloud/router'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 import moment from '@nextcloud/moment'
@@ -39,7 +38,6 @@ export default {
     props: [],
     components: {
         DashboardWidget,
-        Avatar, Popover
     },
 
     beforeMount() {
