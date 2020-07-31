@@ -76,7 +76,9 @@ class GitlabAPIController extends Controller {
      * @NoCSRFRequired
      */
     public function getGitlabAvatar($url) {
-        return new DataDisplayResponse($this->gitlabAPIService->getGitlabAvatar($url));
+        $response = new DataDisplayResponse($this->gitlabAPIService->getGitlabAvatar($url));
+        $response->cacheFor(60*60*24);
+        return $response;
     }
 
     /**
