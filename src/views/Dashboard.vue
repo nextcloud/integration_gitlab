@@ -1,63 +1,34 @@
 <template>
-    <div>
-        <ul v-if="state === 'ok'" class="notification-list">
-            <li v-for="n in notifications" :key="getUniqueKey(n)"
-                @mouseover="$set(hovered, getUniqueKey(n), true)" @mouseleave="$set(hovered, getUniqueKey(n), false)">
-                <div class="popover-container">
-                    <!--Popover :open="hovered[getUniqueKey(n)]" placement="top" class="content-popover" offset="40">
-                        <template>
-                            <h3>{{ n.project_path }}</h3>
-                            <div class="popover-author">
-                                <Avatar
-                                    class="author-avatar"
-                                    :size="24"
-                                    :url="getAuthorAvatarUrl(n)"
-                                    />
-                                <span class="popover-author-name">{{ getAuthorFullName(n) }}</span>
-                            </div>
-                            {{ getFormattedDate(n) }}<br/>
-                            {{ getTargetIdentifier(n) }} {{ n.target_title }}<br/><br/>
-                            <b>{{ getNotificationContent(n) }}</b><br/>
-                            {{ getTargetContent(n) }}
-                        </template>
-                    </Popover-->
-                </div>
-                <a :href="getNotificationTarget(n)" target="_blank" class="notification-list__entry">
-                    <Avatar
-                        class="project-avatar"
-                        :url="getNotificationImage(n)"
-                        />
-                    <img class="gitlab-notification-icon" :src="getNotificationTypeImage(n)"/>
-                    <div class="notification__details">
-                        <h3>
-                            {{ getTargetTitle(n) }}
-                        </h3>
-                        <p class="message" :title="getSubline(n)">
-                            {{ getSubline(n) }}
-                        </p>
-                    </div>
+    <DashboardWidget :items="items"
+          :showMore="true"
+          @moreClicked="onMoreClick"
+          @markDone="onMarkDone"
+          :loading="state === 'loading'"
+          :itemMenu="itemMenu">
+        <template v-slot:empty-content>
+            <div v-if="state === 'no-token'">
+                <a :href="settingsUrl">
+                    {{ t('gitlab', 'Click here to configure the access to your Gitlab account.')}}
                 </a>
-            </li>
-        </ul>
-        <div v-else-if="state === 'no-token'">
-            <a :href="settingsUrl">
-                {{ t('gitlab', 'Click here to configure the access to your Gitlab account.')}}
-            </a>
-        </div>
-        <div v-else-if="state === 'error'">
-            <a :href="settingsUrl">
-                {{ t('gitlab', 'Incorrect access token.') }}
-                {{ t('gitlab', 'Click here to configure the access to your Gitlab account.')}}
-            </a>
-        </div>
-        <div v-else-if="state === 'loading'" class="icon-loading-small"></div>
-    </div>
+            </div>
+            <div v-else-if="state === 'error'">
+                <a :href="settingsUrl">
+                    {{ t('gitlab', 'Incorrect access token.') }}
+                    {{ t('gitlab', 'Click here to configure the access to your Gitlab account.')}}
+                </a>
+            </div>
+            <div v-else-if="state === 'ok'">
+                  {{ t('gitlab', 'Nothing to show') }}
+            </div>
+        </template>
+    </DashboardWidget>
 </template>
 
 <script>
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import { Avatar, Popover } from '@nextcloud/vue'
+import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 import moment from '@nextcloud/moment'
 import { getLocale } from '@nextcloud/l10n'
@@ -67,6 +38,7 @@ export default {
 
     props: [],
     components: {
+        DashboardWidget,
         Avatar, Popover
     },
 
@@ -86,11 +58,29 @@ export default {
             state: 'loading',
             settingsUrl: generateUrl('/settings/user/linked-accounts'),
             themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
-            hovered: {},
+            itemMenu: {
+                  'markDone': {
+                      text: t('gitlab', 'Mark as done'),
+                      icon: 'icon-checkmark',
+                  },
+              },
         }
     },
 
     computed: {
+        items() {
+            return this.notifications.map((n) => {
+                return {
+                    id: this.getUniqueKey(n),
+                    targetUrl: this.getNotificationTarget(n),
+                    avatarUrl: this.getNotificationImage(n),
+                    //avatarUsername: '',
+                    overlayIconUrl: this.getNotificationTypeImage(n),
+                    mainText: this.getTargetTitle(n),
+                    subText: this.getSubline(n),
+                }
+            })
+        },
         lastDate() {
             const nbNotif = this.notifications.length
             return (nbNotif > 0) ? this.notifications[0].updated_at : null
@@ -148,11 +138,11 @@ export default {
                 }
                 if (i > 0) {
                     const toAdd = this.filter(newNotifications.slice(0, i))
-                    this.notifications = toAdd.concat(this.notifications).slice(0, 7)
+                    this.notifications = toAdd.concat(this.notifications)
                 }
             } else {
                 // first time we don't check the date
-                this.notifications = this.filter(newNotifications).slice(0, 7)
+                this.notifications = this.filter(newNotifications)
             }
         },
         filter(notifications) {
@@ -221,7 +211,7 @@ export default {
             return ''
         },
         getSubline(n) {
-            return this.getProjectPath(n) + ' ' + this.getNotificationActionChar(n) + ' ' + this.getTargetIdentifier(n)
+            return this.getNotificationActionChar(n) + ' ' + n.project.path + this.getTargetIdentifier(n)
         },
         getTargetContent(n) {
             return n.body
@@ -243,80 +233,26 @@ export default {
         getFormattedDate(n) {
             return moment(n.updated_at).locale(this.locale).format('LLL')
         },
+        onMoreClick() {
+            const win = window.open(this.gitlabUrl + '/dashboard/todos', '_blank')
+            win.focus()
+        },
+        onMarkDone(item) {
+            const i = this.notifications.findIndex((n) => this.getUniqueKey(n) === item.id)
+            if (i !== -1) {
+                this.notifications.splice(i, 1)
+            }
+            //this.editNotification(item, 'mark-done')
+        },
+        editNotification(item, action) {
+            axios.put(generateUrl('/apps/gitlab/todos/' + item.id + '/' + action)).then((response) => {
+            }).catch((error) => {
+                showError(t('gitlab', 'Failed to edit Gitlab todo.'))
+            })
+        },
     },
 }
 </script>
 
 <style scoped lang="scss">
-li .notification-list__entry {
-    display: flex;
-    align-items: flex-start;
-    padding: 8px;
-
-    &:hover,
-    &:focus {
-        background-color: var(--color-background-hover);
-        border-radius: var(--border-radius-large);
-    }
-    .project-avatar {
-        position: relative;
-        margin-top: auto;
-        margin-bottom: auto;
-    }
-    .notification__details {
-        padding-left: 8px;
-        max-height: 44px;
-        flex-grow: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        h3,
-        .message {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .message span {
-            width: 10px;
-            display: inline-block;
-            margin-bottom: -3px;
-        }
-        h3 {
-            font-size: 100%;
-            margin: 0;
-        }
-        .message {
-            width: 100%;
-            color: var(--color-text-maxcontrast);
-        }
-    }
-    img.gitlab-notification-icon {
-        position: absolute;
-        width: 14px;
-        height: 14px;
-        margin: 27px 0 10px 24px;
-    }
-    button.primary {
-        padding: 21px;
-        margin: 0;
-    }
-}
-.date-popover {
-    position: relative;
-    top: 7px;
-}
-.content-popover {
-    height: 0px;
-    width: 0px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.popover-container {
-    width: 100%;
-    height: 0px;
-}
-.popover-author-name {
-    vertical-align: top;
-    line-height: 24px;
-}
 </style>

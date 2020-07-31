@@ -149,9 +149,6 @@ class GitlabAPIService {
                 $ts = $date->getTimestamp();
                 return $ts > $sinceTimestamp;
             });
-        } else {
-            // take 7 most recent if no date filter
-            $result = array_slice($result, 0, 7);
         }
 
         // make sure it's an array and not a hastable
