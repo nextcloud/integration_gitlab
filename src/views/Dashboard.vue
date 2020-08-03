@@ -188,7 +188,7 @@ export default {
         },
         getNotificationTypeImage(n) {
             if (n.target_type === 'MergeRequest') {
-                return generateUrl('/svg/gitlab/merge_request?color=' + this.themingColor)
+                return generateUrl('/svg/gitlab/merge_request?color=ffffff')
             } else if (n.target_type === 'Issue') {
                 return generateUrl('/svg/gitlab/issues?color=ffffff')
             }
