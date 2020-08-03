@@ -190,7 +190,7 @@ export default {
             if (n.target_type === 'MergeRequest') {
                 return generateUrl('/svg/gitlab/merge_request?color=' + this.themingColor)
             } else if (n.target_type === 'Issue') {
-                return generateUrl('/svg/gitlab/issues?color=' + this.themingColor)
+                return generateUrl('/svg/gitlab/issues?color=ffffff')
             }
             return generateUrl('/svg/core/actions/sound?color=' + this.themingColor)
         },
