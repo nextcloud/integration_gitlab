@@ -18,7 +18,7 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 
 use OCA\Gitlab\Controller\PageController;
-use OCA\Gitlab\Dashboard\GitlabPanel;
+use OCA\Gitlab\Dashboard\GitlabWidget;
 
 /**
  * Class Application
@@ -39,7 +39,7 @@ class Application extends App implements IBootstrap {
     }
 
     public function register(IRegistrationContext $context): void {
-        $context->registerDashboardPanel(GitlabPanel::class);
+        $context->registerDashboardWidget(GitlabWidget::class);
     }
 
     public function boot(IBootContext $context): void {

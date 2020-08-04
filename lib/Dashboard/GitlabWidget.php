@@ -23,9 +23,10 @@
 
 namespace OCA\Gitlab\Dashboard;
 
+use OCP\Dashboard\IWidget;
 use OCP\IL10N;
 
-class GitlabPanel implements \OCP\Dashboard\IPanel {
+class GitlabWidget implements IWidget {
 
 	/** @var IL10N */
 	private $l10n;
