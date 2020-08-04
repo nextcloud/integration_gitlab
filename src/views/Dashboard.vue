@@ -1,7 +1,6 @@
 <template>
     <DashboardWidget :items="items"
-          :showMore="true"
-          @moreClicked="onMoreClick"
+          :showMoreUrl="showMoreUrl"
           @markDone="onMarkDone"
           :loading="state === 'loading'"
           :itemMenu="itemMenu">
@@ -66,6 +65,9 @@ export default {
     },
 
     computed: {
+        showMoreUrl() {
+            return this.gitlabUrl + '/dashboard/todos'
+        },
         items() {
             return this.notifications.map((n) => {
                 return {
@@ -230,10 +232,6 @@ export default {
         },
         getFormattedDate(n) {
             return moment(n.updated_at).locale(this.locale).format('LLL')
-        },
-        onMoreClick() {
-            const win = window.open(this.gitlabUrl + '/dashboard/todos', '_blank')
-            win.focus()
         },
         onMarkDone(item) {
             const i = this.notifications.findIndex((n) => this.getUniqueKey(n) === item.id)
