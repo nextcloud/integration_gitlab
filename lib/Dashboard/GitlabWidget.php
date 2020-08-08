@@ -76,7 +76,7 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-        \OC_Util::addScript('gitlab', 'dashboard');
+        \OC_Util::addScript('gitlab', 'gitlab-dashboard');
         \OC_Util::addStyle('gitlab', 'dashboard');
     }
 }

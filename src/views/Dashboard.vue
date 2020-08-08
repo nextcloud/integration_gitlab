@@ -29,7 +29,6 @@ import { generateUrl } from '@nextcloud/router'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 import moment from '@nextcloud/moment'
-import { getLocale } from '@nextcloud/l10n'
 
 export default {
     name: 'Dashboard',
@@ -50,7 +49,6 @@ export default {
         return {
             gitlabUrl: null,
             notifications: [],
-            locale: getLocale(),
             loop: null,
             state: 'loading',
             settingsUrl: generateUrl('/settings/user/linked-accounts'),
@@ -231,7 +229,7 @@ export default {
             return ''
         },
         getFormattedDate(n) {
-            return moment(n.updated_at).locale(this.locale).format('LLL')
+            return moment(n.updated_at).format('LLL')
         },
         onMarkDone(item) {
             const i = this.notifications.findIndex((n) => this.getUniqueKey(n) === item.id)

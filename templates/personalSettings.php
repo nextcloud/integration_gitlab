@@ -1,9 +1,5 @@
 <?php
-/** @var $l \OCP\IL10N */
-/** @var $_ array */
-
-script('gitlab', 'personalSettings');
-//style('gitlab', 'perso');
+script('gitlab', 'gitlab-personalSettings');
 ?>
 
 <div id="gitlab_prefs"></div>
