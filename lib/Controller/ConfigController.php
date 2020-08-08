@@ -30,7 +30,8 @@ use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
-use OCP\Http\Client\IClientService;
+
+use OCA\Gitlab\Service\GitlabAPIService;
 
 class ConfigController extends Controller {
 
@@ -50,7 +51,7 @@ class ConfigController extends Controller {
                                 IURLGenerator $urlGenerator,
                                 IL10N $l,
                                 ILogger $logger,
-                                IClientService $clientService,
+                                GitlabAPIService $gitlabAPIService,
                                 $userId) {
         parent::__construct($AppName, $request);
         $this->l = $l;
@@ -61,7 +62,7 @@ class ConfigController extends Controller {
         $this->dbconnection = $dbconnection;
         $this->urlGenerator = $urlGenerator;
         $this->logger = $logger;
-        $this->clientService = $clientService;
+        $this->gitlabAPIService = $gitlabAPIService;
     }
 
     /**
@@ -103,7 +104,7 @@ class ConfigController extends Controller {
         if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
             $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('gitlab.config.oauthRedirect');
             $gitlabUrl = $this->config->getUserValue($this->userId, 'gitlab', 'url', '');
-            $result = $this->requestOAuthAccessToken($gitlabUrl, [
+            $result = $this->gitlabAPIService->requestOAuthAccessToken($gitlabUrl, [
                 'client_id' => $clientID,
                 'client_secret' => $clientSecret,
                 'code' => $code,
@@ -127,47 +128,4 @@ class ConfigController extends Controller {
             '?gitlabToken=error&message=' . urlencode($result)
         );
     }
-
-    private function requestOAuthAccessToken($url, $params = [], $method = 'GET') {
-        $client = $this->clientService->newClient();
-        try {
-            $url = $url . '/oauth/token';
-            $options = [
-                'headers' => [
-                    'User-Agent'  => 'Nextcloud Gitlab integration',
-                ]
-            ];
-
-            if (count($params) > 0) {
-                if ($method === 'GET') {
-                    $paramsContent = http_build_query($params);
-                    $url .= '?' . $paramsContent;
-                } else {
-                    $options['body'] = $params;
-                }
-            }
-
-            if ($method === 'GET') {
-                $response = $client->get($url, $options);
-            } else if ($method === 'POST') {
-                $response = $client->post($url, $options);
-            } else if ($method === 'PUT') {
-                $response = $client->put($url, $options);
-            } else if ($method === 'DELETE') {
-                $response = $client->delete($url, $options);
-            }
-            $body = $response->getBody();
-            $respCode = $response->getStatusCode();
-
-            if ($respCode >= 400) {
-                return $this->l->t('OAuth access token refused');
-            } else {
-                return json_decode($body, true);
-            }
-        } catch (\Exception $e) {
-            $this->logger->warning('Gitlab OAuth error : '.$e, array('app' => $this->appName));
-            return $e;
-        }
-    }
-
 }
