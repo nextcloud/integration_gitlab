@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/* jshint esversion: 6 */
 
 /**
  * Nextcloud - gitlab
@@ -18,6 +18,6 @@ import AdminSettings from './components/AdminSettings'
 'use strict'
 
 new Vue({
-    el: "#gitlab_prefs",
-    render: h => h(AdminSettings),
+	el: '#gitlab_prefs',
+	render: h => h(AdminSettings),
 })
