@@ -1,6 +1,7 @@
 <template>
 	<DashboardWidget :items="items"
 		:showMoreUrl="showMoreUrl"
+		:showMoreText="title"
 		:loading="state === 'loading'"
 		:itemMenu="itemMenu"
 		@markDone="onMarkDone">
@@ -37,7 +38,12 @@ export default {
 		DashboardWidget,
 	},
 
-	props: [],
+	props: {
+		title: {
+			type: String,
+			required: true,
+		}
+	},
 
 	data() {
 		return {
