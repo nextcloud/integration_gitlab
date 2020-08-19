@@ -2,6 +2,6 @@
     background-image: url(./../img/app-dark.svg);
 }
 
-body.dark .icon-gitlab {
+body.theme--dark .icon-gitlab {
     background-image: url(./../img/app.svg);
 }
