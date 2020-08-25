@@ -67,6 +67,7 @@ export default {
 
 	mounted() {
 		const paramString = window.location.search.substr(1)
+		// eslint-disable-next-line
 		const urlParams = new URLSearchParams(paramString)
 		const glToken = urlParams.get('gitlabToken')
 		if (glToken === 'success') {
@@ -115,7 +116,7 @@ export default {
 		},
 		onOAuthClick() {
 			const redirectEndpoint = generateUrl('/apps/integration_gitlab/oauth-redirect')
-			const redirectUri = OC.getProtocol() + '://' + OC.getHostName() + redirectEndpoint
+			const redirectUri = window.location.protocol + '//' + window.location.host + redirectEndpoint
 			const oauthState = Math.random().toString(36).substring(3)
 			const requestUrl = this.state.url + '/oauth/authorize?client_id=' + encodeURIComponent(this.state.client_id)
 				+ '&redirect_uri=' + encodeURIComponent(redirectUri)

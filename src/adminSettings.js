@@ -18,6 +18,7 @@ import AdminSettings from './components/AdminSettings'
 // eslint-disable-next-line
 'use strict'
 
+// eslint-disable-next-line
 new Vue({
 	el: '#gitlab_prefs',
 	render: h => h(AdminSettings),
