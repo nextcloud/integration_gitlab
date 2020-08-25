@@ -32,9 +32,9 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 
 use OCA\Gitlab\Service\GitlabAPIService;
+use OCA\Gitlab\AppInfo\Application;
 
 class ConfigController extends Controller {
-
 
     private $userId;
     private $config;
@@ -71,7 +71,7 @@ class ConfigController extends Controller {
      */
     public function setConfig($values) {
         foreach ($values as $key => $value) {
-            $this->config->setUserValue($this->userId, 'gitlab', $key, $value);
+            $this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
         }
         $response = new DataResponse(1);
         return $response;
@@ -82,7 +82,7 @@ class ConfigController extends Controller {
      */
     public function setAdminConfig($values) {
         foreach ($values as $key => $value) {
-            $this->config->setAppValue('gitlab', $key, $value);
+            $this->config->setAppValue(Application::APP_ID, $key, $value);
         }
         $response = new DataResponse(1);
         return $response;
@@ -94,16 +94,16 @@ class ConfigController extends Controller {
      * @NoCSRFRequired
      */
     public function oauthRedirect($code, $state) {
-        $configState = $this->config->getUserValue($this->userId, 'gitlab', 'oauth_state', '');
-        $clientID = $this->config->getAppValue('gitlab', 'client_id', '');
-        $clientSecret = $this->config->getAppValue('gitlab', 'client_secret', '');
+        $configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+        $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
 
         // anyway, reset state
-        $this->config->setUserValue($this->userId, 'gitlab', 'oauth_state', '');
+        $this->config->setUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
 
         if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
-            $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('gitlab.config.oauthRedirect');
-            $gitlabUrl = $this->config->getUserValue($this->userId, 'gitlab', 'url', '');
+            $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('integration_gitlab.config.oauthRedirect');
+            $gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
             $result = $this->gitlabAPIService->requestOAuthAccessToken($gitlabUrl, [
                 'client_id' => $clientID,
                 'client_secret' => $clientSecret,
@@ -111,15 +111,15 @@ class ConfigController extends Controller {
                 'redirect_uri' => $redirect_uri,
                 'grant_type' => 'authorization_code'
             ], 'POST');
-            if (is_array($result) and isset($result['access_token'])) {
+            if (isset($result['access_token'])) {
                 $accessToken = $result['access_token'];
-                $this->config->setUserValue($this->userId, 'gitlab', 'token', $accessToken);
+                $this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
                 return new RedirectResponse(
                     $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'linked-accounts']) .
                     '?gitlabToken=success'
                 );
             }
-            $result = $this->l->t('Error getting OAuth access token');
+            $result = $this->l->t('Error getting OAuth access token. ' . $result['error']);
         } else {
             $result = $this->l->t('Error during OAuth exchanges');
         }

@@ -15,6 +15,7 @@ import Vue from 'vue'
 import './bootstrap'
 import PersonalSettings from './components/PersonalSettings'
 
+// eslint-disable-next-line
 'use strict'
 
 new Vue({

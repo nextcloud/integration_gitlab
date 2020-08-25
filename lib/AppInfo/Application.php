@@ -26,6 +26,7 @@ use OCA\Gitlab\Dashboard\GitlabWidget;
  * @package OCA\Gitlab\AppInfo
  */
 class Application extends App implements IBootstrap {
+    public const APP_ID = 'integration_gitlab';
 
     /**
      * Constructor
@@ -33,7 +34,7 @@ class Application extends App implements IBootstrap {
      * @param array $urlParams
      */
     public function __construct(array $urlParams = []) {
-        parent::__construct('gitlab', $urlParams);
+        parent::__construct(self::APP_ID, $urlParams);
 
         $container = $this->getContainer();
     }

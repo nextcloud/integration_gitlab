@@ -2,45 +2,45 @@
 	<div id="gitlab_prefs" class="section">
 		<h2>
 			<a class="icon icon-gitlab" />
-			{{ t('gitlab', 'Gitlab') }}
+			{{ t('integration_gitlab', 'Gitlab integration') }}
 		</h2>
 		<p class="settings-hint">
-			{{ t('gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to a Gitlab instance of your choice, create an application in your Gitlab settings and set the ID and secret here.') }}
+			{{ t('integration_gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to a Gitlab instance of your choice, create an application in your Gitlab settings and set the ID and secret here.') }}
 			<br>
-			{{ t('gitlab', 'Make sure you set the "redirect_uri" to') }}
+			{{ t('integration_gitlab', 'Make sure you set the "redirect_uri" to') }}
 			<br><b> {{ redirect_uri }} </b><br>
-			{{ t('gitlab', ' and give at least read_* permissions to the application.') }}
+			{{ t('integration_gitlab', ' and give at least read_* permissions to the application.') }}
 		</p>
 		<div class="grid-form">
 			<label for="gitlab-oauth-instance">
 				<a class="icon icon-link" />
-				{{ t('gitlab', 'OAuth app instance address') }}
+				{{ t('integration_gitlab', 'OAuth app instance address') }}
 			</label>
 			<input id="gitlab-oauth-instance"
 				v-model="state.oauth_instance_url"
 				type="text"
-				:placeholder="t('gitlab', 'Instance address')"
+				:placeholder="t('integration_gitlab', 'Instance address')"
 				@input="onInput">
 			<label for="gitlab-client-id">
 				<a class="icon icon-category-auth" />
-				{{ t('gitlab', 'Application ID') }}
+				{{ t('integration_gitlab', 'Application ID') }}
 			</label>
 			<input id="gitlab-client-id"
 				v-model="state.client_id"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('gitlab', 'ID or your Gitlab application')"
+				:placeholder="t('integration_gitlab', 'ID or your Gitlab application')"
 				@input="onInput"
 				@focus="readonly = false">
 			<label for="gitlab-client-secret">
 				<a class="icon icon-category-auth" />
-				{{ t('gitlab', 'Application secret') }}
+				{{ t('integration_gitlab', 'Application secret') }}
 			</label>
 			<input id="gitlab-client-secret"
 				v-model="state.client_secret"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('gitlab', 'Client secret or your Gitlab application')"
+				:placeholder="t('integration_gitlab', 'Client secret or your Gitlab application')"
 				@focus="readonly = false"
 				@input="onInput">
 		</div>
@@ -64,10 +64,10 @@ export default {
 
 	data() {
 		return {
-			state: loadState('gitlab', 'admin-config'),
+			state: loadState('integration_gitlab', 'admin-config'),
 			// to prevent some browsers to fill fields with remembered passwords
 			readonly: true,
-			redirect_uri: OC.getProtocol() + '://' + OC.getHostName() + generateUrl('/apps/gitlab/oauth-redirect'),
+			redirect_uri: OC.getProtocol() + '://' + OC.getHostName() + generateUrl('/apps/integration_gitlab/oauth-redirect'),
 		}
 	},
 
@@ -92,14 +92,14 @@ export default {
 					oauth_instance_url: this.state.oauth_instance_url,
 				},
 			}
-			const url = generateUrl('/apps/gitlab/admin-config')
+			const url = generateUrl('/apps/integration_gitlab/admin-config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('gitlab', 'Gitlab admin options saved.'))
+					showSuccess(t('integration_gitlab', 'Gitlab admin options saved.'))
 				})
 				.catch((error) => {
 					showError(
-						t('gitlab', 'Failed to save Gitlab admin options')
+						t('integration_gitlab', 'Failed to save Gitlab admin options')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)

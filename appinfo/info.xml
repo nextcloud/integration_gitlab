@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <info>
-    <id>gitlab</id>
-    <name>Gitlab</name>
+    <id>integration_gitlab</id>
+    <name>Gitlab integration</name>
     <summary> </summary><description> </description>
     <version>0.0.1</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Gitlab</namespace>
     <documentation>
-        <developer>https://nowhere.org/wikis/devdoc</developer>
+        <developer>https://github.com/nextcloud/integration_gitlab/wikis/devdoc</developer>
     </documentation>
     <category>integration</category>
-    <website>https://github.com/nextcloud/gitlab</website>
-    <bugs>https://github.com/nextcloud/gitlab/issues</bugs>
+    <website>https://github.com/nextcloud/integration_gitlab</website>
+    <bugs>https://github.com/nextcloud/integration_gitlab/issues</bugs>
     <dependencies>
         <database min-version="9.4">pgsql</database>
         <database>sqlite</database>

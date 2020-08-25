@@ -2,34 +2,34 @@
 	<div id="gitlab_prefs" class="section">
 		<h2>
 			<a class="icon icon-gitlab" />
-			{{ t('gitlab', 'Gitlab') }}
+			{{ t('integration_gitlab', 'Gitlab integration') }}
 		</h2>
 		<p class="settings-hint">
-			{{ t('gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions.') }}
+			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions.') }}
 		</p>
 		<div class="gitlab-grid-form">
 			<label for="gitlab-url">
 				<a class="icon icon-link" />
-				{{ t('gitlab', 'Gitlab instance address') }}
+				{{ t('integration_gitlab', 'Gitlab instance address') }}
 			</label>
 			<input id="gitlab-url"
 				v-model="state.url"
 				type="text"
-				:placeholder="t('gitlab', 'Gitlab instance address')"
+				:placeholder="t('integration_gitlab', 'Gitlab instance address')"
 				@input="onInput">
 			<button v-if="showOAuth" id="gitlab-oauth" @click="onOAuthClick">
 				<span class="icon icon-external" />
-				{{ t('gitlab', 'Get access with OAuth') }}
+				{{ t('integration_gitlab', 'Get access with OAuth') }}
 			</button>
 			<span v-else />
 			<label for="gitlab-token">
 				<a class="icon icon-category-auth" />
-				{{ t('gitlab', 'Gitlab access token') }}
+				{{ t('integration_gitlab', 'Gitlab access token') }}
 			</label>
 			<input id="gitlab-token"
 				v-model="state.token"
 				type="password"
-				:placeholder="t('gitlab', 'Get a token in Gitlab settings')"
+				:placeholder="t('integration_gitlab', 'Get a token in Gitlab settings')"
 				@input="onInput">
 		</div>
 	</div>
@@ -52,7 +52,7 @@ export default {
 
 	data() {
 		return {
-			state: loadState('gitlab', 'user-config'),
+			state: loadState('integration_gitlab', 'user-config'),
 		}
 	},
 
@@ -70,9 +70,9 @@ export default {
 		const urlParams = new URLSearchParams(paramString)
 		const glToken = urlParams.get('gitlabToken')
 		if (glToken === 'success') {
-			showSuccess(t('gitlab', 'Gitlab OAuth access token successfully retrieved!'))
+			showSuccess(t('integration_gitlab', 'Gitlab OAuth access token successfully retrieved!'))
 		} else if (glToken === 'error') {
-			showError(t('gitlab', 'Gitlab OAuth access token could not be obtained:') + ' ' + urlParams.get('message'))
+			showError(t('integration_gitlab', 'Gitlab OAuth access token could not be obtained:') + ' ' + urlParams.get('message'))
 		}
 	},
 
@@ -97,15 +97,15 @@ export default {
 					url: this.state.url,
 				},
 			}
-			const url = generateUrl('/apps/gitlab/config')
+			const url = generateUrl('/apps/integration_gitlab/config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('gitlab', 'Gitlab options saved.'))
+					showSuccess(t('integration_gitlab', 'Gitlab options saved.'))
 					console.debug(response)
 				})
 				.catch((error) => {
 					showError(
-						t('gitlab', 'Failed to save Gitlab options')
+						t('integration_gitlab', 'Failed to save Gitlab options')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)
@@ -114,7 +114,7 @@ export default {
 				})
 		},
 		onOAuthClick() {
-			const redirectEndpoint = generateUrl('/apps/gitlab/oauth-redirect')
+			const redirectEndpoint = generateUrl('/apps/integration_gitlab/oauth-redirect')
 			const redirectUri = OC.getProtocol() + '://' + OC.getHostName() + redirectEndpoint
 			const oauthState = Math.random().toString(36).substring(3)
 			const requestUrl = this.state.url + '/oauth/authorize?client_id=' + encodeURIComponent(this.state.client_id)
@@ -128,14 +128,14 @@ export default {
 					oauth_state: oauthState,
 				},
 			}
-			const url = generateUrl('/apps/gitlab/config')
+			const url = generateUrl('/apps/integration_gitlab/config')
 			axios.put(url, req)
 				.then((response) => {
 					window.location.replace(requestUrl)
 				})
 				.catch((error) => {
 					showError(
-						t('gitlab', 'Failed to save Gitlab OAuth state')
+						t('integration_gitlab', 'Failed to save Gitlab OAuth state')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)

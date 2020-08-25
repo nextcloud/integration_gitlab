@@ -26,6 +26,8 @@ namespace OCA\Gitlab\Dashboard;
 use OCP\Dashboard\IWidget;
 use OCP\IL10N;
 
+use OCA\Gitlab\AppInfo\Application;
+
 class GitlabWidget implements IWidget {
 
 	/** @var IL10N */
@@ -41,7 +43,7 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function getId(): string {
-		return 'gitlab';
+		return 'gitlab_todos';
 	}
 
 	/**
@@ -76,7 +78,7 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-        \OC_Util::addScript('gitlab', 'gitlab-dashboard');
-        \OC_Util::addStyle('gitlab', 'dashboard');
+        \OC_Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');
+        \OC_Util::addStyle(Application::APP_ID, 'dashboard');
     }
 }

@@ -8,17 +8,17 @@
 		<template v-slot:empty-content>
 			<div v-if="state === 'no-token'">
 				<a :href="settingsUrl">
-					{{ t('gitlab', 'Click here to configure the access to your Gitlab account.') }}
+					{{ t('integration_gitlab', 'Click here to configure the access to your Gitlab account.') }}
 				</a>
 			</div>
 			<div v-else-if="state === 'error'">
 				<a :href="settingsUrl">
-					{{ t('gitlab', 'Incorrect access token.') }}
-					{{ t('gitlab', 'Click here to configure the access to your Gitlab account.') }}
+					{{ t('integration_gitlab', 'Incorrect access token.') }}
+					{{ t('integration_gitlab', 'Click here to configure the access to your Gitlab account.') }}
 				</a>
 			</div>
 			<div v-else-if="state === 'ok'">
-				{{ t('gitlab', 'Nothing to show') }}
+				{{ t('integration_gitlab', 'Nothing to show') }}
 			</div>
 		</template>
 	</DashboardWidget>
@@ -55,7 +55,7 @@ export default {
 			themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
 			itemMenu: {
 				  markDone: {
-					  text: t('gitlab', 'Mark as done'),
+					  text: t('integration_gitlab', 'Mark as done'),
 					  icon: 'icon-checkmark',
 				  },
 			  },
@@ -99,7 +99,7 @@ export default {
 		async launchLoop() {
 			// get gitlab URL first
 			try {
-				const response = await axios.get(generateUrl('/apps/gitlab/url'))
+				const response = await axios.get(generateUrl('/apps/integration_gitlab/url'))
 				this.gitlabUrl = response.data.replace(/\/+$/, '')
 				if (this.gitlabUrl === '') {
 					this.gitlabUrl = 'https://gitlab.com'
@@ -118,7 +118,7 @@ export default {
 					since: this.lastDate,
 				}
 			}
-			axios.get(generateUrl('/apps/gitlab/todos'), req).then((response) => {
+			axios.get(generateUrl('/apps/integration_gitlab/todos'), req).then((response) => {
 				this.processNotifications(response.data)
 				this.state = 'ok'
 			}).catch((error) => {
@@ -126,7 +126,7 @@ export default {
 				if (error.response && error.response.status === 400) {
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
-					showError(t('gitlab', 'Failed to get Gitlab notifications.'))
+					showError(t('integration_gitlab', 'Failed to get Gitlab notifications.'))
 					this.state = 'error'
 				} else {
 					// there was an error in notif processing
@@ -161,7 +161,7 @@ export default {
 		},
 		getNotificationImage(n) {
 			return (n.project && n.project.avatar_url)
-				? generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project.avatar_url)
+				? generateUrl('/apps/integration_gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project.avatar_url)
 				: ''
 		},
 		getAuthorFullName(n) {
@@ -171,7 +171,7 @@ export default {
 		},
 		getAuthorAvatarUrl(n) {
 			return (n.author && n.author.avatar_url)
-				? generateUrl('/apps/gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.author.avatar_url)
+				? generateUrl('/apps/integration_gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.author.avatar_url)
 				: ''
 		},
 		getNotificationProjectName(n) {
@@ -179,25 +179,25 @@ export default {
 		},
 		getNotificationContent(n) {
 			if (n.action_name === 'mentioned') {
-				return t('gitlab', 'You were mentioned')
+				return t('integration_gitlab', 'You were mentioned')
 			} else if (n.action_name === 'approval_required') {
-				return t('gitlab', 'Your approval is required')
+				return t('integration_gitlab', 'Your approval is required')
 			} else if (n.action_name === 'assigned') {
-				return t('gitlab', 'You were assigned')
+				return t('integration_gitlab', 'You were assigned')
 			} else if (n.action_name === 'build_failed') {
-				return t('gitlab', 'A build has failed')
+				return t('integration_gitlab', 'A build has failed')
 			} else if (n.action_name === 'marked') {
-				return t('gitlab', 'Marked')
+				return t('integration_gitlab', 'Marked')
 			} else if (n.action_name === 'directly_addressed') {
-				return t('gitlab', 'You were directly addressed')
+				return t('integration_gitlab', 'You were directly addressed')
 			}
 			return ''
 		},
 		getNotificationTypeImage(n) {
 			if (n.target_type === 'MergeRequest') {
-				return generateUrl('/svg/gitlab/merge_request?color=ffffff')
+				return generateUrl('/svg/integration_gitlab/merge_request?color=ffffff')
 			} else if (n.target_type === 'Issue') {
-				return generateUrl('/svg/gitlab/issues?color=ffffff')
+				return generateUrl('/svg/integration_gitlab/issues?color=ffffff')
 			}
 			return generateUrl('/svg/core/actions/sound?color=' + this.themingColor)
 		},
@@ -246,9 +246,9 @@ export default {
 			// this.editNotification(item, 'mark-done')
 		},
 		editNotification(item, action) {
-			axios.put(generateUrl('/apps/gitlab/todos/' + item.id + '/' + action)).then((response) => {
+			axios.put(generateUrl('/apps/integration_gitlab/todos/' + item.id + '/' + action)).then((response) => {
 			}).catch((error) => {
-				showError(t('gitlab', 'Failed to edit Gitlab todo.'))
+				showError(t('integration_gitlab', 'Failed to edit Gitlab todo.'))
 				console.debug(error)
 			})
 		},

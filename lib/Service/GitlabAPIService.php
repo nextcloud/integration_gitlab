@@ -231,7 +231,7 @@ class GitlabAPIService {
         }
     }
 
-    public function requestOAuthAccessToken($url, $params = [], $method = 'GET') {
+    public function requestOAuthAccessToken($url, $params = [], $method = 'GET'): array {
         try {
             $url = $url . '/oauth/token';
             $options = [
@@ -268,7 +268,7 @@ class GitlabAPIService {
             }
         } catch (\Exception $e) {
             $this->logger->warning('Gitlab OAuth error : '.$e, array('app' => $this->appName));
-            return $e;
+            return ['error', $e->getMessage()];
         }
     }
 

@@ -31,9 +31,9 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 
 use OCA\Gitlab\Service\GitlabAPIService;
+use OCA\Gitlab\AppInfo\Application;
 
 class GitlabAPIController extends Controller {
-
 
     private $userId;
     private $config;
@@ -58,8 +58,8 @@ class GitlabAPIController extends Controller {
         $this->config = $config;
         $this->logger = $logger;
         $this->gitlabAPIService = $gitlabAPIService;
-        $this->accessToken = $this->config->getUserValue($this->userId, 'gitlab', 'token', '');
-        $this->gitlabUrl = $this->config->getUserValue($this->userId, 'gitlab', 'url', 'https://gitlab.com');
+        $this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
+        $this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
     }
 
     /**

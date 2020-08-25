@@ -10,6 +10,8 @@ use OCP\Util;
 use OCP\IURLGenerator;
 use OCP\IInitialStateService;
 
+use OCA\Gitlab\AppInfo\Application;
+
 class Personal implements ISettings {
 
     private $request;
@@ -39,17 +41,17 @@ class Personal implements ISettings {
      * @return TemplateResponse
      */
     public function getForm() {
-        $token = $this->config->getUserValue($this->userId, 'gitlab', 'token', '');
-        $url = $this->config->getUserValue($this->userId, 'gitlab', 'url', 'https://gitlab.com');
+        $token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
+        $url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
         if ($url === '') {
             $url = 'https://gitlab.com';
         }
 
         // for OAuth
-        $clientID = $this->config->getAppValue('gitlab', 'client_id', '');
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
         // don't expose the client secret to users
-        $clientSecret = ($this->config->getAppValue('gitlab', 'client_secret', '') !== '');
-        $oauthUrl = $this->config->getAppValue('gitlab', 'oauth_instance_url', '');
+        $clientSecret = ($this->config->getAppValue(Application::APP_ID, 'client_secret', '') !== '');
+        $oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', '');
 
         $userConfig = [
             'token' => $token,
@@ -59,7 +61,7 @@ class Personal implements ISettings {
             'oauth_instance_url' => $oauthUrl,
         ];
         $this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
-        return new TemplateResponse('gitlab', 'personalSettings');
+        return new TemplateResponse(Application::APP_ID, 'personalSettings');
     }
 
     public function getSection() {
