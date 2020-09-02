@@ -4,12 +4,12 @@
     <name>Gitlab integration</name>
     <summary>Integration of Gitlab software development management service</summary>
     <description><![CDATA[Gitlab integration provides a dashboard widget displaying your important notifications.]]></description>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Gitlab</namespace>
     <documentation>
-        <developer>https://github.com/eneiluj/integration_gitlab/wikis/devdoc</developer>
+        <developer>https://github.com/eneiluj/integration_gitlab/wikis</developer>
     </documentation>
     <category>integration</category>
     <category>dashboard</category>
