@@ -1,9 +1,9 @@
 <template>
 	<DashboardWidget :items="items"
-		:showMoreUrl="showMoreUrl"
-		:showMoreText="title"
+		:show-more-url="showMoreUrl"
+		:show-more-text="title"
 		:loading="state === 'loading'"
-		:itemMenu="itemMenu"
+		:item-menu="itemMenu"
 		@markDone="onMarkDone">
 		<template v-slot:empty-content>
 			<div v-if="state === 'no-token'">
@@ -42,7 +42,7 @@ export default {
 		title: {
 			type: String,
 			required: true,
-		}
+		},
 	},
 
 	data() {
