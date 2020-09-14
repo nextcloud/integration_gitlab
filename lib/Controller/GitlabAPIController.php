@@ -60,13 +60,14 @@ class GitlabAPIController extends Controller {
         $this->gitlabAPIService = $gitlabAPIService;
         $this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
         $this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
+        $this->gitlabUrl = $this->gitlabUrl && $this->gitlabUrl !== '' ? $this->gitlabUrl : 'https://gitlab.com';
     }
 
     /**
      * get notification list
      * @NoAdminRequired
      */
-    public function getGitlabUrl() {
+    public function getGitlabUrl(): DataResponse {
         return new DataResponse($this->gitlabUrl);
     }
 
@@ -75,7 +76,7 @@ class GitlabAPIController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function getGitlabAvatar($url) {
+    public function getGitlabAvatar(string $url): DataDisplayResponse {
         $response = new DataDisplayResponse($this->gitlabAPIService->getGitlabAvatar($url));
         $response->cacheFor(60*60*24);
         return $response;
@@ -85,13 +86,12 @@ class GitlabAPIController extends Controller {
      * get event list
      * @NoAdminRequired
      */
-    public function getEvents($since = null) {
+    public function getEvents(?string $since = null): DataResponse {
         if ($this->accessToken === '') {
             return new DataResponse('', 400);
         }
-        $url = $this->gitlabUrl === '' ? 'https://gitlab.com' : $this->gitlabUrl;
-        $result = $this->gitlabAPIService->getEvents($url, $this->accessToken, $since);
-        if (is_array($result)) {
+        $result = $this->gitlabAPIService->getEvents($this->gitlabUrl, $this->accessToken, $since);
+        if (!isset($result['error'])) {
             $response = new DataResponse($result);
         } else {
             $response = new DataResponse($result, 401);
@@ -103,13 +103,12 @@ class GitlabAPIController extends Controller {
      * get todo list
      * @NoAdminRequired
      */
-    public function getTodos($since = null) {
+    public function getTodos(?string $since = null): DataResponse {
         if ($this->accessToken === '') {
             return new DataResponse('', 400);
         }
-        $url = $this->gitlabUrl === '' ? 'https://gitlab.com' : $this->gitlabUrl;
-        $result = $this->gitlabAPIService->getTodos($url, $this->accessToken, $since);
-        if (is_array($result)) {
+        $result = $this->gitlabAPIService->getTodos($this->gitlabUrl, $this->accessToken, $since);
+        if (!isset($result['error'])) {
             $response = new DataResponse($result);
         } else {
             $response = new DataResponse($result, 401);

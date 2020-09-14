@@ -51,7 +51,7 @@ export default {
 			notifications: [],
 			loop: null,
 			state: 'loading',
-			settingsUrl: generateUrl('/settings/user/linked-accounts'),
+			settingsUrl: generateUrl('/settings/user/connected-accounts'),
 			themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
 			itemMenu: {
 				  markDone: {
@@ -109,7 +109,7 @@ export default {
 			}
 			// then launch the loop
 			this.fetchNotifications()
-			this.loop = setInterval(() => this.fetchNotifications(), 15000)
+			this.loop = setInterval(() => this.fetchNotifications(), 60000)
 		},
 		fetchNotifications() {
 			const req = {}

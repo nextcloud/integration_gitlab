@@ -17,259 +17,290 @@ use OCP\Http\Client\IClientService;
 
 class GitlabAPIService {
 
-    private $l10n;
-    private $logger;
+	private $l10n;
+	private $logger;
 
-    /**
-     * Service to make requests to Gitlab v3 (JSON) API
-     */
-    public function __construct (
-        string $appName,
-        ILogger $logger,
-        IL10N $l10n,
-        IClientService $clientService
-    ) {
-        $this->appName = $appName;
-        $this->l10n = $l10n;
-        $this->logger = $logger;
-        $this->clientService = $clientService;
-        $this->client = $clientService->newClient();
-    }
+	/**
+	 * Service to make requests to Gitlab v3 (JSON) API
+	 */
+	public function __construct (
+		string $appName,
+		ILogger $logger,
+		IL10N $l10n,
+		IClientService $clientService
+	) {
+		$this->appName = $appName;
+		$this->l10n = $l10n;
+		$this->logger = $logger;
+		$this->clientService = $clientService;
+		$this->client = $clientService->newClient();
+	}
 
-    private function getMyProjectsInfo($url, $accessToken) {
-        $params = [
-            'membership' => 'true',
-        ];
-        $projects = $this->request($url, $accessToken, 'projects', $params);
-        $projectsInfo = [];
-        foreach ($projects as $project) {
-            $pid = $project['id'];
-            $projectsInfo[$pid] = [
-                'path_with_namespace' => $project['path_with_namespace'],
-                'avatar_url' => $project['avatar_url'],
-            ];
-        }
-        return $projectsInfo;
-    }
+	private function getMyProjectsInfo(string $url, string $accessToken): array {
+		$params = [
+			'membership' => 'true',
+		];
+		$projects = $this->request($url, $accessToken, 'projects', $params);
+		if (isset($projects['error'])) {
+			return $projects;
+		}
+		$projectsInfo = [];
+		foreach ($projects as $project) {
+			$pid = $project['id'];
+			$projectsInfo[$pid] = [
+				'path_with_namespace' => $project['path_with_namespace'],
+				'avatar_url' => $project['avatar_url'],
+			];
+		}
+		return $projectsInfo;
+	}
 
-    public function getEvents($url, $accessToken, $since = null) {
-        // first get list of the projects i'm member of
-        $projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
-        // get current user ID
-        $user = $this->request($url, $accessToken, 'user');
+	public function getEvents(string $url, string $accessToken, ?string $since = null): array {
+		// first get list of the projects i'm member of
+		$projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
+		if (isset($projectsInfo['error'])) {
+			return $projectsInfo;
+		}
+		// get current user ID
+		$user = $this->request($url, $accessToken, 'user');
+		if (isset($user['error'])) {
+			return $user;
+		}
 
-        // then get many things
-        $params = [
-            'scope' => 'all',
-        ];
-        if (is_null($since)) {
-            $twoWeeksEarlier = new \DateTime();
-            $twoWeeksEarlier->sub(new \DateInterval('P14D'));
-            $params['after'] = $twoWeeksEarlier->format('Y-m-d');
-        } else {
-            // we get a full ISO date, the API only wants a day (non inclusive)
-            $sinceDate = new \DateTimeImmutable($since);
-            $sinceTimestamp = $sinceDate->getTimestamp();
-            $minusOneDayDate = $sinceDate->sub(new \DateInterval('P1D'));
-            $params['after'] = $minusOneDayDate->format('Y-m-d');
-        }
-        // merge requests created
-        $params['target_type'] = 'merge_request';
-        $params['action'] = 'created';
-        $result = $this->request($url, $accessToken, 'events', $params);
-        // merge requests merged
-        $params['target_type'] = 'merge_request';
-        $params['action'] = 'merged';
-        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
-        // issues created
-        $params['target_type'] = 'issue';
-        $params['action'] = 'created';
-        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
-        // issues closed
-        $params['target_type'] = 'issue';
-        $params['action'] = 'closed';
-        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
-        // issue comments
-        $params['target_type'] = 'note';
-        $params['action'] = 'commented';
-        $result = array_merge($result, $this->request($url, $accessToken, 'events', $params));
+		// then get many things
+		$params = [
+			'scope' => 'all',
+		];
+		if (is_null($since)) {
+			$twoWeeksEarlier = new \DateTime();
+			$twoWeeksEarlier->sub(new \DateInterval('P14D'));
+			$params['after'] = $twoWeeksEarlier->format('Y-m-d');
+		} else {
+			// we get a full ISO date, the API only wants a day (non inclusive)
+			$sinceDate = new \DateTimeImmutable($since);
+			$sinceTimestamp = $sinceDate->getTimestamp();
+			$minusOneDayDate = $sinceDate->sub(new \DateInterval('P1D'));
+			$params['after'] = $minusOneDayDate->format('Y-m-d');
+		}
+		// merge requests created
+		$params['target_type'] = 'merge_request';
+		$params['action'] = 'created';
+		$result = $this->request($url, $accessToken, 'events', $params);
+		if (isset($result['error'])) {
+			return $result;
+		}
+		// merge requests merged
+		$params['target_type'] = 'merge_request';
+		$params['action'] = 'merged';
+		$mrm = $this->request($url, $accessToken, 'events', $params);
+		if (isset($mrm['error'])) {
+			return $mrm;
+		}
+		$result = array_merge($result, $mrm);
+		// issues created
+		$params['target_type'] = 'issue';
+		$params['action'] = 'created';
+		$ic = $this->request($url, $accessToken, 'events', $params);
+		if (isset($ic['error'])) {
+			return $ic;
+		}
+		$result = array_merge($result, $ic);
+		// issues closed
+		$params['target_type'] = 'issue';
+		$params['action'] = 'closed';
+		$icl = $this->request($url, $accessToken, 'events', $params);
+		if (isset($icl['error'])) {
+			return $icl;
+		}
+		$result = array_merge($result, $icl);
+		// issue comments
+		$params['target_type'] = 'note';
+		$params['action'] = 'commented';
+		$ico = $this->request($url, $accessToken, 'events', $params);
+		if (isset($ico['error'])) {
+			return $ico;
+		}
+		$result = array_merge($result, $ico);
 
-        // filter merged results by date
-        if (!is_null($since)) {
-            $result = array_filter($result, function($elem) use ($sinceTimestamp) {
-                $date = new \Datetime($elem['created_at']);
-                $ts = $date->getTimestamp();
-                return $ts > $sinceTimestamp;
-            });
-        }
+		// filter merged results by date
+		if (!is_null($since)) {
+			$result = array_filter($result, function($elem) use ($sinceTimestamp) {
+				$date = new \Datetime($elem['created_at']);
+				$ts = $date->getTimestamp();
+				return $ts > $sinceTimestamp;
+			});
+		}
 
-        // avoid what has been done by me
-        $result = array_filter($result, function($elem) use ($user) {
-            return $elem['author_id'] !== $user['id'];
-        });
-        // make sure it's an array and not a hastable
-        $result = array_values($result);
+		// avoid what has been done by me
+		$result = array_filter($result, function($elem) use ($user) {
+			return $elem['author_id'] !== $user['id'];
+		});
+		// make sure it's an array and not a hastable
+		$result = array_values($result);
 
-        // sort merged results by date
-        $a = usort($result, function($a, $b) {
-            $a = new \Datetime($a['created_at']);
-            $ta = $a->getTimestamp();
-            $b = new \Datetime($b['created_at']);
-            $tb = $b->getTimestamp();
-            return ($ta > $tb) ? -1 : 1;
-        });
+		// sort merged results by date
+		$a = usort($result, function($a, $b) {
+			$a = new \Datetime($a['created_at']);
+			$ta = $a->getTimestamp();
+			$b = new \Datetime($b['created_at']);
+			$tb = $b->getTimestamp();
+			return ($ta > $tb) ? -1 : 1;
+		});
 
-        // add project path in results
-        foreach ($result as $k => $r) {
-            $pid = $r['project_id'];
-            $result[$k]['project_path'] = $projectsInfo[$pid]['path_with_namespace'];
-            $result[$k]['project_avatar_url'] = $projectsInfo[$pid]['avatar_url'];
-        }
-        return $result;
-    }
+		// add project path in results
+		foreach ($result as $k => $r) {
+			$pid = $r['project_id'];
+			$result[$k]['project_path'] = $projectsInfo[$pid]['path_with_namespace'];
+			$result[$k]['project_avatar_url'] = $projectsInfo[$pid]['avatar_url'];
+		}
+		return $result;
+	}
 
-    public function getTodos($url, $accessToken, $since = null) {
-        $params = [
-            'action' => ['assigned', 'mentioned', 'build_failed', 'marked', 'approval_required', 'unmergeable', 'directly_addressed'],
-            'state' => 'pending',
-        ];
-        $result = $this->request($url, $accessToken, 'todos', $params);
-        if (!is_array($result)) {
-            return $result;
-        }
+	public function getTodos(string $url, string $accessToken, ?string $since = null): array {
+		$params = [
+			'action' => ['assigned', 'mentioned', 'build_failed', 'marked', 'approval_required', 'unmergeable', 'directly_addressed'],
+			'state' => 'pending',
+		];
+		$result = $this->request($url, $accessToken, 'todos', $params);
+		if (isset($result['error'])) {
+			return $result;
+		}
 
-        // filter results by date
-        if (!is_null($since)) {
-            // we get a full ISO date, the API only wants a day (non inclusive)
-            $sinceDate = new \DateTime($since);
-            $sinceTimestamp = $sinceDate->getTimestamp();
+		// filter results by date
+		if (!is_null($since)) {
+			// we get a full ISO date, the API only wants a day (non inclusive)
+			$sinceDate = new \DateTime($since);
+			$sinceTimestamp = $sinceDate->getTimestamp();
 
-            $result = array_filter($result, function($elem) use ($sinceTimestamp) {
-                $date = new \Datetime($elem['updated_at']);
-                $ts = $date->getTimestamp();
-                return $ts > $sinceTimestamp;
-            });
-        }
+			$result = array_filter($result, function($elem) use ($sinceTimestamp) {
+				$date = new \Datetime($elem['updated_at']);
+				$ts = $date->getTimestamp();
+				return $ts > $sinceTimestamp;
+			});
+		}
 
-        // make sure it's an array and not a hastable
-        $result = array_values($result);
+		// make sure it's an array and not a hastable
+		$result = array_values($result);
 
-        // add project avatars to results
-        $projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
-        foreach ($result as $k => $todo) {
-            $pid = $todo['project']['id'];
-            if (array_key_exists($pid, $projectsInfo)) {
-                $result[$k]['project']['avatar_url'] = $projectsInfo[$pid]['avatar_url'];
-            } else {
-                // get the project avatar
-                $projectInfo = $this->request($url, $accessToken, 'projects/' . $pid);
-                $result[$k]['project']['avatar_url'] = $projectInfo['avatar_url'];
-                // cache result
-                $projectsInfo[$pid] = [
-                    'avatar_url' => $projectInfo['avatar_url']
-                ];
-            }
-        }
+		// add project avatars to results
+		$projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
+		foreach ($result as $k => $todo) {
+			$pid = $todo['project']['id'];
+			if (array_key_exists($pid, $projectsInfo)) {
+				$result[$k]['project']['avatar_url'] = $projectsInfo[$pid]['avatar_url'];
+			} else {
+				// get the project avatar
+				$projectInfo = $this->request($url, $accessToken, 'projects/' . $pid);
+				if (isset($projectInfo['error'])) {
+					return $projectInfo;
+				}
+				$result[$k]['project']['avatar_url'] = $projectInfo['avatar_url'];
+				// cache result
+				$projectsInfo[$pid] = [
+					'avatar_url' => $projectInfo['avatar_url']
+				];
+			}
+		}
 
-        return $result;
-    }
+		return $result;
+	}
 
-    public function getGitlabAvatar($url) {
-        return $this->client->get($url)->getBody();
-    }
+	public function getGitlabAvatar(string $url): string {
+		return $this->client->get($url)->getBody();
+	}
 
-    public function request($url, $accessToken, $endPoint, $params = [], $method = 'GET') {
-        try {
-            $url = $url . '/api/v4/' . $endPoint;
-            $options = [
-                'headers' => [
-                    'Authorization'  => 'Bearer ' . $accessToken,
-                    'User-Agent' => 'Nextcloud Gitlab integration'
-                ],
-            ];
+	public function request(string $url, string $accessToken, string $endPoint, ?array $params = [], ?string $method = 'GET'): array {
+		try {
+			$url = $url . '/api/v4/' . $endPoint;
+			$options = [
+				'headers' => [
+					'Authorization'  => 'Bearer ' . $accessToken,
+					'User-Agent' => 'Nextcloud Gitlab integration'
+				],
+			];
 
-            if (count($params) > 0) {
-                if ($method === 'GET') {
-                    // manage array parameters
-                    $paramsContent = '';
-                    foreach ($params as $key => $value) {
-                        if (is_array($value)) {
-                            foreach ($value as $oneArrayValue) {
-                                $paramsContent .= $key . '[]=' . urlencode($oneArrayValue) . '&';
-                            }
-                            unset($params[$key]);
-                        }
-                    }
-                    $paramsContent .= http_build_query($params);
+			if (count($params) > 0) {
+				if ($method === 'GET') {
+					// manage array parameters
+					$paramsContent = '';
+					foreach ($params as $key => $value) {
+						if (is_array($value)) {
+							foreach ($value as $oneArrayValue) {
+								$paramsContent .= $key . '[]=' . urlencode($oneArrayValue) . '&';
+							}
+							unset($params[$key]);
+						}
+					}
+					$paramsContent .= http_build_query($params);
 
-                    $url .= '?' . $paramsContent;
-                } else {
-                    $options['body'] = $params;
-                }
-            }
+					$url .= '?' . $paramsContent;
+				} else {
+					$options['body'] = $params;
+				}
+			}
 
-            if ($method === 'GET') {
-                $response = $this->client->get($url, $options);
-            } else if ($method === 'POST') {
-                $response = $this->client->post($url, $options);
-            } else if ($method === 'PUT') {
-                $response = $this->client->put($url, $options);
-            } else if ($method === 'DELETE') {
-                $response = $this->client->delete($url, $options);
-            }
-            $body = $response->getBody();
-            $respCode = $response->getStatusCode();
+			if ($method === 'GET') {
+				$response = $this->client->get($url, $options);
+			} else if ($method === 'POST') {
+				$response = $this->client->post($url, $options);
+			} else if ($method === 'PUT') {
+				$response = $this->client->put($url, $options);
+			} else if ($method === 'DELETE') {
+				$response = $this->client->delete($url, $options);
+			}
+			$body = $response->getBody();
+			$respCode = $response->getStatusCode();
 
-            if ($respCode >= 400) {
-                return $this->l10n->t('Bad credentials');
-            } else {
-                return json_decode($body, true);
-            }
-        } catch (\Exception $e) {
-            $this->logger->warning('Gitlab API error : '.$e, array('app' => $this->appName));
-            return $e;
-        }
-    }
+			if ($respCode >= 400) {
+				return ['error' => $this->l10n->t('Bad credentials')];
+			} else {
+				return json_decode($body, true);
+			}
+		} catch (\Exception $e) {
+			$this->logger->warning('Gitlab API error : '.$e->getMessage(), array('app' => $this->appName));
+			return ['error' => $e->getMessage()];
+		}
+	}
 
-    public function requestOAuthAccessToken($url, $params = [], $method = 'GET'): array {
-        try {
-            $url = $url . '/oauth/token';
-            $options = [
-                'headers' => [
-                    'User-Agent'  => 'Nextcloud Gitlab integration',
-                ]
-            ];
+	public function requestOAuthAccessToken(string $url, ?array $params = [], ?string $method = 'GET'): array {
+		try {
+			$url = $url . '/oauth/token';
+			$options = [
+				'headers' => [
+					'User-Agent'  => 'Nextcloud Gitlab integration',
+				]
+			];
 
-            if (count($params) > 0) {
-                if ($method === 'GET') {
-                    $paramsContent = http_build_query($params);
-                    $url .= '?' . $paramsContent;
-                } else {
-                    $options['body'] = $params;
-                }
-            }
+			if (count($params) > 0) {
+				if ($method === 'GET') {
+					$paramsContent = http_build_query($params);
+					$url .= '?' . $paramsContent;
+				} else {
+					$options['body'] = $params;
+				}
+			}
 
-            if ($method === 'GET') {
-                $response = $this->client->get($url, $options);
-            } else if ($method === 'POST') {
-                $response = $this->client->post($url, $options);
-            } else if ($method === 'PUT') {
-                $response = $this->client->put($url, $options);
-            } else if ($method === 'DELETE') {
-                $response = $this->client->delete($url, $options);
-            }
-            $body = $response->getBody();
-            $respCode = $response->getStatusCode();
+			if ($method === 'GET') {
+				$response = $this->client->get($url, $options);
+			} else if ($method === 'POST') {
+				$response = $this->client->post($url, $options);
+			} else if ($method === 'PUT') {
+				$response = $this->client->put($url, $options);
+			} else if ($method === 'DELETE') {
+				$response = $this->client->delete($url, $options);
+			}
+			$body = $response->getBody();
+			$respCode = $response->getStatusCode();
 
-            if ($respCode >= 400) {
-                return $this->l10n->t('OAuth access token refused');
-            } else {
-                return json_decode($body, true);
-            }
-        } catch (\Exception $e) {
-            $this->logger->warning('Gitlab OAuth error : '.$e, array('app' => $this->appName));
-            return ['error', $e->getMessage()];
-        }
-    }
+			if ($respCode >= 400) {
+				return ['error', $this->l10n->t('OAuth access token refused')];
+			} else {
+				return json_decode($body, true);
+			}
+		} catch (\Exception $e) {
+			$this->logger->warning('Gitlab OAuth error : '.$e->getMessage(), array('app' => $this->appName));
+			return ['error', $e->getMessage()];
+		}
+	}
 
 }

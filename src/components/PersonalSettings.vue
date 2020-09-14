@@ -7,30 +7,44 @@
 		<p class="settings-hint">
 			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions.') }}
 		</p>
-		<div class="gitlab-grid-form">
-			<label for="gitlab-url">
-				<a class="icon icon-link" />
-				{{ t('integration_gitlab', 'Gitlab instance address') }}
-			</label>
-			<input id="gitlab-url"
-				v-model="state.url"
-				type="text"
-				:placeholder="t('integration_gitlab', 'Gitlab instance address')"
-				@input="onInput">
-			<button v-if="showOAuth" id="gitlab-oauth" @click="onOAuthClick">
+		<div id="gitlab-content">
+			<div class="gitlab-grid-form">
+				<label for="gitlab-url">
+					<a class="icon icon-link" />
+					{{ t('integration_gitlab', 'Gitlab instance address') }}
+				</label>
+				<input id="gitlab-url"
+					v-model="state.url"
+					type="text"
+					:disabled="connected === true"
+					:placeholder="t('integration_gitlab', 'Gitlab instance address')"
+					@input="onInput">
+				<label for="gitlab-token">
+					<a class="icon icon-category-auth" />
+					{{ t('integration_gitlab', 'Gitlab access token') }}
+				</label>
+				<input id="gitlab-token"
+					v-model="state.token"
+					type="password"
+					:disabled="connected === true"
+					:placeholder="t('integration_gitlab', 'Gitlab access token')"
+					@input="onInput">
+			</div>
+			<button v-if="showOAuth && !connected" id="gitlab-oauth" @click="onOAuthClick">
 				<span class="icon icon-external" />
-				{{ t('integration_gitlab', 'Get access with OAuth') }}
+				{{ t('integration_gitlab', 'Connect to Gitlab') }}
 			</button>
-			<span v-else />
-			<label for="gitlab-token">
-				<a class="icon icon-category-auth" />
-				{{ t('integration_gitlab', 'Gitlab access token') }}
-			</label>
-			<input id="gitlab-token"
-				v-model="state.token"
-				type="password"
-				:placeholder="t('integration_gitlab', 'Get a token in Gitlab settings')"
-				@input="onInput">
+			<div v-if="connected" class="gitlab-grid-form">
+				<label class="gitlab-connected">
+					<a class="icon icon-checkmark-color" />
+					{{ t('integration_gitlab', 'Connected as {user}', { user: state.user_name }) }}
+				</label>
+				<button id="gitlab-rm-cred" @click="onLogoutClick">
+					<span class="icon icon-close" />
+					{{ t('integration_gitlab', 'Disconnect from Gitlab') }}
+				</button>
+				<span />
+			</div>
 		</div>
 	</div>
 </template>
@@ -60,6 +74,11 @@ export default {
 		showOAuth() {
 			return (this.state.url === this.state.oauth_instance_url) && this.state.client_id && this.state.client_secret
 		},
+		connected() {
+			return this.state.token && this.state.token !== ''
+				&& this.state.url && this.state.url !== ''
+				&& this.state.user_name && this.state.user_name !== ''
+		},
 	},
 
 	watch: {
@@ -78,6 +97,10 @@ export default {
 	},
 
 	methods: {
+		onLogoutClick() {
+			this.state.token = ''
+			this.saveOptions()
+		},
 		onInput() {
 			const that = this
 			delay(function() {
@@ -103,6 +126,12 @@ export default {
 				.then((response) => {
 					showSuccess(t('integration_gitlab', 'Gitlab options saved.'))
 					console.debug(response)
+					if (response.data.user_name !== undefined) {
+						this.state.user_name = response.data.user_name
+						if (this.state.token && response.data.user_name === '') {
+							showError(t('integration_gitlab', 'Incorrect access token'))
+						}
+					}
 				})
 				.catch((error) => {
 					showError(
@@ -156,10 +185,9 @@ export default {
 	width: 100%;
 }
 .gitlab-grid-form {
-	max-width: 900px;
+	max-width: 600px;
 	display: grid;
-	grid-template: 1fr / 1fr 1fr 1fr;
-	margin-left: 30px;
+	grid-template: 1fr / 1fr 1fr;
 	button .icon {
 		margin-bottom: -1px;
 	}
@@ -179,5 +207,8 @@ export default {
 }
 body.dark .icon-gitlab {
 	background-image: url(./../../img/app.svg);
+}
+#gitlab-content {
+	margin-left: 40px;
 }
 </style>

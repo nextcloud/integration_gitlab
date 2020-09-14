@@ -71,7 +71,7 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function getUrl(): ?string {
-		return \OC::$server->getURLGenerator()->linkToRoute('settings.PersonalSettings.index', ['section' => 'linked-accounts']);
+		return \OC::$server->getURLGenerator()->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']);
 	}
 
 	/**
