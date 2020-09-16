@@ -4,7 +4,7 @@
 			<a class="icon icon-gitlab" />
 			{{ t('integration_gitlab', 'Gitlab integration') }}
 		</h2>
-		<p class="settings-hint">
+		<p v-if="!showOAuth && !connected" class="settings-hint">
 			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions.') }}
 		</p>
 		<div id="gitlab-content">
@@ -19,15 +19,17 @@
 					:disabled="connected === true"
 					:placeholder="t('integration_gitlab', 'Gitlab instance address')"
 					@input="onInput">
-				<label for="gitlab-token">
+				<label v-show="!showOAuth"
+					for="gitlab-token">
 					<a class="icon icon-category-auth" />
-					{{ t('integration_gitlab', 'Gitlab access token') }}
+					{{ t('integration_gitlab', 'Personal access token') }}
 				</label>
-				<input id="gitlab-token"
+				<input v-show="!showOAuth"
+					id="gitlab-token"
 					v-model="state.token"
 					type="password"
 					:disabled="connected === true"
-					:placeholder="t('integration_gitlab', 'Gitlab access token')"
+					:placeholder="t('integration_gitlab', 'Gitlab personal access token')"
 					@input="onInput">
 			</div>
 			<button v-if="showOAuth && !connected" id="gitlab-oauth" @click="onOAuthClick">
