@@ -6,10 +6,14 @@
 		</h2>
 		<p class="settings-hint">
 			{{ t('integration_gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to a Gitlab instance of your choice, create an application in your Gitlab settings and set the ID and secret here.') }}
+			<br><br>
+			<span class="icon icon-details" />
+			{{ t('integration_gitlab', 'Make sure you set the "Redirect URI" to') }}
+			<b> {{ redirect_uri }} </b>
+			<br><br>
+			{{ t('integration_gitlab', ' and give "read_user", "read_api" and "read_repository" permissions to the application.') }}
 			<br>
-			{{ t('integration_gitlab', 'Make sure you set the "redirect_uri" to') }}
-			<br><b> {{ redirect_uri }} </b><br>
-			{{ t('integration_gitlab', ' and give at least read_* permissions to the application.') }}
+			{{ t('integration_gitlab', 'Put the "Application ID" and "Application secret" below. Your Nextcloud users will then see a "Connect to Gitlab" button in their personal settings if they select the Gitlab instance defined here.') }}
 		</p>
 		<div class="grid-form">
 			<label for="gitlab-oauth-instance">
