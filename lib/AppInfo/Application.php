@@ -26,24 +26,24 @@ use OCA\Gitlab\Dashboard\GitlabWidget;
  * @package OCA\Gitlab\AppInfo
  */
 class Application extends App implements IBootstrap {
-    public const APP_ID = 'integration_gitlab';
+	public const APP_ID = 'integration_gitlab';
 
-    /**
-     * Constructor
-     *
-     * @param array $urlParams
-     */
-    public function __construct(array $urlParams = []) {
-        parent::__construct(self::APP_ID, $urlParams);
+	/**
+	 * Constructor
+	 *
+	 * @param array $urlParams
+	 */
+	public function __construct(array $urlParams = []) {
+		parent::__construct(self::APP_ID, $urlParams);
 
-        $container = $this->getContainer();
-    }
+		$container = $this->getContainer();
+	}
 
-    public function register(IRegistrationContext $context): void {
-        $context->registerDashboardWidget(GitlabWidget::class);
-    }
+	public function register(IRegistrationContext $context): void {
+		$context->registerDashboardWidget(GitlabWidget::class);
+	}
 
-    public function boot(IBootContext $context): void {
-    }
+	public function boot(IBootContext $context): void {
+	}
 }
 
