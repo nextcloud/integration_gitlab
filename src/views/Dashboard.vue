@@ -6,20 +6,18 @@
 		:item-menu="itemMenu"
 		@markDone="onMarkDone">
 		<template v-slot:empty-content>
-			<div v-if="state === 'no-token'">
-				<a :href="settingsUrl">
-					{{ t('integration_gitlab', 'Click here to configure the access to your GitLab account.') }}
-				</a>
-			</div>
-			<div v-else-if="state === 'error'">
-				<a :href="settingsUrl">
-					{{ t('integration_gitlab', 'Incorrect access token.') }}
-					{{ t('integration_gitlab', 'Click here to configure the access to your GitLab account.') }}
-				</a>
-			</div>
-			<div v-else-if="state === 'ok'">
-				{{ t('integration_gitlab', 'Nothing to show') }}
-			</div>
+			<EmptyContent
+				v-if="emptyContentMessage"
+				:icon="emptyContentIcon">
+				<template #desc>
+					{{ emptyContentMessage }}
+					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
+						<a class="button" :href="settingsUrl">
+							{{ t('integration_gitlab', 'Connect to GitLab') }}
+						</a>
+					</div>
+				</template>
+			</EmptyContent>
 		</template>
 	</DashboardWidget>
 </template>
@@ -30,12 +28,13 @@ import { generateUrl } from '@nextcloud/router'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { showError } from '@nextcloud/dialogs'
 import moment from '@nextcloud/moment'
+import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 
 export default {
 	name: 'Dashboard',
 
 	components: {
-		DashboardWidget,
+		DashboardWidget, EmptyContent,
 	},
 
 	props: {
@@ -85,6 +84,26 @@ export default {
 		},
 		lastMoment() {
 			return moment(this.lastDate)
+		},
+		emptyContentMessage() {
+			if (this.state === 'no-token') {
+				return t('integration_gitlab', 'No GitLab account connected')
+			} else if (this.state === 'error') {
+				return t('integration_gitlab', 'Error connecting to GitLab')
+			} else if (this.state === 'ok') {
+				return t('integration_gitlab', 'No GitLab notifications!')
+			}
+			return ''
+		},
+		emptyContentIcon() {
+			if (this.state === 'no-token') {
+				return 'icon-gitlab'
+			} else if (this.state === 'error') {
+				return 'icon-close'
+			} else if (this.state === 'ok') {
+				return 'icon-checkmark'
+			}
+			return 'icon-checkmark'
 		},
 	},
 
@@ -257,4 +276,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+::v-deep .connect-button {
+	margin-top: 10px;
+}
 </style>
