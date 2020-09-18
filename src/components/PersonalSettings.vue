@@ -207,7 +207,7 @@ export default {
 	height: 23px;
 	margin-bottom: -4px;
 }
-body.dark .icon-gitlab {
+body.theme--dark .icon-gitlab {
 	background-image: url(./../../img/app.svg);
 }
 #gitlab-content {
