@@ -92,9 +92,9 @@ export default {
 		const urlParams = new URLSearchParams(paramString)
 		const glToken = urlParams.get('gitlabToken')
 		if (glToken === 'success') {
-			showSuccess(t('integration_gitlab', 'GitLab OAuth access token successfully retrieved!'))
+			showSuccess(t('integration_gitlab', 'Successfully connected to GitLab!'))
 		} else if (glToken === 'error') {
-			showError(t('integration_gitlab', 'GitLab OAuth access token could not be obtained:') + ' ' + urlParams.get('message'))
+			showError(t('integration_gitlab', 'Error connecting to GitLab:') + ' ' + urlParams.get('message'))
 		}
 	},
 
