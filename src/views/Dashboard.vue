@@ -8,13 +8,13 @@
 		<template v-slot:empty-content>
 			<div v-if="state === 'no-token'">
 				<a :href="settingsUrl">
-					{{ t('integration_gitlab', 'Click here to configure the access to your Gitlab account.') }}
+					{{ t('integration_gitlab', 'Click here to configure the access to your GitLab account.') }}
 				</a>
 			</div>
 			<div v-else-if="state === 'error'">
 				<a :href="settingsUrl">
 					{{ t('integration_gitlab', 'Incorrect access token.') }}
-					{{ t('integration_gitlab', 'Click here to configure the access to your Gitlab account.') }}
+					{{ t('integration_gitlab', 'Click here to configure the access to your GitLab account.') }}
 				</a>
 			</div>
 			<div v-else-if="state === 'ok'">
@@ -126,7 +126,7 @@ export default {
 				if (error.response && error.response.status === 400) {
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
-					showError(t('integration_gitlab', 'Failed to get Gitlab notifications.'))
+					showError(t('integration_gitlab', 'Failed to get GitLab notifications.'))
 					this.state = 'error'
 				} else {
 					// there was an error in notif processing
@@ -248,7 +248,7 @@ export default {
 		editNotification(item, action) {
 			axios.put(generateUrl('/apps/integration_gitlab/todos/' + item.id + '/' + action)).then((response) => {
 			}).catch((error) => {
-				showError(t('integration_gitlab', 'Failed to edit Gitlab todo.'))
+				showError(t('integration_gitlab', 'Failed to edit GitLab todo.'))
 				console.debug(error)
 			})
 		},

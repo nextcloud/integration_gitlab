@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <info>
     <id>integration_gitlab</id>
-    <name>Gitlab integration</name>
-    <summary>Integration of Gitlab software development management service</summary>
-    <description><![CDATA[Gitlab integration provides a dashboard widget displaying your important notifications.]]></description>
+    <name>GitLab integration</name>
+    <summary>Integration of GitLab software development management service</summary>
+    <description><![CDATA[GitLab integration provides a dashboard widget displaying your important notifications.]]></description>
     <version>0.0.2</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Nextcloud - Gitlab
+ * Nextcloud - GitLab
  *
  *
  * @author Julien Veyssier <eneiluj@posteo.net>

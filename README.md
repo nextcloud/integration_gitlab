@@ -1,6 +1,6 @@
-# Gitlab Nextcloud application
+# GitLab Nextcloud application
 
-This app adds a dashboard item to see your main Gitlab notifications.
+This app adds a dashboard item to see your main GitLab notifications.
 
 ## Releases
 

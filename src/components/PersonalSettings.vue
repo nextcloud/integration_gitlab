@@ -2,7 +2,7 @@
 	<div id="gitlab_prefs" class="section">
 		<h2>
 			<a class="icon icon-gitlab" />
-			{{ t('integration_gitlab', 'Gitlab integration') }}
+			{{ t('integration_gitlab', 'GitLab integration') }}
 		</h2>
 		<p v-if="!showOAuth && !connected" class="settings-hint">
 			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions.') }}
@@ -11,13 +11,13 @@
 			<div class="gitlab-grid-form">
 				<label for="gitlab-url">
 					<a class="icon icon-link" />
-					{{ t('integration_gitlab', 'Gitlab instance address') }}
+					{{ t('integration_gitlab', 'GitLab instance address') }}
 				</label>
 				<input id="gitlab-url"
 					v-model="state.url"
 					type="text"
 					:disabled="connected === true"
-					:placeholder="t('integration_gitlab', 'Gitlab instance address')"
+					:placeholder="t('integration_gitlab', 'GitLab instance address')"
 					@input="onInput">
 				<label v-show="!showOAuth"
 					for="gitlab-token">
@@ -29,12 +29,12 @@
 					v-model="state.token"
 					type="password"
 					:disabled="connected === true"
-					:placeholder="t('integration_gitlab', 'Gitlab personal access token')"
+					:placeholder="t('integration_gitlab', 'GitLab personal access token')"
 					@input="onInput">
 			</div>
 			<button v-if="showOAuth && !connected" id="gitlab-oauth" @click="onOAuthClick">
 				<span class="icon icon-external" />
-				{{ t('integration_gitlab', 'Connect to Gitlab') }}
+				{{ t('integration_gitlab', 'Connect to GitLab') }}
 			</button>
 			<div v-if="connected" class="gitlab-grid-form">
 				<label class="gitlab-connected">
@@ -43,7 +43,7 @@
 				</label>
 				<button id="gitlab-rm-cred" @click="onLogoutClick">
 					<span class="icon icon-close" />
-					{{ t('integration_gitlab', 'Disconnect from Gitlab') }}
+					{{ t('integration_gitlab', 'Disconnect from GitLab') }}
 				</button>
 				<span />
 			</div>
@@ -92,9 +92,9 @@ export default {
 		const urlParams = new URLSearchParams(paramString)
 		const glToken = urlParams.get('gitlabToken')
 		if (glToken === 'success') {
-			showSuccess(t('integration_gitlab', 'Gitlab OAuth access token successfully retrieved!'))
+			showSuccess(t('integration_gitlab', 'GitLab OAuth access token successfully retrieved!'))
 		} else if (glToken === 'error') {
-			showError(t('integration_gitlab', 'Gitlab OAuth access token could not be obtained:') + ' ' + urlParams.get('message'))
+			showError(t('integration_gitlab', 'GitLab OAuth access token could not be obtained:') + ' ' + urlParams.get('message'))
 		}
 	},
 
@@ -126,7 +126,7 @@ export default {
 			const url = generateUrl('/apps/integration_gitlab/config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('integration_gitlab', 'Gitlab options saved.'))
+					showSuccess(t('integration_gitlab', 'GitLab options saved.'))
 					console.debug(response)
 					if (response.data.user_name !== undefined) {
 						this.state.user_name = response.data.user_name
@@ -137,7 +137,7 @@ export default {
 				})
 				.catch((error) => {
 					showError(
-						t('integration_gitlab', 'Failed to save Gitlab options')
+						t('integration_gitlab', 'Failed to save GitLab options')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)
@@ -167,7 +167,7 @@ export default {
 				})
 				.catch((error) => {
 					showError(
-						t('integration_gitlab', 'Failed to save Gitlab OAuth state')
+						t('integration_gitlab', 'Failed to save GitLab OAuth state')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)

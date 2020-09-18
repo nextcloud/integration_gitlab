@@ -21,7 +21,7 @@ class GitlabAPIService {
 	private $logger;
 
 	/**
-	 * Service to make requests to Gitlab v3 (JSON) API
+	 * Service to make requests to GitLab v3 (JSON) API
 	 */
 	public function __construct (
 		string $appName,
@@ -215,7 +215,7 @@ class GitlabAPIService {
 			$options = [
 				'headers' => [
 					'Authorization'  => 'Bearer ' . $accessToken,
-					'User-Agent' => 'Nextcloud Gitlab integration'
+					'User-Agent' => 'Nextcloud GitLab integration'
 				],
 			];
 
@@ -257,7 +257,7 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (\Exception $e) {
-			$this->logger->warning('Gitlab API error : '.$e->getMessage(), array('app' => $this->appName));
+			$this->logger->warning('GitLab API error : '.$e->getMessage(), array('app' => $this->appName));
 			return ['error' => $e->getMessage()];
 		}
 	}
@@ -267,7 +267,7 @@ class GitlabAPIService {
 			$url = $url . '/oauth/token';
 			$options = [
 				'headers' => [
-					'User-Agent'  => 'Nextcloud Gitlab integration',
+					'User-Agent'  => 'Nextcloud GitLab integration',
 				]
 			];
 
@@ -298,7 +298,7 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (\Exception $e) {
-			$this->logger->warning('Gitlab OAuth error : '.$e->getMessage(), array('app' => $this->appName));
+			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), array('app' => $this->appName));
 			return ['error', $e->getMessage()];
 		}
 	}
