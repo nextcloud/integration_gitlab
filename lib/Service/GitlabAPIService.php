@@ -293,13 +293,13 @@ class GitlabAPIService {
 			$respCode = $response->getStatusCode();
 
 			if ($respCode >= 400) {
-				return ['error', $this->l10n->t('OAuth access token refused')];
+				return ['error' => $this->l10n->t('OAuth access token refused')];
 			} else {
 				return json_decode($body, true);
 			}
 		} catch (\Exception $e) {
 			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), array('app' => $this->appName));
-			return ['error', $e->getMessage()];
+			return ['error' => $e->getMessage()];
 		}
 	}
 
