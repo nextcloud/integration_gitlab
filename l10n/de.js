@@ -1,0 +1,27 @@
+OC.L10N.register(
+    "integration_gitlab",
+    {
+    "Error during OAuth exchanges" : "Fehler beim OAuth-Austausch",
+    "Bad credentials" : "Falsche Anmeldeinformationen",
+    "OAuth access token refused" : "OAuth-Zugriffstoken abgelehnt",
+    "Connected accounts" : "Verbundene Konten",
+    "GitLab integration" : "GitLab-Einbindung",
+    "Application ID" : "Anwendungs-ID",
+    "Failed to save GitLab admin options" : "Fehler beim Speichern der GitLab-Administrator-Einstellungen",
+    "Personal access token" : "Persönlicher Zugriffsschlüssel",
+    "Connect to GitLab" : "Verbunden mit GitLab",
+    "Connected as {user}" : "Verbunden als {user}",
+    "Disconnect from GitLab" : "Von GitLab getrennt",
+    "Successfully connected to GitLab!" : "Erfolgreich verbunden mit GitLab!",
+    "Error connecting to GitLab:" : "Fehler bei der Verbindung zu GitLab:",
+    "GitLab options saved." : "GitLab Einstellungen gespeichert.",
+    "Failed to save GitLab options" : "Fehler beim Speichern der GutLab-Einstellungen",
+    "Mark as done" : "Als erledigt markieren",
+    "No GitLab account connected" : "Kein GitLab-Konto verbunden",
+    "Error connecting to GitLab" : "Fehler bei der Verbindung zu GitLab",
+    "No GitLab notifications!" : "Keine GitLab Benachrichtigungen!",
+    "You were mentioned" : "Du wurdest erwähnt",
+    "You were assigned" : "Du wurdest zugeordnet",
+    "Marked" : "Markiert"
+},
+"nplurals=2; plural=(n != 1);");
