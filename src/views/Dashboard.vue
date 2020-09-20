@@ -87,9 +87,9 @@ export default {
 		},
 		emptyContentMessage() {
 			if (this.state === 'no-token') {
-				return t('integration_gitlab', 'No GitLab account connected')
+				return t('integration_gitlab', 'No GitLab account connected.')
 			} else if (this.state === 'error') {
-				return t('integration_gitlab', 'Error connecting to GitLab')
+				return t('integration_gitlab', 'Error connecting to GitLab.')
 			} else if (this.state === 'ok') {
 				return t('integration_gitlab', 'No GitLab notifications!')
 			}
