@@ -152,13 +152,13 @@ export default {
 					if (response.data.user_name !== undefined) {
 						this.state.user_name = response.data.user_name
 						if (this.state.token && response.data.user_name === '') {
-							showError(t('integration_gitlab', 'Incorrect access token'))
+							showError(t('integration_gitlab', 'Incorrect access token.'))
 						}
 					}
 				})
 				.catch((error) => {
 					showError(
-						t('integration_gitlab', 'Failed to save GitLab options')
+						t('integration_gitlab', 'Failed to save GitLab options.')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)
@@ -188,7 +188,7 @@ export default {
 				})
 				.catch((error) => {
 					showError(
-						t('integration_gitlab', 'Failed to save GitLab OAuth state')
+						t('integration_gitlab', 'Failed to save GitLab OAuth state.')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)
