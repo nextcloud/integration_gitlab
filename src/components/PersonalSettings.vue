@@ -47,6 +47,22 @@
 				</button>
 				<span />
 			</div>
+			<br>
+			<div v-if="connected" id="gitlab-search-block">
+				<input
+					id="search-gitlab"
+					type="checkbox"
+					class="checkbox"
+					:checked="state.search_enabled"
+					@input="onSearchChange">
+				<!--label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories, issues and merge requests.') }}</label-->
+				<label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories.') }}</label>
+				<br><br>
+				<p v-if="state.search_enabled" class="settings-hint">
+					<span class="icon icon-details" />
+					{{ t('integration_gitlab', 'Warning, everything you type in the search bar will be sent to GitLab.') }}
+				</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -103,6 +119,10 @@ export default {
 			this.state.token = ''
 			this.saveOptions()
 		},
+		onSearchChange(e) {
+			this.state.search_enabled = e.target.checked
+			this.saveOptions()
+		},
 		onInput() {
 			const that = this
 			delay(function() {
@@ -121,6 +141,7 @@ export default {
 				values: {
 					token: this.state.token,
 					url: this.state.url,
+					search_enabled: this.state.search_enabled ? '1' : '0',
 				},
 			}
 			const url = generateUrl('/apps/integration_gitlab/config')
@@ -212,5 +233,8 @@ body.theme--dark .icon-gitlab {
 }
 #gitlab-content {
 	margin-left: 40px;
+}
+#gitlab-search-block .icon {
+	width: 22px;
 }
 </style>

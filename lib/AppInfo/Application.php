@@ -19,6 +19,8 @@ use OCP\AppFramework\Bootstrap\IBootstrap;
 
 use OCA\Gitlab\Controller\PageController;
 use OCA\Gitlab\Dashboard\GitlabWidget;
+use OCA\Gitlab\Search\GitlabSearchIssuesProvider;
+use OCA\Gitlab\Search\GitlabSearchReposProvider;
 
 /**
  * Class Application
@@ -41,6 +43,8 @@ class Application extends App implements IBootstrap {
 
 	public function register(IRegistrationContext $context): void {
 		$context->registerDashboardWidget(GitlabWidget::class);
+		//$context->registerSearchProvider(GitlabSearchIssuesProvider::class);
+		$context->registerSearchProvider(GitlabSearchReposProvider::class);
 	}
 
 	public function boot(IBootContext $context): void {

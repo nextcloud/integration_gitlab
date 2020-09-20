@@ -55,6 +55,64 @@ class GitlabAPIService {
 		return $projectsInfo;
 	}
 
+	public function searchRepositories(string $url, string $accessToken, string $term, int $offset = 0, int $limit = 5): array {
+		$params = [
+			'scope' => 'projects',
+			'search' => $term,
+		];
+		$projects = $this->request($url, $accessToken, 'search', $params);
+		if (isset($projects['error'])) {
+			return $projects;
+		}
+		$a = usort($projects, function($a, $b) {
+			$a = new \Datetime($a['last_activity_at']);
+			$ta = $a->getTimestamp();
+			$b = new \Datetime($b['last_activity_at']);
+			$tb = $b->getTimestamp();
+			return ($ta > $tb) ? -1 : 1;
+		});
+		$projects = array_slice($projects, $offset, $limit);
+		return $projects;
+	}
+
+	public function searchIssues(string $url, string $accessToken, string $term, int $offset = 0, int $limit = 5): array {
+		$params = [
+			'scope' => 'issues',
+			'search' => $term,
+		];
+		$issues = $this->request($url, $accessToken, 'search', $params);
+		if (isset($issues['error'])) {
+			return $issues;
+		}
+		foreach ($issues as $k => $issue) {
+			$issues[$k]['type'] = 'issue';
+		}
+
+		$params = [
+			'scope' => 'merge_requests',
+			'search' => $term,
+		];
+		$mergeRequests = $this->request($url, $accessToken, 'search', $params);
+		if (isset($mergeRequests['error'])) {
+			return $mergeRequests;
+		}
+		foreach ($mergeRequests as $k => $mergeRequest) {
+			$mergeRequests[$k]['type'] = 'merge_request';
+		}
+
+		$results = array_merge($issues, $mergeRequests);
+
+		$a = usort($results, function($a, $b) {
+			$a = new \Datetime($a['updated_at']);
+			$ta = $a->getTimestamp();
+			$b = new \Datetime($b['updated_at']);
+			$tb = $b->getTimestamp();
+			return ($ta > $tb) ? -1 : 1;
+		});
+		$results = array_slice($results, $offset, $limit);
+		return $results;
+	}
+
 	public function getEvents(string $url, string $accessToken, ?string $since = null): array {
 		// first get list of the projects i'm member of
 		$projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
