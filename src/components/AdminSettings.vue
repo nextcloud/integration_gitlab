@@ -103,7 +103,7 @@ export default {
 				})
 				.catch((error) => {
 					showError(
-						t('integration_gitlab', 'Failed to save GitLab admin options')
+						t('integration_gitlab', 'Failed to save GitLab admin options.')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)
