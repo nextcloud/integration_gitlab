@@ -11,10 +11,8 @@ OC.L10N.register(
     "Connected as {user}" : "Connesso come {user}",
     "Disconnect from GitLab" : "Disconnetti da GitLab",
     "GitLab options saved." : "Opzioni di GitLab salvate.",
-    "Incorrect access token" : "Token di accesso non corretto",
+    "Incorrect access token." : "Token di accesso non corretto.",
     "Mark as done" : "Marca come completato",
-    "No GitLab account connected" : "Nessun account GitLab connesso",
-    "Error connecting to GitLab" : "Errore durante la connessione a GitLab",
     "No GitLab notifications!" : "Nessuna notifica GitLab!",
     "You were mentioned" : "Sei stato menzionato"
 },

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Error during OAuth exchanges" : "Błąd podczas wymiany OAuth",
     "Bad credentials" : "Złe poświadczenia",
+    "OAuth access token refused" : "Odmowa tokena dostępu OAuth",
     "Connected accounts" : "Połączone konta",
     "Connected as {user}" : "Połączono jako {user}",
     "You were mentioned" : "Wspomniano o Tobie"
