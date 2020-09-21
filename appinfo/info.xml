@@ -3,8 +3,9 @@
     <id>integration_gitlab</id>
     <name>GitLab integration</name>
     <summary>Integration of GitLab software development management service</summary>
-    <description><![CDATA[GitLab integration provides a dashboard widget displaying your important notifications.]]></description>
-    <version>0.0.2</version>
+    <description><![CDATA[GitLab integration provides a dashboard widget displaying your most important notifications
+    and a unified search provider for repositories.]]></description>
+    <version>0.0.3</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Gitlab</namespace>

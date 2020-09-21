@@ -156,7 +156,7 @@ class GitlabSearchReposProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getSubline(array $entry): string {
-		return $entry['description'];
+		return $entry['description'] ?? '';
 	}
 
 	/**

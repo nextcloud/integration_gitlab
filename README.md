@@ -1,7 +1,5 @@
-# GitLab Nextcloud application
+# GitLab integration into Nextcloud
 
-This app adds a dashboard item to see your main GitLab notifications.
+🦊 Put a fox in your engine!
 
-## Releases
-
-...
+This app adds a dashboard item to see your most important GitLab notifications and a unified search provider for repositories.
