@@ -36,6 +36,11 @@ class GitlabAPIService {
 		$this->client = $clientService->newClient();
 	}
 
+	/**
+	 * @param string $url
+	 * @param string $accessToken
+	 * @return array
+	 */
 	private function getMyProjectsInfo(string $url, string $accessToken): array {
 		$params = [
 			'membership' => 'true',
@@ -55,6 +60,14 @@ class GitlabAPIService {
 		return $projectsInfo;
 	}
 
+	/**
+	 * @param string $url
+	 * @param string $accessToken
+	 * @param string $term
+	 * @param int $offset
+	 * @param int $limit
+	 * @return array
+	 */
 	public function searchRepositories(string $url, string $accessToken, string $term, int $offset = 0, int $limit = 5): array {
 		$params = [
 			'scope' => 'projects',
@@ -71,10 +84,23 @@ class GitlabAPIService {
 			$tb = $b->getTimestamp();
 			return ($ta > $tb) ? -1 : 1;
 		});
+		//$a = usort($projects, function($a, $b) {
+		//	$sa = intval($a['star_count']);
+		//	$sb = intval($b['star_count']);
+		//	return ($sa > $sb) ? -1 : 1;
+		//});
 		$projects = array_slice($projects, $offset, $limit);
 		return $projects;
 	}
 
+	/**
+	 * @param string $url
+	 * @param string $accessToken
+	 * @param string $term
+	 * @param int $offset
+	 * @param int $limit
+	 * @return array
+	 */
 	public function searchIssues(string $url, string $accessToken, string $term, int $offset = 0, int $limit = 5): array {
 		$params = [
 			'scope' => 'issues',
@@ -113,6 +139,12 @@ class GitlabAPIService {
 		return $results;
 	}
 
+	/**
+	 * @param string $url
+	 * @param string $accessToken
+	 * @param ?string $since
+	 * @return array
+	 */
 	public function getEvents(string $url, string $accessToken, ?string $since = null): array {
 		// first get list of the projects i'm member of
 		$projectsInfo = $this->getMyProjectsInfo($url, $accessToken);
@@ -214,6 +246,12 @@ class GitlabAPIService {
 		return $result;
 	}
 
+	/**
+	 * @param string $url
+	 * @param string $accessToken
+	 * @param ?string $since
+	 * @return array
+	 */
 	public function getTodos(string $url, string $accessToken, ?string $since = null): array {
 		$params = [
 			'action' => ['assigned', 'mentioned', 'build_failed', 'marked', 'approval_required', 'unmergeable', 'directly_addressed'],
@@ -263,11 +301,23 @@ class GitlabAPIService {
 		return $result;
 	}
 
-	public function getGitlabAvatar(string $url): string {
+	/**
+	 * @param string $url
+	 * @return ?string
+	 */
+	public function getGitlabAvatar(string $url): ?string {
 		return $this->client->get($url)->getBody();
 	}
 
-	public function request(string $url, string $accessToken, string $endPoint, ?array $params = [], ?string $method = 'GET'): array {
+	/**
+	 * @param string $url
+	 * @param string $accessToken
+	 * @param string $endPoint
+	 * @param array $params
+	 * @param string $method
+	 * @return array
+	 */
+	public function request(string $url, string $accessToken, string $endPoint, array $params = [], string $method = 'GET'): array {
 		try {
 			$url = $url . '/api/v4/' . $endPoint;
 			$options = [
@@ -320,7 +370,13 @@ class GitlabAPIService {
 		}
 	}
 
-	public function requestOAuthAccessToken(string $url, ?array $params = [], ?string $method = 'GET'): array {
+	/**
+	 * @param string $url
+	 * @param array $params
+	 * @param string $method
+	 * @return array
+	 */
+	public function requestOAuthAccessToken(string $url, array $params = [], string $method = 'GET'): array {
 		try {
 			$url = $url . '/oauth/token';
 			$options = [
@@ -360,5 +416,4 @@ class GitlabAPIService {
 			return ['error' => $e->getMessage()];
 		}
 	}
-
 }

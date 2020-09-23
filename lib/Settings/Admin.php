@@ -40,7 +40,7 @@ class Admin implements ISettings {
 	/**
 	 * @return TemplateResponse
 	 */
-	public function getForm() {
+	public function getForm(): TemplateResponse {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
 		$oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', '');
@@ -54,11 +54,11 @@ class Admin implements ISettings {
 		return new TemplateResponse(Application::APP_ID, 'adminSettings');
 	}
 
-	public function getSection() {
+	public function getSection(): string {
 		return 'connected-accounts';
 	}
 
-	public function getPriority() {
+	public function getPriority(): int {
 		return 10;
 	}
 }

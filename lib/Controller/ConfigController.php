@@ -68,8 +68,11 @@ class ConfigController extends Controller {
 	/**
 	 * set config values
 	 * @NoAdminRequired
+	 *
+	 * @param array $values
+	 * @return DataResponse
 	 */
-	public function setConfig($values) {
+	public function setConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 		}
@@ -92,8 +95,11 @@ class ConfigController extends Controller {
 
 	/**
 	 * set admin config values
+	 *
+	 * @param array $values
+	 * @return DataResponse
 	 */
-	public function setAdminConfig($values) {
+	public function setAdminConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
 			$this->config->setAppValue(Application::APP_ID, $key, $value);
 		}
@@ -105,8 +111,12 @@ class ConfigController extends Controller {
 	 * receive oauth code and get oauth access token
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 *
+	 * @param string $code
+	 * @param string $state
+	 * @return RedirectResponse
 	 */
-	public function oauthRedirect($code, $state) {
+	public function oauthRedirect(string $code = '', string $state = ''): RedirectResponse {
 		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
@@ -144,6 +154,11 @@ class ConfigController extends Controller {
 		);
 	}
 
+	/**
+	 * @param string $gitlabUrl
+	 * @param string $accessToken
+	 * @return string
+	 */
 	private function storeUserInfo(string $gitlabUrl, string $accessToken): string {
 		$info = $this->gitlabAPIService->request($gitlabUrl, $accessToken, 'user');
 		if (isset($info['username']) && isset($info['id'])) {

@@ -66,6 +66,8 @@ class GitlabAPIController extends Controller {
 	/**
 	 * get notification list
 	 * @NoAdminRequired
+	 *
+	 * @return DataResponse
 	 */
 	public function getGitlabUrl(): DataResponse {
 		return new DataResponse($this->gitlabUrl);
@@ -75,6 +77,9 @@ class GitlabAPIController extends Controller {
 	 * get gitlab user avatar
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 *
+	 * @param string $url
+	 * @return DataDisplayResponse
 	 */
 	public function getGitlabAvatar(string $url): DataDisplayResponse {
 		$response = new DataDisplayResponse($this->gitlabAPIService->getGitlabAvatar($url));
@@ -85,6 +90,9 @@ class GitlabAPIController extends Controller {
 	/**
 	 * get event list
 	 * @NoAdminRequired
+	 *
+	 * @param ?string $since
+	 * @return DataResponse
 	 */
 	public function getEvents(?string $since = null): DataResponse {
 		if ($this->accessToken === '') {
@@ -102,6 +110,9 @@ class GitlabAPIController extends Controller {
 	/**
 	 * get todo list
 	 * @NoAdminRequired
+	 *
+	 * @param ?string $since
+	 * @return DataResponse
 	 */
 	public function getTodos(?string $since = null): DataResponse {
 		if ($this->accessToken === '') {
@@ -115,5 +126,4 @@ class GitlabAPIController extends Controller {
 		}
 		return $response;
 	}
-
 }
