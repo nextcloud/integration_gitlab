@@ -11,7 +11,7 @@
 			{{ t('integration_gitlab', 'Make sure you set the "Redirect URI" to') }}
 			<b> {{ redirect_uri }} </b>
 			<br><br>
-			{{ t('integration_gitlab', ' and give "read_user", "read_api" and "read_repository" permissions to the application.') }}
+			{{ t('integration_gitlab', 'and give "read_user", "read_api" and "read_repository" permissions to the application.') }}
 			<br>
 			{{ t('integration_gitlab', 'Put the "Application ID" and "Application secret" below. Your Nextcloud users will then see a "Connect to GitLab" button in their personal settings if they select the GitLab instance defined here.') }}
 		</p>
