@@ -55,7 +55,7 @@
 					class="checkbox"
 					:checked="state.search_enabled"
 					@input="onSearchChange">
-				<!--label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories, issues and merge requests.') }}</label-->
+				<!--label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories, issues and merge requests') }}</label-->
 				<label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories.') }}</label>
 				<br><br>
 				<p v-if="state.search_enabled" class="settings-hint">
