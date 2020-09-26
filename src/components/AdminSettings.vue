@@ -33,7 +33,7 @@
 				v-model="state.client_id"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('integration_gitlab', 'ID or your GitLab application')"
+				:placeholder="t('integration_gitlab', 'Client ID or your GitLab application')"
 				@input="onInput"
 				@focus="readonly = false">
 			<label for="gitlab-client-secret">
