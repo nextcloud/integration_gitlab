@@ -87,9 +87,9 @@ export default {
 		},
 		emptyContentMessage() {
 			if (this.state === 'no-token') {
-				return t('integration_gitlab', 'No GitLab account connected.')
+				return t('integration_gitlab', 'No GitLab account connected')
 			} else if (this.state === 'error') {
-				return t('integration_gitlab', 'Error connecting to GitLab.')
+				return t('integration_gitlab', 'Error connecting to GitLab')
 			} else if (this.state === 'ok') {
 				return t('integration_gitlab', 'No GitLab notifications!')
 			}
@@ -145,7 +145,7 @@ export default {
 				if (error.response && error.response.status === 400) {
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
-					showError(t('integration_gitlab', 'Failed to get GitLab notifications.'))
+					showError(t('integration_gitlab', 'Failed to get GitLab notifications'))
 					this.state = 'error'
 				} else {
 					// there was an error in notif processing
@@ -267,7 +267,7 @@ export default {
 		editNotification(item, action) {
 			axios.put(generateUrl('/apps/integration_gitlab/todos/' + item.id + '/' + action)).then((response) => {
 			}).catch((error) => {
-				showError(t('integration_gitlab', 'Failed to edit GitLab todo.'))
+				showError(t('integration_gitlab', 'Failed to edit GitLab todo'))
 				console.debug(error)
 			})
 		},

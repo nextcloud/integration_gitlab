@@ -77,7 +77,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @inheritDoc
 	 */
 	public function getName(): string {
-		return $this->l10n->t('GitLab issues and pull requests');
+		return $this->l10n->t('GitLab issues and merge requests');
 	}
 
 	/**

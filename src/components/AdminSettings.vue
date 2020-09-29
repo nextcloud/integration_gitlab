@@ -99,7 +99,7 @@ export default {
 			const url = generateUrl('/apps/integration_gitlab/admin-config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('integration_gitlab', 'GitLab admin options saved.'))
+					showSuccess(t('integration_gitlab', 'GitLab admin options saved'))
 				})
 				.catch((error) => {
 					showError(
