@@ -170,7 +170,9 @@ export default {
 			}
 		},
 		filter(notifications) {
-			return notifications
+			return notifications.filter((n) => {
+				return n.action_name !== 'marked'
+			})
 		},
 		getNotificationTarget(n) {
 			return n.target_url
