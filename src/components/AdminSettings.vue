@@ -33,7 +33,7 @@
 				v-model="state.client_id"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('integration_gitlab', 'ID or your GitLab application')"
+				:placeholder="t('integration_gitlab', 'ID of your GitLab application')"
 				@input="onInput"
 				@focus="readonly = false">
 			<label for="gitlab-client-secret">
@@ -44,7 +44,7 @@
 				v-model="state.client_secret"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('integration_gitlab', 'Client secret or your GitLab application')"
+				:placeholder="t('integration_gitlab', 'Client secret of your GitLab application')"
 				@focus="readonly = false"
 				@input="onInput">
 		</div>
