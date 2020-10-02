@@ -117,19 +117,19 @@ export default {
 	methods: {
 		onLogoutClick() {
 			this.state.token = ''
-			this.saveOptions()
+			this.saveOptions(true)
 		},
 		onSearchChange(e) {
 			this.state.search_enabled = e.target.checked
-			this.saveOptions()
+			this.saveOptions(false)
 		},
 		onInput() {
 			const that = this
 			delay(function() {
-				that.saveOptions()
+				that.saveOptions(true)
 			}, 2000)()
 		},
-		saveOptions() {
+		saveOptions(authSettings) {
 			if (this.state.url !== '' && !this.state.url.startsWith('https://')) {
 				if (this.state.url.startsWith('http://')) {
 					this.state.url = this.state.url.replace('http://', 'https://')
@@ -137,18 +137,21 @@ export default {
 					this.state.url = 'https://' + this.state.url
 				}
 			}
-			const req = {
-				values: {
+			const req = {}
+			if (authSettings) {
+				req.values = {
 					token: this.state.token,
 					url: this.state.url,
+				}
+			} else {
+				req.values = {
 					search_enabled: this.state.search_enabled ? '1' : '0',
-				},
+				}
 			}
 			const url = generateUrl('/apps/integration_gitlab/config')
 			axios.put(url, req)
 				.then((response) => {
 					showSuccess(t('integration_gitlab', 'GitLab options saved'))
-					console.debug(response)
 					if (response.data.user_name !== undefined) {
 						this.state.user_name = response.data.user_name
 						if (this.state.token && response.data.user_name === '') {
