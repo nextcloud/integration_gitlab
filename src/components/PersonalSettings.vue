@@ -5,7 +5,7 @@
 			{{ t('integration_gitlab', 'GitLab integration') }}
 		</h2>
 		<p v-if="!showOAuth && !connected" class="settings-hint">
-			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions.') }}
+			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "api", "read_user", "read_api" and "read_repository" permissions.') }}
 		</p>
 		<div id="gitlab-content">
 			<div class="gitlab-grid-form">
@@ -174,7 +174,7 @@ export default {
 				+ '&redirect_uri=' + encodeURIComponent(redirectUri)
 				+ '&response_type=code'
 				+ '&state=' + encodeURIComponent(oauthState)
-				+ '&scope=' + encodeURIComponent('read_user read_api read_repository')
+				+ '&scope=' + encodeURIComponent('api read_user read_api read_repository')
 
 			const req = {
 				values: {

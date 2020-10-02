@@ -260,14 +260,17 @@ export default {
 			return moment(n.updated_at).format('LLL')
 		},
 		onMarkDone(item) {
-			const i = this.notifications.findIndex((n) => this.getUniqueKey(n) === item.id)
+			// TODO adapt vue-dashboard to give ID in item and use following line
+			// const i = this.notifications.findIndex((n) => this.getUniqueKey(n) === item.id)
+			const i = this.notifications.findIndex((n) => n.target_url === item.targetUrl)
 			if (i !== -1) {
+				const id = this.notifications[i].id
 				this.notifications.splice(i, 1)
+				this.editTodo(id, 'mark-done')
 			}
-			// this.editNotification(item, 'mark-done')
 		},
-		editNotification(item, action) {
-			axios.put(generateUrl('/apps/integration_gitlab/todos/' + item.id + '/' + action)).then((response) => {
+		editTodo(id, action) {
+			axios.put(generateUrl('/apps/integration_gitlab/todos/' + id + '/' + action)).then((response) => {
 			}).catch((error) => {
 				showError(t('integration_gitlab', 'Failed to edit GitLab todo'))
 				console.debug(error)

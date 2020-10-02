@@ -249,6 +249,16 @@ class GitlabAPIService {
 	/**
 	 * @param string $url
 	 * @param string $accessToken
+	 * @param int $id
+	 * @return array
+	 */
+	public function markTodoAsDone(string $url, string $accessToken, int $id): array {
+		return $this->request($url, $accessToken, 'todos/' . $id . '/mark_as_done', [], 'POST');
+	}
+
+	/**
+	 * @param string $url
+	 * @param string $accessToken
 	 * @param ?string $since
 	 * @return array
 	 */

@@ -126,4 +126,23 @@ class GitlabAPIController extends Controller {
 		}
 		return $response;
 	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param int $id
+	 * @return DataResponse
+	 */
+	public function markTodoAsDone(int $id): DataResponse {
+		if ($this->accessToken === '') {
+			return new DataResponse('', 400);
+		}
+		$result = $this->gitlabAPIService->markTodoAsDone($this->gitlabUrl, $this->accessToken, $id);
+		if (!isset($result['error'])) {
+			$response = new DataResponse($result);
+		} else {
+			$response = new DataResponse($result, 401);
+		}
+		return $response;
+	}
 }

@@ -16,6 +16,7 @@ return [
         ['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
         ['name' => 'gitlabAPI#getEvents', 'url' => '/events', 'verb' => 'GET'],
         ['name' => 'gitlabAPI#getTodos', 'url' => '/todos', 'verb' => 'GET'],
+        ['name' => 'gitlabAPI#markTodoAsDone', 'url' => '/todos/{id}/mark-done', 'verb' => 'PUT'],
         ['name' => 'gitlabAPI#getGitlabUrl', 'url' => '/url', 'verb' => 'GET'],
         ['name' => 'gitlabAPI#getGitlabAvatar', 'url' => '/avatar', 'verb' => 'GET'],
     ]
