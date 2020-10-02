@@ -1,0 +1,6 @@
+{ "translations": {
+    "Bad credentials" : "Неточни акредитиви",
+    "Connected accounts" : "Поврзани сметки",
+    "Connected as {user}" : "Поврзан како {user}"
+},"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
+}
