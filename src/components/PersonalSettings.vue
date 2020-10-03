@@ -32,7 +32,11 @@
 					:placeholder="t('integration_gitlab', 'GitLab personal access token')"
 					@input="onInput">
 			</div>
-			<button v-if="showOAuth && !connected" id="gitlab-oauth" @click="onOAuthClick">
+			<button v-if="showOAuth && !connected"
+				id="gitlab-oauth"
+				:disabled="loading === true"
+				:class="{ loading }"
+				@click="onOAuthClick">
 				<span class="icon icon-external" />
 				{{ t('integration_gitlab', 'Connect to GitLab') }}
 			</button>
@@ -85,6 +89,7 @@ export default {
 	data() {
 		return {
 			state: loadState('integration_gitlab', 'user-config'),
+			loading: false,
 		}
 	},
 
@@ -124,6 +129,7 @@ export default {
 			this.saveOptions(false)
 		},
 		onInput() {
+			this.loading = true
 			const that = this
 			delay(function() {
 				that.saveOptions(true)
@@ -167,6 +173,7 @@ export default {
 					console.debug(error)
 				})
 				.then(() => {
+					this.loading = false
 				})
 		},
 		onOAuthClick() {
