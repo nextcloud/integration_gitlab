@@ -12,7 +12,6 @@
     "Instance address" : "Instance adres",
     "Application ID" : "Application ID",
     "Application secret" : "Application secret",
-    "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Als je zelf een access token aanmaakt, geef het dan minimaal \"read:user\", \"read_api\" en \"read_repository\" permissies.",
     "GitLab instance address" : "GitLab instance adres",
     "Personal access token" : "Persoonlijk access token",
     "GitLab personal access token" : "GitLab persoonlijk access token",
