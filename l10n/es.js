@@ -9,6 +9,7 @@ OC.L10N.register(
     "OAuth access token refused" : "Token de acceso OAuth rechazado",
     "Connected accounts" : "Cuentas conectadas",
     "GitLab integration" : "Integración GitLab",
-    "Connected as {user}" : "Conectado como {user}"
+    "Connected as {user}" : "Conectado como {user}",
+    "Incorrect access token" : "Token de acceso incorrecto"
 },
 "nplurals=2; plural=(n != 1);");
