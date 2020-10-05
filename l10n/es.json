@@ -7,7 +7,10 @@
     "OAuth access token refused" : "Token de acceso OAuth rechazado",
     "Connected accounts" : "Cuentas conectadas",
     "GitLab integration" : "Integración GitLab",
+    "Application ID" : "ID de la aplicación",
+    "Application secret" : "Secreto de la aplicación",
     "Connected as {user}" : "Conectado como {user}",
-    "Incorrect access token" : "Token de acceso incorrecto"
+    "Incorrect access token" : "Token de acceso incorrecto",
+    "You were mentioned" : "Has sido mencionado"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
