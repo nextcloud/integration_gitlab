@@ -11,7 +11,9 @@ OC.L10N.register(
     "GitLab integration" : "Integración GitLab",
     "Application ID" : "ID de la aplicación",
     "Application secret" : "Secreto de la aplicación",
+    "Personal access token" : "Token de acceso personal",
     "Connected as {user}" : "Conectado como {user}",
+    "Enable searching for repositories" : "Activar la búsqueda de repositorios",
     "Incorrect access token" : "Token de acceso incorrecto",
     "You were mentioned" : "Has sido mencionado"
 },
