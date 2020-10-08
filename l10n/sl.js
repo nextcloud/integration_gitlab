@@ -16,6 +16,7 @@ OC.L10N.register(
     "Application secret" : "Koda programa",
     "GitLab admin options saved" : "Skrbniške nastavitve GitLab so shranjene",
     "Failed to save GitLab admin options" : "Shranjevanje skrbniških nastavitev GitLab je spodletelo",
+    "Personal access token" : "Osebni žeton za dostop",
     "Connect to GitLab" : "Poveži z GitLab",
     "Connected as {user}" : "Poveži kot {user}",
     "Disconnect from GitLab" : "Prekini povezavo z GitLab",
