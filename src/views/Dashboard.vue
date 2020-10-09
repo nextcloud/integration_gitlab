@@ -71,7 +71,7 @@ export default {
 					id: this.getUniqueKey(n),
 					targetUrl: this.getNotificationTarget(n),
 					avatarUrl: this.getNotificationImage(n),
-					// avatarUsername: '',
+					avatarUsername: this.getRepositoryName(n),
 					overlayIconUrl: this.getNotificationTypeImage(n),
 					mainText: this.getTargetTitle(n),
 					subText: this.getSubline(n),
@@ -193,6 +193,11 @@ export default {
 		getAuthorAvatarUrl(n) {
 			return (n.author && n.author.avatar_url)
 				? generateUrl('/apps/integration_gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.author.avatar_url)
+				: ''
+		},
+		getRepositoryName(n) {
+			return n.project.path
+				? n.project.path
 				: ''
 		},
 		getNotificationProjectName(n) {
