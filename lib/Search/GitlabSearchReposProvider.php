@@ -149,7 +149,7 @@ class GitlabSearchReposProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getMainText(array $entry): string {
-		return $entry['path_with_namespace'] . ' [' . $entry['star_count'] . '⭐]';
+		return $entry['path_with_namespace'] . ' [' . ($entry['star_count'] ?? 0) . '⭐]';
 	}
 
 	/**
@@ -163,7 +163,7 @@ class GitlabSearchReposProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getLinkToGitlab(array $entry): string {
-		return $entry['web_url'];
+		return $entry['web_url'] ?? '';
 	}
 
 	/**

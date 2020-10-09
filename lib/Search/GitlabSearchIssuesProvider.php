@@ -181,7 +181,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getLinkToGitlab(array $entry): string {
-		return $entry['web_url'];
+		return $entry['web_url'] ?? '';
 	}
 
 	/**
