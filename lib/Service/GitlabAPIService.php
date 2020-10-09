@@ -315,8 +315,17 @@ class GitlabAPIService {
 	 * @param string $url
 	 * @return ?string
 	 */
-	public function getGitlabAvatar(string $url): ?string {
-		return $this->client->get($url)->getBody();
+	public function getGitlabAvatar(string $avatarUrl, string $gitlabUrl): ?string {
+		$gUrl = parse_url($gitlabUrl);
+		$aUrl = parse_url($avatarUrl);
+		if ($gUrl && $aUrl) {
+			$gitlabHost = $gUrl['host'];
+			$avatarHost = $aUrl['host'];
+			if ($gitlabHost === $avatarHost || preg_match('/\.gitlab-static\.net$/', $avatarHost)) {
+				return $this->client->get($avatarUrl)->getBody();
+			}
+		}
+		return null;
 	}
 
 	/**
