@@ -134,7 +134,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 				$this->getSubline($entry, $url),
 				$this->getLinkToGitlab($entry),
 				'',
-				true
+				false
 			);
 		}, $issues);
 

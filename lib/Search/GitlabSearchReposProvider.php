@@ -134,7 +134,7 @@ class GitlabSearchReposProvider implements IProvider {
 				$this->getSubline($entry),
 				$this->getLinkToGitlab($entry),
 				'',
-				true
+				false
 			);
 		}, $repos);
 
