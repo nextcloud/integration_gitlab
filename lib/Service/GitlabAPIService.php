@@ -55,6 +55,7 @@ class GitlabAPIService {
 			$projectsInfo[$pid] = [
 				'path_with_namespace' => $project['path_with_namespace'],
 				'avatar_url' => $project['avatar_url'],
+				'visibility' => $project['visibility'],
 			];
 		}
 		return $projectsInfo;
@@ -294,6 +295,7 @@ class GitlabAPIService {
 			$pid = $todo['project']['id'];
 			if (array_key_exists($pid, $projectsInfo)) {
 				$result[$k]['project']['avatar_url'] = $projectsInfo[$pid]['avatar_url'];
+				$result[$k]['project']['visibility'] = $projectsInfo[$pid]['visibility'];
 			} else {
 				// get the project avatar
 				$projectInfo = $this->request($url, $accessToken, 'projects/' . $pid);
@@ -301,9 +303,11 @@ class GitlabAPIService {
 					return $projectInfo;
 				}
 				$result[$k]['project']['avatar_url'] = $projectInfo['avatar_url'];
+				$result[$k]['project']['visibility'] = $projectInfo['visibility'];
 				// cache result
 				$projectsInfo[$pid] = [
-					'avatar_url' => $projectInfo['avatar_url']
+					'avatar_url' => $projectInfo['avatar_url'],
+					'visibility' => $projectInfo['visibility'],
 				];
 			}
 		}

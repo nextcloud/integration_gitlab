@@ -181,7 +181,7 @@ export default {
 			return n.id + ':' + n.updated_at
 		},
 		getNotificationImage(n) {
-			return (n.project && n.project.avatar_url)
+			return (n.project && n.project.avatar_url && n.project.visibility !== 'private')
 				? generateUrl('/apps/integration_gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project.avatar_url)
 				: ''
 		},
