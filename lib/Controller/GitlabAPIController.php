@@ -82,11 +82,11 @@ class GitlabAPIController extends Controller {
 	 * @return DataDisplayResponse
 	 */
 	public function getGitlabAvatar(string $url): DataDisplayResponse {
-		$avatarContent = $this->gitlabAPIService->getGitlabAvatar($url, $this->gitlabUrl);
-		if (is_null($avatarContent)) {
-			return new DataDisplayResponse('', 400);
+		$avatar = $this->gitlabAPIService->getGitlabAvatar($url, $this->gitlabUrl, $this->accessToken);
+		if (isset($avatar['error']) && !isset($avatar['content'])) {
+			return new DataDisplayResponse($avatar['error'], 400);
 		} else {
-			$response = new DataDisplayResponse($avatarContent);
+			$response = new DataDisplayResponse($avatar['content']);
 			$response->cacheFor(60*60*24);
 			return $response;
 		}

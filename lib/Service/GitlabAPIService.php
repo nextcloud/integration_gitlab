@@ -313,19 +313,81 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $url
-	 * @return ?string
+	 * @param string $gitlabUrl
+	 * @param string $accessToken
+	 * @return array
 	 */
-	public function getGitlabAvatar(string $avatarUrl, string $gitlabUrl): ?string {
+	public function getGitlabAvatar(string $avatarUrl, string $gitlabUrl, string $accessToken): array {
 		$gUrl = parse_url($gitlabUrl);
 		$aUrl = parse_url($avatarUrl);
 		if ($gUrl && $aUrl) {
 			$gitlabHost = $gUrl['host'];
 			$avatarHost = $aUrl['host'];
 			if ($gitlabHost === $avatarHost || preg_match('/\.gitlab-static\.net$/', $avatarHost)) {
-				return $this->client->get($avatarUrl)->getBody();
+				return $this->simpleRequestString($avatarUrl, $accessToken);
 			}
 		}
-		return null;
+		return ['error' => 'Unauthorize hostname'];
+	}
+
+	/**
+	 * @param string $url
+	 * @param string $accessToken
+	 * @param string $endPoint
+	 * @param array $params
+	 * @param string $method
+	 * @return array
+	 */
+	public function simpleRequestString(string $url, string $accessToken, array $params = [], string $method = 'GET'): array {
+		try {
+			$options = [
+				'headers' => [
+					'Authorization'  => 'Bearer ' . $accessToken,
+					'User-Agent' => 'Nextcloud GitLab integration'
+				],
+			];
+
+			if (count($params) > 0) {
+				if ($method === 'GET') {
+					// manage array parameters
+					$paramsContent = '';
+					foreach ($params as $key => $value) {
+						if (is_array($value)) {
+							foreach ($value as $oneArrayValue) {
+								$paramsContent .= $key . '[]=' . urlencode($oneArrayValue) . '&';
+							}
+							unset($params[$key]);
+						}
+					}
+					$paramsContent .= http_build_query($params);
+
+					$url .= '?' . $paramsContent;
+				} else {
+					$options['body'] = $params;
+				}
+			}
+
+			if ($method === 'GET') {
+				$response = $this->client->get($url, $options);
+			} else if ($method === 'POST') {
+				$response = $this->client->post($url, $options);
+			} else if ($method === 'PUT') {
+				$response = $this->client->put($url, $options);
+			} else if ($method === 'DELETE') {
+				$response = $this->client->delete($url, $options);
+			}
+			$body = $response->getBody();
+			$respCode = $response->getStatusCode();
+
+			if ($respCode >= 400) {
+				return ['error' => $this->l10n->t('Bad credentials')];
+			} else {
+				return ['content' => $body];
+			}
+		} catch (\Exception $e) {
+			$this->logger->warning('GitLab API error : '.$e->getMessage(), array('app' => $this->appName));
+			return ['error' => $e->getMessage()];
+		}
 	}
 
 	/**
