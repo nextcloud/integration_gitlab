@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Error getting OAuth access token. " : "Fehler beim Abrufen des OAuth-Zugriffstokens.",
     "Error during OAuth exchanges" : "Fehler beim OAuth-Austausch",
-    "GitLab todos" : "Gitlab Aufgaben",
+    "GitLab todos" : "GitLab Aufgaben",
     "GitLab issues and merge requests" : "GitLab Issues und Merge-Requests",
     "GitLab repositories" : "GitLab Repositories",
     "Bad credentials" : "Falsche Anmeldeinformationen",
@@ -51,6 +51,6 @@ OC.L10N.register(
     "A build has failed" : "Ein Build ist fehlgeschlagen",
     "Marked" : "Markiert",
     "You were directly addressed" : "Sie wurden direkt angesprochen",
-    "Failed to edit GitLab todo" : "Fehler beim Bearbeiten der GitLab-Todo"
+    "Failed to edit GitLab todo" : "Fehler beim Bearbeiten der GitLab-Aufgaben"
 },
 "nplurals=2; plural=(n != 1);");
