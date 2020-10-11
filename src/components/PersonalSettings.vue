@@ -159,12 +159,15 @@ export default {
 			const url = generateUrl('/apps/integration_gitlab/config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('integration_gitlab', 'GitLab options saved'))
 					if (response.data.user_name !== undefined) {
 						this.state.user_name = response.data.user_name
 						if (this.state.token && response.data.user_name === '') {
 							showError(t('integration_gitlab', 'Incorrect access token'))
+						} else if (response.data.user_name) {
+							showSuccess(t('integration_gitlab', 'Successfully connected to GitLab!'))
 						}
+					} else {
+						showSuccess(t('integration_gitlab', 'GitLab options saved'))
 					}
 				})
 				.catch((error) => {
