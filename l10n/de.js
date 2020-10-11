@@ -3,9 +3,9 @@ OC.L10N.register(
     {
     "Error getting OAuth access token. " : "Fehler beim Abrufen des OAuth-Zugriffstokens.",
     "Error during OAuth exchanges" : "Fehler beim OAuth-Austausch",
-    "GitLab todos" : "Gitlab Aufgaben",
+    "GitLab todos" : "Gitlab-Aufgaben",
     "GitLab issues and merge requests" : "GitLab Issues und Merge-Requests",
-    "GitLab repositories" : "GitLab Repositories",
+    "GitLab repositories" : "GitLab-Repositories",
     "Bad credentials" : "Falsche Anmeldeinformationen",
     "OAuth access token refused" : "OAuth-Zugriffstoken abgelehnt",
     "Connected accounts" : "Verbundene Konten",

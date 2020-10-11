@@ -39,7 +39,7 @@ OC.L10N.register(
     "GitLab options saved" : "Opcje GitLab zostały zapisane",
     "Incorrect access token" : "Nieprawidłowy token dostępu.",
     "Failed to save GitLab options" : "Nie udało się zapisać opcji GitLaba.",
-    "Failed to save GitLab OAuth state" : "Nie udało się zapisać statusu GitLab OAuth",
+    "Failed to save GitLab OAuth state" : "Nie udało się zapisać statusu OAuth GitLab",
     "Mark as done" : "Oznacz jako wykonane",
     "No GitLab account connected" : "Brak połączonego konta GitLab",
     "Error connecting to GitLab" : "Błąd podczas łączenia się z GitLabem",
