@@ -59,10 +59,17 @@
 					class="checkbox"
 					:checked="state.search_enabled"
 					@input="onSearchChange">
-				<!--label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories, issues and merge requests') }}</label-->
 				<label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories') }}</label>
 				<br><br>
-				<p v-if="state.search_enabled" class="settings-hint">
+				<input
+					id="search-issues-gitlab"
+					type="checkbox"
+					class="checkbox"
+					:checked="state.search_issues_enabled"
+					@input="onSearchIssuesChange">
+				<label for="search-issues-gitlab">{{ t('integration_gitlab', 'Enable searching for issues and merge requests') }}</label>
+				<br><br>
+				<p v-if="state.search_enabled || state.search_issues_enabled" class="settings-hint">
 					<span class="icon icon-details" />
 					{{ t('integration_gitlab', 'Warning, everything you type in the search bar will be sent to GitLab.') }}
 				</p>
@@ -122,20 +129,18 @@ export default {
 	methods: {
 		onLogoutClick() {
 			this.state.token = ''
-			this.saveOptions(true)
+			this.saveOptions({ token: '' })
 		},
 		onSearchChange(e) {
 			this.state.search_enabled = e.target.checked
-			this.saveOptions(false)
+			this.saveOptions({ search_enabled: this.state.search_enabled ? '1' : '0' })
+		},
+		onSearchIssuesChange(e) {
+			this.state.search_issues_enabled = e.target.checked
+			this.saveOptions({ search_issues_enabled: this.state.search_issues_enabled ? '1' : '0' })
 		},
 		onInput() {
 			this.loading = true
-			const that = this
-			delay(function() {
-				that.saveOptions(true)
-			}, 2000)()
-		},
-		saveOptions(authSettings) {
 			if (this.state.url !== '' && !this.state.url.startsWith('https://')) {
 				if (this.state.url.startsWith('http://')) {
 					this.state.url = this.state.url.replace('http://', 'https://')
@@ -143,16 +148,13 @@ export default {
 					this.state.url = 'https://' + this.state.url
 				}
 			}
-			const req = {}
-			if (authSettings) {
-				req.values = {
-					token: this.state.token,
-					url: this.state.url,
-				}
-			} else {
-				req.values = {
-					search_enabled: this.state.search_enabled ? '1' : '0',
-				}
+			delay(() => {
+				this.saveOptions({ token: this.state.token, url: this.state.url })
+			}, 2000)()
+		},
+		saveOptions(values) {
+			const req = {
+				values,
 			}
 			const url = generateUrl('/apps/integration_gitlab/config')
 			axios.put(url, req)

@@ -191,8 +191,8 @@ export default {
 				: n.author.username
 		},
 		getAuthorAvatarUrl(n) {
-			return (n.author && n.author.username)
-				? generateUrl('/apps/integration_gitlab/avatar/user?') + encodeURIComponent('userName') + '=' + encodeURIComponent(n.author.username)
+			return (n.author && n.author.id)
+				? generateUrl('/apps/integration_gitlab/avatar/user?') + encodeURIComponent('userId') + '=' + encodeURIComponent(n.author.id)
 				: ''
 		},
 		getRepositoryName(n) {

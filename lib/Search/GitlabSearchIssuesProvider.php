@@ -115,16 +115,14 @@ class GitlabSearchIssuesProvider implements IProvider {
 		if ($url === '') {
 			$url = 'https://gitlab.com';
 		}
-		$searchEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_enabled', '0') === '1';
-		if ($accessToken === '' || !$searchEnabled) {
+		$searchIssuesEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_issues_enabled', '0') === '1';
+		if ($accessToken === '' || !$searchIssuesEnabled) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$searchResult = $this->service->searchIssues($url, $accessToken, $term, $offset, $limit);
+		$issues = $this->service->searchIssues($url, $accessToken, $term, $offset, $limit);
 		if (isset($searchResult['error'])) {
-			$issues = [];
-		} else {
-			$issues = $searchResult;
+			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
 		$formattedResults = \array_map(function (array $entry) use ($thumbnailUrl, $url): GitlabSearchResultEntry {
@@ -188,9 +186,9 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getThumbnailUrl(array $entry, string $thumbnailUrl): string {
-		$userName = $entry['author']['username'] ?? '';
-		return $userName
-			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', []) . '?userName=' . urlencode($userName)
+		$userId = $entry['author']['id'] ?? '';
+		return $userId
+			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', []) . '?userId=' . urlencode(strval($userId))
 			: $thumbnailUrl;
 	}
 }

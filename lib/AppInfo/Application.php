@@ -43,7 +43,7 @@ class Application extends App implements IBootstrap {
 
 	public function register(IRegistrationContext $context): void {
 		$context->registerDashboardWidget(GitlabWidget::class);
-		//$context->registerSearchProvider(GitlabSearchIssuesProvider::class);
+		$context->registerSearchProvider(GitlabSearchIssuesProvider::class);
 		$context->registerSearchProvider(GitlabSearchReposProvider::class);
 	}
 

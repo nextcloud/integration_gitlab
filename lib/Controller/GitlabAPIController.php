@@ -78,12 +78,12 @@ class GitlabAPIController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
-	 * @param string $userName
+	 * @param int $userId
 	 * @return DataDisplayResponse
 	 */
-	public function getUserAvatar(string $userName): DataDisplayResponse {
+	public function getUserAvatar(int $userId): DataDisplayResponse {
 		$avatarContent = $this->gitlabAPIService->getUserAvatar(
-			$userName, $this->gitlabUrl, $this->accessToken
+			$userId, $this->gitlabUrl, $this->accessToken
 		);
 		if (is_null($avatarContent)) {
 			return new DataDisplayResponse('', 400);

@@ -43,6 +43,7 @@ class Personal implements ISettings {
 	public function getForm(): TemplateResponse {
 		$token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
 		$searchEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_enabled', '0');
+		$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0');
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name', '');
 		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
 		if ($url === '') {
@@ -63,6 +64,7 @@ class Personal implements ISettings {
 			'oauth_instance_url' => $oauthUrl,
 			'user_name' => $userName,
 			'search_enabled' => ($searchEnabled === '1'),
+			'search_issues_enabled' => ($searchIssuesEnabled === '1'),
 		];
 		$this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
 		return new TemplateResponse(Application::APP_ID, 'personalSettings');

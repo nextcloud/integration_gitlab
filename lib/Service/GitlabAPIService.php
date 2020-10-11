@@ -316,13 +316,14 @@ class GitlabAPIService {
 	}
 
 	/**
-	 * @param string $userName
+	 * @param int $userId
 	 * @param string $gitlabUrl
 	 * @param string $accessToken
 	 * @return ?string
 	 */
-	public function getUserAvatar(string $userName, string $gitlabUrl, string $accessToken): ?string {
-		$userInfo = $this->request($gitlabUrl, $accessToken, 'users/' . $userName);
+	public function getUserAvatar(int $userId, string $gitlabUrl, string $accessToken): ?string {
+		$userInfo = $this->request($gitlabUrl, $accessToken, 'users/' . $userId);
+		file_put_contents('/tmp/aa', json_encode($userInfo));
 		if (!isset($userInfo['error']) && isset($userInfo['avatar_url'])) {
 			return $this->client->get($userInfo['avatar_url'])->getBody();
 		}
