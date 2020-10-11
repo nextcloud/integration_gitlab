@@ -316,18 +316,29 @@ class GitlabAPIService {
 	}
 
 	/**
-	 * @param string $url
+	 * @param string $userName
+	 * @param string $gitlabUrl
+	 * @param string $accessToken
 	 * @return ?string
 	 */
-	public function getGitlabAvatar(string $avatarUrl, string $gitlabUrl): ?string {
-		$gUrl = parse_url($gitlabUrl);
-		$aUrl = parse_url($avatarUrl);
-		if ($gUrl && $aUrl) {
-			$gitlabHost = $gUrl['host'];
-			$avatarHost = $aUrl['host'];
-			if ($gitlabHost === $avatarHost || preg_match('/\.gitlab-static\.net$/', $avatarHost)) {
-				return $this->client->get($avatarUrl)->getBody();
-			}
+	public function getUserAvatar(string $userName, string $gitlabUrl, string $accessToken): ?string {
+		$userInfo = $this->request($gitlabUrl, $accessToken, 'users/' . $userName);
+		if (!isset($userInfo['error']) && isset($userInfo['avatar_url'])) {
+			return $this->client->get($userInfo['avatar_url'])->getBody();
+		}
+		return null;
+	}
+
+	/**
+	 * @param int $projectId
+	 * @param string $gitlabUrl
+	 * @param string $accessToken
+	 * @return ?string
+	 */
+	public function getProjectAvatar(int $projectId, string $gitlabUrl, string $accessToken): ?string {
+		$projectInfo = $this->request($gitlabUrl, $accessToken, 'projects/' . $projectId);
+		if (!isset($projectInfo['error']) && isset($projectInfo['avatar_url'])) {
+			return $this->client->get($projectInfo['avatar_url'])->getBody();
 		}
 		return null;
 	}

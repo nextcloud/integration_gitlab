@@ -181,8 +181,8 @@ export default {
 			return n.id + ':' + n.updated_at
 		},
 		getNotificationImage(n) {
-			return (n.project && n.project.avatar_url && n.project.visibility !== 'private')
-				? generateUrl('/apps/integration_gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.project.avatar_url)
+			return (n.project && n.project.id && n.project.visibility !== 'private')
+				? generateUrl('/apps/integration_gitlab/avatar/project?') + encodeURIComponent('projectId') + '=' + encodeURIComponent(n.project.id)
 				: ''
 		},
 		getAuthorFullName(n) {
@@ -191,8 +191,8 @@ export default {
 				: n.author.username
 		},
 		getAuthorAvatarUrl(n) {
-			return (n.author && n.author.avatar_url)
-				? generateUrl('/apps/integration_gitlab/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.author.avatar_url)
+			return (n.author && n.author.username)
+				? generateUrl('/apps/integration_gitlab/avatar/user?') + encodeURIComponent('userName') + '=' + encodeURIComponent(n.author.username)
 				: ''
 		},
 		getRepositoryName(n) {

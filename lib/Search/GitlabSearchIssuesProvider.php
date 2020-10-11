@@ -188,9 +188,9 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getThumbnailUrl(array $entry, string $thumbnailUrl): string {
-		$url = $entry['author']['avatar_url'];
-		return $url
-			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getGitlabAvatar', []) . '?url=' . urlencode($url)
+		$userName = $entry['author']['username'] ?? '';
+		return $userName
+			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', []) . '?userName=' . urlencode($userName)
 			: $thumbnailUrl;
 	}
 }

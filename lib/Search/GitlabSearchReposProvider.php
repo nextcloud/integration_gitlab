@@ -170,9 +170,10 @@ class GitlabSearchReposProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getThumbnailUrl(array $entry, string $thumbnailUrl): string {
-		$url = $entry['avatar_url'];
-		return $url
-			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getGitlabAvatar', []) . '?url=' . urlencode($url)
+		$projectId = $entry['id'] ?? '';
+		$avatarUrl = $entry['avatar_url'] ?? '';
+		return $avatarUrl
+			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getProjectAvatar', []) . '?projectId=' . urlencode(strval($projectId))
 			: $thumbnailUrl;
 	}
 }
