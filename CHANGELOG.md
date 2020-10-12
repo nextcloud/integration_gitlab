@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.5 – 2020-10-12
+### Changed
+- better avatar management, url generated on server side
+- safer search
+
+### Fixed
+- various small design problems
+
 ## 0.0.4 – 2020-10-02
 ### Added
 - lots of translations

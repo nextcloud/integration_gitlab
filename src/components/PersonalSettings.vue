@@ -67,7 +67,10 @@
 					class="checkbox"
 					:checked="state.search_issues_enabled"
 					@input="onSearchIssuesChange">
-				<label for="search-issues-gitlab">{{ t('integration_gitlab', 'Enable searching for issues and merge requests') }}</label>
+				<label for="search-issues-gitlab">
+					{{ t('integration_gitlab', 'Enable searching for issues and merge requests') }}
+					{{ t('integration_gitlab', '(This may be slow or even fail on some GitLab instances)') }}
+				</label>
 				<br><br>
 				<p v-if="state.search_enabled || state.search_issues_enabled" class="settings-hint">
 					<span class="icon icon-details" />
