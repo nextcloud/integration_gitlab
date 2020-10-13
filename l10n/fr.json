@@ -9,7 +9,6 @@
     "Connected accounts" : "Comptes connectés",
     "GitLab integration" : "Intégration de GitLab",
     "Integration of GitLab software development management service" : "Intégration du service de gestion de développement GitLab",
-    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories." : "L'intégration de GitLab fournit un widget de tableau de bord qui affiche vos notifications les plus importantes\net la recherche de dépôts.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Si vous voulez permettre à vos utilisateurs Nextcloud d'utiliser OAuth pour s'identifier sur une instance GitLab de votre choix, créez une application dans vos paramètres GitLab et renseignez son ID et secret ici.",
     "Make sure you set the \"Redirect URI\" to" : "Assurez-vous que \"l'URI de redirection\" a la valeur",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "Mettez l'\"ID application\" et le \"secret application\" ci-dessous. Vos utilisateurs Nextcloud verront ensuite un bouton \"Se connecter à GitLab\" dans leur paramètres personnels si ils sélectionnent l'instance GitLab définie ici.",
