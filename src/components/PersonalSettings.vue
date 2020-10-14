@@ -176,7 +176,7 @@ export default {
 				.catch((error) => {
 					showError(
 						t('integration_gitlab', 'Failed to save GitLab options')
-						+ ': ' + error.response.request.responseText
+						+ ': ' + (error.response?.request?.responseText ?? '')
 					)
 					console.debug(error)
 				})
@@ -207,7 +207,7 @@ export default {
 				.catch((error) => {
 					showError(
 						t('integration_gitlab', 'Failed to save GitLab OAuth state')
-						+ ': ' + error.response.request.responseText
+						+ ': ' + (error.response?.request?.responseText ?? '')
 					)
 					console.debug(error)
 				})
