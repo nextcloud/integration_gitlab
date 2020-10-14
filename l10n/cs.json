@@ -30,6 +30,7 @@
     "Disconnect from GitLab" : "Odpojit od GitLab",
     "Enable searching for repositories" : "Zapnout vyhledávání v repozitářích",
     "Enable searching for issues and merge requests" : "Zapnout vyhledávání v hlášeních problémů a požadavcích na začlenění kódu",
+    "(This may be slow or even fail on some GitLab instances)" : "(V případě některých instancí GitLab může toto být pomalé nebo se dokonce nezdařit)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varování – cokoli zadáte do kolonky vyhledávání bude odesláno do GitLab.",
     "Successfully connected to GitLab!" : "Úspěšně spojeno s GitLab!",
     "Error connecting to GitLab:" : "Chyba při připojování se ke GitLab:",
