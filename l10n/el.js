@@ -5,6 +5,8 @@ OC.L10N.register(
     "Bad credentials" : "Εσφαλμένα διαπιστευτήρια",
     "OAuth access token refused" : "Το διακριτικό πρόσβασης OAuth απορρίφθηκε",
     "Connected accounts" : "Συνδεδεμένοι λογαριασμοί",
+    "Application ID" : "Αναγνωριστικό εφαρμογής",
+    "Application secret" : "Μυστικό εφαρμογής",
     "Personal access token" : "Διακριτικό προσωπικής πρόσβασης",
     "Connected as {user}" : "Συνδεδεμένος ως {user}",
     "Enable searching for repositories" : "Ενεργοποίηση αναζήτησης για αποθετήρια",

@@ -9,6 +9,7 @@
     "Connected accounts" : "Propojené účty",
     "GitLab integration" : "Napojení na GitLab",
     "Integration of GitLab software development management service" : "Napojení na službu pro správu vývoje software GitLab",
+    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Napojení na GitLab poskytuje ovládací prvek pro přehled zobrazující nejdůležitější upozornění pro vás\n    a sjednoceného poskytovatele vyhledávání v repozitářích, hlášeních chyba a požadavcích na začlenění kódu.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Pokud chcete vašim Nextcloud uživatelům umožnit použít k ověřování se vůči vámi zvolené instanci GitLab OAuth, vytvořte v nastavení GitLab aplikaci a nastavte zde identifikátor a tajemství.",
     "Make sure you set the \"Redirect URI\" to" : "Ověřte, že jste nastavili „URI přesměrování“ na",
     "and give \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "a udělte aplikaci oprávnění pro „api“, „read_user“, „read_api“ a „read_repository“.",
