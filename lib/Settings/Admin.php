@@ -20,14 +20,13 @@ class Admin implements ISettings {
 	private $urlGenerator;
 	private $l;
 
-	public function __construct(
-						string $appName,
-						IL10N $l,
-						IRequest $request,
-						IConfig $config,
-						IURLGenerator $urlGenerator,
-						IInitialStateService $initialStateService,
-						$userId) {
+	public function __construct(string $appName,
+								IL10N $l,
+								IRequest $request,
+								IConfig $config,
+								IURLGenerator $urlGenerator,
+								IInitialStateService $initialStateService,
+								$userId) {
 		$this->appName = $appName;
 		$this->urlGenerator = $urlGenerator;
 		$this->request = $request;
@@ -44,11 +43,13 @@ class Admin implements ISettings {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
 		$oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', '');
+		$redirectUri = $this->urlGenerator->linkToRouteAbsolute('integration_gitlab.config.oauthRedirect');
 
 		$adminConfig = [
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret,
 			'oauth_instance_url' => $oauthUrl,
+			'redirect_uri' => $redirectUri,
 		];
 		$this->initialStateService->provideInitialState($this->appName, 'admin-config', $adminConfig);
 		return new TemplateResponse(Application::APP_ID, 'adminSettings');
