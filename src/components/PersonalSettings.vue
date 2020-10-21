@@ -100,6 +100,7 @@ export default {
 		return {
 			state: loadState('integration_gitlab', 'user-config'),
 			loading: false,
+			redirect_uri: window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_gitlab/oauth-redirect'),
 		}
 	},
 
@@ -188,7 +189,7 @@ export default {
 			const oauthState = Math.random().toString(36).substring(3)
 			const requestUrl = this.state.url + '/oauth/authorize'
 				+ '?client_id=' + encodeURIComponent(this.state.client_id)
-				+ '&redirect_uri=' + encodeURIComponent(this.state.redirect_uri)
+				+ '&redirect_uri=' + encodeURIComponent(this.redirect_uri)
 				+ '&response_type=code'
 				+ '&state=' + encodeURIComponent(oauthState)
 				+ '&scope=' + encodeURIComponent('api read_user read_api read_repository')
@@ -196,6 +197,7 @@ export default {
 			const req = {
 				values: {
 					oauth_state: oauthState,
+					redirect_uri: this.redirect_uri,
 				},
 			}
 			const url = generateUrl('/apps/integration_gitlab/config')

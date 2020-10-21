@@ -54,7 +54,6 @@ class Personal implements ISettings {
 		// don't expose the client secret to users
 		$clientSecret = ($this->config->getAppValue(Application::APP_ID, 'client_secret', '') !== '');
 		$oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', '');
-		$redirectUri = $this->urlGenerator->linkToRouteAbsolute('integration_gitlab.config.oauthRedirect');
 
 		$userConfig = [
 			'token' => $token,
@@ -62,7 +61,6 @@ class Personal implements ISettings {
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret,
 			'oauth_instance_url' => $oauthUrl,
-			'redirect_uri' => $redirectUri,
 			'user_name' => $userName,
 			'search_enabled' => ($searchEnabled === '1'),
 			'search_issues_enabled' => ($searchIssuesEnabled === '1'),

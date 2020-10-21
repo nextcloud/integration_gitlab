@@ -125,7 +125,7 @@ class ConfigController extends Controller {
 		$this->config->setUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
 
 		if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
-			$redirect_uri = $this->urlGenerator->linkToRouteAbsolute('integration_gitlab.config.oauthRedirect');
+			$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri', '');
 			$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
 			$gitlabUrl = $gitlabUrl && $gitlabUrl !== '' ? $gitlabUrl : 'https://gitlab.com';
 			$result = $this->gitlabAPIService->requestOAuthAccessToken($gitlabUrl, [

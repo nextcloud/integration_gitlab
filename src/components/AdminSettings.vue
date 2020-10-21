@@ -9,7 +9,7 @@
 			<br><br>
 			<span class="icon icon-details" />
 			{{ t('integration_gitlab', 'Make sure you set the "Redirect URI" to') }}
-			<b> {{ state.redirect_uri }} </b>
+			<b> {{ redirect_uri }} </b>
 			<br><br>
 			{{ t('integration_gitlab', 'and give "api", "read_user", "read_api" and "read_repository" permissions to the application.') }}
 			<br>
@@ -71,6 +71,7 @@ export default {
 			state: loadState('integration_gitlab', 'admin-config'),
 			// to prevent some browsers to fill fields with remembered passwords
 			readonly: true,
+			redirect_uri: window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_gitlab/oauth-redirect'),
 		}
 	},
 
