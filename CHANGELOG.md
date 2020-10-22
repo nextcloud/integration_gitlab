@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.6 – 2020-10-22
+### Added
+- automate releases
+
+### Changed
+- use Webpack 5 and style lint
+
+### Fixed
+- always use redirect URI generated on browser side
+
 ## 0.0.5 – 2020-10-12
 ### Changed
 - better avatar management, url generated on server side
