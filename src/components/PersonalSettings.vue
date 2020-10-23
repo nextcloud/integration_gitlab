@@ -4,6 +4,16 @@
 			<a class="icon icon-gitlab" />
 			{{ t('integration_gitlab', 'GitLab integration') }}
 		</h2>
+		<div id="toggle-gitlab-navigation-link">
+			<input
+				id="gitlab-link"
+				type="checkbox"
+				class="checkbox"
+				:checked="state.navigation_enabled"
+				@input="onNavigationChange">
+			<label for="gitlab-link">{{ t('integration_gitlab', 'Enable navigation link') }}</label>
+		</div>
+		<br><br>
 		<p v-if="!showOAuth && !connected" class="settings-hint">
 			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "api", "read_user", "read_api" and "read_repository" permissions.') }}
 		</p>
@@ -143,6 +153,10 @@ export default {
 			this.state.search_issues_enabled = e.target.checked
 			this.saveOptions({ search_issues_enabled: this.state.search_issues_enabled ? '1' : '0' })
 		},
+		onNavigationChange(e) {
+			this.state.navigation_enabled = e.target.checked
+			this.saveOptions({ navigation_enabled: this.state.navigation_enabled ? '1' : '0' })
+		},
 		onInput() {
 			this.loading = true
 			if (this.state.url !== '' && !this.state.url.startsWith('https://')) {
@@ -263,6 +277,10 @@ body.theme--dark .icon-gitlab {
 
 #gitlab-search-block .icon {
 	width: 22px;
+}
+
+#toggle-gitlab-navigation-link {
+	margin-left: 40px;
 }
 
 </style>

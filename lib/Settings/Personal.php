@@ -43,11 +43,9 @@ class Personal implements ISettings {
 		$token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
 		$searchEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_enabled', '0');
 		$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0');
+		$navigationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'navigation_enabled', '0');
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name', '');
-		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
-		if ($url === '') {
-			$url = 'https://gitlab.com';
-		}
+		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com') ?: 'https://gitlab.com';
 
 		// for OAuth
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
@@ -64,6 +62,7 @@ class Personal implements ISettings {
 			'user_name' => $userName,
 			'search_enabled' => ($searchEnabled === '1'),
 			'search_issues_enabled' => ($searchIssuesEnabled === '1'),
+			'navigation_enabled' => ($navigationEnabled === '1'),
 		];
 		$this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
 		return new TemplateResponse(Application::APP_ID, 'personalSettings');
