@@ -32,7 +32,7 @@ OC.L10N.register(
     "Connected as {user}" : "Verbunden als {user}",
     "Disconnect from GitLab" : "Von GitLab trennen",
     "Enable searching for repositories" : "Suche nach Repositories aktivieren",
-    "Enable searching for issues and merge requests" : "Suche nach Issues (Problemen) und Merge Requests (Übernahmeanfragen) aktivieren",
+    "Enable searching for issues and merge requests" : "Suche nach Issues und Merge Requests aktivieren",
     "(This may be slow or even fail on some GitLab instances)" : "(Dies kann bei einigen GitLab-Instanzen langsam sein oder sogar fehlschlagen)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Achtung, alles, was Sie in die Suchleiste eingeben, wird an GitLab gesendet.",
     "Successfully connected to GitLab!" : "Erfolgreich verbunden mit GitLab!",
