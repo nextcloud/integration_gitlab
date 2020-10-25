@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Błąd podczas pobierania tokena dostępu OAuth.",
     "Error during OAuth exchanges" : "Błąd podczas zamiany OAuth",
     "GitLab todos" : "Do zrobienia na GitLabie",
@@ -24,6 +25,7 @@ OC.L10N.register(
     "Client secret of your GitLab application" : "Sekret klienta aplikacji GitLab",
     "GitLab admin options saved" : "Opcje administratora GitLaba zostały zapisane",
     "Failed to save GitLab admin options" : "Nie udało się zapisać opcji administratora GitLaba.",
+    "Enable navigation link" : "Włącz połączenie nawigacyjne",
     "When you create an access token yourself, give it at least \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Gdy tworzysz token dostępu, przyznaj mu przynajmniej uprawnienia \"api\", \"read_user\", \"read_api\" i \"read_repository\".",
     "GitLab instance address" : "Adres instancji GitLab",
     "Personal access token" : "Osobisty token dostępu",
