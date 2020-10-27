@@ -22,6 +22,7 @@ OC.L10N.register(
     "Client secret of your GitLab application" : "Secret client de votre application GitLab",
     "GitLab admin options saved" : "Options d'administration GitLab enregistrées",
     "Failed to save GitLab admin options" : "Impossible d'enregistrer les options d'administration GitLab",
+    "Enable navigation link" : "Activer le lien de navigation",
     "GitLab instance address" : "Adresse de l'instance GitLab",
     "Personal access token" : "Jeton d'accès personnel",
     "GitLab personal access token" : "Jeton d'accès personnel GitLab",
