@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : " Napaka med pridobivanjem žetona OAuth za dostop",
     "Error during OAuth exchanges" : " Napaka med izmenjavo podatkov OAuth",
     "GitLab todos" : "Odprte naloge GitLab",
@@ -32,6 +33,8 @@ OC.L10N.register(
     "No GitLab account connected" : "Ni povezanega računa GitLab",
     "Error connecting to GitLab" : "Napaka povezovanja z GitLab",
     "No GitLab notifications!" : "Ni obvestil GitLab!",
-    "You were mentioned" : "Omenjeni ste bili v klepetu"
+    "Failed to get GitLab notifications" : "Pridobivanje obvestil GitLab je spodletelo",
+    "You were mentioned" : "Omenjeni ste bili v klepetu",
+    "Marked" : "Označeno"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

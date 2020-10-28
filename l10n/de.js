@@ -4,7 +4,7 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Fehler beim Abrufen des OAuth-Zugriffstokens.",
     "Error during OAuth exchanges" : "Fehler beim OAuth-Austausch",
-    "GitLab todos" : "Gitlab-Aufgaben",
+    "GitLab todos" : "GitLab-Aufgaben",
     "GitLab issues and merge requests" : "GitLab Issues und Merge-Requests",
     "GitLab repositories" : "GitLab-Repositories",
     "Bad credentials" : "Falsche Anmeldeinformationen",
@@ -40,8 +40,8 @@ OC.L10N.register(
     "Successfully connected to GitLab!" : "Erfolgreich verbunden mit GitLab!",
     "Error connecting to GitLab:" : "Fehler bei der Verbindung zu GitLab:",
     "Incorrect access token" : "Zugriffstoken nicht korrekt",
-    "GitLab options saved" : "GitLab Einstellungen gespeichert",
-    "Failed to save GitLab options" : "Fehler beim Speichern der GutLab-Einstellungen",
+    "GitLab options saved" : "GitLab-Einstellungen gespeichert",
+    "Failed to save GitLab options" : "Fehler beim Speichern der GitLab-Einstellungen",
     "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status",
     "Mark as done" : "Als erledigt markieren",
     "No GitLab account connected" : "Kein GitLab-Konto verbunden",
@@ -54,6 +54,6 @@ OC.L10N.register(
     "A build has failed" : "Ein Build ist fehlgeschlagen",
     "Marked" : "Markiert",
     "You were directly addressed" : "Du wurdest direkt angesprochen",
-    "Failed to edit GitLab todo" : "Fehler beim Bearbeiten der GitLab-Todo"
+    "Failed to edit GitLab todo" : "Fehler beim Bearbeiten der GitLab-Aufgaben"
 },
 "nplurals=2; plural=(n != 1);");
