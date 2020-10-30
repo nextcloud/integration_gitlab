@@ -5,7 +5,7 @@
 		:loading="state === 'loading'"
 		:item-menu="itemMenu"
 		@markDone="onMarkDone">
-		<template v-slot:empty-content>
+		<template #empty-content>
 			<EmptyContent
 				v-if="emptyContentMessage"
 				:icon="emptyContentIcon">
