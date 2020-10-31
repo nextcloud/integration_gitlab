@@ -6,7 +6,7 @@ OC.L10N.register(
     "GitLab repositories" : "GitLab 仓库",
     "Bad credentials" : "不好的证书",
     "OAuth access token refused" : "OAuth 访问令牌拒绝",
-    "Connected accounts" : "账号已连接",
+    "Connected accounts" : "关联账号",
     "Enable navigation link" : "启用导航链接",
     "Connected as {user}" : "作为 {user} 已连接",
     "Incorrect access token" : "访问令牌不正确"
