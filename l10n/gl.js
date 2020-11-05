@@ -16,7 +16,7 @@ OC.L10N.register(
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Se quere permitir que os seus usuarios do Nextcloud usen OAuth para autenticarse nunha instancia de GitLab da súa elección, cree unha aplicación nos seus axustes de GitLab e estabeleza o ID e o segredo aquí.",
     "Make sure you set the \"Redirect URI\" to" : "Asegúrese de estabelecer o «URI de redirección» como",
     "and give \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "e déalle os permisos «api», «read_user», «read_api» e «read_repository» á aplicación.",
-    "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "Engada a continuación o «ID de cliente» e o «Segredo de cliente». Os seus usuarios do Nextcloud verán entón un botón «Conectar con GitLab» nos seus axustes persoais se seleccionan a instancia GitLab aquí definida.",
+    "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "Engada deseguido o «ID de cliente» e o «Segredo de cliente». Os seus usuarios do Nextcloud verán entón un botón «Conectar con GitLab» nos seus axustes persoais se seleccionan a instancia GitLab aquí definida.",
     "OAuth app instance address" : "Enderezo da instancia de OAuth",
     "Instance address" : "Enderezo da instancia",
     "Application ID" : "ID da aplicación",
