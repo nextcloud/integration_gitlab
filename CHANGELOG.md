@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.8 – 2020-11-08
+### Added
+- optional link to GitLab in NC navigation
+
+### Changed
+- bump js libs
+
+### Fixed
+- make app icon dimensions square
+
 ## 0.0.7 – 2020-10-22
 ### Added
 - automate releases
