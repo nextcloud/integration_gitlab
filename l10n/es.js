@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Error al obtener el token de acceso OAuth.",
     "Error during OAuth exchanges" : "Error durante los intercambios OAuth",
     "GitLab todos" : "GitLab todos",
@@ -11,6 +12,7 @@ OC.L10N.register(
     "Connected accounts" : "Cuentas conectadas",
     "GitLab integration" : "Integración GitLab",
     "Integration of GitLab software development management service" : "Integración con el servicio de control de desarrollo de software GitLab",
+    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "La integración con GitLab ofrece un widget que muestra tus notificaciones más importantes\n   y un proveedor unificado de búsqueda para repositorios, errores y merge requests.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Si quieres permitir que tus usuarios de Nextcloud usen OAuth para autenticarse en una instancia de GitLab de tu elección, crea una aplicación en tu configuración de GitLab y pon aquí la ID y secreto.",
     "Make sure you set the \"Redirect URI\" to" : "Asegúrate de que pones la «URI de redirección» como",
     "and give \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "y concedes permisos «api», «read_user», «read_api» y read_repository«» a la aplicación.",
@@ -20,6 +22,10 @@ OC.L10N.register(
     "Application ID" : "ID de la aplicación",
     "ID of your GitLab application" : "ID de tu aplicación GitLab",
     "Application secret" : "Secreto de la aplicación",
+    "Client secret of your GitLab application" : "Secreto de cliente de tu aplicación GitLab",
+    "GitLab admin options saved" : "Opciones de administración guardadas",
+    "Failed to save GitLab admin options" : "Fallo al guardar las opciones de administración de GitLab",
+    "Enable navigation link" : "Activar enlace de navegación",
     "Personal access token" : "Token de acceso personal",
     "Connected as {user}" : "Conectado como {user}",
     "Enable searching for repositories" : "Activar la búsqueda de repositorios",
