@@ -24,10 +24,22 @@
     "GitLab admin options saved" : "Opciones de administración guardadas",
     "Failed to save GitLab admin options" : "Fallo al guardar las opciones de administración de GitLab",
     "Enable navigation link" : "Activar enlace de navegación",
+    "When you create an access token yourself, give it at least \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Al crear tú mismo un token de acceso, dale al menos los permisos «api», «read_user», «read_api» y «read_repository».",
+    "GitLab instance address" : "Dirección de la instancia de GitLab",
     "Personal access token" : "Token de acceso personal",
+    "GitLab personal access token" : "Token personal de acceso a GitLab",
+    "Connect to GitLab" : "Conectar con GitLab",
     "Connected as {user}" : "Conectado como {user}",
+    "Disconnect from GitLab" : "Desconectar de GitLab",
     "Enable searching for repositories" : "Activar la búsqueda de repositorios",
+    "Enable searching for issues and merge requests" : "Activar búsqueda de problemas y merge requests",
+    "(This may be slow or even fail on some GitLab instances)" : "(esto puede ser lento e incluso fallar en algunas instancias de GitLab)",
+    "Warning, everything you type in the search bar will be sent to GitLab." : "Atención: todo lo que escribas en la barra de búsqueda será enviado a GitLab.",
+    "Successfully connected to GitLab!" : "Conectado a GitLab con éxito.",
+    "Error connecting to GitLab:" : "Error al conectar con Gitlab:",
     "Incorrect access token" : "Token de acceso incorrecto",
+    "GitLab options saved" : "Opciones de GitLab guardadas",
+    "Failed to save GitLab options" : "Fallo al guardar las opciones de GitlLab",
     "You were mentioned" : "Has sido mencionado"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
