@@ -12,7 +12,7 @@ OC.L10N.register(
     "Connected accounts" : "Bağlı hesaplar",
     "GitLab integration" : "GitLab bütünleştirmesi",
     "Integration of GitLab software development management service" : "GitLab yazılım geliştirme yönetimi sistemi bütünleştirmesi",
-    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "GitLab bütünleştirmesi en önemli bildirimler ile depolar, sorunlar ve birleştirme istekleri\n    için birleşik arama özelliğini görüntüleyen bir pano gereci sağlar.",
+    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "GitLab bütünleştirmesi en önemli bildirimler ile depolar, sorunlar ve birleştirme istekleri\n    için birleşik arama özelliğini görüntüleyen bir pano bileşeni sağlar.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Nextcloud kullanıcılarınızın seçeeceğiniz GitLab kopyası kimlik doğrulaması için OAuth uygulamasını kullanmak istiyorsanız, GitLab ayarlarınızdan bir uygulama oluşturun ve aşağıya kimlik ve sır bilgilerini yazın.",
     "Make sure you set the \"Redirect URI\" to" : "\"Yönlendirme adresini\" şuna ayarladığınızdan emin olun",
     "and give \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "ve uygulamaya \"api\", \"read_user\", \"read_api\" ve \"read_repository\" izinlerini verin.",
