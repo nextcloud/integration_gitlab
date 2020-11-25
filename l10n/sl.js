@@ -29,7 +29,7 @@ OC.L10N.register(
     "Connected as {user}" : "Povezan je uporabniški račun {user}",
     "Disconnect from GitLab" : "Prekini povezavo z GitLab",
     "Enable searching for repositories" : "Omogoči iskanje po skladiščih",
-    "Warning, everything you type in the search bar will be sent to GitLab." : "Opozorilo! Karkoli vpišete v iskalno okno bo poslano na GitLab.",
+    "Warning, everything you type in the search bar will be sent to GitLab." : "Opozorilo! Karkoli vpišete v iskalno okno bo poslano na strežnik GitLab.",
     "Successfully connected to GitLab!" : "Povezava z računom GitLab je uspešno vzpostavljena!",
     "Error connecting to GitLab:" : "Napaka povezovanja z računom GitLab:",
     "Incorrect access token" : " Neveljaven žetona za dostop",
