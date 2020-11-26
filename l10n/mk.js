@@ -6,6 +6,7 @@ OC.L10N.register(
     "Bad credentials" : "Неточни акредитиви",
     "OAuth access token refused" : "Одбиен OAuth пристапен токен ",
     "Connected accounts" : "Поврзани сметки",
+    "Enable navigation link" : "Овозможи линк за навигација",
     "Connected as {user}" : "Поврзан како {user}",
     "Incorrect access token" : "Неточен токен за пристап",
     "You were mentioned" : "Споменати сте"
