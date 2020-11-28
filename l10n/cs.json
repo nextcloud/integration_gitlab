@@ -23,6 +23,7 @@
     "Client secret of your GitLab application" : "Klientské tajemství vaší GitLab aplikace",
     "GitLab admin options saved" : "Předvolby správy GitLab uloženy",
     "Failed to save GitLab admin options" : "Nepodařilo se uložit předvolby správy GitLab",
+    "Enable navigation link" : "Povolit navigační odkaz",
     "When you create an access token yourself, give it at least \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Když si osobní přístupový token vytváříte sami, udělte mu přinejmenším oprávnění pro „api“, „read_user“, „read_api“ a „read_repository“.",
     "GitLab instance address" : "Adresa instance GitLab",
     "Personal access token" : "Osobní přístupový token",
