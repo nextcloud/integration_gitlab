@@ -22,9 +22,12 @@ OC.L10N.register(
     "Successfully connected to GitLab!" : "Succesvol verbonden met GitLab!",
     "Error connecting to GitLab:" : "Fout bij het verbinden met GitLab:",
     "Mark as done" : "Markeren als gedaan",
+    "No GitLab notifications!" : "Geen GitLab meldingen!",
     "You were mentioned" : "Je werd vermeld",
     "Your approval is required" : "Je toestemming is vereist",
     "You were assigned" : "Je kreeg toegewezen",
-    "Marked" : "Gemarkeerd"
+    "A build has failed" : "Een build is mislukt",
+    "Marked" : "Gemarkeerd",
+    "You were directly addressed" : "Je werd rechtstreeks benaderd"
 },
 "nplurals=2; plural=(n != 1);");
