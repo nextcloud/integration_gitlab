@@ -23,6 +23,7 @@ OC.L10N.register(
     "Connect to GitLab" : "Verbinden met GitLab",
     "Connected as {user}" : "Verbonden als {user}",
     "Disconnect from GitLab" : "Verbinding met GitLab verbreken",
+    "Warning, everything you type in the search bar will be sent to GitLab." : "Let op: alles wat je intypt in de zoekbalk wordt naar GitLab gestuurd.",
     "Successfully connected to GitLab!" : "Succesvol verbonden met GitLab!",
     "Error connecting to GitLab:" : "Fout bij het verbinden met GitLab:",
     "Mark as done" : "Markeren als gedaan",
