@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.9 – 2020-12-15
+### Changed
+- bump js libs
+- show namespace in dashboard widget items
+
 ## 0.0.8 – 2020-11-08
 ### Added
 - optional link to GitLab in NC navigation
