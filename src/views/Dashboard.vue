@@ -242,7 +242,7 @@ export default {
 			return ''
 		},
 		getSubline(n) {
-			return this.getNotificationActionChar(n) + ' ' + n.project.path + this.getTargetIdentifier(n)
+			return this.getNotificationActionChar(n) + ' ' + n.project.path_with_namespace + this.getTargetIdentifier(n)
 		},
 		getTargetContent(n) {
 			return n.body
