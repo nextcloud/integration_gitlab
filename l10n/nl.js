@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Fout bij ophalen OAuth access token",
     "Error during OAuth exchanges" : "Fout tijdens OAuth uitwisselingen",
     "GitLab todos" : "GitLab todo's",
@@ -18,7 +19,9 @@ OC.L10N.register(
     "OAuth app instance address" : "OAuth app instance adres",
     "Instance address" : "Instance adres",
     "Application ID" : "Application ID",
+    "ID of your GitLab application" : "ID van je GitLab applicatie",
     "Application secret" : "Application secret",
+    "Client secret of your GitLab application" : "Client secret van je GitLab applicatie",
     "GitLab admin options saved" : "GitLab beheeropties bewaard",
     "Failed to save GitLab admin options" : "Kon GitLab admin-opties niet opslaan",
     "When you create an access token yourself, give it at least \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Als je zelf een access token aanmaakt, geef het dan minimaal \"api\", read:user\", \"read_api\" en \"read_repository\" permissies.",
@@ -28,6 +31,7 @@ OC.L10N.register(
     "Connect to GitLab" : "Verbinden met GitLab",
     "Connected as {user}" : "Verbonden als {user}",
     "Disconnect from GitLab" : "Verbinding met GitLab verbreken",
+    "Enable searching for repositories" : "Inschakelen zoeken naar repositories",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Let op: alles wat je intypt in de zoekbalk wordt naar GitLab gestuurd.",
     "Successfully connected to GitLab!" : "Succesvol verbonden met GitLab!",
     "Error connecting to GitLab:" : "Fout bij het verbinden met GitLab:",
@@ -36,12 +40,16 @@ OC.L10N.register(
     "Failed to save GitLab options" : "Kon GitLab-opties niet opslaan",
     "Failed to save GitLab OAuth state" : "Kan GitLab OAuth-status niet bewaren",
     "Mark as done" : "Markeren als gedaan",
+    "No GitLab account connected" : "Geen GitLab-account verbonden",
+    "Error connecting to GitLab" : "Fout bij het verbinden met Google",
     "No GitLab notifications!" : "Geen GitLab meldingen!",
+    "Failed to get GitLab notifications" : "Kon GitLab-meldingen niet ophalen.",
     "You were mentioned" : "Je werd vermeld",
     "Your approval is required" : "Je toestemming is vereist",
     "You were assigned" : "Je kreeg toegewezen",
     "A build has failed" : "Een build is mislukt",
     "Marked" : "Gemarkeerd",
-    "You were directly addressed" : "Je werd rechtstreeks benaderd"
+    "You were directly addressed" : "Je werd rechtstreeks benaderd",
+    "Failed to edit GitLab todo" : "Kon de GitLab todo niet bewerken"
 },
 "nplurals=2; plural=(n != 1);");
