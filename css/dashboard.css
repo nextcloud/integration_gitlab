@@ -1,3 +1,8 @@
+body {
+    height: auto;
+    min-height: 100%;
+}
+
 .icon-gitlab {
     background-image: url(./../img/app-dark.svg);
 }
