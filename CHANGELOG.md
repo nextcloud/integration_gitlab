@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.10 – 2021-01-18
+### Fixed
+- Popover scroll issue
+
 ## 0.0.9 – 2020-12-15
 ### Changed
 - bump js libs
