@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 0.0.11 – 2021-02-08
+## 0.0.12 – 2021-02-08
 ### Changed
 - bump max NC version
 
