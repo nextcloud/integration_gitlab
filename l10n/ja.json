@@ -1,8 +1,19 @@
 { "translations": {
+    "GitLab" : "GitLab",
     "Error during OAuth exchanges" : "OAuth通信中のエラー",
+    "GitLab repositories" : "GitLab のリポジトリ",
     "Bad credentials" : "不正な資格情報",
     "OAuth access token refused" : "OAuthアクセストークンが拒否されました",
     "Connected accounts" : "接続済みアカウント",
-    "Connected as {user}" : "{user} を接続済み"
+    "GitLab integration" : "GitLab の統合",
+    "Instance address" : "インスタンスのアドレス",
+    "Application ID" : "アプリケーション ID",
+    "ID of your GitLab application" : "GitLab アプリケーションの ID",
+    "Application secret" : "アプリケーションシークレット",
+    "Enable navigation link" : "ナビゲーションリンクを有効化",
+    "GitLab instance address" : "GitLab インスタンスのアドレス",
+    "Connect to GitLab" : "GitLab に接続",
+    "Connected as {user}" : "{user} を接続済み",
+    "Disconnect from GitLab" : "GitLab から切断"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
