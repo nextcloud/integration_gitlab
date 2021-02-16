@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 0.0.14 – 2021-02-16
+## 0.0.15 – 2021-02-16
 ### Changed
 - app certificate
 
