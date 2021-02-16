@@ -7,6 +7,7 @@ OC.L10N.register(
     "Bad credentials" : "Kredentzial okerrak",
     "OAuth access token refused" : "QAuth sarbide tokena ukatua izan da",
     "Connected accounts" : "Konektaturiko kontuak",
+    "Instance address" : "Instantzia helbidea",
     "Application ID" : "Aplikazio ID",
     "Application secret" : "Aplikazio-sekretua",
     "Enable navigation link" : "Gaitu nabigazio esteka",
