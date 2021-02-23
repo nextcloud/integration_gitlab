@@ -45,7 +45,7 @@
     "No GitLab account connected" : "未連線至 GitLab 帳號",
     "Error connecting to GitLab" : "連線至 GitLab 時發生錯誤",
     "No GitLab notifications!" : "無 GitLab 通知！",
-    "Failed to get GitLab notifications" : "取得 GitLab 通知失敗",
+    "Failed to get GitLab notifications" : "未能獲取 GitLab 通知",
     "You were mentioned" : "您被提及",
     "Your approval is required" : "需要您的批准",
     "You were assigned" : "您被指派",
