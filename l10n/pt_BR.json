@@ -19,7 +19,7 @@
     "Instance address" : "Endereço da instância",
     "Application ID" : "ID do aplicativo",
     "ID of your GitLab application" : "ID do seu aplicativo GitLab",
-    "Application secret" : "Chave do aplicativo",
+    "Application secret" : "Segredo do aplicativo",
     "Client secret of your GitLab application" : "Chave secreta do cliente de seu aplicativo GitLab",
     "GitLab admin options saved" : "Opções de administração do GitLab salvas",
     "Failed to save GitLab admin options" : "Falha ao salvar as opções de administrador do GitLab",
