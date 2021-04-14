@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "GitLab" : "GitLab",
     "Error during OAuth exchanges" : "Errorea QAuth trukeak egitean",
     "GitLab todos" : "GitLab eginbeharrak",
     "GitLab repositories" : "GitLab biltegiak",
@@ -11,6 +12,7 @@ OC.L10N.register(
     "Instance address" : "Instantzia helbidea",
     "Application ID" : "Aplikazio ID",
     "Application secret" : "Aplikazio-sekretua",
+    "GitLab admin options saved" : "GitLab administratzaile aukerak gorde dira",
     "Enable navigation link" : "Gaitu nabigazio esteka",
     "GitLab instance address" : "GitLab instantzia helbidea",
     "Personal access token" : "Sarbide token pertsonala",
@@ -22,10 +24,12 @@ OC.L10N.register(
     "Successfully connected to GitLab!" : "GitLab-era ongi konektatu da!",
     "Error connecting to GitLab:" : "Errorea GitLab-era konektatzean:",
     "Incorrect access token" : "Sarbide token okerra",
+    "GitLab options saved" : "GitLab aukerak gordeta",
     "Mark as done" : "Markatu eginda",
     "No GitLab notifications!" : "Ez dago GitLab jakinarazpenik!",
     "You were mentioned" : "Aipatu egin zaituzte",
     "Your approval is required" : "Zure onarpena beharrezkoa da",
+    "You were assigned" : "Esleitu zaituzte",
     "A build has failed" : "Eraiketa batek huts egin du",
     "Marked" : "Markatuta"
 },
