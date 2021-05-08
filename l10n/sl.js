@@ -15,6 +15,7 @@ OC.L10N.register(
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Podpora za GitLab omogoča uporabo gradnika nadzorne plošče za prikazovanje pomembnih obvestil in sporočil in\nuporabo iskalnika po skladiščih, med napakami in različnimi objavami.",
     "Make sure you set the \"Redirect URI\" to" : "Poskrbite, da bo »preusmeritveni naslov URI« nastavljen na",
     "and give \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "in odobrite programu dovoljenja »api (vmesnik dostopa)«, »read_api (branje podatkov)« in »read_repository (dostop do skladišča)«.",
+    "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "V polja je treba vpisati »ID programa« in »Kodo programa«. Uporabniki Nextcloud bodo nato med nastavitvami videli gumb »Poveži z računom GitLab«.",
     "OAuth app instance address" : "Naslov programa OAuth",
     "Instance address" : "Naslov povezave",
     "Application ID" : "ID Programa",
