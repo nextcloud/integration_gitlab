@@ -12,7 +12,7 @@ OC.L10N.register(
     "GitLab integration" : "GitLab集成",
     "Integration of GitLab software development management service" : "GitLab软件开发管理服务的集成",
     "Application ID" : "应用ID",
-    "Application secret" : "应用密钥",
+    "Application secret" : "应用程序 secret",
     "Enable navigation link" : "启用导航链接",
     "Connect to GitLab" : "连接到GitLab",
     "Connected as {user}" : "作为 {user} 已连接",
