@@ -45,12 +45,21 @@ class GitlabSearchIssuesProvider implements IProvider {
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
+	/**
+	 * @var IConfig
+	 */
+	private $config;
+	/**
+	 * @var GitlabAPIService
+	 */
+	private $service;
 
 	/**
 	 * CospendSearchProvider constructor.
 	 *
 	 * @param IAppManager $appManager
 	 * @param IL10N $l10n
+	 * @param IConfig $config
 	 * @param IURLGenerator $urlGenerator
 	 * @param GitlabAPIService $service
 	 */
@@ -105,12 +114,12 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$offset = $query->getCursor();
 		$offset = $offset ? intval($offset) : 0;
 
-		$theme = $this->config->getUserValue($user->getUID(), 'accessibility', 'theme', '');
+		$theme = $this->config->getUserValue($user->getUID(), 'accessibility', 'theme');
 		$thumbnailUrl = ($theme === 'dark')
 			? $this->urlGenerator->imagePath(Application::APP_ID, 'app.svg')
 			: $this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg');
 
-		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token', '');
+		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
 		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', 'https://gitlab.com');
 		if ($url === '') {
 			$url = 'https://gitlab.com';
@@ -125,7 +134,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$formattedResults = \array_map(function (array $entry) use ($thumbnailUrl, $url): GitlabSearchResultEntry {
+		$formattedResults = array_map(function (array $entry) use ($thumbnailUrl, $url): GitlabSearchResultEntry {
 			return new GitlabSearchResultEntry(
 				$this->getThumbnailUrl($entry, $thumbnailUrl),
 				$this->getMainText($entry),
@@ -144,6 +153,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 	}
 
 	/**
+	 * @param array $entry
 	 * @return string
 	 */
 	protected function getMainText(array $entry): string {
@@ -160,6 +170,8 @@ class GitlabSearchIssuesProvider implements IProvider {
 	}
 
 	/**
+	 * @param array $entry
+	 * @param string $url
 	 * @return string
 	 */
 	protected function getSubline(array $entry, string $url): string {
@@ -167,7 +179,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$repoFullName = preg_replace('/\/issues\/.*/', '', $repoFullName);
 		$repoFullName = preg_replace('/^\//', '', $repoFullName);
 		$spl = explode('/', $repoFullName);
-		$owner = $spl[0];
+//		$owner = $spl[0];
 		$repo = $spl[1];
 		$number = $entry['iid'];
 		$typeChar = $entry['type'] !== 'issue' ? '⑃' : '🛈';
@@ -176,6 +188,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 	}
 
 	/**
+	 * @param array $entry
 	 * @return string
 	 */
 	protected function getLinkToGitlab(array $entry): string {
@@ -183,6 +196,8 @@ class GitlabSearchIssuesProvider implements IProvider {
 	}
 
 	/**
+	 * @param array $entry
+	 * @param string $thumbnailUrl
 	 * @return string
 	 */
 	protected function getThumbnailUrl(array $entry, string $thumbnailUrl): string {

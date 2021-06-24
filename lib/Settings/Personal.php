@@ -2,35 +2,30 @@
 namespace OCA\Gitlab\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IRequest;
-use OCP\IL10N;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\Settings\ISettings;
-use OCP\Util;
-use OCP\IURLGenerator;
-use OCP\IInitialStateService;
 
 use OCA\Gitlab\AppInfo\Application;
 
 class Personal implements ISettings {
 
-	private $request;
+	/**
+	 * @var IConfig
+	 */
 	private $config;
-	private $dataDirPath;
-	private $urlGenerator;
-	private $l;
+	/**
+	 * @var IInitialState
+	 */
+	private $initialStateService;
+	/**
+	 * @var string|null
+	 */
+	private $userId;
 
-	public function __construct(string $appName,
-								IL10N $l,
-								IRequest $request,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								IInitialStateService $initialStateService,
-								$userId) {
-		$this->appName = $appName;
-		$this->urlGenerator = $urlGenerator;
-		$this->request = $request;
-		$this->l = $l;
+	public function __construct(IConfig $config,
+								IInitialState $initialStateService,
+								?string $userId) {
 		$this->config = $config;
 		$this->initialStateService = $initialStateService;
 		$this->userId = $userId;
@@ -40,18 +35,18 @@ class Personal implements ISettings {
 	 * @return TemplateResponse
 	 */
 	public function getForm(): TemplateResponse {
-		$token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
+		$token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
 		$searchEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_enabled', '0');
 		$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0');
 		$navigationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'navigation_enabled', '0');
-		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name', '');
+		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com') ?: 'https://gitlab.com';
 
 		// for OAuth
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		// don't expose the client secret to users
-		$clientSecret = ($this->config->getAppValue(Application::APP_ID, 'client_secret', '') !== '');
-		$oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', '');
+		$clientSecret = ($this->config->getAppValue(Application::APP_ID, 'client_secret') !== '');
+		$oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url');
 
 		$userConfig = [
 			'token' => $token,
@@ -64,7 +59,7 @@ class Personal implements ISettings {
 			'search_issues_enabled' => ($searchIssuesEnabled === '1'),
 			'navigation_enabled' => ($navigationEnabled === '1'),
 		];
-		$this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
+		$this->initialStateService->provideInitialState('user-config', $userConfig);
 		return new TemplateResponse(Application::APP_ID, 'personalSettings');
 	}
 

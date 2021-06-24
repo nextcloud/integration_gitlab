@@ -11,28 +11,42 @@
 
 namespace OCA\Gitlab\Service;
 
+use DateInterval;
+use Datetime;
+use DateTimeImmutable;
+use Exception;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 use OCP\Http\Client\IClientService;
 
 class GitlabAPIService {
-
-	private $l10n;
+	/**
+	 * @var string
+	 */
+	private $appName;
+	/**
+	 * @var LoggerInterface
+	 */
 	private $logger;
+	/**
+	 * @var IL10N
+	 */
+	private $l10n;
+	/**
+	 * @var \OCP\Http\Client\IClient
+	 */
+	private $client;
 
 	/**
 	 * Service to make requests to GitLab v3 (JSON) API
 	 */
-	public function __construct (
-		string $appName,
-		LoggerInterface $logger,
-		IL10N $l10n,
-		IClientService $clientService
-	) {
+	public function __construct (string $appName,
+								LoggerInterface $logger,
+								IL10N $l10n,
+								IClientService $clientService) {
 		$this->appName = $appName;
-		$this->l10n = $l10n;
 		$this->logger = $logger;
-		$this->clientService = $clientService;
+		$this->l10n = $l10n;
 		$this->client = $clientService->newClient();
 	}
 
@@ -78,10 +92,10 @@ class GitlabAPIService {
 		if (isset($projects['error'])) {
 			return $projects;
 		}
-		$a = usort($projects, function($a, $b) {
-			$a = new \Datetime($a['last_activity_at']);
+		usort($projects, function($a, $b) {
+			$a = new Datetime($a['last_activity_at']);
 			$ta = $a->getTimestamp();
-			$b = new \Datetime($b['last_activity_at']);
+			$b = new Datetime($b['last_activity_at']);
 			$tb = $b->getTimestamp();
 			return ($ta > $tb) ? -1 : 1;
 		});
@@ -90,8 +104,7 @@ class GitlabAPIService {
 		//	$sb = intval($b['star_count']);
 		//	return ($sa > $sb) ? -1 : 1;
 		//});
-		$projects = array_slice($projects, $offset, $limit);
-		return $projects;
+		return array_slice($projects, $offset, $limit);
 	}
 
 	/**
@@ -129,15 +142,14 @@ class GitlabAPIService {
 
 		$results = array_merge($issues, $mergeRequests);
 
-		$a = usort($results, function($a, $b) {
-			$a = new \Datetime($a['updated_at']);
+		usort($results, function($a, $b) {
+			$a = new Datetime($a['updated_at']);
 			$ta = $a->getTimestamp();
-			$b = new \Datetime($b['updated_at']);
+			$b = new Datetime($b['updated_at']);
 			$tb = $b->getTimestamp();
 			return ($ta > $tb) ? -1 : 1;
 		});
-		$results = array_slice($results, $offset, $limit);
-		return $results;
+		return array_slice($results, $offset, $limit);
 	}
 
 	/**
@@ -163,14 +175,14 @@ class GitlabAPIService {
 			'scope' => 'all',
 		];
 		if (is_null($since)) {
-			$twoWeeksEarlier = new \DateTime();
-			$twoWeeksEarlier->sub(new \DateInterval('P14D'));
+			$twoWeeksEarlier = new DateTime();
+			$twoWeeksEarlier->sub(new DateInterval('P14D'));
 			$params['after'] = $twoWeeksEarlier->format('Y-m-d');
 		} else {
 			// we get a full ISO date, the API only wants a day (non inclusive)
-			$sinceDate = new \DateTimeImmutable($since);
+			$sinceDate = new DateTimeImmutable($since);
 			$sinceTimestamp = $sinceDate->getTimestamp();
-			$minusOneDayDate = $sinceDate->sub(new \DateInterval('P1D'));
+			$minusOneDayDate = $sinceDate->sub(new DateInterval('P1D'));
 			$params['after'] = $minusOneDayDate->format('Y-m-d');
 		}
 		// merge requests created
@@ -216,7 +228,7 @@ class GitlabAPIService {
 		// filter merged results by date
 		if (!is_null($since)) {
 			$result = array_filter($result, function($elem) use ($sinceTimestamp) {
-				$date = new \Datetime($elem['created_at']);
+				$date = new Datetime($elem['created_at']);
 				$ts = $date->getTimestamp();
 				return $ts > $sinceTimestamp;
 			});
@@ -230,10 +242,10 @@ class GitlabAPIService {
 		$result = array_values($result);
 
 		// sort merged results by date
-		$a = usort($result, function($a, $b) {
-			$a = new \Datetime($a['created_at']);
+		usort($result, function($a, $b) {
+			$a = new Datetime($a['created_at']);
 			$ta = $a->getTimestamp();
-			$b = new \Datetime($b['created_at']);
+			$b = new Datetime($b['created_at']);
 			$tb = $b->getTimestamp();
 			return ($ta > $tb) ? -1 : 1;
 		});
@@ -276,11 +288,11 @@ class GitlabAPIService {
 		// filter results by date
 		if (!is_null($since)) {
 			// we get a full ISO date, the API only wants a day (non inclusive)
-			$sinceDate = new \DateTime($since);
+			$sinceDate = new DateTime($since);
 			$sinceTimestamp = $sinceDate->getTimestamp();
 
 			$result = array_filter($result, function($elem) use ($sinceTimestamp) {
-				$date = new \Datetime($elem['updated_at']);
+				$date = new Datetime($elem['updated_at']);
 				$ts = $date->getTimestamp();
 				return $ts > $sinceTimestamp;
 			});
@@ -390,6 +402,8 @@ class GitlabAPIService {
 				$response = $this->client->put($url, $options);
 			} else if ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
+			} else {
+				return ['error' => $this->l10n->t('Bad HTTP method')];
 			}
 			$body = $response->getBody();
 			$respCode = $response->getStatusCode();
@@ -399,7 +413,7 @@ class GitlabAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			$this->logger->warning('GitLab API error : '.$e->getMessage(), array('app' => $this->appName));
 			return ['error' => $e->getMessage()];
 		}
@@ -437,6 +451,8 @@ class GitlabAPIService {
 				$response = $this->client->put($url, $options);
 			} else if ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
+			} else {
+				return ['error' => $this->l10n->t('Bad HTTP method')];
 			}
 			$body = $response->getBody();
 			$respCode = $response->getStatusCode();
@@ -446,7 +462,7 @@ class GitlabAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), array('app' => $this->appName));
 			return ['error' => $e->getMessage()];
 		}

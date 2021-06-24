@@ -9,16 +9,18 @@
 
 namespace OCA\Gitlab\AppInfo;
 
-use OCP\IContainer;
+use Closure;
+use OCP\IConfig;
+use OCP\IL10N;
+use OCP\INavigationManager;
+use OCP\IURLGenerator;
 use OCP\IUserSession;
 
 use OCP\AppFramework\App;
-use OCP\AppFramework\IAppContainer;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 
-use OCA\Gitlab\Controller\PageController;
 use OCA\Gitlab\Dashboard\GitlabWidget;
 use OCA\Gitlab\Search\GitlabSearchIssuesProvider;
 use OCA\Gitlab\Search\GitlabSearchReposProvider;
@@ -30,6 +32,10 @@ use OCA\Gitlab\Search\GitlabSearchReposProvider;
  */
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'integration_gitlab';
+	/**
+	 * @var mixed
+	 */
+	private $config;
 
 	/**
 	 * Constructor
@@ -40,8 +46,7 @@ class Application extends App implements IBootstrap {
 		parent::__construct(self::APP_ID, $urlParams);
 
 		$container = $this->getContainer();
-		$this->container = $container;
-		$this->config = $container->query(\OCP\IConfig::class);
+		$this->config = $container->get(IConfig::class);
 	}
 
 	public function register(IRegistrationContext $context): void {
@@ -51,20 +56,20 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function boot(IBootContext $context): void {
-		$context->injectFn(\Closure::fromCallable([$this, 'registerNavigation']));
+		$context->injectFn(Closure::fromCallable([$this, 'registerNavigation']));
 	}
 
 	public function registerNavigation(IUserSession $userSession): void {
 		$user = $userSession->getUser();
 		if ($user !== null) {
 			$userId = $user->getUID();
-			$container = $this->container;
+			$container = $this->getContainer();
 
 			if ($this->config->getUserValue($userId, self::APP_ID, 'navigation_enabled', '0') === '1') {
 				$gitlabUrl = $this->config->getUserValue($userId, self::APP_ID, 'url', '') ?: 'https://gitlab.com';
-				$container->query(\OCP\INavigationManager::class)->add(function () use ($container, $gitlabUrl) {
-					$urlGenerator = $container->query(\OCP\IURLGenerator::class);
-					$l10n = $container->query(\OCP\IL10N::class);
+				$container->get(INavigationManager::class)->add(function () use ($container, $gitlabUrl) {
+					$urlGenerator = $container->get(IURLGenerator::class);
+					$l10n = $container->get(IL10N::class);
 					return [
 						'id' => self::APP_ID,
 
