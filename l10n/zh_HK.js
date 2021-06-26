@@ -7,6 +7,7 @@ OC.L10N.register(
     "GitLab todos" : "GitLab 待辦事項",
     "GitLab issues and merge requests" : "GitLab 議題與合併請求",
     "GitLab repositories" : "GitLab 倉庫",
+    "Bad HTTP method" : "不正確的 HTTP 方法",
     "Bad credentials" : "錯誤的憑證",
     "OAuth access token refused" : "OAuth 存取權杖被拒絕",
     "Connected accounts" : "已連線的帳號",

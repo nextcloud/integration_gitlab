@@ -7,6 +7,7 @@ OC.L10N.register(
     "GitLab todos" : "Do zrobienia na GitLabie",
     "GitLab issues and merge requests" : "Problemy na GitLabie i żądania scalenia",
     "GitLab repositories" : "Repozytoria GitLab",
+    "Bad HTTP method" : "Zła metoda HTTP",
     "Bad credentials" : "Złe poświadczenia",
     "OAuth access token refused" : "Odmowa tokena dostępu OAuth",
     "Connected accounts" : "Połączone konta",
