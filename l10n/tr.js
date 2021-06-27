@@ -7,6 +7,7 @@ OC.L10N.register(
     "GitLab todos" : "GitLab yapılacak işler",
     "GitLab issues and merge requests" : "GitLab sorunları ve birleştirme istekleri",
     "GitLab repositories" : "GitLab depoları",
+    "Bad HTTP method" : "HTTP yöntemi hatalı",
     "Bad credentials" : "Kimlik doğrulama bilgileri hatalı",
     "OAuth access token refused" : "OAuth erişim kodu reddedildi",
     "Connected accounts" : "Bağlı hesaplar",
