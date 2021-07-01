@@ -7,6 +7,7 @@ OC.L10N.register(
     "GitLab todos" : "GitLab eginbeharrak",
     "GitLab issues and merge requests" : "GitLab issue-ak eta pull request-ak",
     "GitLab repositories" : "GitLab biltegiak",
+    "Bad HTTP method" : "HTTP metodo okerra",
     "Bad credentials" : "Kredentzial okerrak",
     "OAuth access token refused" : "QAuth sarbide tokena ukatua izan da",
     "Connected accounts" : "Konektaturiko kontuak",
