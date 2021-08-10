@@ -7,6 +7,7 @@ OC.L10N.register(
     "GitLab todos" : "GitLab zadaci",
     "GitLab issues and merge requests" : "GitLab problemi i zahtjevi za spajanje",
     "GitLab repositories" : "GitLab spremišta podataka",
+    "Bad HTTP method" : "Pogrešna metoda HTTP-a",
     "Bad credentials" : "Pogrešne vjerodajnice",
     "OAuth access token refused" : "Odbijen token za pristup OAuth",
     "Connected accounts" : "Povezani računi",
