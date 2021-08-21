@@ -17,7 +17,7 @@ OC.L10N.register(
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "如果您想要讓您的 Nextcloud 用戶使用 OAuth 來驗證您選擇的 GItLab 站台的話，在您的 GItLab 設定中建立應用程式，然後在此處設定 ID 與密碼。",
     "Make sure you set the \"Redirect URI\" to" : "確保您將「重新導向 URI」設定為",
     "and give \"api\", \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "並將 \"api\"、\"read_user\"、\"read_api\" 與 \"read_repository\" 權限授予應用程式。",
-    "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "在下方填入「應用程式 ID」與「應用程式密碼」。如果您的 Nextcloud 用戶選擇了在此定義的 GitLab 站台，他們將會在個人設定中看到「連線至 GItLab」按鈕。",
+    "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "在下方填入「應用程式 ID」與「應用程式密碼」。如果您的 Nextcloud 用戶選擇了在此定義的 GitLab 站台，他們將會在個人設定中看到【連線至 GItLab】按鈕。",
     "OAuth app instance address" : "OAuth 應用程式站台地址",
     "Instance address" : "站台地址",
     "Application ID" : "應用程式 ID",
