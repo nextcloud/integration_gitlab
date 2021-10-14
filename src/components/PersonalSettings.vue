@@ -15,7 +15,7 @@
 		</div>
 		<br><br>
 		<p v-if="!showOAuth && !connected" class="settings-hint">
-			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "api", "read_user", "read_api" and "read_repository" permissions.') }}
+			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions. Optinonally "api" instead.') }}
 		</p>
 		<div id="gitlab-content">
 			<div class="gitlab-grid-form">
