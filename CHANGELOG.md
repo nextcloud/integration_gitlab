@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.2 – 2021-10-14
+### Changed
+- don't ask for 'api' scope when using OAuth
+- adjust advice to create personal token
+
 ## 1.0.1 – 2021-06-28
 ### Changed
 - stop polling widget content when document is hidden
