@@ -7,6 +7,7 @@ OC.L10N.register(
     "GitLab todos" : "Odprte naloge GitLab",
     "GitLab issues and merge requests" : "Odprte naloge in zahteve za združitev kode",
     "GitLab repositories" : "Skladišča GitLab",
+    "Bad HTTP method" : "Neustrezna metoda HTTP",
     "Bad credentials" : "Neustrezna poverila",
     "OAuth access token refused" : "Žeton OAuth za dostop je bil zavrnjen",
     "Connected accounts" : "Povezani računi",
