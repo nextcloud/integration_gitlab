@@ -17,6 +17,7 @@ OC.L10N.register(
     "Connect to GitLab" : "GitLab に接続",
     "Connected as {user}" : "{user} を接続済み",
     "Disconnect from GitLab" : "GitLab から切断",
+    "Successfully connected to GitLab!" : "GitLabへの接続に成功しました！",
     "No GitLab account connected" : "接続済みGitLabアカウントがありません",
     "No GitLab notifications!" : "GitLab通知がありません！"
 },
