@@ -28,6 +28,7 @@ OC.L10N.register(
     "Error connecting to GitLab:" : "连接到GitLab时出现错误：",
     "Incorrect access token" : "访问令牌不正确",
     "Mark as done" : "标记为已完成",
+    "No GitLab notifications!" : "无 GitLab 通知！",
     "You were mentioned" : "您被提及",
     "Your approval is required" : "需要您的批准",
     "You were assigned" : "您已被指派",
