@@ -29,7 +29,7 @@ OC.L10N.register(
     "Personal access token" : "Testimoni d'accés personal",
     "GitLab personal access token" : "Testimoni d'accés personal de GitLab",
     "Connect to GitLab" : "Connectar-se a GitLab",
-    "Connected as {user}" : "S'ha connectat com a {usuari}",
+    "Connected as {user}" : "S'ha connectat com a {user}",
     "Disconnect from GitLab" : "Desconnectar-se de GitLab",
     "Enable searching for repositories" : "Habilita la cerca de repositoris",
     "Enable searching for issues and merge requests" : "Habilita la cerca de problemes i les sol·licituds de combinació",
