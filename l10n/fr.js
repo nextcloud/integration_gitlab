@@ -57,4 +57,4 @@ OC.L10N.register(
     "You were directly addressed" : "Vous avez été mentionné(e)",
     "Failed to edit GitLab todo" : "Impossible d'éditer le todo GitLab"
 },
-"nplurals=3; plural=(n==0 || n==1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
+"nplurals=2; plural=(n > 1);");
