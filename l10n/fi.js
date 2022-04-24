@@ -24,6 +24,7 @@ OC.L10N.register(
     "Connect to GitLab" : "Yhdistä GitLabiin",
     "Connected as {user}" : "Yhdistetty käyttäjänä {user}",
     "Disconnect from GitLab" : "Katkaise yhteys GitLabiin",
+    "Enable searching for repositories" : "Ota käyttöön tietovarastojen haku",
     "Successfully connected to GitLab!" : "Yhdistetty GitLabiin!",
     "Error connecting to GitLab:" : "Virhe yhdistäessä GitLabiin:",
     "Incorrect access token" : "Virheellinen käyttöpoletti",

@@ -18,7 +18,10 @@ OC.L10N.register(
     "Connected as {user}" : "{user} を接続済み",
     "Disconnect from GitLab" : "GitLab から切断",
     "Successfully connected to GitLab!" : "GitLabへの接続に成功しました！",
+    "Incorrect access token" : "正しくないアクセストークン",
+    "Mark as done" : "完了としてマーク",
     "No GitLab account connected" : "接続済みGitLabアカウントがありません",
-    "No GitLab notifications!" : "GitLab通知がありません！"
+    "No GitLab notifications!" : "GitLab通知がありません！",
+    "You were mentioned" : "あなたについて言及されました"
 },
 "nplurals=1; plural=0;");

@@ -6,6 +6,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "交换 OAuth 时出错",
     "GitLab todos" : "GitLab待办事项",
     "GitLab repositories" : "GitLab 仓库",
+    "Bad HTTP method" : "错误的HTTP方法",
     "Bad credentials" : "不好的证书",
     "OAuth access token refused" : "OAuth 访问令牌拒绝",
     "Connected accounts" : "关联账号",

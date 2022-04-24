@@ -5,6 +5,7 @@
     "GitLab todos" : "Tasques pendents de GitLab",
     "GitLab issues and merge requests" : "Problemes de GitLab i sol·licituds de fusió",
     "GitLab repositories" : "Repositoris de GitLab",
+    "Bad HTTP method" : "Mètode HTTP incorrecte",
     "Bad credentials" : "Credencials dolentes",
     "OAuth access token refused" : "S'ha rebutjat el testimoni d'accés oAuth",
     "Connected accounts" : "Comptes connectades",
