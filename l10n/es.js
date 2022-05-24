@@ -57,4 +57,4 @@ OC.L10N.register(
     "You were directly addressed" : "Se han dirigido a ti",
     "Failed to edit GitLab todo" : "No ha sido posible editar la tarea de GitLab"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
