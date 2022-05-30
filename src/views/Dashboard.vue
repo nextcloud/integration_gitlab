@@ -24,7 +24,7 @@
 
 <script>
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, imagePath } from '@nextcloud/router'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
@@ -244,11 +244,11 @@ export default {
 		},
 		getNotificationTypeImage(n) {
 			if (n.target_type === 'MergeRequest') {
-				return generateUrl('/svg/integration_gitlab/merge_request?color=ffffff')
+				return imagePath('integration_gitlab', 'merge_request.svg')
 			} else if (n.target_type === 'Issue') {
-				return generateUrl('/svg/integration_gitlab/issues?color=ffffff')
+				return imagePath('integration_gitlab', 'issues.svg')
 			}
-			return generateUrl('/svg/core/actions/sound?color=' + this.themingColor)
+			return imagePath('integration_gitlab', 'sound-border.svg')
 		},
 		getNotificationActionChar(n) {
 			if (['Issue', 'MergeRequest'].includes(n.target_type)) {
