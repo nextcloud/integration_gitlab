@@ -12,6 +12,7 @@
 namespace OCA\Gitlab\Controller;
 
 use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\AppFramework\Http\DataResponse;
@@ -19,6 +20,7 @@ use OCP\AppFramework\Controller;
 
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCA\Gitlab\AppInfo\Application;
+use OCP\IURLGenerator;
 
 class GitlabAPIController extends Controller {
 
@@ -42,10 +44,15 @@ class GitlabAPIController extends Controller {
 	 * @var string
 	 */
 	private $gitlabUrl;
+	/**
+	 * @var IURLGenerator
+	 */
+	private $urlGenerator;
 
 	public function __construct(string $appName,
 								IRequest $request,
 								IConfig $config,
+								IURLGenerator $urlGenerator,
 								GitlabAPIService $gitlabAPIService,
 								?string $userId) {
 		parent::__construct($appName, $request);
@@ -55,6 +62,7 @@ class GitlabAPIController extends Controller {
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
 		$this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
 		$this->gitlabUrl = $this->gitlabUrl && $this->gitlabUrl !== '' ? $this->gitlabUrl : 'https://gitlab.com';
+		$this->urlGenerator = $urlGenerator;
 	}
 
 	/**
@@ -73,16 +81,17 @@ class GitlabAPIController extends Controller {
 	 * @NoCSRFRequired
 	 *
 	 * @param int $userId
-	 * @return DataDisplayResponse
 	 */
-	public function getUserAvatar(int $userId): DataDisplayResponse {
-		$avatarContent = $this->gitlabAPIService->getUserAvatar(
+	public function getUserAvatar(int $userId) {
+		$result = $this->gitlabAPIService->getUserAvatar(
 			$userId, $this->gitlabUrl, $this->accessToken
 		);
-		if (is_null($avatarContent)) {
-			return new DataDisplayResponse('', 400);
+		if (isset($result['userInfo'])) {
+			$userName = $result['userInfo']['name'] ?? '??';
+			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $userName, 'size' => 44]);
+			return new RedirectResponse($fallbackAvatarUrl);
 		} else {
-			$response = new DataDisplayResponse($avatarContent);
+			$response = new DataDisplayResponse($result['avatarContent']);
 			$response->cacheFor(60*60*24);
 			return $response;
 		}
@@ -94,16 +103,17 @@ class GitlabAPIController extends Controller {
 	 * @NoCSRFRequired
 	 *
 	 * @param int $projectId
-	 * @return DataDisplayResponse
 	 */
-	public function getProjectAvatar(int $projectId): DataDisplayResponse {
-		$avatarContent = $this->gitlabAPIService->getProjectAvatar(
+	public function getProjectAvatar(int $projectId) {
+		$result = $this->gitlabAPIService->getProjectAvatar(
 			$projectId, $this->gitlabUrl, $this->accessToken
 		);
-		if (is_null($avatarContent)) {
-			return new DataDisplayResponse('', 400);
+		if (isset($result['projectInfo'])) {
+			$projectName = $result['projectInfo']['name'] ?? '??';
+			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $projectName, 'size' => 44]);
+			return new RedirectResponse($fallbackAvatarUrl);
 		} else {
-			$response = new DataDisplayResponse($avatarContent);
+			$response = new DataDisplayResponse($result['avatarContent']);
 			$response->cacheFor(60*60*24);
 			return $response;
 		}

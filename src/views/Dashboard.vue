@@ -74,6 +74,7 @@ export default {
 					targetUrl: this.getNotificationTarget(n),
 					avatarUrl: this.getNotificationImage(n),
 					avatarUsername: this.getRepositoryName(n),
+					avatarIsNoUser: true,
 					overlayIconUrl: this.getNotificationTypeImage(n),
 					mainText: this.getTargetTitle(n),
 					subText: this.getSubline(n),
@@ -206,7 +207,7 @@ export default {
 		getNotificationImage(n) {
 			return (n.project && n.project.id && n.project.visibility !== 'private')
 				? generateUrl('/apps/integration_gitlab/avatar/project?') + encodeURIComponent('projectId') + '=' + encodeURIComponent(n.project.id)
-				: ''
+				: undefined
 		},
 		getAuthorFullName(n) {
 			return n.author.name

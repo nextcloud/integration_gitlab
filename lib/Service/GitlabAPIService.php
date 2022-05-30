@@ -331,29 +331,28 @@ class GitlabAPIService {
 	 * @param int $userId
 	 * @param string $gitlabUrl
 	 * @param string $accessToken
-	 * @return ?string
+	 * @return array
 	 */
-	public function getUserAvatar(int $userId, string $gitlabUrl, string $accessToken): ?string {
+	public function getUserAvatar(int $userId, string $gitlabUrl, string $accessToken): array {
 		$userInfo = $this->request($gitlabUrl, $accessToken, 'users/' . $userId);
-		file_put_contents('/tmp/aa', json_encode($userInfo));
 		if (!isset($userInfo['error']) && isset($userInfo['avatar_url'])) {
-			return $this->client->get($userInfo['avatar_url'])->getBody();
+			return ['avatarContent' => $this->client->get($userInfo['avatar_url'])->getBody()];
 		}
-		return null;
+		return ['userInfo' => $userInfo];
 	}
 
 	/**
 	 * @param int $projectId
 	 * @param string $gitlabUrl
 	 * @param string $accessToken
-	 * @return ?string
+	 * @return array
 	 */
-	public function getProjectAvatar(int $projectId, string $gitlabUrl, string $accessToken): ?string {
+	public function getProjectAvatar(int $projectId, string $gitlabUrl, string $accessToken): array {
 		$projectInfo = $this->request($gitlabUrl, $accessToken, 'projects/' . $projectId);
 		if (!isset($projectInfo['error']) && isset($projectInfo['avatar_url'])) {
-			return $this->client->get($projectInfo['avatar_url'])->getBody();
+			return ['avatarContent' => $this->client->get($projectInfo['avatar_url'])->getBody()];
 		}
-		return null;
+		return ['projectInfo' => $projectInfo];
 	}
 
 	/**
