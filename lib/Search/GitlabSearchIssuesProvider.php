@@ -129,7 +129,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$issues = $this->service->searchIssues($url, $accessToken, $term, $offset, $limit);
+		$issues = $this->service->searchIssues($user->getUID(), $url, $term, $offset, $limit);
 		if (isset($searchResult['error'])) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}

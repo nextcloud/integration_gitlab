@@ -83,9 +83,7 @@ class GitlabAPIController extends Controller {
 	 * @param int $userId
 	 */
 	public function getUserAvatar(int $userId) {
-		$result = $this->gitlabAPIService->getUserAvatar(
-			$userId, $this->gitlabUrl, $this->accessToken
-		);
+		$result = $this->gitlabAPIService->getUserAvatar($this->userId, $userId, $this->gitlabUrl);
 		if (isset($result['userInfo'])) {
 			$userName = $result['userInfo']['name'] ?? '??';
 			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $userName, 'size' => 44]);
@@ -105,9 +103,7 @@ class GitlabAPIController extends Controller {
 	 * @param int $projectId
 	 */
 	public function getProjectAvatar(int $projectId) {
-		$result = $this->gitlabAPIService->getProjectAvatar(
-			$projectId, $this->gitlabUrl, $this->accessToken
-		);
+		$result = $this->gitlabAPIService->getProjectAvatar($this->userId, $projectId, $this->gitlabUrl);
 		if (isset($result['projectInfo'])) {
 			$projectName = $result['projectInfo']['name'] ?? '??';
 			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $projectName, 'size' => 44]);
@@ -130,7 +126,7 @@ class GitlabAPIController extends Controller {
 		if ($this->accessToken === '') {
 			return new DataResponse('', 400);
 		}
-		$result = $this->gitlabAPIService->getEvents($this->gitlabUrl, $this->accessToken, $since);
+		$result = $this->gitlabAPIService->getEvents($this->userId, $this->gitlabUrl, $since);
 		if (!isset($result['error'])) {
 			$response = new DataResponse($result);
 		} else {
@@ -150,7 +146,7 @@ class GitlabAPIController extends Controller {
 		if ($this->accessToken === '') {
 			return new DataResponse('', 400);
 		}
-		$result = $this->gitlabAPIService->getTodos($this->gitlabUrl, $this->accessToken, $since);
+		$result = $this->gitlabAPIService->getTodos($this->userId, $this->gitlabUrl, $since);
 		if (!isset($result['error'])) {
 			$response = new DataResponse($result);
 		} else {
@@ -169,7 +165,7 @@ class GitlabAPIController extends Controller {
 		if ($this->accessToken === '') {
 			return new DataResponse('', 400);
 		}
-		$result = $this->gitlabAPIService->markTodoAsDone($this->gitlabUrl, $this->accessToken, $id);
+		$result = $this->gitlabAPIService->markTodoAsDone($this->userId, $this->gitlabUrl, $id);
 		if (!isset($result['error'])) {
 			$response = new DataResponse($result);
 		} else {

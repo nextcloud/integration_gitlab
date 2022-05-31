@@ -77,11 +77,14 @@ class ConfigController extends Controller {
 			if ($values['token'] && $values['token'] !== '') {
 				$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
 				$gitlabUrl = $gitlabUrl && $gitlabUrl !== '' ? $gitlabUrl : 'https://gitlab.com';
+				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
 				$userName = $this->storeUserInfo($gitlabUrl, $values['token']);
 				$result['user_name'] = $userName;
 			} else {
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', '');
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', '');
+				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_id');
+				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_name');
+				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token');
+				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
 				$result['user_name'] = '';
 			}
 		}
@@ -131,7 +134,9 @@ class ConfigController extends Controller {
 			], 'POST');
 			if (isset($result['access_token'])) {
 				$accessToken = $result['access_token'];
+				$refreshToken = $result['refresh_token'] ?? '';
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
+				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
 				$this->storeUserInfo($gitlabUrl, $accessToken);
 				return new RedirectResponse(
 					$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
@@ -153,8 +158,8 @@ class ConfigController extends Controller {
 	 * @param string $accessToken
 	 * @return string
 	 */
-	private function storeUserInfo(string $gitlabUrl, string $accessToken): string {
-		$info = $this->gitlabAPIService->request($gitlabUrl, $accessToken, 'user');
+	private function storeUserInfo(string $gitlabUrl, string $accessToken, ?string $refreshToken = null): string {
+		$info = $this->gitlabAPIService->request($this->userId, $gitlabUrl, 'user');
 		if (isset($info['username']) && isset($info['id'])) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['username']);

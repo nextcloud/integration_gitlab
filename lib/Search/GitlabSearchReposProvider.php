@@ -129,7 +129,7 @@ class GitlabSearchReposProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$searchResult = $this->service->searchRepositories($url, $accessToken, $term, $offset, $limit);
+		$searchResult = $this->service->searchRepositories($user->getUID(), $url, $term, $offset, $limit);
 		if (isset($searchResult['error'])) {
 			$repos = [];
 		} else {
