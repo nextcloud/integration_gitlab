@@ -372,6 +372,7 @@ class GitlabAPIService {
 	 * @return array
 	 */
 	public function request(string $userId, string $url, string $endPoint, array $params = [], string $method = 'GET'): array {
+		$this->checkTokenExpiration($userId, $url);
 		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
 		try {
 			$url = $url . '/api/v4/' . $endPoint;
@@ -438,6 +439,19 @@ class GitlabAPIService {
 		}
 	}
 
+	private function checkTokenExpiration(string $userId, string $url): void {
+		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
+		$expireAt = $this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
+		if ($refreshToken !== '' && $expireAt !== '') {
+			$nowTs = (new Datetime())->getTimestamp();
+			$expireAt = (int) $expireAt;
+			// if token expires in less than a minute or is already expired
+			if ($nowTs > $expireAt - 60) {
+				$this->refreshToken($userId, $url);
+			}
+		}
+	}
+
 	private function refreshToken(string $userId, string $url): bool {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
@@ -460,6 +474,11 @@ class GitlabAPIService {
 			$refreshToken = $result['refresh_token'];
 			$this->config->setUserValue($userId, Application::APP_ID, 'token', $accessToken);
 			$this->config->setUserValue($userId, Application::APP_ID, 'refresh_token', $refreshToken);
+			if (isset($result['expires_in'])) {
+				$nowTs = (new Datetime())->getTimestamp();
+				$expiresAt = $nowTs + (int) $result['expires_in'];
+				$this->config->setUserValue($userId, Application::APP_ID, 'token_expires_at', $expiresAt);
+			}
 			return true;
 		} else {
 			// impossible to refresh the token

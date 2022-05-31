@@ -11,6 +11,7 @@
 
 namespace OCA\Gitlab\Controller;
 
+use DateTime;
 use OCP\IURLGenerator;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -77,16 +78,17 @@ class ConfigController extends Controller {
 			if ($values['token'] && $values['token'] !== '') {
 				$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
 				$gitlabUrl = $gitlabUrl && $gitlabUrl !== '' ? $gitlabUrl : 'https://gitlab.com';
-				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
 				$userName = $this->storeUserInfo($gitlabUrl, $values['token']);
 				$result['user_name'] = $userName;
 			} else {
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_id');
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_name');
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token');
-				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
 				$result['user_name'] = '';
 			}
+			// if the token is set, cleanup refresh token and expiration date
+			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
+			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_expires_at');
 		}
 		return new DataResponse($result);
 	}
@@ -135,6 +137,11 @@ class ConfigController extends Controller {
 			if (isset($result['access_token'])) {
 				$accessToken = $result['access_token'];
 				$refreshToken = $result['refresh_token'] ?? '';
+				if (isset($result['expires_in'])) {
+					$nowTs = (new Datetime())->getTimestamp();
+					$expiresAt = $nowTs + (int) $result['expires_in'];
+					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_expires_at', $expiresAt);
+				}
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
 				$this->storeUserInfo($gitlabUrl, $accessToken);
