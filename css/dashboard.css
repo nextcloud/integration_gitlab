@@ -4,5 +4,5 @@
 
 /* for NC <= 24 */
 body.theme--dark .icon-gitlab {
-	background-image: url(./../../img/app.svg);
+	background-image: url(./../img/app.svg);
 }
