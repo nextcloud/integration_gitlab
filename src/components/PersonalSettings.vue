@@ -269,6 +269,11 @@ export default {
 	filter: var(--background-invert-if-dark);
 }
 
+// for NC <= 24
+body.theme--dark .icon-gitlab {
+	background-image: url(./../../img/app.svg);
+}
+
 #gitlab-content {
 	margin-left: 40px;
 }
