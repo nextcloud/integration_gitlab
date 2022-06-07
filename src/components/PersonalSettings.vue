@@ -266,10 +266,7 @@ export default {
 	background-size: 23px 23px;
 	height: 23px;
 	margin-bottom: -4px;
-}
-
-body.theme--dark .icon-gitlab {
-	background-image: url(./../../img/app.svg);
+	filter: var(--background-invert-if-dark);
 }
 
 #gitlab-content {

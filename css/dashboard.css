@@ -1,7 +1,3 @@
 .icon-gitlab {
     background-image: url(./../img/app-dark.svg);
 }
-
-body.theme--dark .icon-gitlab {
-    background-image: url(./../img/app.svg);
-}
