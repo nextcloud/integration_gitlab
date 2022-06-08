@@ -114,11 +114,6 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$offset = $query->getCursor();
 		$offset = $offset ? intval($offset) : 0;
 
-		$theme = $this->config->getUserValue($user->getUID(), 'accessibility', 'theme');
-		$thumbnailUrl = ($theme === 'dark')
-			? $this->urlGenerator->imagePath(Application::APP_ID, 'app.svg')
-			: $this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg');
-
 		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
 		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', 'https://gitlab.com');
 		if ($url === '') {
@@ -134,13 +129,14 @@ class GitlabSearchIssuesProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$formattedResults = array_map(function (array $entry) use ($thumbnailUrl, $url): GitlabSearchResultEntry {
+		$formattedResults = array_map(function (array $entry) use ($url): GitlabSearchResultEntry {
+			$finalThumbnailUrl = $this->getThumbnailUrl($entry);
 			return new GitlabSearchResultEntry(
-				$this->getThumbnailUrl($entry, $thumbnailUrl),
+				$finalThumbnailUrl,
 				$this->getMainText($entry),
 				$this->getSubline($entry, $url),
 				$this->getLinkToGitlab($entry),
-				'',
+				$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
 				false
 			);
 		}, $issues);
@@ -200,10 +196,10 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @param string $thumbnailUrl
 	 * @return string
 	 */
-	protected function getThumbnailUrl(array $entry, string $thumbnailUrl): string {
+	protected function getThumbnailUrl(array $entry): string {
 		$userId = $entry['author']['id'] ?? '';
 		return $userId
 			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', []) . '?userId=' . urlencode(strval($userId))
-			: $thumbnailUrl;
+			: '';
 	}
 }

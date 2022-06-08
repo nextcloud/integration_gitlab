@@ -24,6 +24,7 @@ use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCA\Gitlab\Dashboard\GitlabWidget;
 use OCA\Gitlab\Search\GitlabSearchIssuesProvider;
 use OCA\Gitlab\Search\GitlabSearchReposProvider;
+use OCP\Util;
 
 /**
  * Class Application
@@ -57,6 +58,7 @@ class Application extends App implements IBootstrap {
 
 	public function boot(IBootContext $context): void {
 		$context->injectFn(Closure::fromCallable([$this, 'registerNavigation']));
+		Util::addStyle(self::APP_ID, 'gitlab-search');
 	}
 
 	public function registerNavigation(IUserSession $userSession): void {
