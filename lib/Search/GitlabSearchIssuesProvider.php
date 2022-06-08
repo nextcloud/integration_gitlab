@@ -178,7 +178,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 //		$owner = $spl[0];
 		$repo = $spl[1];
 		$number = $entry['iid'];
-		$typeChar = $entry['type'] !== 'issue' ? '⑃' : '🛈';
+		$typeChar = $entry['type'] !== 'issue' ? '⑃' : '🂠';
 		$idChar = $entry['type'] !== 'issue' ? '!' : '#';
 		return $typeChar . ' ' . $repo . $idChar . $number;
 	}
