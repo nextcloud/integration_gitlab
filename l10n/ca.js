@@ -10,7 +10,7 @@ OC.L10N.register(
     "Bad HTTP method" : "Mètode HTTP incorrecte",
     "Bad credentials" : "Credencials dolentes",
     "OAuth access token refused" : "S'ha rebutjat el testimoni d'accés oAuth",
-    "Connected accounts" : "Comptes connectades",
+    "Connected accounts" : "Comptes connectats",
     "GitLab integration" : "Integració de GitLab",
     "Integration of GitLab software development management service" : "Integració del servei de gestió del desenvolupament de programari GitLab",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "La integració de GitLab proporciona un giny de quadres de comandament que mostra les notificacions més importants\n    i un proveïdor de cerca unificat per a repositoris, problemes i sol·licituds de combinació.",
