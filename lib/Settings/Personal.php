@@ -40,20 +40,21 @@ class Personal implements ISettings {
 		$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0');
 		$navigationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'navigation_enabled', '0');
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
-		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com') ?: 'https://gitlab.com';
 
 		// for OAuth
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		// don't expose the client secret to users
 		$clientSecret = ($this->config->getAppValue(Application::APP_ID, 'client_secret') !== '');
-		$oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url');
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+
+		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 
 		$userConfig = [
 			'token' => $token,
 			'url' => $url,
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret,
-			'oauth_instance_url' => $oauthUrl,
+			'oauth_instance_url' => $adminOauthUrl,
 			'user_name' => $userName,
 			'search_enabled' => ($searchEnabled === '1'),
 			'search_issues_enabled' => ($searchIssuesEnabled === '1'),

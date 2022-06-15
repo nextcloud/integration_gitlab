@@ -27,7 +27,7 @@ import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/styles/toast.scss'
+import { loadState } from '@nextcloud/initial-state'
 import moment from '@nextcloud/moment'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 
@@ -47,23 +47,26 @@ export default {
 
 	data() {
 		return {
-			gitlabUrl: null,
 			notifications: [],
 			loop: null,
 			state: 'loading',
 			settingsUrl: generateUrl('/settings/user/connected-accounts'),
 			themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
 			itemMenu: {
-				  markDone: {
-					  text: t('integration_gitlab', 'Mark as done'),
-					  icon: 'icon-checkmark',
-				  },
-			  },
+				markDone: {
+					text: t('integration_gitlab', 'Mark as done'),
+					icon: 'icon-checkmark',
+				},
+			},
+			initialState: loadState('integration_gitlab', 'user-config'),
 			windowVisibility: true,
 		}
 	},
 
 	computed: {
+		gitlabUrl() {
+			return this.initialState?.url?.replace(/\/+$/, '')
+		},
 		showMoreUrl() {
 			return this.gitlabUrl + '/dashboard/todos'
 		},
@@ -130,6 +133,7 @@ export default {
 	},
 
 	mounted() {
+		console.debug('gitlab ININININ', this.initialState)
 	},
 
 	methods: {
@@ -140,17 +144,6 @@ export default {
 			clearInterval(this.loop)
 		},
 		async launchLoop() {
-			// get gitlab URL first
-			try {
-				const response = await axios.get(generateUrl('/apps/integration_gitlab/url'))
-				this.gitlabUrl = response.data.replace(/\/+$/, '')
-				if (this.gitlabUrl === '') {
-					this.gitlabUrl = 'https://gitlab.com'
-				}
-			} catch (error) {
-				console.debug(error)
-			}
-			// then launch the loop
 			this.fetchNotifications()
 			this.loop = setInterval(() => this.fetchNotifications(), 60000)
 		},

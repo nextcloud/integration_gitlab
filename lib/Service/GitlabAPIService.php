@@ -16,6 +16,7 @@ use Datetime;
 use DateTimeImmutable;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
 use OCA\Gitlab\AppInfo\Application;
 use OCP\IConfig;
@@ -371,11 +372,11 @@ class GitlabAPIService {
 	 * @param string $method
 	 * @return array
 	 */
-	public function request(string $userId, string $url, string $endPoint, array $params = [], string $method = 'GET'): array {
-		$this->checkTokenExpiration($userId, $url);
+	public function request(string $userId, string $baseUrl, string $endPoint, array $params = [], string $method = 'GET'): array {
+		$this->checkTokenExpiration($userId, $baseUrl);
 		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
 		try {
-			$url = $url . '/api/v4/' . $endPoint;
+			$url = $baseUrl . '/api/v4/' . $endPoint;
 			$options = [
 				'headers' => [
 					'Authorization'  => 'Bearer ' . $accessToken,
@@ -424,16 +425,20 @@ class GitlabAPIService {
 			}
 		} catch (ServerException | ClientException $e) {
 			$response = $e->getResponse();
-			if ($response->getStatusCode() === 401) {
+			$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
+			if ($response->getStatusCode() === 401 && $refreshToken) {
 				// try to refresh the token
 				$this->logger->info('Trying to REFRESH the access token', ['app' => $this->appName]);
-				if ($this->refreshToken($userId, $url)) {
+				if ($this->refreshToken($userId, $baseUrl)) {
 					// retry the request with new access token
-					return $this->request($userId, $url, $endPoint, $params, $method);
+					return $this->request($userId, $baseUrl, $endPoint, $params, $method);
 				} else {
 					return ['error' => 'No GitLab refresh token, impossible to refresh the token'];
 				}
 			}
+			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => $this->appName]);
+			return ['error' => 'Authentication to ' . $baseUrl . ' failed'];
+		} catch (ConnectException $e) {
 			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => $this->appName]);
 			return ['error' => $e->getMessage()];
 		}

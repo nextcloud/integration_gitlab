@@ -68,7 +68,8 @@ class Application extends App implements IBootstrap {
 			$container = $this->getContainer();
 
 			if ($this->config->getUserValue($userId, self::APP_ID, 'navigation_enabled', '0') === '1') {
-				$gitlabUrl = $this->config->getUserValue($userId, self::APP_ID, 'url', '') ?: 'https://gitlab.com';
+				$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+				$gitlabUrl = $this->config->getUserValue($userId, self::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 				$container->get(INavigationManager::class)->add(function () use ($container, $gitlabUrl) {
 					$urlGenerator = $container->get(IURLGenerator::class);
 					$l10n = $container->get(IL10N::class);

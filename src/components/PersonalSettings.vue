@@ -176,29 +176,26 @@ export default {
 				values,
 			}
 			const url = generateUrl('/apps/integration_gitlab/config')
-			axios.put(url, req)
-				.then((response) => {
-					if (response.data.user_name !== undefined) {
-						this.state.user_name = response.data.user_name
-						if (this.state.token && response.data.user_name === '') {
-							showError(t('integration_gitlab', 'Incorrect access token'))
-						} else if (response.data.user_name) {
-							showSuccess(t('integration_gitlab', 'Successfully connected to GitLab!'))
-						}
-					} else {
-						showSuccess(t('integration_gitlab', 'GitLab options saved'))
+			axios.put(url, req).then((response) => {
+				if (response.data.user_name !== undefined) {
+					this.state.user_name = response.data.user_name
+					if (this.state.token && response.data.user_name === '') {
+						showError(t('integration_gitlab', 'Incorrect access token'))
+					} else if (response.data.user_name) {
+						showSuccess(t('integration_gitlab', 'Successfully connected to GitLab!'))
 					}
-				})
-				.catch((error) => {
-					showError(
-						t('integration_gitlab', 'Failed to save GitLab options')
-						+ ': ' + (error.response?.request?.responseText ?? '')
-					)
-					console.debug(error)
-				})
-				.then(() => {
-					this.loading = false
-				})
+				} else {
+					showSuccess(t('integration_gitlab', 'GitLab options saved'))
+				}
+			}).catch((error) => {
+				showError(
+					t('integration_gitlab', 'Failed to save GitLab options')
+					+ ': ' + (error.response?.data?.error ?? '')
+				)
+				console.debug(error)
+			}).then(() => {
+				this.loading = false
+			})
 		},
 		onOAuthClick() {
 			const oauthState = Math.random().toString(36).substring(3)

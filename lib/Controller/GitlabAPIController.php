@@ -60,8 +60,8 @@ class GitlabAPIController extends Controller {
 		$this->gitlabAPIService = $gitlabAPIService;
 		$this->userId = $userId;
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
-		$this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
-		$this->gitlabUrl = $this->gitlabUrl && $this->gitlabUrl !== '' ? $this->gitlabUrl : 'https://gitlab.com';
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+		$this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 		$this->urlGenerator = $urlGenerator;
 	}
 

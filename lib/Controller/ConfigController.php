@@ -12,6 +12,7 @@
 namespace OCA\Gitlab\Controller;
 
 use DateTime;
+use OCP\AppFramework\Http;
 use OCP\IURLGenerator;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -75,20 +76,24 @@ class ConfigController extends Controller {
 		$result = [];
 
 		if (isset($values['token'])) {
+			// if the token is set, cleanup refresh token and expiration date
+			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
+			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_expires_at');
+
 			if ($values['token'] && $values['token'] !== '') {
-				$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
-				$gitlabUrl = $gitlabUrl && $gitlabUrl !== '' ? $gitlabUrl : 'https://gitlab.com';
-				$userName = $this->storeUserInfo($gitlabUrl, $values['token']);
-				$result['user_name'] = $userName;
+				$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+				$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+				$info = $this->storeUserInfo($gitlabUrl, $values['token']);
+				if (isset($info['error'])) {
+					return new DataResponse(['error' => $info['error']], Http::STATUS_BAD_REQUEST);
+				}
+				$result['user_name'] = $info['username'] ?? '';
 			} else {
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_id');
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_name');
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token');
 				$result['user_name'] = '';
 			}
-			// if the token is set, cleanup refresh token and expiration date
-			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
-			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_expires_at');
 		}
 		return new DataResponse($result);
 	}
@@ -125,8 +130,8 @@ class ConfigController extends Controller {
 
 		if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
 			$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri');
-			$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', 'https://gitlab.com');
-			$gitlabUrl = $gitlabUrl && $gitlabUrl !== '' ? $gitlabUrl : 'https://gitlab.com';
+			$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+			$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 			$result = $this->gitlabAPIService->requestOAuthAccessToken($gitlabUrl, [
 				'client_id' => $clientID,
 				'client_secret' => $clientSecret,
@@ -163,18 +168,21 @@ class ConfigController extends Controller {
 	/**
 	 * @param string $gitlabUrl
 	 * @param string $accessToken
-	 * @return string
+	 * @return array
 	 */
-	private function storeUserInfo(string $gitlabUrl, string $accessToken, ?string $refreshToken = null): string {
+	private function storeUserInfo(string $gitlabUrl, string $accessToken, ?string $refreshToken = null): array {
 		$info = $this->gitlabAPIService->request($this->userId, $gitlabUrl, 'user');
 		if (isset($info['username']) && isset($info['id'])) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['username']);
-			return $info['username'];
+			return [
+				'username' => $info['username'],
+				'userid' => $info['id'],
+			];
 		} else {
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', '');
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', '');
-			return '';
+			return $info;
 		}
 	}
 }

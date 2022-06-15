@@ -115,10 +115,8 @@ class GitlabSearchReposProvider implements IProvider {
 		$offset = $offset ? intval($offset) : 0;
 
 		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
-		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', 'https://gitlab.com');
-		if ($url === '') {
-			$url = 'https://gitlab.com';
-		}
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 		$searchEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_enabled', '0') === '1';
 		if ($accessToken === '' || !$searchEnabled) {
 			return SearchResult::paginated($this->getName(), [], 0);
