@@ -210,6 +210,7 @@ export default {
 				values: {
 					oauth_state: oauthState,
 					redirect_uri: this.redirect_uri,
+					oauth_origin: 'settings',
 				},
 			}
 			const url = generateUrl('/apps/integration_gitlab/config')

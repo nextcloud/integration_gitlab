@@ -12,9 +12,18 @@
 				<template #desc>
 					{{ emptyContentMessage }}
 					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
-						<a class="button" :href="settingsUrl">
+						<a v-if="!initialState.oauth_is_possible"
+							class="button"
+							:href="settingsUrl">
 							{{ t('integration_gitlab', 'Connect to GitLab') }}
 						</a>
+						<Button v-else
+							@click="onOauthClick">
+							<template #icon>
+								<LoginVariantIcon />
+							</template>
+							{{ t('integration_gitlab', 'Connect to {url}', { url: gitlabUrl }) }}
+						</Button>
 					</div>
 				</template>
 			</EmptyContent>
@@ -30,12 +39,17 @@ import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import moment from '@nextcloud/moment'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import LoginVariantIcon from 'vue-material-design-icons/LoginVariant'
+import Button from '@nextcloud/vue/dist/Components/Button'
 
 export default {
 	name: 'Dashboard',
 
 	components: {
-		DashboardWidget, EmptyContent,
+		DashboardWidget,
+		EmptyContent,
+		Button,
+		LoginVariantIcon,
 	},
 
 	props: {
@@ -133,10 +147,38 @@ export default {
 	},
 
 	mounted() {
-		console.debug('gitlab ININININ', this.initialState)
 	},
 
 	methods: {
+		onOauthClick() {
+			const redirectUri = window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_gitlab/oauth-redirect')
+
+			const oauthState = Math.random().toString(36).substring(3)
+			const requestUrl = this.gitlabUrl + '/oauth/authorize'
+				+ '?client_id=' + encodeURIComponent(this.initialState.client_id)
+				+ '&redirect_uri=' + encodeURIComponent(redirectUri)
+				+ '&response_type=code'
+				+ '&state=' + encodeURIComponent(oauthState)
+				+ '&scope=' + encodeURIComponent('read_user read_api read_repository')
+
+			const req = {
+				values: {
+					oauth_state: oauthState,
+					redirect_uri: redirectUri,
+					oauth_origin: 'dashboard',
+				},
+			}
+			const url = generateUrl('/apps/integration_gitlab/config')
+			axios.put(url, req).then((response) => {
+				window.location.replace(requestUrl)
+			}).catch((error) => {
+				showError(
+					t('integration_gitlab', 'Failed to save GitLab OAuth state')
+					+ ': ' + (error.response?.request?.responseText ?? '')
+				)
+				console.debug(error)
+			})
+		},
 		changeWindowVisibility() {
 			this.windowVisibility = !document.hidden
 		},
