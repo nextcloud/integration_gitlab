@@ -44,6 +44,7 @@ OC.L10N.register(
     "GitLab options saved" : "GitLab ayarları kaydedildi",
     "Failed to save GitLab options" : "GitLab ayarları kaydedilemedi",
     "Failed to save GitLab OAuth state" : "GitLab OAuth durumu kaydedilemedi",
+    "Connect to {url}" : "{url} bağlantısı kur",
     "Mark as done" : "Tamamlanmış olarak işaretle",
     "No GitLab account connected" : "Bağlı bir GitLab hesabı yok",
     "Error connecting to GitLab" : "GitLab bağlantısı kurulurken sorun çıktı",

@@ -42,6 +42,7 @@
     "GitLab options saved" : "Opcje GitLab zostały zapisane",
     "Failed to save GitLab options" : "Nie udało się zapisać opcji GitLaba.",
     "Failed to save GitLab OAuth state" : "Nie udało się zapisać statusu OAuth GitLab",
+    "Connect to {url}" : "Połącz z {url}",
     "Mark as done" : "Oznacz jako wykonane",
     "No GitLab account connected" : "Brak połączonego konta GitLab",
     "Error connecting to GitLab" : "Błąd podczas łączenia z GitLabem",

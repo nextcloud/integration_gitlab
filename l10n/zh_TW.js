@@ -44,6 +44,7 @@ OC.L10N.register(
     "GitLab options saved" : "已儲存 GitLab 選項",
     "Failed to save GitLab options" : "儲存 GitLab 選項失敗",
     "Failed to save GitLab OAuth state" : "儲存 GitLab OAuth 狀態失敗",
+    "Connect to {url}" : "連線至 {url}",
     "Mark as done" : "標記為完成",
     "No GitLab account connected" : "未連線至 GitLab 帳號",
     "Error connecting to GitLab" : "連線至 GitLab 時發生錯誤",
