@@ -44,6 +44,7 @@ OC.L10N.register(
     "GitLab options saved" : "Opções do GitLab salvas.",
     "Failed to save GitLab options" : "Erro ao salvar as opções do GitLab",
     "Failed to save GitLab OAuth state" : "Falha ao salvar o estado GitLab OAuth",
+    "Connect to {url}" : "Conecte-se a {url}",
     "Mark as done" : "Marcar como concluído",
     "No GitLab account connected" : "Nenhuma conta GitLab conectada",
     "Error connecting to GitLab" : "Erro ao conectar ao GitLab",

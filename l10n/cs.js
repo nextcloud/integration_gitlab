@@ -44,6 +44,7 @@ OC.L10N.register(
     "GitLab options saved" : "Předvolby pro GitLab uloženy",
     "Failed to save GitLab options" : "Nepodařilo se uložit předvolby pro GitLab",
     "Failed to save GitLab OAuth state" : "Nepodařilo se uložit stav GitLab OAuth",
+    "Connect to {url}" : "Připojit k {url}",
     "Mark as done" : "Označit jako hotové",
     "No GitLab account connected" : "Nepřipojen žádný GitLab účet",
     "Error connecting to GitLab" : "Chyba při připojování se ke GitLab",

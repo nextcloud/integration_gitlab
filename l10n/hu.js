@@ -44,6 +44,7 @@ OC.L10N.register(
     "GitLab options saved" : "A GitLab beállítások mentve",
     "Failed to save GitLab options" : "A GitLab beállítások mentése sikertelen",
     "Failed to save GitLab OAuth state" : "A GitLab OAuth állapot mentése sikertelen",
+    "Connect to {url}" : "Kapcsolódás ehhez: {url}",
     "Mark as done" : "Megjelölés készként",
     "No GitLab account connected" : "Nincs GitLab-fiók csatlakoztatva",
     "Error connecting to GitLab" : "Hiba történt a GitLabhez történő kapcsolódáskor",
