@@ -73,7 +73,7 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function getTitle(): string {
-		return $this->l10n->t('GitLab todos');
+		return $this->l10n->t('GitLab To-Dos');
 		}
 
 	/**

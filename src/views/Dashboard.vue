@@ -336,7 +336,7 @@ export default {
 		editTodo(id, action) {
 			axios.put(generateUrl('/apps/integration_gitlab/todos/' + id + '/' + action)).then((response) => {
 			}).catch((error) => {
-				showError(t('integration_gitlab', 'Failed to edit GitLab todo'))
+				showError(t('integration_gitlab', 'Failed to edit GitLab To-Do'))
 				console.debug(error)
 			})
 		},
