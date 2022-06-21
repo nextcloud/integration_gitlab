@@ -2,7 +2,6 @@
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Fout bij ophalen OAuth access token",
     "Error during OAuth exchanges" : "Fout tijdens OAuth uitwisselingen",
-    "GitLab todos" : "GitLab todo's",
     "GitLab issues and merge requests" : "GitLab issues en merge requests",
     "GitLab repositories" : "GitLab repositories",
     "Bad HTTP method" : "Foute HTTP methode",
@@ -52,7 +51,6 @@
     "You were assigned" : "Je kreeg toegewezen",
     "A build has failed" : "Een build is mislukt",
     "Marked" : "Gemarkeerd",
-    "You were directly addressed" : "Je werd rechtstreeks benaderd",
-    "Failed to edit GitLab todo" : "Kon de GitLab todo niet bewerken"
+    "You were directly addressed" : "Je werd rechtstreeks benaderd"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

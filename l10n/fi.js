@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Virhe haettaessa OAuth-käyttöpolettia.",
     "Error during OAuth exchanges" : "Virhe OAuth-vaihdossa",
-    "GitLab todos" : "GitLabin tehtävälistat",
     "GitLab issues and merge requests" : "GitLabin ongelmat ja yhdistämispyynnöt",
     "GitLab repositories" : "GitLabin tietovarastot",
     "Bad HTTP method" : "Virheellinen HTTP-metodi",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "You were mentioned" : "Sinut mainittiin",
     "Your approval is required" : "Hyväksyntäsi vaaditaan",
     "A build has failed" : "Buildi on epäonnistunut",
-    "Marked" : "Merkattu",
-    "Failed to edit GitLab todo" : "GitLab-tehtävälistan muokkaaminen epäonnistui"
+    "Marked" : "Merkattu"
 },
 "nplurals=2; plural=(n != 1);");

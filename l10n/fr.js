@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Erreur lors de l'obtention du jeton d'accès OAuth.",
     "Error during OAuth exchanges" : "Erreur lors des échanges OAuth",
-    "GitLab todos" : "Todos GitLab",
     "GitLab issues and merge requests" : "Tickets et merge requests GitLab",
     "GitLab repositories" : "Dépôts GitLab",
     "Bad HTTP method" : "Mauvaise méthode HTTP",
@@ -54,7 +53,6 @@ OC.L10N.register(
     "You were assigned" : "Vous avez été assigné(e)",
     "A build has failed" : "Un build a échoué",
     "Marked" : "Marqué comme",
-    "You were directly addressed" : "Vous avez été mentionné(e)",
-    "Failed to edit GitLab todo" : "Impossible d'éditer le todo GitLab"
+    "You were directly addressed" : "Vous avez été mentionné(e)"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

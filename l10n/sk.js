@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Chyba pri získavaní prístupového tokenu OAuth.",
     "Error during OAuth exchanges" : "Chyba počas výmeny OAuth",
-    "GitLab todos" : "GitLab todos",
     "GitLab issues and merge requests" : "GitLab problémy a žiadosti o merge",
     "GitLab repositories" : "GitLab repozitáre",
     "Bad HTTP method" : "Zlá metóda HTTP",
@@ -54,7 +53,6 @@ OC.L10N.register(
     "You were assigned" : "Boli ste priradený",
     "A build has failed" : "Zostavenie zlyhalo",
     "Marked" : "Označené",
-    "You were directly addressed" : "Boli ste priamo oslovení",
-    "Failed to edit GitLab todo" : "Nepodarilo sa upraviť GitLab todo"
+    "You were directly addressed" : "Boli ste priamo oslovení"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

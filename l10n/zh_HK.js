@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "取得 OAuth 存取權杖時發生錯誤。",
     "Error during OAuth exchanges" : "OAuth 交換時發生錯誤",
-    "GitLab todos" : "GitLab 待辦事項",
     "GitLab issues and merge requests" : "GitLab 議題與合併請求",
     "GitLab repositories" : "GitLab 倉庫",
     "Bad HTTP method" : "不正確的 HTTP 方法",
@@ -55,7 +54,6 @@ OC.L10N.register(
     "You were assigned" : "您被指派",
     "A build has failed" : "建構失敗",
     "Marked" : "已被標記",
-    "You were directly addressed" : "您得到直接答覆",
-    "Failed to edit GitLab todo" : "編輯 GitLab 待辦清單失敗"
+    "You were directly addressed" : "您得到直接答覆"
 },
 "nplurals=1; plural=0;");

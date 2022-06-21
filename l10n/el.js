@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Σφάλμα κατά τη λήψη  token πρόσβασης OAuth.",
     "Error during OAuth exchanges" : "Σφάλμα κατά την ανταλλαγή OAuth",
-    "GitLab todos" : "GitLab todos",
     "GitLab issues and merge requests" : "Ζητήματα GitLab και αιτήματα συγχώνευσης",
     "GitLab repositories" : "Αποθετήρια GitLab",
     "Bad HTTP method" : "Κακή μέθοδος HTTP",
@@ -54,7 +53,6 @@ OC.L10N.register(
     "You were assigned" : "Σας ανατέθηκε",
     "A build has failed" : "Η έκδοση απέτυχε",
     "Marked" : "Επισημάνθηκε",
-    "You were directly addressed" : "Σας απευθύνθηκαν άμεσα",
-    "Failed to edit GitLab todo" : "Αποτυχία επεξεργασίας του GitLab todo"
+    "You were directly addressed" : "Σας απευθύνθηκαν άμεσα"
 },
 "nplurals=2; plural=(n != 1);");

@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Produciuse un erro ao obter o testemuño de acceso OAuth.",
     "Error during OAuth exchanges" : "Produciuse un erro durante os intercambios de OAuth",
-    "GitLab todos" : "Tarefas pendentes de GitLab",
     "GitLab issues and merge requests" : "Incidencias (issues) e solicitudes de fusión (merge requests) de GitLab",
     "GitLab repositories" : "Repositorios de GitLab",
     "Bad credentials" : "Credenciais incorrectas",
@@ -51,7 +50,6 @@ OC.L10N.register(
     "You were assigned" : "Foi asignado",
     "A build has failed" : "Fallou unha compilación",
     "Marked" : "Marcado",
-    "You were directly addressed" : "Dirixíuselle directamente",
-    "Failed to edit GitLab todo" : "Produciuse un fallo ao editar as tarefas pendentes de GitLab"
+    "You were directly addressed" : "Dirixíuselle directamente"
 },
 "nplurals=2; plural=(n != 1);");

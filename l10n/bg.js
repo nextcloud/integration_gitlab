@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab /платформа за разработчици/",
     "Error getting OAuth access token. " : "Грешка при получаване на маркер за достъп на OAuth.",
     "Error during OAuth exchanges" : "Грешка по време на обмен на OAuth",
-    "GitLab todos" : "GitLab задачи",
     "GitLab issues and merge requests" : "Проблеми с GitLab и заявки за сливане",
     "GitLab repositories" : "GitLab хранилища",
     "Bad HTTP method" : "Лош HTTP метод",
@@ -54,7 +53,6 @@ OC.L10N.register(
     "You were assigned" : "Вие бяхте назначени",
     "A build has failed" : "Неуспешна компилация",
     "Marked" : "Маркирано",
-    "You were directly addressed" : "Обърнаха се директно към вас",
-    "Failed to edit GitLab todo" : "Неуспешно редактиране на задача на GitLab"
+    "You were directly addressed" : "Обърнаха се директно към вас"
 },
 "nplurals=2; plural=(n != 1);");
