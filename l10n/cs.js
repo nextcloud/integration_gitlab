@@ -4,6 +4,7 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Chyba při získávání přístupového OAuth přístupového tokenu.",
     "Error during OAuth exchanges" : "Chyba při výměnách informací v rámci OAuth",
+    "GitLab To-Dos" : "GitLab úkoly",
     "GitLab issues and merge requests" : "Hlášení problémů a požadavky na začlenění z GitLab",
     "GitLab repositories" : "GitLab repozitáře",
     "Bad HTTP method" : "Nesprávná HTTP metoda",
@@ -54,6 +55,7 @@ OC.L10N.register(
     "You were assigned" : "Byli jste přiřazeni",
     "A build has failed" : "Sestavování se nezdařilo",
     "Marked" : "Označeno",
-    "You were directly addressed" : "Byli jste přímo adresováni"
+    "You were directly addressed" : "Byli jste přímo adresováni",
+    "Failed to edit GitLab To-Do" : "Nepodařilo se upravit GitLab seznam úkolů"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

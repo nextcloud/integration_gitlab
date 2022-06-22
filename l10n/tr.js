@@ -4,6 +4,7 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "OAuth erişim kodu alınırken sorun çıktı.",
     "Error during OAuth exchanges" : "OAuth takasında sorun çıktı",
+    "GitLab To-Dos" : "GitLab yapılacak işler",
     "GitLab issues and merge requests" : "GitLab sorunları ve birleştirme istekleri",
     "GitLab repositories" : "GitLab depoları",
     "Bad HTTP method" : "HTTP yöntemi hatalı",
@@ -54,6 +55,7 @@ OC.L10N.register(
     "You were assigned" : "Atandınız",
     "A build has failed" : "Bir yapım oluşturulamadı",
     "Marked" : "İşaretlendi",
-    "You were directly addressed" : "Doğrudan adreslendiniz"
+    "You were directly addressed" : "Doğrudan adreslendiniz",
+    "Failed to edit GitLab To-Do" : "GitLab yapılacak işleri düzenlenemedi"
 },
 "nplurals=2; plural=(n > 1);");
