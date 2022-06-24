@@ -56,6 +56,6 @@ OC.L10N.register(
     "A build has failed" : "Ein Build ist fehlgeschlagen",
     "Marked" : "Markiert",
     "You were directly addressed" : "Sie wurden direkt angesprochen",
-    "Failed to edit GitLab To-Do" : "Fehler beim Bearbeiten der GitLab-Aufgaben"
+    "Failed to edit GitLab To-Do" : "Fehler beim Bearbeiten der GitLab-Aufgabe"
 },
 "nplurals=2; plural=(n != 1);");
