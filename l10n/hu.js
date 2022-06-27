@@ -4,6 +4,7 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Hiba történt az OAuth hozzáférési token lekérése során. ",
     "Error during OAuth exchanges" : "Hiba történt az OAuth üzenetváltások során",
+    "GitLab To-Dos" : "GitLab teendők",
     "GitLab issues and merge requests" : "GitLab kiadások és beolvasztási kérések",
     "GitLab repositories" : "GitLab tárolók",
     "Bad HTTP method" : "Hibás HTTP metódus",
@@ -54,6 +55,7 @@ OC.L10N.register(
     "You were assigned" : "Hozzárendelték Önt",
     "A build has failed" : "Egy összeállítás meghiúsult",
     "Marked" : "Megjelölve",
-    "You were directly addressed" : "Közvetlenül megszólították"
+    "You were directly addressed" : "Közvetlenül megszólították",
+    "Failed to edit GitLab To-Do" : "Nem sikerült a GitLab teendő szerkesztése"
 },
 "nplurals=2; plural=(n != 1);");
