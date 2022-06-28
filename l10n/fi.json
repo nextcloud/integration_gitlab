@@ -28,6 +28,7 @@
     "GitLab options saved" : "GitLab-valinnat tallennettu",
     "Failed to save GitLab options" : "GitLab valintojen tallentaminen epäonnistui",
     "Failed to save GitLab OAuth state" : "GitLab OAuth tilan tallentaminen epäonnistui",
+    "Connect to {url}" : "Yhdistä osoitteeseen {url}",
     "Mark as done" : "Merkitse valmiiksi",
     "No GitLab account connected" : "GitLab-tiliä ei ole yhdistetty",
     "Error connecting to GitLab" : "Virhe yhdistäessä GitLabiin",
