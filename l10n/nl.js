@@ -4,6 +4,7 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Fout bij ophalen OAuth access token",
     "Error during OAuth exchanges" : "Fout tijdens OAuth uitwisselingen",
+    "GitLab To-Dos" : "GitLab todo's",
     "GitLab issues and merge requests" : "GitLab issues en merge requests",
     "GitLab repositories" : "GitLab repositories",
     "Bad HTTP method" : "Foute HTTP methode",
