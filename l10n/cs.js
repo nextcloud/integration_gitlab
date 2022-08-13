@@ -13,7 +13,7 @@ OC.L10N.register(
     "Connected accounts" : "Propojené účty",
     "GitLab integration" : "Napojení na GitLab",
     "Integration of GitLab software development management service" : "Napojení na službu pro správu vývoje software GitLab",
-    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Napojení na GitLab poskytuje ovládací prvek pro přehled zobrazující nejdůležitější upozornění pro vás\n    a sjednoceného poskytovatele vyhledávání v repozitářích, hlášeních chyba a požadavcích na začlenění kódu.",
+    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Napojení na GitLab poskytuje ovládací prvek pro nástěnku, zobrazující nejdůležitější upozornění pro vás\n    a poskytovatele do sjednoceného vyhledávání pro hledání v repozitářích, hlášeních chyb a požadavcích na začlenění kódu.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Pokud chcete svým Nextcloud uživatelům umožnit použití ověření pomocí vámi zvolené instance GitLab OAuth, vytvořte v nastavení GitLab aplikaci a nastavte zde identifikátor a tajemství.",
     "Make sure you set the \"Redirect URI\" to" : "Ověřte, že jste nastavili „URI přesměrování“ na",
     "and give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application. Optionally \"api\" instead." : "a udělte aplikaci oprávnění „read_user“, „read_api“ a „read_repository“. Volitelně namísto toho „api“.",
