@@ -7,8 +7,10 @@
 		@markDone="onMarkDone">
 		<template #empty-content>
 			<EmptyContent
-				v-if="emptyContentMessage"
-				:icon="emptyContentIcon">
+				v-if="emptyContentMessage">
+				<template #icon>
+					<component :is="emptyContentIcon" />
+				</template>
 				<template #desc>
 					{{ emptyContentMessage }}
 					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
@@ -17,13 +19,13 @@
 							:href="settingsUrl">
 							{{ t('integration_gitlab', 'Connect to GitLab') }}
 						</a>
-						<Button v-else
+						<NcButton v-else
 							@click="onOauthClick">
 							<template #icon>
 								<LoginVariantIcon />
 							</template>
 							{{ t('integration_gitlab', 'Connect to {url}', { url: gitlabUrl }) }}
-						</Button>
+						</NcButton>
 					</div>
 				</template>
 			</EmptyContent>
@@ -38,9 +40,13 @@ import { DashboardWidget } from '@nextcloud/vue-dashboard'
 import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import moment from '@nextcloud/moment'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
-import LoginVariantIcon from 'vue-material-design-icons/LoginVariant'
-import Button from '@nextcloud/vue/dist/Components/Button'
+import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent.js'
+import NcButton from '@nextcloud/vue/dist/Components/Button.js'
+
+import LoginVariantIcon from 'vue-material-design-icons/LoginVariant.vue'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+import GitlabIcon from '../components/icons/GitlabIcon.vue'
 
 export default {
 	name: 'Dashboard',
@@ -48,7 +54,7 @@ export default {
 	components: {
 		DashboardWidget,
 		EmptyContent,
-		Button,
+		NcButton,
 		LoginVariantIcon,
 	},
 
@@ -117,13 +123,13 @@ export default {
 		},
 		emptyContentIcon() {
 			if (this.state === 'no-token') {
-				return 'icon-gitlab'
+				return GitlabIcon
 			} else if (this.state === 'error') {
-				return 'icon-close'
+				return CloseIcon
 			} else if (this.state === 'ok') {
-				return 'icon-checkmark'
+				return CheckIcon
 			}
-			return 'icon-checkmark'
+			return CheckIcon
 		},
 	},
 
