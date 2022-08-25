@@ -58,6 +58,11 @@
 					@focus="readonly = false"
 					@input="onInput">
 			</div>
+			<CheckboxRadioSwitch
+				:checked.sync="state.use_popup"
+				@update:checked="onUsePopupChanged">
+				{{ t('integration_gitlab', 'Use a popup to authenticate') }}
+			</CheckboxRadioSwitch>
 		</div>
 	</div>
 </template>
@@ -75,10 +80,13 @@ import axios from '@nextcloud/axios'
 import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
+import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
+
 export default {
 	name: 'AdminSettings',
 
 	components: {
+		CheckboxRadioSwitch,
 		GitlabIcon,
 		KeyIcon,
 		EarthIcon,
@@ -103,34 +111,32 @@ export default {
 	},
 
 	methods: {
-		onInput() {
-			const that = this
-			delay(() => {
-				that.saveOptions()
-			}, 2000)()
+		onUsePopupChanged(newValue) {
+			this.saveOptions({ use_popup: newValue ? '1' : '0' })
 		},
-		saveOptions() {
-			const req = {
-				values: {
+		onInput() {
+			delay(() => {
+				this.saveOptions({
 					client_id: this.state.client_id,
 					client_secret: this.state.client_secret,
 					oauth_instance_url: this.state.oauth_instance_url,
-				},
+				})
+			}, 2000)()
+		},
+		saveOptions(values) {
+			const req = {
+				values,
 			}
 			const url = generateUrl('/apps/integration_gitlab/admin-config')
-			axios.put(url, req)
-				.then((response) => {
-					showSuccess(t('integration_gitlab', 'GitLab admin options saved'))
-				})
-				.catch((error) => {
-					showError(
-						t('integration_gitlab', 'Failed to save GitLab admin options')
-						+ ': ' + (error.response?.request?.responseText ?? '')
-					)
-					console.debug(error)
-				})
-				.then(() => {
-				})
+			axios.put(url, req).then((response) => {
+				showSuccess(t('integration_gitlab', 'GitLab admin options saved'))
+			}).catch((error) => {
+				showError(
+					t('integration_gitlab', 'Failed to save GitLab admin options')
+					+ ': ' + (error.response?.request?.responseText ?? '')
+				)
+				console.debug(error)
+			})
 		},
 	},
 }

@@ -106,9 +106,11 @@ class GitlabWidget implements IWidget {
 		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
 		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 		$oauthPossible = $clientID !== '' && $clientSecret !== '' && $url === $adminOauthUrl;
+		$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0');
 
 		$userConfig = [
 			'oauth_is_possible' => $oauthPossible,
+			'use_popup' => ($usePopup === '1'),
 			'url' => $url,
 			'client_id' => $clientID,
 		];

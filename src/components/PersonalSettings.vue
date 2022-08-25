@@ -37,13 +37,13 @@
 					type="password"
 					:disabled="connected === true"
 					:placeholder="t('integration_gitlab', 'GitLab personal access token')"
-					@input="onInput">
+					@keyup.enter="onConnectClick">
 			</div>
-			<NcButton v-if="showOAuth && !connected"
+			<NcButton v-if="!connected"
 				id="gitlab-oauth"
-				:disabled="loading === true"
+				:disabled="loading === true || (!showOAuth && !state.token)"
 				:class="{ loading }"
-				@click="onOAuthClick">
+				@click="onConnectClick">
 				<template #icon>
 					<OpenInNewIcon :size="20" />
 				</template>
@@ -98,7 +98,7 @@ import GitlabIcon from './icons/GitlabIcon.vue'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import { delay } from '../utils.js'
+import { delay, oauthConnect } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
 import NcButton from '@nextcloud/vue/dist/Components/Button.js'
@@ -125,7 +125,6 @@ export default {
 		return {
 			state: loadState('integration_gitlab', 'user-config'),
 			loading: false,
-			redirect_uri: window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_gitlab/oauth-redirect'),
 		}
 	},
 
@@ -134,9 +133,9 @@ export default {
 			return (this.state.url === this.state.oauth_instance_url) && this.state.client_id && this.state.client_secret
 		},
 		connected() {
-			return this.state.token && this.state.token !== ''
-				&& this.state.url && this.state.url !== ''
-				&& this.state.user_name && this.state.user_name !== ''
+			return !!this.state.token
+				&& !!this.state.url
+				&& !!this.state.user_name
 		},
 	},
 
@@ -166,15 +165,8 @@ export default {
 		},
 		onInput() {
 			this.loading = true
-			if (this.state.url !== '' && !this.state.url.startsWith('https://')) {
-				if (this.state.url.startsWith('http://')) {
-					this.state.url = this.state.url.replace('http://', 'https://')
-				} else {
-					this.state.url = 'https://' + this.state.url
-				}
-			}
 			delay(() => {
-				this.saveOptions({ token: this.state.token, url: this.state.url })
+				this.saveOptions({ url: this.state.url })
 			}, 2000)()
 		},
 		saveOptions(values) {
@@ -203,36 +195,31 @@ export default {
 				this.loading = false
 			})
 		},
-		onOAuthClick() {
-			const oauthState = Math.random().toString(36).substring(3)
-			const requestUrl = this.state.url + '/oauth/authorize'
-				+ '?client_id=' + encodeURIComponent(this.state.client_id)
-				+ '&redirect_uri=' + encodeURIComponent(this.redirect_uri)
-				+ '&response_type=code'
-				+ '&state=' + encodeURIComponent(oauthState)
-				+ '&scope=' + encodeURIComponent('read_user read_api read_repository')
-
-			const req = {
-				values: {
-					oauth_state: oauthState,
-					redirect_uri: this.redirect_uri,
-					oauth_origin: 'settings',
-				},
+		onConnectClick() {
+			if (this.showOAuth) {
+				this.connectWithOauth()
+			} else {
+				this.connectWithToken()
 			}
-			const url = generateUrl('/apps/integration_gitlab/config')
-			axios.put(url, req)
-				.then((response) => {
-					window.location.replace(requestUrl)
-				})
-				.catch((error) => {
-					showError(
-						t('integration_gitlab', 'Failed to save GitLab OAuth state')
-						+ ': ' + (error.response?.request?.responseText ?? '')
-					)
-					console.debug(error)
-				})
-				.then(() => {
-				})
+		},
+		connectWithToken() {
+			this.loading = true
+			this.saveOptions({
+				token: this.state.token,
+				url: this.state.url,
+			})
+		},
+		connectWithOauth() {
+			if (this.state.use_popup) {
+				oauthConnect(this.state.url, this.state.client_id, null, true)
+					.then((data) => {
+						this.state.token = 'dummyToken'
+						this.state.user_name = data.userName
+						this.state.user_displayname = data.userDisplayName
+					})
+			} else {
+				oauthConnect(this.state.url, this.state.client_id, 'settings')
+			}
 		},
 	},
 }

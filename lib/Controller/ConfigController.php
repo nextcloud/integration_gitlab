@@ -13,6 +13,8 @@ namespace OCA\Gitlab\Controller;
 
 use DateTime;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IURLGenerator;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -46,12 +48,17 @@ class ConfigController extends Controller {
 	 * @var string|null
 	 */
 	private $userId;
+	/**
+	 * @var IInitialState
+	 */
+	private $initialStateService;
 
 	public function __construct(string $appName,
 								IRequest $request,
 								IConfig $config,
 								IURLGenerator $urlGenerator,
 								IL10N $l,
+								IInitialState $initialStateService,
 								GitlabAPIService $gitlabAPIService,
 								?string $userId) {
 		parent::__construct($appName, $request);
@@ -60,6 +67,7 @@ class ConfigController extends Controller {
 		$this->l = $l;
 		$this->gitlabAPIService = $gitlabAPIService;
 		$this->userId = $userId;
+		$this->initialStateService = $initialStateService;
 	}
 
 	/**
@@ -112,6 +120,19 @@ class ConfigController extends Controller {
 	}
 
 	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 *
+	 * @param string $user_name
+	 * @param string $user_displayname
+	 * @return TemplateResponse
+	 */
+	public function popupSuccessPage(string $user_name, string $user_displayname): TemplateResponse {
+		$this->initialStateService->provideInitialState('popup-data', ['user_name' => $user_name, 'user_displayname' => $user_displayname]);
+		return new TemplateResponse(Application::APP_ID, 'popupSuccess', [], TemplateResponse::RENDER_AS_GUEST);
+	}
+
+	/**
 	 * receive oauth code and get oauth access token
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
@@ -149,23 +170,34 @@ class ConfigController extends Controller {
 				}
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
-				$this->storeUserInfo($gitlabUrl, $accessToken);
-				$oauthOrigin = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_origin');
-				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'oauth_origin');
-				if ($oauthOrigin === 'settings') {
+				$userInfo = $this->storeUserInfo($gitlabUrl, $accessToken);
+
+				$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0') === '1';
+				if ($usePopup) {
+					return new RedirectResponse(
+						$this->urlGenerator->linkToRoute('integration_gitlab.config.popupSuccessPage', [
+							'user_name' => $userInfo['username'] ?? '',
+							'user_displayname' => $userInfo['username'] ?? '',
+						])
+					);
+				} else {
+					$oauthOrigin = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_origin');
+					$this->config->deleteUserValue($this->userId, Application::APP_ID, 'oauth_origin');
+					if ($oauthOrigin === 'settings') {
+						return new RedirectResponse(
+							$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
+							'?gitlabToken=success'
+						);
+					} elseif ($oauthOrigin === 'dashboard') {
+						return new RedirectResponse(
+							$this->urlGenerator->linkToRoute('dashboard.dashboard.index')
+						);
+					}
 					return new RedirectResponse(
 						$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
 						'?gitlabToken=success'
 					);
-				} elseif ($oauthOrigin === 'dashboard') {
-					return new RedirectResponse(
-						$this->urlGenerator->linkToRoute('dashboard.dashboard.index')
-					);
 				}
-				return new RedirectResponse(
-					$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-					'?gitlabToken=success'
-				);
 			}
 			$result = $this->l->t('Error getting OAuth access token. ' . $result['error']);
 		} else {

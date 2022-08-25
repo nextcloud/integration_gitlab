@@ -32,11 +32,13 @@ class Admin implements ISettings {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$oauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url');
+		$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0');
 
 		$adminConfig = [
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret,
 			'oauth_instance_url' => $oauthUrl,
+			'use_popup' => ($usePopup === '1'),
 		];
 		$this->initialStateService->provideInitialState('admin-config', $adminConfig);
 		return new TemplateResponse(Application::APP_ID, 'adminSettings');
