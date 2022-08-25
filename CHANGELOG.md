@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.4 – 2022-08-25
+### Added
+- new option to connect with OAuth in a popup
+- token refresh (based on expiration date)
+- allow connection directly from the dashboard (with or without a popup)
+
+### Changed
+- use material icons
+- use node 16, bump js libs, adjust to new eslint config
+- get ready for NC 25
+
+### Fixed
+- fallback avatar
+
 ## 1.0.2 – 2021-10-14
 ### Changed
 - don't ask for 'api' scope when using OAuth

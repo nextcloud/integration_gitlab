@@ -10,17 +10,17 @@
  */
 
 return [
-    'routes' => [
-        ['name' => 'config#oauthRedirect', 'url' => '/oauth-redirect', 'verb' => 'GET'],
-        ['name' => 'config#setConfig', 'url' => '/config', 'verb' => 'PUT'],
-        ['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
+	'routes' => [
+		['name' => 'config#oauthRedirect', 'url' => '/oauth-redirect', 'verb' => 'GET'],
+		['name' => 'config#setConfig', 'url' => '/config', 'verb' => 'PUT'],
+		['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
 		['name' => 'config#popupSuccessPage', 'url' => '/popup-success', 'verb' => 'GET'],
 
-        ['name' => 'gitlabAPI#getEvents', 'url' => '/events', 'verb' => 'GET'],
-        ['name' => 'gitlabAPI#getTodos', 'url' => '/todos', 'verb' => 'GET'],
-        ['name' => 'gitlabAPI#markTodoAsDone', 'url' => '/todos/{id}/mark-done', 'verb' => 'PUT'],
-        ['name' => 'gitlabAPI#getGitlabUrl', 'url' => '/url', 'verb' => 'GET'],
-        ['name' => 'gitlabAPI#getProjectAvatar', 'url' => '/avatar/project', 'verb' => 'GET'],
-        ['name' => 'gitlabAPI#getUserAvatar', 'url' => '/avatar/user', 'verb' => 'GET'],
-    ]
+		['name' => 'gitlabAPI#getEvents', 'url' => '/events', 'verb' => 'GET'],
+		['name' => 'gitlabAPI#getTodos', 'url' => '/todos', 'verb' => 'GET'],
+		['name' => 'gitlabAPI#markTodoAsDone', 'url' => '/todos/{id}/mark-done', 'verb' => 'PUT'],
+		['name' => 'gitlabAPI#getGitlabUrl', 'url' => '/url', 'verb' => 'GET'],
+		['name' => 'gitlabAPI#getProjectAvatar', 'url' => '/avatar/project', 'verb' => 'GET'],
+		['name' => 'gitlabAPI#getUserAvatar', 'url' => '/avatar/user', 'verb' => 'GET'],
+	]
 ];
