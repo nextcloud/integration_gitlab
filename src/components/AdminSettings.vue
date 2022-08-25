@@ -1,57 +1,74 @@
 <template>
 	<div id="gitlab_prefs" class="section">
 		<h2>
-			<a class="icon icon-gitlab" />
+			<GitlabIcon class="icon" />
 			{{ t('integration_gitlab', 'GitLab integration') }}
 		</h2>
 		<p class="settings-hint">
 			{{ t('integration_gitlab', 'If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here.') }}
-			<br><br>
-			<span class="icon icon-details" />
-			{{ t('integration_gitlab', 'Make sure you set the "Redirect URI" to') }}
-			<b> {{ redirect_uri }} </b>
-			<br><br>
-			{{ t('integration_gitlab', 'and give "read_user", "read_api" and "read_repository" permissions to the application. Optionally "api" instead.') }}
-			<br>
+		</p>
+		<p class="settings-hint">
+			<InformationOutlineIcon :size="20" class="icon" />
+			{{ t('integration_gitlab', 'Make sure you set the "Redirect URI" to:') }}
+		</p>
+		<p class="settings-hint">
+			<strong>{{ redirect_uri }}</strong>
+		</p>
+		<p class="settings-hint">
+			{{ t('integration_gitlab', 'Give "read_user", "read_api" and "read_repository" permissions to the application. Optionally "api" instead.') }}
+		</p>
+		<p class="settings-hint">
 			{{ t('integration_gitlab', 'Put the "Application ID" and "Application secret" below. Your Nextcloud users will then see a "Connect to GitLab" button in their personal settings if they select the GitLab instance defined here.') }}
 		</p>
-		<div class="grid-form">
-			<label for="gitlab-oauth-instance">
-				<a class="icon icon-link" />
-				{{ t('integration_gitlab', 'OAuth app instance address') }}
-			</label>
-			<input id="gitlab-oauth-instance"
-				v-model="state.oauth_instance_url"
-				type="text"
-				:placeholder="t('integration_gitlab', 'Instance address')"
-				@input="onInput">
-			<label for="gitlab-client-id">
-				<a class="icon icon-category-auth" />
-				{{ t('integration_gitlab', 'Application ID') }}
-			</label>
-			<input id="gitlab-client-id"
-				v-model="state.client_id"
-				type="password"
-				:readonly="readonly"
-				:placeholder="t('integration_gitlab', 'ID of your GitLab application')"
-				@input="onInput"
-				@focus="readonly = false">
-			<label for="gitlab-client-secret">
-				<a class="icon icon-category-auth" />
-				{{ t('integration_gitlab', 'Application secret') }}
-			</label>
-			<input id="gitlab-client-secret"
-				v-model="state.client_secret"
-				type="password"
-				:readonly="readonly"
-				:placeholder="t('integration_gitlab', 'Client secret of your GitLab application')"
-				@focus="readonly = false"
-				@input="onInput">
+		<div id="gitlab-content">
+			<div class="line">
+				<label for="gitlab-oauth-instance">
+					<EarthIcon :size="20" class="icon" />
+					{{ t('integration_gitlab', 'OAuth app instance address') }}
+				</label>
+				<input id="gitlab-oauth-instance"
+					v-model="state.oauth_instance_url"
+					type="text"
+					:placeholder="t('integration_gitlab', 'Instance address')"
+					@input="onInput">
+			</div>
+			<div class="line">
+				<label for="gitlab-client-id">
+					<KeyIcon :size="20" class="icon" />
+					{{ t('integration_gitlab', 'Application ID') }}
+				</label>
+				<input id="gitlab-client-id"
+					v-model="state.client_id"
+					type="password"
+					:readonly="readonly"
+					:placeholder="t('integration_gitlab', 'ID of your GitLab application')"
+					@input="onInput"
+					@focus="readonly = false">
+			</div>
+			<div class="line">
+				<label for="gitlab-client-secret">
+					<KeyIcon :size="20" class="icon" />
+					{{ t('integration_gitlab', 'Application secret') }}
+				</label>
+				<input id="gitlab-client-secret"
+					v-model="state.client_secret"
+					type="password"
+					:readonly="readonly"
+					:placeholder="t('integration_gitlab', 'Client secret of your GitLab application')"
+					@focus="readonly = false"
+					@input="onInput">
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
+import KeyIcon from 'vue-material-design-icons/Key.vue'
+import EarthIcon from 'vue-material-design-icons/Earth.vue'
+
+import GitlabIcon from './icons/GitlabIcon.vue'
+
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
@@ -62,6 +79,10 @@ export default {
 	name: 'AdminSettings',
 
 	components: {
+		GitlabIcon,
+		KeyIcon,
+		EarthIcon,
+		InformationOutlineIcon,
 	},
 
 	props: [],
@@ -116,40 +137,34 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.grid-form label {
-	line-height: 38px;
-}
+#gitlab_prefs {
+	#gitlab-content{
+		margin-left: 40px;
+	}
 
-.grid-form input {
-	width: 100%;
-}
+	h2,
+	.line,
+	.settings-hint {
+		display: flex;
+		align-items: center;
+		.icon {
+			margin-right: 4px;
+		}
+	}
 
-.grid-form {
-	max-width: 500px;
-	display: grid;
-	grid-template: 1fr / 1fr 1fr;
-	margin-left: 30px;
-}
+	h2 .icon {
+		margin-right: 8px;
+	}
 
-#gitlab_prefs .icon {
-	display: inline-block;
-	width: 32px;
-}
-
-#gitlab_prefs .grid-form .icon {
-	margin-bottom: -3px;
-}
-
-.icon-gitlab {
-	background-image: url(./../../img/app-dark.svg);
-	background-size: 23px 23px;
-	height: 23px;
-	margin-bottom: -4px;
-	filter: var(--background-invert-if-dark);
-}
-
-// for NC <= 24
-body.theme--dark .icon-gitlab {
-	background-image: url(./../../img/app.svg);
+	.line {
+		> label {
+			width: 300px;
+			display: flex;
+			align-items: center;
+		}
+		> input {
+			width: 250px;
+		}
+	}
 }
 </style>

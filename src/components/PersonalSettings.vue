@@ -1,26 +1,21 @@
 <template>
 	<div id="gitlab_prefs" class="section">
 		<h2>
-			<a class="icon icon-gitlab" />
+			<GitlabIcon class="icon" />
 			{{ t('integration_gitlab', 'GitLab integration') }}
 		</h2>
-		<div id="toggle-gitlab-navigation-link">
-			<input
-				id="gitlab-link"
-				type="checkbox"
-				class="checkbox"
-				:checked="state.navigation_enabled"
-				@input="onNavigationChange">
-			<label for="gitlab-link">{{ t('integration_gitlab', 'Enable navigation link') }}</label>
-		</div>
-		<br><br>
 		<p v-if="!showOAuth && !connected" class="settings-hint">
 			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions. Optionally "api" instead.') }}
 		</p>
 		<div id="gitlab-content">
-			<div class="gitlab-grid-form">
+			<CheckboxRadioSwitch
+				:checked="state.navigation_enabled"
+				@update:checked="onCheckboxChanged($event, 'navigation_enabled')">
+				{{ t('integration_gitlab', 'Enable navigation link') }}
+			</CheckboxRadioSwitch>
+			<div class="line">
 				<label for="gitlab-url">
-					<a class="icon icon-link" />
+					<EarthIcon :size="20" class="icon" />
 					{{ t('integration_gitlab', 'GitLab instance address') }}
 				</label>
 				<input id="gitlab-url"
@@ -29,12 +24,14 @@
 					:disabled="connected === true"
 					:placeholder="t('integration_gitlab', 'GitLab instance address')"
 					@input="onInput">
-				<label v-show="!showOAuth"
+			</div>
+			<div v-show="!showOAuth" class="line">
+				<label
 					for="gitlab-token">
-					<a class="icon icon-category-auth" />
+					<KeyIcon :size="20" class="icon" />
 					{{ t('integration_gitlab', 'Personal access token') }}
 				</label>
-				<input v-show="!showOAuth"
+				<input
 					id="gitlab-token"
 					v-model="state.token"
 					type="password"
@@ -42,48 +39,45 @@
 					:placeholder="t('integration_gitlab', 'GitLab personal access token')"
 					@input="onInput">
 			</div>
-			<button v-if="showOAuth && !connected"
+			<NcButton v-if="showOAuth && !connected"
 				id="gitlab-oauth"
 				:disabled="loading === true"
 				:class="{ loading }"
 				@click="onOAuthClick">
-				<span class="icon icon-external" />
+				<template #icon>
+					<OpenInNewIcon :size="20" />
+				</template>
 				{{ t('integration_gitlab', 'Connect to GitLab') }}
-			</button>
-			<div v-if="connected" class="gitlab-grid-form">
+			</NcButton>
+			<div v-if="connected" class="line">
 				<label class="gitlab-connected">
-					<a class="icon icon-checkmark-color" />
+					<CheckIcon :size="20" class="icon" />
 					{{ t('integration_gitlab', 'Connected as {user}', { user: state.user_name }) }}
 				</label>
-				<button id="gitlab-rm-cred" @click="onLogoutClick">
-					<span class="icon icon-close" />
+				<NcButton @click="onLogoutClick">
+					<template #icon>
+						<CloseIcon :size="20" />
+					</template>
 					{{ t('integration_gitlab', 'Disconnect from GitLab') }}
-				</button>
+				</NcButton>
 				<span />
 			</div>
 			<br>
 			<div v-if="connected" id="gitlab-search-block">
-				<input
-					id="search-gitlab"
-					type="checkbox"
-					class="checkbox"
+				<CheckboxRadioSwitch
 					:checked="state.search_enabled"
-					@input="onSearchChange">
-				<label for="search-gitlab">{{ t('integration_gitlab', 'Enable searching for repositories') }}</label>
-				<br><br>
-				<input
-					id="search-issues-gitlab"
-					type="checkbox"
-					class="checkbox"
+					@update:checked="onCheckboxChanged($event, 'search_enabled')">
+					{{ t('integration_gitlab', 'Enable searching for repositories') }}
+				</CheckboxRadioSwitch>
+				<CheckboxRadioSwitch
 					:checked="state.search_issues_enabled"
-					@input="onSearchIssuesChange">
-				<label for="search-issues-gitlab">
+					@update:checked="onCheckboxChanged($event, 'search_issues_enabled')">
 					{{ t('integration_gitlab', 'Enable searching for issues and merge requests') }}
 					{{ t('integration_gitlab', '(This may be slow or even fail on some GitLab instances)') }}
-				</label>
-				<br><br>
+				</CheckboxRadioSwitch>
+				<br>
 				<p v-if="state.search_enabled || state.search_issues_enabled" class="settings-hint">
-					<span class="icon icon-details" />
+					<InformationOutlineIcon :size="20" class="icon" />
 					{{ t('integration_gitlab', 'Warning, everything you type in the search bar will be sent to GitLab.') }}
 				</p>
 			</div>
@@ -92,16 +86,37 @@
 </template>
 
 <script>
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
+import KeyIcon from 'vue-material-design-icons/Key.vue'
+import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+import EarthIcon from 'vue-material-design-icons/Earth.vue'
+
+import GitlabIcon from './icons/GitlabIcon.vue'
+
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
+import NcButton from '@nextcloud/vue/dist/Components/Button.js'
+import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
+
 export default {
 	name: 'PersonalSettings',
 
 	components: {
+		GitlabIcon,
+		CheckboxRadioSwitch,
+		NcButton,
+		OpenInNewIcon,
+		EarthIcon,
+		CheckIcon,
+		CloseIcon,
+		KeyIcon,
+		InformationOutlineIcon,
 	},
 
 	props: [],
@@ -145,17 +160,9 @@ export default {
 			this.state.token = ''
 			this.saveOptions({ token: '' })
 		},
-		onSearchChange(e) {
-			this.state.search_enabled = e.target.checked
-			this.saveOptions({ search_enabled: this.state.search_enabled ? '1' : '0' })
-		},
-		onSearchIssuesChange(e) {
-			this.state.search_issues_enabled = e.target.checked
-			this.saveOptions({ search_issues_enabled: this.state.search_issues_enabled ? '1' : '0' })
-		},
-		onNavigationChange(e) {
-			this.state.navigation_enabled = e.target.checked
-			this.saveOptions({ navigation_enabled: this.state.navigation_enabled ? '1' : '0' })
+		onCheckboxChanged(newValue, key) {
+			this.state[key] = newValue
+			this.saveOptions({ [key]: this.state[key] ? '1' : '0' })
 		},
 		onInput() {
 			this.loading = true
@@ -232,55 +239,33 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.gitlab-grid-form label {
-	line-height: 38px;
-}
+#gitlab_prefs {
+	#gitlab-content {
+		margin-left: 40px;
+	}
+	h2,
+	.line,
+	.settings-hint {
+		display: flex;
+		align-items: center;
+		.icon {
+			margin-right: 4px;
+		}
+	}
 
-.gitlab-grid-form input {
-	width: 100%;
-}
+	h2 .icon {
+		margin-right: 8px;
+	}
 
-.gitlab-grid-form {
-	max-width: 600px;
-	display: grid;
-	grid-template: 1fr / 1fr 1fr;
-	button .icon {
-		margin-bottom: -1px;
+	.line {
+		> label {
+			width: 300px;
+			display: flex;
+			align-items: center;
+		}
+		> input {
+			width: 250px;
+		}
 	}
 }
-
-#gitlab_prefs .icon {
-	display: inline-block;
-	width: 32px;
-}
-
-#gitlab_prefs .grid-form .icon {
-	margin-bottom: -3px;
-}
-
-.icon-gitlab {
-	background-image: url(./../../img/app-dark.svg);
-	background-size: 23px 23px;
-	height: 23px;
-	margin-bottom: -4px;
-	filter: var(--background-invert-if-dark);
-}
-
-// for NC <= 24
-body.theme--dark .icon-gitlab {
-	background-image: url(./../../img/app.svg);
-}
-
-#gitlab-content {
-	margin-left: 40px;
-}
-
-#gitlab-search-block .icon {
-	width: 22px;
-}
-
-#toggle-gitlab-navigation-link {
-	margin-left: 40px;
-}
-
 </style>
