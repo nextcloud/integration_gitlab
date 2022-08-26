@@ -78,6 +78,14 @@ class ConfigController extends Controller {
 	 * @return DataResponse
 	 */
 	public function setConfig(array $values): DataResponse {
+		// revoke the oauth token if needed
+		if (isset($values['token']) && $values['token'] === '') {
+			$tokenType = $this->config->getUserValue($this->userId, Application::APP_ID, 'token_type');
+			if ($tokenType === 'oauth') {
+				$this->gitlabAPIService->revokeOauthToken($this->userId);
+			}
+		}
+
 		foreach ($values as $key => $value) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 		}
@@ -85,6 +93,7 @@ class ConfigController extends Controller {
 
 		if (isset($values['token'])) {
 			// if the token is set, cleanup refresh token and expiration date
+			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_type');
 			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
 			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_expires_at');
 
@@ -96,6 +105,10 @@ class ConfigController extends Controller {
 					return new DataResponse(['error' => $info['error']], Http::STATUS_BAD_REQUEST);
 				}
 				$result['user_name'] = $info['username'] ?? '';
+				// store token type if it's valid (so we have a user name)
+				if ($result['user_name'] !== '') {
+					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_type', 'personal');
+				}
 			} else {
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_id');
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_name');
@@ -170,6 +183,7 @@ class ConfigController extends Controller {
 				}
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
+				$this->config->setUserValue($this->userId, Application::APP_ID, 'token_type', 'oauth');
 				$userInfo = $this->storeUserInfo($gitlabUrl, $accessToken);
 
 				$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0') === '1';

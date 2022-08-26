@@ -21,6 +21,7 @@ use GuzzleHttp\Exception\ServerException;
 use OCA\Gitlab\AppInfo\Application;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCP\Http\Client\IClientService;
 
@@ -65,6 +66,7 @@ class GitlabAPIService {
 	 * @param string $userId
 	 * @param string $url
 	 * @return array
+	 * @throws Exception
 	 */
 	private function getMyProjectsInfo(string $userId, string $url): array {
 		$params = [
@@ -274,18 +276,22 @@ class GitlabAPIService {
 	}
 
 	/**
+	 * @param string $userId
 	 * @param string $url
 	 * @param int $id
 	 * @return array
+	 * @throws Exception
 	 */
 	public function markTodoAsDone(string $userId, string $url, int $id): array {
 		return $this->request($userId, $url, 'todos/' . $id . '/mark_as_done', [], 'POST');
 	}
 
 	/**
+	 * @param string $userId
 	 * @param string $url
 	 * @param ?string $since
 	 * @return array
+	 * @throws Exception
 	 */
 	public function getTodos(string $userId, string $url, ?string $since = null): array {
 		$params = [
@@ -340,9 +346,11 @@ class GitlabAPIService {
 	}
 
 	/**
-	 * @param int $userId
+	 * @param string $userId
+	 * @param int $gitlabUserId
 	 * @param string $gitlabUrl
 	 * @return array
+	 * @throws Exception
 	 */
 	public function getUserAvatar(string $userId, int $gitlabUserId, string $gitlabUrl): array {
 		$userInfo = $this->request($userId, $gitlabUrl, 'users/' . $gitlabUserId);
@@ -353,9 +361,11 @@ class GitlabAPIService {
 	}
 
 	/**
+	 * @param string $userId
 	 * @param int $projectId
 	 * @param string $gitlabUrl
 	 * @return array
+	 * @throws Exception
 	 */
 	public function getProjectAvatar(string $userId, int $projectId, string $gitlabUrl): array {
 		$projectInfo = $this->request($userId, $gitlabUrl, 'projects/' . $projectId);
@@ -366,11 +376,13 @@ class GitlabAPIService {
 	}
 
 	/**
-	 * @param string $url
+	 * @param string $userId
+	 * @param string $baseUrl
 	 * @param string $endPoint
 	 * @param array $params
 	 * @param string $method
 	 * @return array
+	 * @throws Exception
 	 */
 	public function request(string $userId, string $baseUrl, string $endPoint, array $params = [], string $method = 'GET'): array {
 		$this->checkTokenExpiration($userId, $baseUrl);
@@ -428,7 +440,7 @@ class GitlabAPIService {
 			$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 			if ($response->getStatusCode() === 401 && $refreshToken) {
 				// try to refresh the token
-				$this->logger->info('Trying to REFRESH the access token', ['app' => $this->appName]);
+				$this->logger->info('Trying to REFRESH the access token', ['app' => Application::APP_ID]);
 				if ($this->refreshToken($userId, $baseUrl)) {
 					// retry the request with new access token
 					return $this->request($userId, $baseUrl, $endPoint, $params, $method);
@@ -436,14 +448,19 @@ class GitlabAPIService {
 					return ['error' => 'No GitLab refresh token, impossible to refresh the token'];
 				}
 			}
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => $this->appName]);
+			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => 'Authentication to ' . $baseUrl . ' failed'];
 		} catch (ConnectException $e) {
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => $this->appName]);
+			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}
 
+	/**
+	 * @param string $userId
+	 * @param string $url
+	 * @return void
+	 */
 	private function checkTokenExpiration(string $userId, string $url): void {
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 		$expireAt = $this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
@@ -457,13 +474,19 @@ class GitlabAPIService {
 		}
 	}
 
+	/**
+	 * @param string $userId
+	 * @param string $url
+	 * @return bool
+	 * @throws PreConditionNotMetException
+	 */
 	private function refreshToken(string $userId, string $url): bool {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$redirect_uri = $this->config->getUserValue($userId, Application::APP_ID, 'redirect_uri');
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 		if (!$refreshToken) {
-			$this->logger->error('No GitLab refresh token found', ['app' => $this->appName]);
+			$this->logger->error('No GitLab refresh token found', ['app' => Application::APP_ID]);
 			return false;
 		}
 		$result = $this->requestOAuthAccessToken($url, [
@@ -474,7 +497,7 @@ class GitlabAPIService {
 			'refresh_token' => $refreshToken,
 		], 'POST');
 		if (isset($result['access_token'])) {
-			$this->logger->info('GitLab access token successfully refreshed', ['app' => $this->appName]);
+			$this->logger->info('GitLab access token successfully refreshed', ['app' => Application::APP_ID]);
 			$accessToken = $result['access_token'];
 			$refreshToken = $result['refresh_token'];
 			$this->config->setUserValue($userId, Application::APP_ID, 'token', $accessToken);
@@ -491,9 +514,46 @@ class GitlabAPIService {
 				'Token is not valid anymore. Impossible to refresh it. '
 					. $result['error'] . ' '
 					. $result['error_description'] ?? '[no error description]',
-				['app' => $this->appName]
+				['app' => Application::APP_ID]
 			);
 			return false;
+		}
+	}
+
+	public function revokeOauthToken(string $userId): array {
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+		$gitlabUrl = $this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+
+		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
+		$clientId = $this->config->getAppValue(Application::APP_ID, 'client_id');
+		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$endPoint = 'oauth/revoke';
+		try {
+			$url = $gitlabUrl . '/' . $endPoint;
+			$options = [
+				'headers' => [
+					'User-Agent' => 'Nextcloud GitLab integration',
+					'Content-Type' => 'application/json',
+				],
+				'body' => json_encode([
+					'client_id' => $clientId,
+					'client_secret' => $clientSecret,
+					'token' => $accessToken,
+				]),
+			];
+			error_log('TOKEN "'.$accessToken.'"');
+
+			$response = $this->client->post($url, $options);
+			$respCode = $response->getStatusCode();
+
+			if ($respCode >= 400) {
+				return ['error' => $this->l10n->t('Bad credentials')];
+			} else {
+				return [];
+			}
+		} catch (Exception $e) {
+			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			return ['error' => $e->getMessage()];
 		}
 	}
 
@@ -541,7 +601,7 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (Exception $e) {
-			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), array('app' => $this->appName));
+			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), array('app' => Application::APP_ID));
 			return ['error' => $e->getMessage()];
 		}
 	}
