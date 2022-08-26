@@ -168,6 +168,7 @@ export default {
 			oauthConnectConfirmDialog(this.gitlabUrl).then((result) => {
 				if (result) {
 					if (this.initialState.use_popup) {
+						this.state = 'loading'
 						oauthConnect(this.gitlabUrl, this.initialState.client_id, null, true)
 							.then((data) => {
 								this.stopLoop()
