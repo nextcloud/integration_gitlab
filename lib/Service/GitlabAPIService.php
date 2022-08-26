@@ -27,10 +27,6 @@ use OCP\Http\Client\IClientService;
 
 class GitlabAPIService {
 	/**
-	 * @var string
-	 */
-	private $appName;
-	/**
 	 * @var LoggerInterface
 	 */
 	private $logger;
@@ -55,7 +51,6 @@ class GitlabAPIService {
 								IL10N $l10n,
 								IConfig $config,
 								IClientService $clientService) {
-		$this->appName = $appName;
 		$this->logger = $logger;
 		$this->l10n = $l10n;
 		$this->client = $clientService->newClient();
@@ -64,15 +59,14 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @return array
 	 * @throws Exception
 	 */
-	private function getMyProjectsInfo(string $userId, string $url): array {
+	private function getMyProjectsInfo(string $userId): array {
 		$params = [
 			'membership' => 'true',
 		];
-		$projects = $this->request($userId, $url, 'projects', $params);
+		$projects = $this->request($userId, 'projects', $params);
 		if (isset($projects['error'])) {
 			return $projects;
 		}
@@ -90,19 +84,18 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @param string $term
 	 * @param int $offset
 	 * @param int $limit
 	 * @return array
 	 * @throws Exception
 	 */
-	public function searchRepositories(string $userId, string $url, string $term, int $offset = 0, int $limit = 5): array {
+	public function searchRepositories(string $userId, string $term, int $offset = 0, int $limit = 5): array {
 		$params = [
 			'scope' => 'projects',
 			'search' => $term,
 		];
-		$projects = $this->request($userId, $url, 'search', $params);
+		$projects = $this->request($userId, 'search', $params);
 		if (isset($projects['error'])) {
 			return $projects;
 		}
@@ -123,19 +116,18 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @param string $term
 	 * @param int $offset
 	 * @param int $limit
 	 * @return array
 	 * @throws Exception
 	 */
-	public function searchIssues(string $userId, string $url, string $term, int $offset = 0, int $limit = 5): array {
+	public function searchIssues(string $userId, string $term, int $offset = 0, int $limit = 5): array {
 		$params = [
 			'scope' => 'issues',
 			'search' => $term,
 		];
-		$issues = $this->request($userId, $url, 'search', $params);
+		$issues = $this->request($userId, 'search', $params);
 		if (isset($issues['error'])) {
 			return $issues;
 		}
@@ -147,7 +139,7 @@ class GitlabAPIService {
 			'scope' => 'merge_requests',
 			'search' => $term,
 		];
-		$mergeRequests = $this->request($userId, $url, 'search', $params);
+		$mergeRequests = $this->request($userId, 'search', $params);
 		if (isset($mergeRequests['error'])) {
 			return $mergeRequests;
 		}
@@ -169,19 +161,18 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @param ?string $since
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getEvents(string $userId, string $url, ?string $since = null): array {
+	public function getEvents(string $userId, ?string $since = null): array {
 		// first get list of the projects i'm member of
-		$projectsInfo = $this->getMyProjectsInfo($userId, $url);
+		$projectsInfo = $this->getMyProjectsInfo($userId);
 		if (isset($projectsInfo['error'])) {
 			return $projectsInfo;
 		}
 		// get current user ID
-		$user = $this->request($userId, $url, 'user');
+		$user = $this->request($userId, 'user');
 		if (isset($user['error'])) {
 			return $user;
 		}
@@ -204,14 +195,14 @@ class GitlabAPIService {
 		// merge requests created
 		$params['target_type'] = 'merge_request';
 		$params['action'] = 'created';
-		$result = $this->request($userId, $url, 'events', $params);
+		$result = $this->request($userId, 'events', $params);
 		if (isset($result['error'])) {
 			return $result;
 		}
 		// merge requests merged
 		$params['target_type'] = 'merge_request';
 		$params['action'] = 'merged';
-		$mrm = $this->request($userId, $url, 'events', $params);
+		$mrm = $this->request($userId, 'events', $params);
 		if (isset($mrm['error'])) {
 			return $mrm;
 		}
@@ -219,7 +210,7 @@ class GitlabAPIService {
 		// issues created
 		$params['target_type'] = 'issue';
 		$params['action'] = 'created';
-		$ic = $this->request($userId, $url, 'events', $params);
+		$ic = $this->request($userId, 'events', $params);
 		if (isset($ic['error'])) {
 			return $ic;
 		}
@@ -227,7 +218,7 @@ class GitlabAPIService {
 		// issues closed
 		$params['target_type'] = 'issue';
 		$params['action'] = 'closed';
-		$icl = $this->request($userId, $url, 'events', $params);
+		$icl = $this->request($userId, 'events', $params);
 		if (isset($icl['error'])) {
 			return $icl;
 		}
@@ -235,7 +226,7 @@ class GitlabAPIService {
 		// issue comments
 		$params['target_type'] = 'note';
 		$params['action'] = 'commented';
-		$ico = $this->request($userId, $url, 'events', $params);
+		$ico = $this->request($userId, 'events', $params);
 		if (isset($ico['error'])) {
 			return $ico;
 		}
@@ -277,28 +268,26 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @param int $id
 	 * @return array
 	 * @throws Exception
 	 */
-	public function markTodoAsDone(string $userId, string $url, int $id): array {
-		return $this->request($userId, $url, 'todos/' . $id . '/mark_as_done', [], 'POST');
+	public function markTodoAsDone(string $userId, int $id): array {
+		return $this->request($userId, 'todos/' . $id . '/mark_as_done', [], 'POST');
 	}
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @param ?string $since
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getTodos(string $userId, string $url, ?string $since = null): array {
+	public function getTodos(string $userId, ?string $since = null): array {
 		$params = [
 			'action' => ['assigned', 'mentioned', 'build_failed', 'marked', 'approval_required', 'unmergeable', 'directly_addressed'],
 			'state' => 'pending',
 		];
-		$result = $this->request($userId, $url, 'todos', $params);
+		$result = $this->request($userId, 'todos', $params);
 		if (isset($result['error'])) {
 			return $result;
 		}
@@ -320,7 +309,7 @@ class GitlabAPIService {
 		$result = array_values($result);
 
 		// add project avatars to results
-		$projectsInfo = $this->getMyProjectsInfo($userId, $url);
+		$projectsInfo = $this->getMyProjectsInfo($userId);
 		foreach ($result as $k => $todo) {
 			$pid = $todo['project']['id'];
 			if (array_key_exists($pid, $projectsInfo)) {
@@ -328,7 +317,7 @@ class GitlabAPIService {
 				$result[$k]['project']['visibility'] = $projectsInfo[$pid]['visibility'];
 			} else {
 				// get the project avatar
-				$projectInfo = $this->request($userId, $url, 'projects/' . $pid);
+				$projectInfo = $this->request($userId, 'projects/' . $pid);
 				if (isset($projectInfo['error'])) {
 					return $projectInfo;
 				}
@@ -348,12 +337,11 @@ class GitlabAPIService {
 	/**
 	 * @param string $userId
 	 * @param int $gitlabUserId
-	 * @param string $gitlabUrl
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getUserAvatar(string $userId, int $gitlabUserId, string $gitlabUrl): array {
-		$userInfo = $this->request($userId, $gitlabUrl, 'users/' . $gitlabUserId);
+	public function getUserAvatar(string $userId, int $gitlabUserId): array {
+		$userInfo = $this->request($userId, 'users/' . $gitlabUserId);
 		if (!isset($userInfo['error']) && isset($userInfo['avatar_url'])) {
 			return ['avatarContent' => $this->client->get($userInfo['avatar_url'])->getBody()];
 		}
@@ -363,12 +351,11 @@ class GitlabAPIService {
 	/**
 	 * @param string $userId
 	 * @param int $projectId
-	 * @param string $gitlabUrl
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getProjectAvatar(string $userId, int $projectId, string $gitlabUrl): array {
-		$projectInfo = $this->request($userId, $gitlabUrl, 'projects/' . $projectId);
+	public function getProjectAvatar(string $userId, int $projectId): array {
+		$projectInfo = $this->request($userId, 'projects/' . $projectId);
 		if (!isset($projectInfo['error']) && isset($projectInfo['avatar_url'])) {
 			return ['avatarContent' => $this->client->get($projectInfo['avatar_url'])->getBody()];
 		}
@@ -377,16 +364,16 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @param string $baseUrl
 	 * @param string $endPoint
 	 * @param array $params
 	 * @param string $method
 	 * @return array
 	 * @throws Exception
 	 */
-	public function request(string $userId, string $baseUrl, string $endPoint, array $params = [], string $method = 'GET'): array {
-		$this->checkTokenExpiration($userId, $baseUrl);
+	public function request(string $userId, string $endPoint, array $params = [], string $method = 'GET'): array {
+		$this->checkTokenExpiration($userId);
 		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
+		$baseUrl = $this->getGitlabUrl($userId);
 		try {
 			$url = $baseUrl . '/api/v4/' . $endPoint;
 			$options = [
@@ -436,20 +423,8 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (ServerException | ClientException $e) {
-			$response = $e->getResponse();
-			$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
-			if ($response->getStatusCode() === 401 && $refreshToken) {
-				// try to refresh the token
-				$this->logger->info('Trying to REFRESH the access token', ['app' => Application::APP_ID]);
-				if ($this->refreshToken($userId, $baseUrl)) {
-					// retry the request with new access token
-					return $this->request($userId, $baseUrl, $endPoint, $params, $method);
-				} else {
-					return ['error' => 'No GitLab refresh token, impossible to refresh the token'];
-				}
-			}
 			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
-			return ['error' => 'Authentication to ' . $baseUrl . ' failed'];
+			return ['error' => 'Authentication failed'];
 		} catch (ConnectException $e) {
 			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
@@ -458,10 +433,10 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @return void
+	 * @throws PreConditionNotMetException
 	 */
-	private function checkTokenExpiration(string $userId, string $url): void {
+	private function checkTokenExpiration(string $userId): void {
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 		$expireAt = $this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
 		if ($refreshToken !== '' && $expireAt !== '') {
@@ -469,18 +444,18 @@ class GitlabAPIService {
 			$expireAt = (int) $expireAt;
 			// if token expires in less than a minute or is already expired
 			if ($nowTs > $expireAt - 60) {
-				$this->refreshToken($userId, $url);
+				$this->refreshToken($userId);
 			}
 		}
 	}
 
 	/**
 	 * @param string $userId
-	 * @param string $url
 	 * @return bool
 	 * @throws PreConditionNotMetException
 	 */
-	private function refreshToken(string $userId, string $url): bool {
+	private function refreshToken(string $userId): bool {
+		$baseUrl = $this->getGitlabUrl($userId);
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$redirect_uri = $this->config->getUserValue($userId, Application::APP_ID, 'redirect_uri');
@@ -489,7 +464,7 @@ class GitlabAPIService {
 			$this->logger->error('No GitLab refresh token found', ['app' => Application::APP_ID]);
 			return false;
 		}
-		$result = $this->requestOAuthAccessToken($url, [
+		$result = $this->requestOAuthAccessToken($baseUrl, [
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret,
 			'grant_type' => 'refresh_token',
@@ -520,9 +495,13 @@ class GitlabAPIService {
 		}
 	}
 
-	public function revokeOauthToken(string $userId): array {
+	private function getGitlabUrl(string $userId): string {
 		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
-		$gitlabUrl = $this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+		return $this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+	}
+
+	public function revokeOauthToken(string $userId): array {
+		$gitlabUrl = $this->getGitlabUrl($userId);
 
 		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
 		$clientId = $this->config->getAppValue(Application::APP_ID, 'client_id');
@@ -541,7 +520,6 @@ class GitlabAPIService {
 					'token' => $accessToken,
 				]),
 			];
-			error_log('TOKEN "'.$accessToken.'"');
 
 			$response = $this->client->post($url, $options);
 			$respCode = $response->getStatusCode();

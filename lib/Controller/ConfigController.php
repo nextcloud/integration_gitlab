@@ -25,6 +25,7 @@ use OCP\AppFramework\Controller;
 
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCA\Gitlab\AppInfo\Application;
+use OCP\PreConditionNotMetException;
 
 class ConfigController extends Controller {
 
@@ -76,6 +77,7 @@ class ConfigController extends Controller {
 	 *
 	 * @param array $values
 	 * @return DataResponse
+	 * @throws PreConditionNotMetException
 	 */
 	public function setConfig(array $values): DataResponse {
 		// revoke the oauth token if needed
@@ -98,9 +100,7 @@ class ConfigController extends Controller {
 			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_expires_at');
 
 			if ($values['token'] && $values['token'] !== '') {
-				$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
-				$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
-				$info = $this->storeUserInfo($gitlabUrl, $values['token']);
+				$info = $this->storeUserInfo();
 				if (isset($info['error'])) {
 					return new DataResponse(['error' => $info['error']], Http::STATUS_BAD_REQUEST);
 				}
@@ -153,6 +153,7 @@ class ConfigController extends Controller {
 	 * @param string $code
 	 * @param string $state
 	 * @return RedirectResponse
+	 * @throws PreConditionNotMetException
 	 */
 	public function oauthRedirect(string $code = '', string $state = ''): RedirectResponse {
 		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
@@ -184,7 +185,7 @@ class ConfigController extends Controller {
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token_type', 'oauth');
-				$userInfo = $this->storeUserInfo($gitlabUrl, $accessToken);
+				$userInfo = $this->storeUserInfo();
 
 				$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0') === '1';
 				if ($usePopup) {
@@ -224,12 +225,11 @@ class ConfigController extends Controller {
 	}
 
 	/**
-	 * @param string $gitlabUrl
-	 * @param string $accessToken
 	 * @return array
+	 * @throws PreConditionNotMetException
 	 */
-	private function storeUserInfo(string $gitlabUrl, string $accessToken, ?string $refreshToken = null): array {
-		$info = $this->gitlabAPIService->request($this->userId, $gitlabUrl, 'user');
+	private function storeUserInfo(): array {
+		$info = $this->gitlabAPIService->request($this->userId, 'user');
 		if (isset($info['username']) && isset($info['id'])) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['username']);
