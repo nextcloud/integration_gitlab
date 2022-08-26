@@ -105,6 +105,7 @@ class ConfigController extends Controller {
 					return new DataResponse(['error' => $info['error']], Http::STATUS_BAD_REQUEST);
 				}
 				$result['user_name'] = $info['username'] ?? '';
+				$result['user_displayname'] = $info['userdisplayname'] ?? '';
 				// store token type if it's valid (so we have a user name)
 				if ($result['user_name'] !== '') {
 					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_type', 'personal');
@@ -112,6 +113,7 @@ class ConfigController extends Controller {
 			} else {
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_id');
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_name');
+				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_displayname');
 				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token');
 				$result['user_name'] = '';
 			}
@@ -192,7 +194,7 @@ class ConfigController extends Controller {
 					return new RedirectResponse(
 						$this->urlGenerator->linkToRoute('integration_gitlab.config.popupSuccessPage', [
 							'user_name' => $userInfo['username'] ?? '',
-							'user_displayname' => $userInfo['username'] ?? '',
+							'user_displayname' => $userInfo['userdisplayname'] ?? '',
 						])
 					);
 				} else {
@@ -233,9 +235,11 @@ class ConfigController extends Controller {
 		if (isset($info['username']) && isset($info['id'])) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['username']);
+			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_displayname', $info['name']);
 			return [
 				'username' => $info['username'],
 				'userid' => $info['id'],
+				'userdisplayname' => $info['name'],
 			];
 		} else {
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', '');

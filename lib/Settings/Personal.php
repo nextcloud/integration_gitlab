@@ -40,6 +40,7 @@ class Personal implements ISettings {
 		$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0');
 		$navigationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'navigation_enabled', '0');
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
+		$userDisplayName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_displayname');
 
 		// for OAuth
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
@@ -58,6 +59,7 @@ class Personal implements ISettings {
 			'oauth_instance_url' => $adminOauthUrl,
 			'use_popup' => ($usePopup === '1'),
 			'user_name' => $userName,
+			'user_displayname' => $userDisplayName,
 			'search_enabled' => ($searchEnabled === '1'),
 			'search_issues_enabled' => ($searchIssuesEnabled === '1'),
 			'navigation_enabled' => ($navigationEnabled === '1'),

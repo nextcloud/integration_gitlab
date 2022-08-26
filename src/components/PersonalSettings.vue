@@ -52,7 +52,7 @@
 			<div v-if="connected" class="line">
 				<label class="gitlab-connected">
 					<CheckIcon :size="20" class="icon" />
-					{{ t('integration_gitlab', 'Connected as {user}', { user: state.user_name }) }}
+					{{ t('integration_gitlab', 'Connected as {user}', { user: connectedAs }) }}
 				</label>
 				<NcButton @click="onLogoutClick">
 					<template #icon>
@@ -137,6 +137,11 @@ export default {
 				&& !!this.state.url
 				&& !!this.state.user_name
 		},
+		connectedAs() {
+			return this.state.user_displayname
+				? this.state.user_displayname + ' (@' + this.state.user_name + ')'
+				: '@' + this.state.user_name
+		},
 	},
 
 	watch: {
@@ -177,6 +182,7 @@ export default {
 			axios.put(url, req).then((response) => {
 				if (response.data.user_name !== undefined) {
 					this.state.user_name = response.data.user_name
+					this.state.user_displayname = response.data.user_displayname
 					if (this.state.token && response.data.user_name === '') {
 						showError(t('integration_gitlab', 'Incorrect access token'))
 					} else if (response.data.user_name) {
