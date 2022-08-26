@@ -29,7 +29,6 @@ OC.L10N.register(
     "Incorrect access token" : "Virheellinen käyttöpoletti",
     "GitLab options saved" : "GitLab-valinnat tallennettu",
     "Failed to save GitLab options" : "GitLab valintojen tallentaminen epäonnistui",
-    "Failed to save GitLab OAuth state" : "GitLab OAuth tilan tallentaminen epäonnistui",
     "Connect to {url}" : "Yhdistä osoitteeseen {url}",
     "Mark as done" : "Merkitse valmiiksi",
     "No GitLab account connected" : "GitLab-tiliä ei ole yhdistetty",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "You were mentioned" : "Sinut mainittiin",
     "Your approval is required" : "Hyväksyntäsi vaaditaan",
     "A build has failed" : "Buildi on epäonnistunut",
-    "Marked" : "Merkattu"
+    "Marked" : "Merkattu",
+    "Failed to save GitLab OAuth state" : "GitLab OAuth tilan tallentaminen epäonnistui"
 },
 "nplurals=2; plural=(n != 1);");

@@ -15,8 +15,6 @@ OC.L10N.register(
     "Integration of GitLab software development management service" : "GitLab yazılım geliştirme yönetimi sistemi bütünleştirmesi",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "GitLab bütünleştirmesi en önemli bildirimler ile depolar, sorunlar ve birleştirme istekleri\n    için birleşik arama özelliğini görüntüleyen bir pano bileşeni sağlar.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Nextcloud kullanıcılarınızın seçeeceğiniz GitLab kopyası kimlik doğrulaması için OAuth uygulamasını kullanmak istiyorsanız, GitLab ayarlarınızdan bir uygulama oluşturun ve aşağıya kimlik ve sır bilgilerini yazın.",
-    "Make sure you set the \"Redirect URI\" to" : "\"Yönlendirme adresini\" şuna ayarladığınızdan emin olun",
-    "and give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application. Optionally \"api\" instead." : "ve uygulamaya \"read_user\", \"read_api\" ve \"read_repository\" izinlerini verin. Bunun yerine isteğe göre \"api\".",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "\"Uygulama kimliği\" ve \"Uygulama sırrı\" bilgilerini aşağıya yazın. Bundan sonra Nextcloud kullanıcılarınız kişisel ayarlarında burada belirtilen GitLab kopyasını seçerlerse, \"GitLab bağlantısı kur\" seçeneğini görecek.",
     "OAuth app instance address" : "OAuth  uygulaması kopyası adresi",
     "Instance address" : "Kopya adresi",
@@ -24,10 +22,11 @@ OC.L10N.register(
     "ID of your GitLab application" : "GitLab uygulamanızın kimliği",
     "Application secret" : "Uygulama sırrı",
     "Client secret of your GitLab application" : "GitLab uygulamanızın istemci sırrı",
+    "Use a popup to authenticate" : "Kimlik doğrulaması için açılan pencere kullanılsın",
     "GitLab admin options saved" : "GitLab yönetici ayarları kaydedildi",
     "Failed to save GitLab admin options" : "GitLab yönetici ayarları kaydedilemedi",
-    "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Kendiniz için bir kişisel erişim kodu oluştururken en azından \"read_user\", \"read_api\" ve \"read_repository\" izinlerini verin. Bunun yerine isteğe göre \"api\".",
+    "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
     "GitLab instance address" : "GitLab kopyası adresi",
     "Personal access token" : "Kişisel erişim kodu",
     "GitLab personal access token" : "GitLab kişisel erişim kodu",
@@ -43,7 +42,6 @@ OC.L10N.register(
     "Incorrect access token" : "Erişim kodu geçersiz",
     "GitLab options saved" : "GitLab ayarları kaydedildi",
     "Failed to save GitLab options" : "GitLab ayarları kaydedilemedi",
-    "Failed to save GitLab OAuth state" : "GitLab OAuth durumu kaydedilemedi",
     "Connect to {url}" : "{url} bağlantısı kur",
     "Mark as done" : "Tamamlanmış olarak işaretle",
     "No GitLab account connected" : "Bağlı bir GitLab hesabı yok",
@@ -56,6 +54,7 @@ OC.L10N.register(
     "A build has failed" : "Bir yapım oluşturulamadı",
     "Marked" : "İşaretlendi",
     "You were directly addressed" : "Doğrudan adreslendiniz",
-    "Failed to edit GitLab To-Do" : "GitLab yapılacak işleri düzenlenemedi"
+    "Failed to edit GitLab To-Do" : "GitLab yapılacak işleri düzenlenemedi",
+    "Failed to save GitLab OAuth state" : "GitLab OAuth durumu kaydedilemedi"
 },
 "nplurals=2; plural=(n > 1);");

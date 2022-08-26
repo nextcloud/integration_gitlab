@@ -10,7 +10,6 @@
     "GitLab integration" : "GitLab集成",
     "Integration of GitLab software development management service" : "GitLab软件开发管理服务的集成",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "如果您想要允许您的Nextcloud用户使用OAuth来验证您选择的GitLab实例的话，请在您的GitLab配置中创建应用，并在此处设置ID和密码。",
-    "Make sure you set the \"Redirect URI\" to" : "确认您将\"重定向URI\"设置为",
     "OAuth app instance address" : "OAuth应用实例地址",
     "Instance address" : "实例地址",
     "Application ID" : "应用ID",

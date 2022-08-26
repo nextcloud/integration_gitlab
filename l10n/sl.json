@@ -12,7 +12,6 @@
     "Integration of GitLab software development management service" : "Združevalnik za dostop do storitev upravljanja razvijalskega okolja GItLab",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Podpora za GitLab omogoča uporabo gradnika nadzorne plošče za prikazovanje pomembnih obvestil in sporočil in\nuporabo iskalnika po skladiščih, med napakami in različnimi objavami.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Za overitev okolja Github znotraj Nextcloud je treba uporabiti možnost OAuth. Med nastavitvami GitHub nastavite določilo ID in skrivno geslo.",
-    "Make sure you set the \"Redirect URI\" to" : "Poskrbite, da bo »preusmeritveni naslov URI« nastavljen na",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "V polja je treba vpisati »ID programa« in »Kodo programa«. Uporabniki Nextcloud bodo nato med nastavitvami videli gumb »Poveži z računom GitLab«.",
     "OAuth app instance address" : "Naslov programa OAuth",
     "Instance address" : "Naslov povezave",
@@ -38,7 +37,6 @@
     "Incorrect access token" : " Neveljaven žetona za dostop",
     "GitLab options saved" : "Nastavitve GitLab so shranjene",
     "Failed to save GitLab options" : "Shranjevanje nastavitev GitLab je spodletelo",
-    "Failed to save GitLab OAuth state" : "Shranjevanje stanja GitLab OAuth je spodletelo",
     "Mark as done" : "Označi kot končano",
     "No GitLab account connected" : "Ni še povezanega računa GitLab",
     "Error connecting to GitLab" : "Napaka povezovanja z računom GitLab",
@@ -49,6 +47,7 @@
     "You were assigned" : "Dodeljeno imate nalogo",
     "A build has failed" : "Izgradnja je spodletela",
     "Marked" : "Označeno",
-    "You were directly addressed" : "Nekdo vas je neposredno naslovil"
+    "You were directly addressed" : "Nekdo vas je neposredno naslovil",
+    "Failed to save GitLab OAuth state" : "Shranjevanje stanja GitLab OAuth je spodletelo"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

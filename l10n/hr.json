@@ -12,7 +12,6 @@
     "Integration of GitLab software development management service" : "Integracija servisa za upravljanje razvojem softvera GitLab",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Integracija sa sustavom GitLab omogućuje stavljanje widgeta na nadzornu ploču koji prikazuje najvažnije obavijesti,\n i sadrži objedinjeni pretraživač spremišta podataka, problema i zahtjeva za spajanje.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Ako svojim korisnicima Nextclouda želite omogućiti autentifikaciju u željenu instancu GitLaba putem aplikacije OAuth, stvorite aplikaciju u postavkama GitLaba i tamo postavite ID i tajni ključ.",
-    "Make sure you set the \"Redirect URI\" to" : "Obavezno postavite „URL za preusmjeravanje“ na",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "U nastavku unesite „ID aplikacije“ i „Tajni ključ aplikacije“. Korisnici Nextclouda sada će u svojim osobnim postavkama vidjeti gumb „Poveži se s GitLabom“ ako odaberu instancu GitLaba koja je tamo navedena.",
     "OAuth app instance address" : "Adresa instance aplikacije OAuth",
     "Instance address" : "Adresa instance",
@@ -38,7 +37,6 @@
     "Incorrect access token" : "Pogrešan token za pristup",
     "GitLab options saved" : "Postavke GitLaba su spremljene",
     "Failed to save GitLab options" : "Spremanje postavki GitLaba nije uspjelo",
-    "Failed to save GitLab OAuth state" : "Spremanje stanja GitLab OAuth nije uspjelo",
     "Mark as done" : "Označi kao završeno",
     "No GitLab account connected" : "Nema povezanih GitLab računa",
     "Error connecting to GitLab" : "Pogreška pri povezivanju s GitLabom",
@@ -49,6 +47,7 @@
     "You were assigned" : "Dodijeljeni ste",
     "A build has failed" : "Izdanje nije uspjelo",
     "Marked" : "Označeno",
-    "You were directly addressed" : "Izravno vam se obraća"
+    "You were directly addressed" : "Izravno vam se obraća",
+    "Failed to save GitLab OAuth state" : "Spremanje stanja GitLab OAuth nije uspjelo"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }

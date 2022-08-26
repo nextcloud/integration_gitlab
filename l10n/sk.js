@@ -14,8 +14,6 @@ OC.L10N.register(
     "Integration of GitLab software development management service" : "Integrácia služby riadenia vývoja softvéru GitLab",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Integrácia s GitLabom poskytuje miniaplikáciu pre dashboard ktorá zobrazuje vaše najdôležitejšie oznámenia.\n   a jednotné vyhľadávanie pre úložiská, problémy a žiadosti o zlúčenie.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Ak chcete umožniť používateľom Nextcloud používať OAuth na autentifikáciu na vami vybranú inštanciu GitLab, vytvorte aplikáciu v nastaveniach GitLab a tu nastavte ID a tajný kľúč.",
-    "Make sure you set the \"Redirect URI\" to" : "Nezabudnite nastaviť \"Redirect URI\" na",
-    "and give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application. Optionally \"api\" instead." : "a povoľte \"read_user\", \"read_api\" a \"read_repository\" práva pre aplikáciu. Voliteľne povoľte aj \"api\".",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "Nižšie uveďte „ID aplikácie“ a „tajný kľúč aplikácie“. Vašim používateľom Nextcloud sa potom v ich osobných nastaveniach zobrazí tlačidlo „Pripojiť k GitLabu“, ak vyberú tu definovanú inštanciu GitLab.",
     "OAuth app instance address" : "Adresa inštancie aplikácie OAuth",
     "Instance address" : "Adresa inštancie",
@@ -25,8 +23,8 @@ OC.L10N.register(
     "Client secret of your GitLab application" : "Tajomstvo klienta vašej aplikácie GitLab",
     "GitLab admin options saved" : "Možnosti administrátora GitLab boli uložené",
     "Failed to save GitLab admin options" : "Nepodarilo sa uložiť možnosti administrátora GitLab",
-    "Enable navigation link" : "Povoliť navigačný odkaz",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Keď si sami vytvoríte prístupový token, udelte mu aspoň povolenia „read_user“, „read_api“ a „read_repository“. Voliteľne povoľte aj \"api\".",
+    "Enable navigation link" : "Povoliť navigačný odkaz",
     "GitLab instance address" : "Adresa inštancie GitLab",
     "Personal access token" : "Osobný prístupový token",
     "GitLab personal access token" : "GitLab osobný prístupový token",
@@ -42,7 +40,6 @@ OC.L10N.register(
     "Incorrect access token" : "Nesprávny prístupový token",
     "GitLab options saved" : "Nastavenia GitLabu boli uložené",
     "Failed to save GitLab options" : "Nepodarilo sa uložiť nastavenia GitLabu",
-    "Failed to save GitLab OAuth state" : "Nepodarilo sa uložiť stav OAuth GitLabu",
     "Mark as done" : "Označiť ako dokončené",
     "No GitLab account connected" : "Nie je pripojený žiadny GitLab účet",
     "Error connecting to GitLab" : "Chyba pri pripájaní ku GitLab",
@@ -53,6 +50,7 @@ OC.L10N.register(
     "You were assigned" : "Boli ste priradený",
     "A build has failed" : "Zostavenie zlyhalo",
     "Marked" : "Označené",
-    "You were directly addressed" : "Boli ste priamo oslovení"
+    "You were directly addressed" : "Boli ste priamo oslovení",
+    "Failed to save GitLab OAuth state" : "Nepodarilo sa uložiť stav OAuth GitLabu"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

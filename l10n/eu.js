@@ -15,8 +15,6 @@ OC.L10N.register(
     "Integration of GitLab software development management service" : "GitLab software garapen eta kudeaketa zerbitzuaren integrazioa",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "GitLab integrazioak zure jakinarazpen garrantzitsuak erakusten dituen panel-widgeta eskaintzen du.\n\t eta biltegi, issue eta merge request-entzat bilatzaile bateratua.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Zure Nextcloud erabiltzaileei OAuth-ekin GitLab instantzia batean autentifikatzeko aukera eman nahi badiezu, sortu aplikazio bat zure GitLab administrazio-ezarpenetan eta jarri aplikazioaren IDa eta sekretua hemen.",
-    "Make sure you set the \"Redirect URI\" to" : "Ziurtatu \"Birbideratze URLa\" ezartzen duzula hona:",
-    "and give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application. Optionally \"api\" instead." : "eta aplikazioari \"read_user\", \"read_api\" eta \"read_repository\" baimenak ematen dizkiozula. Aukeran \"api\", bestela.",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "Jarri \"Aplikazioaren IDa\" eta \"Aplikazioaren sekretua\" behean. Nextcloud erabiltzaileek \"Konektatu GitLab-ekin\" botoia ikusiko dute beren ezarpen pertsonaletan, hemen definituriko GitLab instantzia hautatzen badute.",
     "OAuth app instance address" : "OAuth aplikazioaren instantziaren helbidea",
     "Instance address" : "Instantzia helbidea",
@@ -24,10 +22,11 @@ OC.L10N.register(
     "ID of your GitLab application" : "GitLab aplikazioaren IDa",
     "Application secret" : "Aplikazio-sekretua",
     "Client secret of your GitLab application" : "GitLab aplikazioaren bezero-sekretua",
+    "Use a popup to authenticate" : "Erabili laster-menua autentifikatzeko",
     "GitLab admin options saved" : "GitLab administratzaile aukerak gorde dira",
     "Failed to save GitLab admin options" : "GitLabn admin aukerak gordetzeak huts egin du",
-    "Enable navigation link" : "Gaitu nabigazio esteka",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Sarbide token bat sortzen duzunean, eman iezaiozu \"read_user\", \"read_api\" eta \"read_repository\" baimenak. Aukeran \"api\", bestela.",
+    "Enable navigation link" : "Gaitu nabigazio esteka",
     "GitLab instance address" : "GitLab instantzia helbidea",
     "Personal access token" : "Sarbide token pertsonala",
     "GitLab personal access token" : "GitLab sarbide token pertsonala",
@@ -43,7 +42,6 @@ OC.L10N.register(
     "Incorrect access token" : "Sarbide token okerra",
     "GitLab options saved" : "GitLab aukerak gordeta",
     "Failed to save GitLab options" : "GitLab aukerak gordetzeak huts egin du",
-    "Failed to save GitLab OAuth state" : "GitLab OAuth egoera gordetzeak huts egin du",
     "Connect to {url}" : "{url}-(e)ra konektatu",
     "Mark as done" : "Markatu eginda",
     "No GitLab account connected" : "Ez dago GitLab konturik konektatuta",
@@ -56,6 +54,7 @@ OC.L10N.register(
     "A build has failed" : "Eraiketa batek huts egin du",
     "Marked" : "Markatuta",
     "You were directly addressed" : "Zuzenean bideratua izan zara",
-    "Failed to edit GitLab To-Do" : "GitLabeko egitekoak editatzeak huts egin du"
+    "Failed to edit GitLab To-Do" : "GitLabeko egitekoak editatzeak huts egin du",
+    "Failed to save GitLab OAuth state" : "GitLab OAuth egoera gordetzeak huts egin du"
 },
 "nplurals=2; plural=(n != 1);");

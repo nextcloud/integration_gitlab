@@ -15,8 +15,6 @@ OC.L10N.register(
     "Integration of GitLab software development management service" : "Einbindung des GitLab Software Development Management Service",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Die GitLab-Einbindung bietet ein Dashboard-Widget mit wichtigen Benachrichtigungen \n  und einen einheitlichen Suchanbieter für die Suche nach Repositorys, Issues und Merge-Requests.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Wenn Sie Ihren Nextcloud-Benutzern erlauben möchten, sich mit OAuth bei einer GitLab-Instanz Ihrer Wahl zu authentifizieren, erstellen Sie eine Anwendung in Ihren GitLab-Einstellungen und legen Sie hier die ID und das Geheimnis fest.",
-    "Make sure you set the \"Redirect URI\" to" : "Stellen Sie sicher, dass die \"Weiterleitungs-URI\" gesetzt ist auf",
-    "and give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application. Optionally \"api\" instead." : "und geben Sie der Anwendung die Berechtigungen \"read_user\" und \"read_repository\". Optional stattdessen \"api\".",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "Geben Sie unten Ihre \"Anwendungs-ID\" (bzw. \"Application ID\") und das \"Anwendungsgeheimnis\" (bzw. \"Application secret\") an. Ihre Nextcloud-Benutzer werden dann einen \"Verbinde zu GitLab\"-Knopf in ihren persönlichen Einstellungen sehen, wenn sie die hier angegebene GitLab-Instanz auswählen.",
     "OAuth app instance address" : "OAuth-App Instanzadresse",
     "Instance address" : "Adresse der Instanz",
@@ -24,10 +22,11 @@ OC.L10N.register(
     "ID of your GitLab application" : "ID von Ihrer GitLab-Anwendung",
     "Application secret" : "Anwendungsgeheimnis",
     "Client secret of your GitLab application" : "Client-Geheimnis von Ihrer GitLab-Anwendung",
+    "Use a popup to authenticate" : "Popup zur Authentifizierung verwenden",
     "GitLab admin options saved" : "GitLab-Administrator-Einstellungen gespeichert",
     "Failed to save GitLab admin options" : "Fehler beim Speichern der GitLab-Administrator-Einstellungen",
-    "Enable navigation link" : "Nagivations-Link aktivieren",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Wenn Sie selbst ein Zugriffstoken erstellen, geben Sie ihm mindestens die Berechtigungen \"read_user\", \"read_api\" und \"read_repository\". Optional stattdessen \"api\".",
+    "Enable navigation link" : "Nagivations-Link aktivieren",
     "GitLab instance address" : "Adresse der GitLab-Instanz",
     "Personal access token" : "Persönlicher Zugriffsschlüssel",
     "GitLab personal access token" : "GitLab-Token für persönlichen Zugang",
@@ -43,7 +42,6 @@ OC.L10N.register(
     "Incorrect access token" : "Zugriffstoken nicht korrekt",
     "GitLab options saved" : "GitLab-Einstellungen gespeichert",
     "Failed to save GitLab options" : "Fehler beim Speichern der GitLab-Einstellungen",
-    "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status",
     "Connect to {url}" : "Mit {url} verbinden",
     "Mark as done" : "Als erledigt markieren",
     "No GitLab account connected" : "Kein GitLab-Konto verbunden",
@@ -56,6 +54,7 @@ OC.L10N.register(
     "A build has failed" : "Ein Build ist fehlgeschlagen",
     "Marked" : "Markiert",
     "You were directly addressed" : "Sie wurden direkt angesprochen",
-    "Failed to edit GitLab To-Do" : "Fehler beim Bearbeiten der GitLab-Aufgabe"
+    "Failed to edit GitLab To-Do" : "Fehler beim Bearbeiten der GitLab-Aufgabe",
+    "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status"
 },
 "nplurals=2; plural=(n != 1);");

@@ -14,7 +14,6 @@ OC.L10N.register(
     "Integration of GitLab software development management service" : "Integració del servei de gestió del desenvolupament de programari GitLab",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "La integració de GitLab proporciona un giny de quadres de comandament que mostra les notificacions més importants\n    i un proveïdor de cerca unificat per a repositoris, problemes i sol·licituds de combinació.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Si voleu permetre que els usuaris de Nextcloud utilitzin OAuth per autenticar-se a una instància GitLab de la vostra elecció, creeu una aplicació a la configuració del GitLab i establiu aquí l'ID i el secret.",
-    "Make sure you set the \"Redirect URI\" to" : "Assegureu-vos de definir l'\"URI de redirecció\" a",
     "Put the \"Application ID\" and \"Application secret\" below. Your Nextcloud users will then see a \"Connect to GitLab\" button in their personal settings if they select the GitLab instance defined here." : "Posi l'\"ID d'Aplicació\" i \"Secret d'Aplicació\" sota. Els usuaris de Nextcloud veuran un botó \"Connecta't a GitLab\" a la configuració personal si seleccionen la instància GitLab definida aquí.",
     "OAuth app instance address" : "Adreça de la instància de l'aplicació OAuth",
     "Instance address" : "Adreça de la instància",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Incorrect access token" : "Testimoni d'accés incorrecte",
     "GitLab options saved" : "Opcions de GitLab desades",
     "Failed to save GitLab options" : "No s'han pogut desar les opcions de GitLab",
-    "Failed to save GitLab OAuth state" : "No s'ha pogut desar l'estat de GitLab OAuth",
     "Mark as done" : "Marcat com a fet",
     "No GitLab account connected" : "No s'ha connectat cap compte de GitLab",
     "Error connecting to GitLab" : "S'ha produït un error en connectar-se a GitLab",
@@ -51,6 +49,7 @@ OC.L10N.register(
     "You were assigned" : "Se us va assignar",
     "A build has failed" : "Ha fallat una compilació",
     "Marked" : "Marcat",
-    "You were directly addressed" : "Se us va dirigir directament"
+    "You were directly addressed" : "Se us va dirigir directament",
+    "Failed to save GitLab OAuth state" : "No s'ha pogut desar l'estat de GitLab OAuth"
 },
 "nplurals=2; plural=(n != 1);");
