@@ -20,6 +20,7 @@
     "ID of your GitLab application" : "ID do seu aplicativo GitLab",
     "Application secret" : "Segredo do aplicativo",
     "Client secret of your GitLab application" : "Chave secreta do cliente de seu aplicativo GitLab",
+    "Use a popup to authenticate" : "Use um pop-up para autenticar",
     "GitLab admin options saved" : "Opções de administração do GitLab salvas",
     "Failed to save GitLab admin options" : "Falha ao salvar as opções de administrador do GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Quando você mesmo cria um token de acesso, conceda a ele pelo menos as permissões \"read_user\", \"read_api\" e \"read_repository\". Opcionalmente, \"api\". ",
