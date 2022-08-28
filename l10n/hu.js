@@ -48,7 +48,7 @@ OC.L10N.register(
     "Mark as done" : "Megjelölés készként",
     "No GitLab account connected" : "Nincs GitLab-fiók csatlakoztatva",
     "Error connecting to GitLab" : "Hiba történt a GitLabhez történő kapcsolódáskor",
-    "No GitLab notifications!" : "Nincsenek GitLab értesítések!",
+    "No GitLab notifications!" : "Nincsenek GitLab-értesítések.",
     "Failed to get GitLab notifications" : "A GitLab értesítések lekérése sikertelen",
     "You were mentioned" : "Megemlítették Önt",
     "Your approval is required" : "Az Ön engedélye szükséges",
