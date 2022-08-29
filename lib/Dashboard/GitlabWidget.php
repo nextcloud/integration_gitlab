@@ -48,7 +48,10 @@ class GitlabWidget implements IWidget {
 	 * @var string|null
 	 */
 	private $userId;
-	private IConfig $config;
+	/**
+	 * @var IConfig
+	 */
+	private $config;
 
 	public function __construct(IL10N $l10n,
 								IConfig $config,
