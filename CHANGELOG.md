@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 1.0.5 – 2022-08-25
+## 1.0.6 – 2022-08-30
 ### Added
 - new option to connect with OAuth in a popup
 - token refresh (based on expiration date)
