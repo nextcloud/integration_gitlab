@@ -115,8 +115,7 @@
 						<DownVoteIcon :size="16" class="icon" />
 						{{ richObject.downvotes }}
 					</div>
-					<div v-if="richObject.user_notes_count > 0"
-						v-tooltip.top="{ content: t('integration_gitlab', 'Comments') }"
+					<div v-tooltip.top="{ content: t('integration_gitlab', 'Comments') }"
 						class="comments-count">
 						<CommentIcon :size="16" class="icon" />
 						{{ richObject.user_notes_count }}
@@ -131,15 +130,34 @@
 			</div>
 		</div>
 		<div v-if="richObject.gitlab_comment" class="comment">
-			<div class="comment--content">
+			<div class="comment--author">
 				<NcAvatar
-					class="author-avatar"
+					class="comment--author--avatar"
 					:tooltip-message="commentAuthorTooltip"
 					:is-no-user="true"
 					:url="commentAuthorAvatarUrl" />
-				<span class="body-bubble" />
-				<span class="body" :title="richObject.gitlab_comment.body">
-					{{ richObject.gitlab_comment.body }}
+				<span class="comment--author--bubble-tip" />
+				<span class="comment--author--bubble">
+					<div class="comment--author--bubble--header">
+						<a :href="getUserAvatarUrl(richObject.gitlab_comment.author.username)" target="_blank" class="author-link">
+							<strong class="comment-author-display-name">{{ richObject.gitlab_comment.author.name }}</strong>
+							@{{ richObject.gitlab_comment.author.username }}
+						</a>
+						&nbsp;·&nbsp;
+						<span v-tooltip.top="{ content: commentUpdatedAtTooltip }">
+							{{ commentUpdatedAtText }}
+						</span>
+						<div class="spacer" />
+						<div v-if="richObject.gitlab_comment.author.username === richObject.author.username" class="label">
+							{{ t('integration_gitlab', 'Author') }}
+						</div>
+						<div v-if="richObject.gitlab_comment.author.username === richObject.gitlab_project_owner_username" class="label">
+							{{ t('integration_gitlab', 'Owner') }}
+						</div>
+					</div>
+					<div class="comment--author--bubble--content" :title="richObject.gitlab_comment.body">
+						{{ richObject.gitlab_comment.body }}
+					</div>
 				</span>
 			</div>
 		</div>
@@ -310,12 +328,18 @@ export default {
 		updatedAtText() {
 			return t('integration_gitlab', 'updated {relativeDate}', { relativeDate: moment(this.richObject.updated_at).fromNow() })
 		},
+		commentUpdatedAtText() {
+			return moment(this.richObject.gitlab_comment.updated_at).fromNow()
+		},
+		commentUpdatedAtTooltip() {
+			return moment(this.richObject.gitlab_comment.updated_at).format('LLL')
+		},
 		commentAuthorAvatarUrl() {
-			const login = this.richObject.gitlab_comment.user?.login ?? ''
-			return generateUrl('/apps/integration_gitlab/avatar?gitlabUserName={login}', { login })
+			const userId = this.richObject.gitlab_comment.author?.id ?? ''
+			return generateUrl('/apps/integration_gitlab/avatar/user/{userId}', { userId })
 		},
 		commentAuthorTooltip() {
-			return t('integration_gitlab', 'Comment from {login}', { login: this.richObject.gitlab_comment.user?.login ?? '' })
+			return t('integration_gitlab', 'Comment from {username}', { username: this.richObject.gitlab_comment.author?.username ?? '' })
 		},
 	},
 
@@ -323,9 +347,13 @@ export default {
 		getUserLink(userName) {
 			if (userName) {
 				const cleanName = escapeHtml(userName)
-				return '<a href="https://gitlab.com/' + cleanName + '" class="author-link" target="_blank">' + cleanName + '</a>'
+				return '<a href="' + this.getUserAvatarUrl(userName) + '" class="author-link" target="_blank">' + cleanName + '</a>'
 			}
 			return '??'
+		},
+		getUserAvatarUrl(userName) {
+			const cleanName = escapeHtml(userName)
+			return 'https://gitlab.com/' + cleanName
 		},
 		getAssigneeAvatarUrl(assignee) {
 			const userId = assignee.id ?? ''
@@ -364,17 +392,6 @@ export default {
 			margin-left: 8px;
 		}
 
-		.label {
-			display: flex;
-			align-items: center;
-			height: 20px;
-			margin-right: 4px;
-			border: 1px solid var(--color-border-dark);
-			padding: 0 7px;
-			border-radius: var(--border-radius-pill);
-			font-size: 12px;
-		}
-
 		.title {
 			display: flex;
 			align-items: center;
@@ -384,21 +401,6 @@ export default {
 			}
 			.issue-pr-link {
 				margin-right: 8px;
-			}
-		}
-
-		.milestone,
-		::v-deep .author-link,
-		.slug-link {
-			color: inherit;
-		}
-
-		.milestone,
-		::v-deep .author-link,
-		.slug-link,
-		.issue-pr-link {
-			&:hover {
-				color: #58a6ff;
 			}
 		}
 
@@ -461,20 +463,33 @@ export default {
 		display: flex;
 		flex-direction: column;
 		align-items: start;
-		&--content {
+		&--author {
 			display: flex;
 			align-items: center;
 			width: 100%;
 
-			.body {
-				text-overflow: ellipsis;
-				overflow: hidden;
-				white-space: nowrap;
+			&--bubble {
+				// TODO improve this
+				display: grid;
+				//flex-direction: column;
+				width: 100%;
 				padding: 4px 8px;
 				border: 1px solid var(--color-border-dark);
 				border-radius: var(--border-radius);
+				&--header {
+					display: flex;
+					color: var(--color-text-maxcontrast);
+					.comment-author-display-name {
+						color: var(--color-main-text);
+					}
+				}
+				&--content {
+					text-overflow: ellipsis;
+					overflow: hidden;
+					white-space: nowrap;
+				}
 			}
-			.body-bubble {
+			&--bubble-tip {
 				margin-left: 15px;
 				position: relative;
 				&:before {
@@ -506,6 +521,33 @@ export default {
 					border-right: 8px solid var(--color-background-hover);
 				}
 			}
+		}
+	}
+
+	.label {
+		display: flex;
+		align-items: center;
+		height: 20px;
+		margin-right: 4px;
+		border: 1px solid var(--color-border-dark);
+		padding: 0 7px;
+		border-radius: var(--border-radius-pill);
+		font-size: 12px;
+	}
+
+	.milestone,
+	::v-deep .author-link,
+	.slug-link {
+		color: inherit;
+	}
+
+	.milestone,
+	::v-deep .author-link,
+	.author-link:hover .comment-author-display-name,
+	.slug-link,
+	.issue-pr-link {
+		&:hover {
+			color: #58a6ff;
 		}
 	}
 

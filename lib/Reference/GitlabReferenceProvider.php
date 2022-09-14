@@ -94,6 +94,7 @@ class GitlabReferenceProvider implements IReferenceProvider {
 						'gitlab_issue_id' => $issueId,
 						'gitlab_repo_owner' => $owner,
 						'gitlab_repo' => $repo,
+						'gitlab_project_owner_username' => $projectInfo['owner']['username'] ?? '',
 						'gitlab_project_labels' => $projectLabels,
 						'gitlab_comment' => $commentInfo,
 					], $issueInfo)
@@ -118,6 +119,7 @@ class GitlabReferenceProvider implements IReferenceProvider {
 							'gitlab_pr_id' => $prId,
 							'gitlab_repo_owner' => $owner,
 							'gitlab_repo' => $repo,
+							'gitlab_project_owner_username' => $projectInfo['owner']['username'] ?? '',
 							'gitlab_project_labels' => $projectLabels,
 							'gitlab_comment' => $commentInfo,
 						], $prInfo),
