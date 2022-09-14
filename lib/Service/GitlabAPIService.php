@@ -363,25 +363,64 @@ class GitlabAPIService {
 	}
 
 	/**
-	 * @param string $userId
+	 * @param string|null $userId
+	 * @param string $owner
+	 * @param string $repo
+	 * @return array
+	 * @throws Exception
+	 */
+	public function getProjectInfo(?string $userId, string $owner, string $repo): array {
+		return $this->request($userId, 'projects/' . urlencode($owner . '/' . $repo));
+	}
+
+	public function getProjectLabels(?string $userId, int $projectId): array {
+		return $this->request($userId, 'projects/' . $projectId . '/labels');
+	}
+
+	public function getIssueInfo(?string $userId, int $projectId, int $issueId): array {
+		return $this->request($userId, 'projects/' . $projectId . '/issues/' . $issueId);
+	}
+
+	public function getIssueCommentInfo(?string $userId, int $projectId, int $issueId, int $commentId): array {
+		return $this->request($userId, 'projects/' . $projectId . '/issues/' . $issueId . '/notes/' . $commentId);
+	}
+
+	public function getPrInfo(?string $userId, int $projectId, int $prId): array {
+		return $this->request($userId, 'projects/' . $projectId . '/merge_requests/' . $prId);
+	}
+
+	public function getPrCommentInfo(?string $userId, int $projectId, int $prId, int $commentId): array {
+		return $this->request($userId, 'projects/' . $projectId . '/merge_requests/' . $prId . '/notes/' . $commentId);
+	}
+
+	/**
+	 * @param string|null $userId
 	 * @param string $endPoint
 	 * @param array $params
 	 * @param string $method
 	 * @return array
-	 * @throws Exception
+	 * @throws PreConditionNotMetException
 	 */
-	public function request(string $userId, string $endPoint, array $params = [], string $method = 'GET'): array {
-		$this->checkTokenExpiration($userId);
-		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
+	public function request(?string $userId, string $endPoint, array $params = [], string $method = 'GET'): array {
+		if ($userId !== null) {
+			$this->checkTokenExpiration($userId);
+		}
 		$baseUrl = $this->getGitlabUrl($userId);
 		try {
 			$url = $baseUrl . '/api/v4/' . $endPoint;
 			$options = [
 				'headers' => [
-					'Authorization'  => 'Bearer ' . $accessToken,
 					'User-Agent' => 'Nextcloud GitLab integration'
 				],
 			];
+
+			// try anonymous request if no user (public page) or user not connected to a gitlab account
+			if ($userId !== null) {
+				$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
+				if ($accessToken !== '') {
+					$options['headers']['Authorization'] = 'Bearer ' . $accessToken;
+				}
+			}
 
 			if (count($params) > 0) {
 				if ($method === 'GET') {

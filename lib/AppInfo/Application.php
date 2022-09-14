@@ -10,6 +10,9 @@
 namespace OCA\Gitlab\AppInfo;
 
 use Closure;
+use OCA\Gitlab\Listener\GitlabReferenceListener;
+use OCA\Gitlab\Reference\GitlabReferenceProvider;
+use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\INavigationManager;
@@ -38,11 +41,6 @@ class Application extends App implements IBootstrap {
 	 */
 	private $config;
 
-	/**
-	 * Constructor
-	 *
-	 * @param array $urlParams
-	 */
 	public function __construct(array $urlParams = []) {
 		parent::__construct(self::APP_ID, $urlParams);
 
@@ -54,6 +52,9 @@ class Application extends App implements IBootstrap {
 		$context->registerDashboardWidget(GitlabWidget::class);
 		$context->registerSearchProvider(GitlabSearchIssuesProvider::class);
 		$context->registerSearchProvider(GitlabSearchReposProvider::class);
+
+		$context->registerReferenceProvider(GitlabReferenceProvider::class);
+		$context->registerEventListener(RenderReferenceEvent::class, GitlabReferenceListener::class);
 	}
 
 	public function boot(IBootContext $context): void {

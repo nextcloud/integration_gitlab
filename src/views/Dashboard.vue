@@ -103,6 +103,7 @@ export default {
 					id: this.getUniqueKey(n),
 					targetUrl: this.getNotificationTarget(n),
 					avatarUrl: this.getNotificationImage(n),
+					// avatarUrl: this.getAuthorAvatarUrl(n),
 					avatarUsername: this.getRepositoryName(n),
 					avatarIsNoUser: true,
 					overlayIconUrl: this.getNotificationTypeImage(n),
@@ -251,7 +252,7 @@ export default {
 		},
 		getAuthorAvatarUrl(n) {
 			return (n.author && n.author.id)
-				? generateUrl('/apps/integration_gitlab/avatar/user?') + encodeURIComponent('userId') + '=' + encodeURIComponent(n.author.id)
+				? generateUrl('/apps/integration_gitlab/avatar/user/{userId}', { userId: n.author.id })
 				: ''
 		},
 		getRepositoryName(n) {

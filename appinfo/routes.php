@@ -21,6 +21,6 @@ return [
 		['name' => 'gitlabAPI#markTodoAsDone', 'url' => '/todos/{id}/mark-done', 'verb' => 'PUT'],
 		['name' => 'gitlabAPI#getGitlabUrl', 'url' => '/url', 'verb' => 'GET'],
 		['name' => 'gitlabAPI#getProjectAvatar', 'url' => '/avatar/project', 'verb' => 'GET'],
-		['name' => 'gitlabAPI#getUserAvatar', 'url' => '/avatar/user', 'verb' => 'GET'],
+		['name' => 'gitlabAPI#getUserAvatar', 'url' => '/avatar/user/{userId}', 'verb' => 'GET'],
 	]
 ];

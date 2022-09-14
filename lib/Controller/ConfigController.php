@@ -12,6 +12,7 @@
 namespace OCA\Gitlab\Controller;
 
 use DateTime;
+use OCA\Gitlab\Reference\GitlabReferenceProvider;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
@@ -53,6 +54,7 @@ class ConfigController extends Controller {
 	 * @var IInitialState
 	 */
 	private $initialStateService;
+	private GitlabReferenceProvider $gitlabReferenceProvider;
 
 	public function __construct(string $appName,
 								IRequest $request,
@@ -61,6 +63,7 @@ class ConfigController extends Controller {
 								IL10N $l,
 								IInitialState $initialStateService,
 								GitlabAPIService $gitlabAPIService,
+								GitlabReferenceProvider $gitlabReferenceProvider,
 								?string $userId) {
 		parent::__construct($appName, $request);
 		$this->config = $config;
@@ -69,6 +72,7 @@ class ConfigController extends Controller {
 		$this->gitlabAPIService = $gitlabAPIService;
 		$this->userId = $userId;
 		$this->initialStateService = $initialStateService;
+		$this->gitlabReferenceProvider = $gitlabReferenceProvider;
 	}
 
 	/**
@@ -98,6 +102,7 @@ class ConfigController extends Controller {
 			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_type');
 			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
 			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_expires_at');
+			$this->gitlabReferenceProvider->invalidateUserCache($this->userId);
 
 			if ($values['token'] && $values['token'] !== '') {
 				$info = $this->storeUserInfo();
@@ -177,6 +182,7 @@ class ConfigController extends Controller {
 				'grant_type' => 'authorization_code'
 			], 'POST');
 			if (isset($result['access_token'])) {
+				$this->gitlabReferenceProvider->invalidateUserCache($this->userId);
 				$accessToken = $result['access_token'];
 				$refreshToken = $result['refresh_token'] ?? '';
 				if (isset($result['expires_in'])) {

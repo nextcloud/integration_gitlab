@@ -81,6 +81,11 @@
 				@update:checked="onCheckboxChanged($event, 'navigation_enabled')">
 				{{ t('integration_gitlab', 'Enable navigation link') }}
 			</NcCheckboxRadioSwitch>
+			<NcCheckboxRadioSwitch
+				:checked="state.link_preview_enabled"
+				@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
+				{{ t('integration_github', 'Enable GitLab link previews in Talk') }}
+			</NcCheckboxRadioSwitch>
 		</div>
 	</div>
 </template>

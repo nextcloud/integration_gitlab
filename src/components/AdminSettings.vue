@@ -59,9 +59,14 @@
 					@input="onInput">
 			</div>
 			<NcCheckboxRadioSwitch
-				:checked.sync="state.use_popup"
-				@update:checked="onUsePopupChanged">
+				:checked="state.use_popup"
+				@update:checked="onCheckboxChanged($event, 'use_popup')">
 				{{ t('integration_gitlab', 'Use a popup to authenticate') }}
+			</NcCheckboxRadioSwitch>
+			<NcCheckboxRadioSwitch
+				:checked="state.link_preview_enabled"
+				@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
+				{{ t('integration_github', 'Enable GitLab link previews in Talk') }}
 			</NcCheckboxRadioSwitch>
 		</div>
 	</div>
@@ -111,8 +116,9 @@ export default {
 	},
 
 	methods: {
-		onUsePopupChanged(newValue) {
-			this.saveOptions({ use_popup: newValue ? '1' : '0' })
+		onCheckboxChanged(newValue, key) {
+			this.state[key] = newValue
+			this.saveOptions({ [key]: this.state[key] ? '1' : '0' })
 		},
 		onInput() {
 			delay(() => {
@@ -169,7 +175,7 @@ export default {
 			align-items: center;
 		}
 		> input {
-			width: 250px;
+			width: 300px;
 		}
 	}
 }
