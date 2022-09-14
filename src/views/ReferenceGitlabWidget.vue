@@ -139,7 +139,7 @@
 				<span class="comment--author--bubble-tip" />
 				<span class="comment--author--bubble">
 					<div class="comment--author--bubble--header">
-						<a :href="getUserAvatarUrl(richObject.gitlab_comment.author.username)" target="_blank" class="author-link">
+						<a :href="getUserUrl(richObject.gitlab_comment.author.username)" target="_blank" class="author-link">
 							<strong class="comment-author-display-name">{{ richObject.gitlab_comment.author.name }}</strong>
 							@{{ richObject.gitlab_comment.author.username }}
 						</a>
@@ -347,11 +347,11 @@ export default {
 		getUserLink(userName) {
 			if (userName) {
 				const cleanName = escapeHtml(userName)
-				return '<a href="' + this.getUserAvatarUrl(userName) + '" class="author-link" target="_blank">' + cleanName + '</a>'
+				return '<a href="' + this.getUserUrl(userName) + '" class="author-link" target="_blank">' + cleanName + '</a>'
 			}
 			return '??'
 		},
-		getUserAvatarUrl(userName) {
+		getUserUrl(userName) {
 			const cleanName = escapeHtml(userName)
 			return 'https://gitlab.com/' + cleanName
 		},
