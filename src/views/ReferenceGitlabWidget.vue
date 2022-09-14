@@ -440,6 +440,7 @@ export default {
 			display: flex;
 			flex-direction: column;
 			align-items: end;
+			text-align: right;
 
 			> * {
 				display: flex;
