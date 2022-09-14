@@ -58,11 +58,11 @@
 					@focus="readonly = false"
 					@input="onInput">
 			</div>
-			<CheckboxRadioSwitch
+			<NcCheckboxRadioSwitch
 				:checked.sync="state.use_popup"
 				@update:checked="onUsePopupChanged">
 				{{ t('integration_gitlab', 'Use a popup to authenticate') }}
-			</CheckboxRadioSwitch>
+			</NcCheckboxRadioSwitch>
 		</div>
 	</div>
 </template>
@@ -80,13 +80,13 @@ import axios from '@nextcloud/axios'
 import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
-import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 
 export default {
 	name: 'AdminSettings',
 
 	components: {
-		CheckboxRadioSwitch,
+		NcCheckboxRadioSwitch,
 		GitlabIcon,
 		KeyIcon,
 		EarthIcon,

@@ -8,11 +8,6 @@
 			{{ t('integration_gitlab', 'When you create an access token yourself, give it at least "read_user", "read_api" and "read_repository" permissions. Optionally "api" instead.') }}
 		</p>
 		<div id="gitlab-content">
-			<CheckboxRadioSwitch
-				:checked="state.navigation_enabled"
-				@update:checked="onCheckboxChanged($event, 'navigation_enabled')">
-				{{ t('integration_gitlab', 'Enable navigation link') }}
-			</CheckboxRadioSwitch>
 			<div class="line">
 				<label for="gitlab-url">
 					<EarthIcon :size="20" class="icon" />
@@ -64,23 +59,28 @@
 			</div>
 			<br>
 			<div v-if="connected" id="gitlab-search-block">
-				<CheckboxRadioSwitch
+				<NcCheckboxRadioSwitch
 					:checked="state.search_enabled"
 					@update:checked="onCheckboxChanged($event, 'search_enabled')">
 					{{ t('integration_gitlab', 'Enable searching for repositories') }}
-				</CheckboxRadioSwitch>
-				<CheckboxRadioSwitch
+				</NcCheckboxRadioSwitch>
+				<NcCheckboxRadioSwitch
 					:checked="state.search_issues_enabled"
 					@update:checked="onCheckboxChanged($event, 'search_issues_enabled')">
 					{{ t('integration_gitlab', 'Enable searching for issues and merge requests') }}
 					{{ t('integration_gitlab', '(This may be slow or even fail on some GitLab instances)') }}
-				</CheckboxRadioSwitch>
+				</NcCheckboxRadioSwitch>
 				<br>
 				<p v-if="state.search_enabled || state.search_issues_enabled" class="settings-hint">
 					<InformationOutlineIcon :size="20" class="icon" />
 					{{ t('integration_gitlab', 'Warning, everything you type in the search bar will be sent to GitLab.') }}
 				</p>
 			</div>
+			<NcCheckboxRadioSwitch
+				:checked="state.navigation_enabled"
+				@update:checked="onCheckboxChanged($event, 'navigation_enabled')">
+				{{ t('integration_gitlab', 'Enable navigation link') }}
+			</NcCheckboxRadioSwitch>
 		</div>
 	</div>
 </template>
@@ -101,15 +101,15 @@ import axios from '@nextcloud/axios'
 import { delay, oauthConnect } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
-import NcButton from '@nextcloud/vue/dist/Components/Button.js'
-import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 
 export default {
 	name: 'PersonalSettings',
 
 	components: {
 		GitlabIcon,
-		CheckboxRadioSwitch,
+		NcCheckboxRadioSwitch,
 		NcButton,
 		OpenInNewIcon,
 		EarthIcon,

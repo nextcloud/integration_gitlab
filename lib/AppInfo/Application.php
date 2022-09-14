@@ -75,18 +75,10 @@ class Application extends App implements IBootstrap {
 					$l10n = $container->get(IL10N::class);
 					return [
 						'id' => self::APP_ID,
-
 						'order' => 10,
-
-						// the route that will be shown on startup
 						'href' => $gitlabUrl,
-
-						// the icon that will be shown in the navigation
-						// this file needs to exist in img/
+						'target' => '_blank',
 						'icon' => $urlGenerator->imagePath(self::APP_ID, 'app.svg'),
-
-						// the title of your application. This will be used in the
-						// navigation or on the settings page of your app
 						'name' => $l10n->t('GitLab'),
 					];
 				});
