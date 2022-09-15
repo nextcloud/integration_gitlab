@@ -24,7 +24,6 @@
     "GitLab admin options saved" : "Opções de administração do GitLab salvas",
     "Failed to save GitLab admin options" : "Falha ao salvar as opções de administrador do GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Quando você mesmo cria um token de acesso, conceda a ele pelo menos as permissões \"read_user\", \"read_api\" e \"read_repository\". Opcionalmente, \"api\". ",
-    "Enable navigation link" : "Habilitar link de navegação",
     "GitLab instance address" : "Endereço da instância GitLab",
     "Personal access token" : "Token de acesso pessoal",
     "GitLab personal access token" : "Token de acesso pessoal do GitLab",
@@ -35,6 +34,7 @@
     "Enable searching for issues and merge requests" : "Permitir a pesquisa de problemas e solicitações de pull",
     "(This may be slow or even fail on some GitLab instances)" : "(Isso pode ser lento ou até mesmo falhar em algumas instâncias do GitLab)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Atenção, tudo o que você digitar na barra de pesquisa será enviado ao GitLab.",
+    "Enable navigation link" : "Habilitar link de navegação",
     "Successfully connected to GitLab!" : "Conectado com sucesso ao GitLab!",
     "Error connecting to GitLab:" : "Erro ao conectar ao GitLab:",
     "Incorrect access token" : "Token de acesso incorreto",
@@ -53,6 +53,9 @@
     "Marked" : "Marcado",
     "You were directly addressed" : "Você foi abordado diretamente",
     "Failed to edit GitLab To-Do" : "Falha ao editar tarefas do GitLab",
+    "Unknown error" : "Erro desconhecido",
+    "Comments" : "Comentários",
+    "Author" : "Autor",
     "Failed to save GitLab OAuth state" : "Falha ao salvar o estado GitLab OAuth"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

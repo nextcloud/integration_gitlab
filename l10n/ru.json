@@ -23,7 +23,6 @@
     "GitLab admin options saved" : "Параметры администратора GitLab сохранены",
     "Failed to save GitLab admin options" : "Не удалось сохранить параметры администратора GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Когда вы создаете токен доступа самостоятельно, дайте ему, по крайней мере, разрешения \"read_user\", \"read_api\" и \"read_repository\". При желании вместо этого используйте \"api\".",
-    "Enable navigation link" : "Включить ссылку для навигации",
     "GitLab instance address" : "Адрес сервера GitLab",
     "Personal access token" : "Личный токен доступа",
     "GitLab personal access token" : "Токен личного доступа GitLab",
@@ -34,6 +33,7 @@
     "Enable searching for issues and merge requests" : "Включение поиска проблем и запросов на слияние",
     "(This may be slow or even fail on some GitLab instances)" : "(Это может быть медленным или даже ошибочным на некоторых серверах GitLab)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Предупреждение, все, что вы вводите в строку поиска, будет отправлено в GitLab.",
+    "Enable navigation link" : "Включить ссылку для навигации",
     "Successfully connected to GitLab!" : "Успешно подключено к GitLab!",
     "Error connecting to GitLab:" : "Ошибка подключения к GitLab:",
     "Incorrect access token" : "Неверный токен доступа",
@@ -52,6 +52,10 @@
     "Marked" : "Отмечено",
     "You were directly addressed" : "К вам напрямую обратились",
     "Failed to edit GitLab To-Do" : "Не удалось внести изменения в GitLab To-Do",
+    "Unknown error" : "Неизвестная ошибка",
+    "Comments" : "Комментарии",
+    "Author" : "Автор",
+    "Owner" : "Владелец",
     "Failed to save GitLab OAuth state" : "Не удалось сохранить состояние GitLab OAuth"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

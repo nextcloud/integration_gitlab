@@ -7,9 +7,12 @@ OC.L10N.register(
     "OAuth access token refused" : "Одбиен OAuth пристапен токен ",
     "Connected accounts" : "Поврзани сметки",
     "Use a popup to authenticate" : "користи скокачки прозор за автентификација",
-    "Enable navigation link" : "Овозможи линк за навигација",
     "Connected as {user}" : "Поврзан како {user}",
+    "Enable navigation link" : "Овозможи линк за навигација",
     "Incorrect access token" : "Неточен токен за пристап",
-    "You were mentioned" : "Споменати сте"
+    "You were mentioned" : "Споменати сте",
+    "Unknown error" : "Непозната грешка",
+    "Comments" : "Коментари",
+    "Author" : "Автор"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

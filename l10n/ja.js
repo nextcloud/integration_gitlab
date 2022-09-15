@@ -12,16 +12,19 @@ OC.L10N.register(
     "Application ID" : "アプリケーション ID",
     "ID of your GitLab application" : "GitLab アプリケーションの ID",
     "Application secret" : "アプリケーションシークレット",
-    "Enable navigation link" : "ナビゲーションリンクを有効化",
     "GitLab instance address" : "GitLab インスタンスのアドレス",
     "Connect to GitLab" : "GitLab に接続",
     "Connected as {user}" : "{user} を接続済み",
     "Disconnect from GitLab" : "GitLab から切断",
+    "Enable navigation link" : "ナビゲーションリンクを有効化",
     "Successfully connected to GitLab!" : "GitLabへの接続に成功しました！",
     "Incorrect access token" : "正しくないアクセストークン",
     "Mark as done" : "完了としてマーク",
     "No GitLab account connected" : "接続済みGitLabアカウントがありません",
     "No GitLab notifications!" : "GitLab通知がありません！",
-    "You were mentioned" : "あなたについて言及されました"
+    "You were mentioned" : "あなたについて言及されました",
+    "Unknown error" : "不明なエラー",
+    "Comments" : "コメント",
+    "Author" : "作者"
 },
 "nplurals=1; plural=0;");

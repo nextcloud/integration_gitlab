@@ -26,7 +26,6 @@
     "GitLab admin options saved" : "Опциите за администратор на GitLab са записани",
     "Failed to save GitLab admin options" : "Неуспешно записване на опциите за администратор на GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Когато сами създавате токен за достъп, дайте му поне права за „прочитане_клиент“, „прочитане_api“ и „прочитане_хранилище“. По избор, вместо \"api\".",
-    "Enable navigation link" : "Активиране на връзка за навигация",
     "GitLab instance address" : "Адрес на екземпляр на GitLab",
     "Personal access token" : "Личен токен за достъп",
     "GitLab personal access token" : "Личен токен за достъп на GitLab",
@@ -37,6 +36,7 @@
     "Enable searching for issues and merge requests" : "Активиране на търсенето на проблеми и заявки за обединяване",
     "(This may be slow or even fail on some GitLab instances)" : "(Това може да е бавно или дори да се провали в някои екземпляри на GitLab)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Предупреждение, всичко, което въведете в лентата за търсене, ще бъде изпратено до GitLab.",
+    "Enable navigation link" : "Активиране на връзка за навигация",
     "Successfully connected to GitLab!" : "Успешно свързване с GitLab!",
     "Error connecting to GitLab:" : "Грешка при свързване с GitLab:",
     "Incorrect access token" : "Неправилен токен за достъп",
@@ -55,6 +55,10 @@
     "Marked" : "Маркирано",
     "You were directly addressed" : "Обърнаха се директно към вас",
     "Failed to edit GitLab To-Do" : "Неуспешно редактиране на задача на GitLab",
+    "Unknown error" : "Неизвестна грешка",
+    "Comments" : "Коментари",
+    "Author" : "Автор",
+    "Unknown state" : "Неизвестно състояние",
     "Failed to save GitLab OAuth state" : "Неуспешно записване на състоянието на GitLab OAuth"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

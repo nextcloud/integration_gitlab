@@ -24,7 +24,6 @@ OC.L10N.register(
     "GitLab admin options saved" : "Οι επιλογές διαχειριστή GitLab αποθηκεύτηκαν",
     "Failed to save GitLab admin options" : "Αποτυχία αποθήκευσης των επιλογών διαχειριστή GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Όταν δημιουργείτε μόνοι σας ένα διακριτικό πρόσβασης, δώστε του τουλάχιστον δικαιώματα \"read_user\", \"read_api\" και \"read_repository\". Προαιρετικά \"api\" αντί αυτού.",
-    "Enable navigation link" : "Ενεργοποίηση συνδέσμου πλοήγησης",
     "GitLab instance address" : "Διεύθυνση instance GitLab",
     "Personal access token" : "Token προσωπικής πρόσβασης",
     "GitLab personal access token" : "Token προσωπικής πρόσβασης GitLab",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Enable searching for issues and merge requests" : "Ενεργοποίηση αναζήτησης για ζητήματα και συγχώνευση αιτημάτων",
     "(This may be slow or even fail on some GitLab instances)" : "(Αυτό μπορεί να είναι αργό ή ακόμη και να αποτύχει σε ορισμένες instances του GitLab)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Προειδοποίηση, όλα όσα πληκτρολογείτε στη γραμμή αναζήτησης θα σταλούν στο GitLab.",
+    "Enable navigation link" : "Ενεργοποίηση συνδέσμου πλοήγησης",
     "Successfully connected to GitLab!" : "Συνδέθηκε με επιτυχία στο GitLab!",
     "Error connecting to GitLab:" : "Σφάλμα σύνδεσης στο GitLab:",
     "Incorrect access token" : "Λανθασμένο token πρόσβασης",
@@ -51,6 +51,10 @@ OC.L10N.register(
     "A build has failed" : "Η έκδοση απέτυχε",
     "Marked" : "Επισημάνθηκε",
     "You were directly addressed" : "Σας απευθύνθηκαν άμεσα",
+    "Unknown error" : "Άγνωστο σφάλμα",
+    "Comments" : "Σχόλια",
+    "Author" : "Δημιουργός",
+    "Owner" : "Κάτοχος",
     "Failed to save GitLab OAuth state" : "Αποτυχία αποθήκευσης της κατάστασης GitLab OAuth"
 },
 "nplurals=2; plural=(n != 1);");

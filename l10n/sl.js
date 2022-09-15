@@ -23,7 +23,6 @@ OC.L10N.register(
     "Client secret of your GitLab application" : "Koda programa za povezavo z računom GitLab",
     "GitLab admin options saved" : "Skrbniške nastavitve povezave GitLab so shranjene",
     "Failed to save GitLab admin options" : "Shranjevanje skrbniških nastavitev računa GitLab je spodletelo",
-    "Enable navigation link" : "Omogoči povezave za krmarjenje",
     "GitLab instance address" : "Naslov povezave do računa GitLab",
     "Personal access token" : "Osebni žeton za dostop",
     "GitLab personal access token" : "Osebni žeton GitHub za dostop",
@@ -34,6 +33,7 @@ OC.L10N.register(
     "Enable searching for issues and merge requests" : "Omogoči iskanje med odprtimi nalogami in zahtevami za združitev kode.",
     "(This may be slow or even fail on some GitLab instances)" : "(Opravilo se lahko izvaja počasi ali pa celo spodleti pri nekaterih namestitvah)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Opozorilo! Karkoli vpišete v iskalno polje bo poslano na strežnik GitLab.",
+    "Enable navigation link" : "Omogoči povezave za krmarjenje",
     "Successfully connected to GitLab!" : "Povezava z računom GitLab je uspešno vzpostavljena!",
     "Error connecting to GitLab:" : "Napaka povezovanja z računom GitLab:",
     "Incorrect access token" : " Neveljaven žetona za dostop",
@@ -50,6 +50,9 @@ OC.L10N.register(
     "A build has failed" : "Izgradnja je spodletela",
     "Marked" : "Označeno",
     "You were directly addressed" : "Nekdo vas je neposredno naslovil",
+    "Unknown error" : "Neznana napaka",
+    "Comments" : "Opombe",
+    "Author" : "Avtor",
     "Failed to save GitLab OAuth state" : "Shranjevanje stanja GitLab OAuth je spodletelo"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

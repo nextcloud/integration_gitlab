@@ -22,7 +22,6 @@ OC.L10N.register(
     "Client secret of your GitLab application" : " Segredo do cliente da súa aplicación de GitLab",
     "GitLab admin options saved" : "Gardáronse as opcións de administración de GitLab",
     "Failed to save GitLab admin options" : "Produciuse un fallo ao gardar as opcións de administración de GitLab.",
-    "Enable navigation link" : "Activar a ligazón de navegación",
     "GitLab instance address" : "Enderezo da instancia de GitLab",
     "Personal access token" : "Testemuño de acceso persoal",
     "GitLab personal access token" : "Testemuño de acceso persoal ao GitLab",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Enable searching for issues and merge requests" : "Activar a busca de incidencias (issues) e solicitudes de fusión (merge request)",
     "(This may be slow or even fail on some GitLab instances)" : "(Isto pode ser lento ou incluso fallar nalgunhas instancias de GitLab)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Advertencia, todo o que escriba na barra de buscas enviarase a GitLab.",
+    "Enable navigation link" : "Activar a ligazón de navegación",
     "Successfully connected to GitLab!" : "Conectou satisfactoriamente con GitLab",
     "Error connecting to GitLab:" : "Produciuse un erro ao conectar con GitLab:",
     "Incorrect access token" : "Testemuño de acceso incorrecto",
@@ -49,6 +49,10 @@ OC.L10N.register(
     "A build has failed" : "Fallou unha compilación",
     "Marked" : "Marcado",
     "You were directly addressed" : "Dirixíuselle directamente",
+    "Unknown error" : "Erro descoñecido",
+    "Comments" : "Comentarios",
+    "Author" : "Autor",
+    "Owner" : "Propietario",
     "Failed to save GitLab OAuth state" : "Produciuse un fallo ao gardar o estado do OAuth de GitLab"
 },
 "nplurals=2; plural=(n != 1);");

@@ -26,7 +26,6 @@ OC.L10N.register(
     "GitLab admin options saved" : "GitLab administratzaile aukerak gorde dira",
     "Failed to save GitLab admin options" : "GitLabn admin aukerak gordetzeak huts egin du",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Sarbide token bat sortzen duzunean, eman iezaiozu \"read_user\", \"read_api\" eta \"read_repository\" baimenak. Aukeran \"api\", bestela.",
-    "Enable navigation link" : "Gaitu nabigazio esteka",
     "GitLab instance address" : "GitLab instantzia helbidea",
     "Personal access token" : "Sarbide token pertsonala",
     "GitLab personal access token" : "GitLab sarbide token pertsonala",
@@ -37,6 +36,7 @@ OC.L10N.register(
     "Enable searching for issues and merge requests" : "Gaitu issue eta merge request-ak bilatzeko aukera",
     "(This may be slow or even fail on some GitLab instances)" : "(Baliteke hau motela izatea edo huts egitea GitLab instantzia batzuetan)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Abisua, bilaketa-barran idazten duzun guztia GitLabera bidaliko da.",
+    "Enable navigation link" : "Gaitu nabigazio esteka",
     "Successfully connected to GitLab!" : "GitLab-era ongi konektatu da!",
     "Error connecting to GitLab:" : "Errorea GitLab-era konektatzean:",
     "Incorrect access token" : "Sarbide token okerra",
@@ -55,6 +55,10 @@ OC.L10N.register(
     "Marked" : "Markatuta",
     "You were directly addressed" : "Zuzenean bideratua izan zara",
     "Failed to edit GitLab To-Do" : "GitLabeko egitekoak editatzeak huts egin du",
+    "Unknown error" : "Errore ezezaguna",
+    "Comments" : "Iruzkinak",
+    "Author" : "Egilea",
+    "Owner" : "Jabea",
     "Failed to save GitLab OAuth state" : "GitLab OAuth egoera gordetzeak huts egin du"
 },
 "nplurals=2; plural=(n != 1);");

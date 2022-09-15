@@ -26,7 +26,6 @@
     "GitLab admin options saved" : "Předvolby správy GitLab uloženy",
     "Failed to save GitLab admin options" : "Nepodařilo se uložit předvolby správy GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Když si osobní přístupový token vytváříte sami, udělte mu přinejmenším oprávnění pro „read_user“, „read_api“ a „read_repository“. Volitelně namísto toho „api“.",
-    "Enable navigation link" : "Povolit navigační odkaz",
     "GitLab instance address" : "Adresa instance GitLab",
     "Personal access token" : "Osobní přístupový token",
     "GitLab personal access token" : "GitLab osobní přístupový token",
@@ -37,6 +36,7 @@
     "Enable searching for issues and merge requests" : "Zapnout vyhledávání v hlášeních problémů a požadavcích na začlenění kódu",
     "(This may be slow or even fail on some GitLab instances)" : "(V případě některých instancí GitLab může toto být pomalé nebo se dokonce nezdařit)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varování – cokoli zadáte do kolonky vyhledávání bude odesláno do GitLab.",
+    "Enable navigation link" : "Povolit navigační odkaz",
     "Successfully connected to GitLab!" : "Úspěšně spojeno s GitLab!",
     "Error connecting to GitLab:" : "Chyba při připojování se ke GitLab:",
     "Incorrect access token" : "Nesprávný přístupový token",
@@ -55,6 +55,14 @@
     "Marked" : "Označeno",
     "You were directly addressed" : "Byli jste přímo adresováni",
     "Failed to edit GitLab To-Do" : "Nepodařilo se upravit GitLab seznam úkolů",
+    "Unknown error" : "Neznámá chyba",
+    "Comments" : "Komentáře",
+    "Author" : "Autor",
+    "Owner" : "Vlastník",
+    "Open issue" : "Otevřít hlášení problému",
+    "Closed issue" : "Problém uzavřen",
+    "Unknown state" : "Neznámý stav",
+    "Review requested" : "Vyžadováno revidování",
     "Failed to save GitLab OAuth state" : "Nepodařilo se uložit stav GitLab OAuth"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

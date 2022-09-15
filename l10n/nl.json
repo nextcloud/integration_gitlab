@@ -23,7 +23,6 @@
     "GitLab admin options saved" : "GitLab beheeropties bewaard",
     "Failed to save GitLab admin options" : "Kon GitLab admin-opties niet opslaan",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Wanneer je zelf een toegangscode genereert, geef minstens \"read_user\", \"read_api\" en \"read_repository\" machtigingen aan de applicatie. Optioneel alleen \"api\" machtiging.",
-    "Enable navigation link" : "Inschakelen navigatielink",
     "GitLab instance address" : "GitLab instance adres",
     "Personal access token" : "Persoonlijk access token",
     "GitLab personal access token" : "GitLab persoonlijk access token",
@@ -34,6 +33,7 @@
     "Enable searching for issues and merge requests" : "Inschakelen zoeken naar issues en merge requests",
     "(This may be slow or even fail on some GitLab instances)" : "(dit kan traag zijn, of zelf mislukken, op sommige GitLab instances)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Let op: alles wat je intypt in de zoekbalk wordt naar GitLab gestuurd.",
+    "Enable navigation link" : "Inschakelen navigatielink",
     "Successfully connected to GitLab!" : "Succesvol verbonden met GitLab!",
     "Error connecting to GitLab:" : "Fout bij het verbinden met GitLab:",
     "Incorrect access token" : "Onjuist access token",
@@ -50,6 +50,9 @@
     "A build has failed" : "Een build is mislukt",
     "Marked" : "Gemarkeerd",
     "You were directly addressed" : "Je werd rechtstreeks benaderd",
+    "Unknown error" : "Onbekende fout",
+    "Comments" : "Reacties",
+    "Author" : "Auteur",
     "Failed to save GitLab OAuth state" : "Kan GitLab OAuth-status niet bewaren"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -22,7 +22,6 @@
     "GitLab admin options saved" : "Možnosti administrátora GitLab boli uložené",
     "Failed to save GitLab admin options" : "Nepodarilo sa uložiť možnosti administrátora GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Keď si sami vytvoríte prístupový token, udelte mu aspoň povolenia „read_user“, „read_api“ a „read_repository“. Voliteľne povoľte aj \"api\".",
-    "Enable navigation link" : "Povoliť navigačný odkaz",
     "GitLab instance address" : "Adresa inštancie GitLab",
     "Personal access token" : "Osobný prístupový token",
     "GitLab personal access token" : "GitLab osobný prístupový token",
@@ -33,6 +32,7 @@
     "Enable searching for issues and merge requests" : "Povoliť vyhľadávanie problémov a žiadostí o merge",
     "(This may be slow or even fail on some GitLab instances)" : "(V niektorých inštanciách GitLab to môže byť pomalé alebo dokonca zlyhať)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varovanie, všetko čo napíšete do vyhľadávania bude odoslané do GitLabu.",
+    "Enable navigation link" : "Povoliť navigačný odkaz",
     "Successfully connected to GitLab!" : "Úspešne pripojené ku GitLabu!",
     "Error connecting to GitLab:" : "Chyba pri pripájaní ku GitLab:",
     "Incorrect access token" : "Nesprávny prístupový token",
@@ -49,6 +49,10 @@
     "A build has failed" : "Zostavenie zlyhalo",
     "Marked" : "Označené",
     "You were directly addressed" : "Boli ste priamo oslovení",
+    "Unknown error" : "Neznáma chyba",
+    "Comments" : "Komentáre",
+    "Author" : "Autor",
+    "Owner" : "Vlastník",
     "Failed to save GitLab OAuth state" : "Nepodarilo sa uložiť stav OAuth GitLabu"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

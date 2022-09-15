@@ -16,7 +16,6 @@ OC.L10N.register(
     "Application ID" : "Sovelluksen ID",
     "Application secret" : "Sovelluksen salaisuus",
     "Failed to save GitLab admin options" : "GitLab-ylläpitäjävalintojen tallentaminen epäonnistui",
-    "Enable navigation link" : "Ota navigointilinkki käyttöön",
     "GitLab instance address" : "GitLab-instanssin osoite",
     "Personal access token" : "Henkilökohtainen käyttöpoletti",
     "GitLab personal access token" : "GitLabin henkilökohtainen käyttöpoletti",
@@ -24,6 +23,7 @@ OC.L10N.register(
     "Connected as {user}" : "Yhdistetty käyttäjänä {user}",
     "Disconnect from GitLab" : "Katkaise yhteys GitLabiin",
     "Enable searching for repositories" : "Ota käyttöön tietovarastojen haku",
+    "Enable navigation link" : "Ota navigointilinkki käyttöön",
     "Successfully connected to GitLab!" : "Yhdistetty GitLabiin!",
     "Error connecting to GitLab:" : "Virhe yhdistäessä GitLabiin:",
     "Incorrect access token" : "Virheellinen käyttöpoletti",
@@ -39,6 +39,10 @@ OC.L10N.register(
     "Your approval is required" : "Hyväksyntäsi vaaditaan",
     "A build has failed" : "Buildi on epäonnistunut",
     "Marked" : "Merkattu",
+    "Unknown error" : "Tuntematon virhe",
+    "Comments" : "Kommentit",
+    "Author" : "Tekijä",
+    "Owner" : "Omistaja",
     "Failed to save GitLab OAuth state" : "GitLab OAuth tilan tallentaminen epäonnistui"
 },
 "nplurals=2; plural=(n != 1);");

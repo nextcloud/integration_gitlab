@@ -26,7 +26,6 @@
     "GitLab admin options saved" : "A GitLab rendszergazdai beállítások mentve",
     "Failed to save GitLab admin options" : "A GitLab rendszergazdai beállítások mentése sikertelen",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Ha létrehoz egy hozzáférési tokent, akkor adjon neki legalább „read_user”, „read_api” és „read_repository” jogosultságot. Vagy válaszhatóan az „api” jogosultságot.",
-    "Enable navigation link" : "Navigációs hivatkozás engedélyezése",
     "GitLab instance address" : "GitLab példány címe",
     "Personal access token" : "Személyes hozzáférési token",
     "GitLab personal access token" : "GitLab személyes hozzáférési token",
@@ -37,6 +36,7 @@
     "Enable searching for issues and merge requests" : "A problémák és beolvasztási kérések keresésének engedélyezése",
     "(This may be slow or even fail on some GitLab instances)" : "(Ez lassú lehet, vagy egyes GitLab példányokban egyáltalán nem működhet)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Figyelem, minden el lesz küldve a GitLabnek, amit a keresősávba ír.",
+    "Enable navigation link" : "Navigációs hivatkozás engedélyezése",
     "Successfully connected to GitLab!" : "Sikeresen kapcsolódott a GitLabhez!",
     "Error connecting to GitLab:" : "Hiba történt a GitLabhez történő kapcsolódáskor:",
     "Incorrect access token" : "Helytelen hozzáférési token",
@@ -55,6 +55,14 @@
     "Marked" : "Megjelölve",
     "You were directly addressed" : "Közvetlenül megszólították",
     "Failed to edit GitLab To-Do" : "Nem sikerült a GitLab teendő szerkesztése",
+    "Unknown error" : "Ismeretlen hiba",
+    "Comments" : "Hozzászólások",
+    "Author" : "Szerző",
+    "Owner" : "Tulajdonos",
+    "Open issue" : "Nyitott jegy",
+    "Closed issue" : "Lezárt jegy",
+    "Unknown state" : "Ismeretlen állapot",
+    "Review requested" : "Átnézés kérve",
     "Failed to save GitLab OAuth state" : "A GitLab OAuth állapot mentése sikertelen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

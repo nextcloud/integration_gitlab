@@ -8,6 +8,10 @@ OC.L10N.register(
     "Connected accounts" : "계정 연결됨",
     "Connected as {user}" : "[user]로 연결됨",
     "Incorrect access token" : "잘못된 액세스 토큰",
-    "You were mentioned" : "당신이 언급되었습니다."
+    "You were mentioned" : "당신이 언급되었습니다.",
+    "Unknown error" : "알 수 없는 오류",
+    "Comments" : "댓글",
+    "Author" : "저자",
+    "Owner" : "소유자"
 },
 "nplurals=1; plural=0;");

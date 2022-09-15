@@ -26,7 +26,6 @@
     "GitLab admin options saved" : "GitLab yönetici ayarları kaydedildi",
     "Failed to save GitLab admin options" : "GitLab yönetici ayarları kaydedilemedi",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Kendiniz için bir kişisel erişim kodu oluştururken en azından \"read_user\", \"read_api\" ve \"read_repository\" izinlerini verin. Bunun yerine isteğe göre \"api\".",
-    "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
     "GitLab instance address" : "GitLab kopyası adresi",
     "Personal access token" : "Kişisel erişim kodu",
     "GitLab personal access token" : "GitLab kişisel erişim kodu",
@@ -37,6 +36,7 @@
     "Enable searching for issues and merge requests" : "Sorunlar ve birleştirme isteklerinde arama yapılabilsin",
     "(This may be slow or even fail on some GitLab instances)" : "(Bu işlem bazı GitLab kopyalarında yavaş olabilir ya da yapılamayabilir)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Uyarı, arama çubuğuna yazdığınız her şey GitLab üzerine gönderilecek.",
+    "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
     "Successfully connected to GitLab!" : "GitLab ile bağlantı kuruldu!",
     "Error connecting to GitLab:" : "GitLab bağlantısı kurulurken sorun çıktı:",
     "Incorrect access token" : "Erişim kodu geçersiz",
@@ -55,6 +55,13 @@
     "Marked" : "İşaretlendi",
     "You were directly addressed" : "Doğrudan adreslendiniz",
     "Failed to edit GitLab To-Do" : "GitLab yapılacak işleri düzenlenemedi",
+    "Unknown error" : "Bilinmeyen sorun",
+    "Comments" : "Yorumlar",
+    "Author" : "İlgili",
+    "Open issue" : "Konu aç",
+    "Closed issue" : "Kapatılmış konu",
+    "Unknown state" : "Durum bilinmiyor",
+    "Review requested" : "Gözden geçirme istendi",
     "Failed to save GitLab OAuth state" : "GitLab OAuth durumu kaydedilemedi"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

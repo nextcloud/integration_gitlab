@@ -28,7 +28,6 @@ OC.L10N.register(
     "GitLab admin options saved" : "GitLab-Administrator-Einstellungen gespeichert",
     "Failed to save GitLab admin options" : "Fehler beim Speichern der GitLab-Administrator-Einstellungen",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Wenn Sie selbst ein Zugriffstoken erstellen, geben Sie ihm mindestens die Berechtigungen \"read_user\", \"read_api\" und \"read_repository\". Optional stattdessen \"api\".",
-    "Enable navigation link" : "Nagivations-Link aktivieren",
     "GitLab instance address" : "Adresse der GitLab-Instanz",
     "Personal access token" : "Persönlicher Zugriffsschlüssel",
     "GitLab personal access token" : "GitLab-Token für persönlichen Zugang",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Enable searching for issues and merge requests" : "Suche nach Issues und Merge Requests aktivieren",
     "(This may be slow or even fail on some GitLab instances)" : "(Dies kann bei einigen GitLab-Instanzen langsam sein oder sogar fehlschlagen)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Achtung, alles, was Sie in die Suchleiste eingeben, wird an GitLab gesendet.",
+    "Enable navigation link" : "Nagivations-Link aktivieren",
     "Successfully connected to GitLab!" : "Erfolgreich verbunden mit GitLab!",
     "Error connecting to GitLab:" : "Fehler bei der Verbindung zu GitLab:",
     "Incorrect access token" : "Zugriffstoken nicht korrekt",
@@ -57,6 +57,9 @@ OC.L10N.register(
     "Marked" : "Markiert",
     "You were directly addressed" : "Sie wurden direkt angesprochen",
     "Failed to edit GitLab To-Do" : "Fehler beim Bearbeiten der GitLab-Aufgabe",
+    "Unknown error" : "Unbekannter Fehler",
+    "Comments" : "Kommentare",
+    "Author" : "Autor",
     "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status"
 },
 "nplurals=2; plural=(n != 1);");

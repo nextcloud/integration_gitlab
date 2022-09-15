@@ -23,7 +23,6 @@
     "GitLab admin options saved" : "Options d'administration GitLab enregistrées",
     "Failed to save GitLab admin options" : "Impossible d'enregistrer les options d'administration GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Lorsque vous créez vous-même un jeton d'accès, donnez-lui au moins les permissions \"read_user\", \"read_api\" et \"read_repository\". Vous pouvez également lui donner les droits \"api\" à la place.",
-    "Enable navigation link" : "Activer le lien de navigation",
     "GitLab instance address" : "Adresse de l'instance GitLab",
     "Personal access token" : "Jeton d'accès personnel",
     "GitLab personal access token" : "Jeton d'accès personnel GitLab",
@@ -34,6 +33,7 @@
     "Enable searching for issues and merge requests" : "Activer la recherche des problèmes et fusion de requêtes.",
     "(This may be slow or even fail on some GitLab instances)" : "(Cela peut ralentir certaines instances Gitlab ou même les faire échouer)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Attention, tout ce que vous tapez dans la barre de recherche sera envoyé à GitLab.",
+    "Enable navigation link" : "Activer le lien de navigation",
     "Successfully connected to GitLab!" : "Connexion à GitLab réussie !",
     "Error connecting to GitLab:" : "Erreur de connexion à GitLab :",
     "Incorrect access token" : "Jeton d'accès incorrect",
@@ -50,6 +50,10 @@
     "A build has failed" : "Un build a échoué",
     "Marked" : "Marqué comme",
     "You were directly addressed" : "Vous avez été mentionné(e)",
+    "Unknown error" : "Erreur inconnue",
+    "Comments" : "Commentaires",
+    "Author" : "Auteur",
+    "Owner" : "Propriétaire",
     "Failed to save GitLab OAuth state" : "Échec de l'enregistrement de l'état OAuth de GitLab"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

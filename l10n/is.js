@@ -5,8 +5,12 @@ OC.L10N.register(
     "Bad credentials" : "Gölluð auðkenni",
     "OAuth access token refused" : "OAuth-aðgangsteikni hafnað",
     "Connected accounts" : "Tengdir aðgangar",
-    "Enable navigation link" : "Virkja flakktengil",
     "Connected as {user}" : "Tengt sem {user}",
-    "Incorrect access token" : "Rangt aðgangsteikn"
+    "Enable navigation link" : "Virkja flakktengil",
+    "Incorrect access token" : "Rangt aðgangsteikn",
+    "Unknown error" : "Óþekkt villa",
+    "Comments" : "Athugasemdir",
+    "Author" : "Höfundur",
+    "Owner" : "Eigandi"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

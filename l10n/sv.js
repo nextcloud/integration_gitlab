@@ -7,11 +7,15 @@ OC.L10N.register(
     "Bad credentials" : "Ogiltiga inloggningsuppgifter",
     "OAuth access token refused" : "OAuth-token avvisades",
     "Connected accounts" : "Anslutna konton",
-    "Enable navigation link" : "Aktivera navigeringslänk",
     "Personal access token" : "Personlig åtkomst-token",
     "Connected as {user}" : "Ansluten som {user}",
     "Enable searching for repositories" : "Aktivera sökning efter arkiv",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varning, allt du skriver i sökfältet skickas till GitLab.",
-    "Incorrect access token" : "Ogiltig åtkomst-token"
+    "Enable navigation link" : "Aktivera navigeringslänk",
+    "Incorrect access token" : "Ogiltig åtkomst-token",
+    "Unknown error" : "Okänt fel",
+    "Comments" : "Kommentarer",
+    "Author" : "Upphovsman",
+    "Owner" : "Ägare"
 },
 "nplurals=2; plural=(n != 1);");
