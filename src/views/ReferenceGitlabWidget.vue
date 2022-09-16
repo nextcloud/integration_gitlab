@@ -286,7 +286,7 @@ export default {
 		},
 		iconColor() {
 			if (this.richObject.state === 'opened') {
-				return '#24663b'
+				return '#108548'
 			} else if (this.richObject.state === 'closed') {
 				if (this.isIssue) {
 					return '#1f75cb'
