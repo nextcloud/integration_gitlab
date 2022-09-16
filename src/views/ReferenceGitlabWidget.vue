@@ -62,9 +62,17 @@
 						</a>
 						{{ gitlabId }}
 					</span>
+					<a :href="'https://gitlab.com/' + richObject.author.username" target="_blank" class="author-link">
+						{{ t('integration_gitlab', 'by {creator}', { creator: richObject.author.username }) }}
+					</a>
 					<span
-						v-tooltip.top="{ content: subTextTooltip }"
-						v-html="subText" />
+						v-tooltip.top="{ content: createdAtFormatted }"
+						class="date-with-tooltip">
+						{{ createdAtText }}
+					</span>
+					<span v-if="isPr">
+						{{ prSubText }}
+					</span>
 					<a v-if="richObject.milestone"
 						v-tooltip.top="{ content: richObject.milestone.description }"
 						:href="richObject.milestone.web_url"
@@ -121,10 +129,14 @@
 						{{ richObject.user_notes_count }}
 					</div>
 				</div>
-				<div v-if="richObject.closed_at" class="closed-at">
+				<div v-if="richObject.closed_at"
+					v-tooltip.top="{ content: closedAtFormatted }"
+					class="closed-at date-with-tooltip">
 					{{ closedAtText }}
 				</div>
-				<div v-else-if="richObject.updated_at" class="updated-at">
+				<div v-else-if="richObject.updated_at"
+					v-tooltip.top="{ content: updatedAtFormatted }"
+					class="updated-at date-with-tooltip">
 					{{ updatedAtText }}
 				</div>
 			</div>
@@ -144,7 +156,9 @@
 							@{{ richObject.gitlab_comment.author.username }}
 						</a>
 						&nbsp;·&nbsp;
-						<span v-tooltip.top="{ content: commentUpdatedAtTooltip }">
+						<span
+							v-tooltip.top="{ content: commentUpdatedAtTooltip }"
+							class="date-with-tooltip">
 							{{ commentUpdatedAtText }}
 						</span>
 						<div class="spacer" />
@@ -174,6 +188,9 @@ import MilestoneIcon from '../components/icons/MilestoneIcon.vue'
 import MergeRequestIcon from '../components/icons/MergeRequestIcon.vue'
 import UpVoteIcon from '../components/icons/UpVoteIcon.vue'
 import DownVoteIcon from '../components/icons/DownVoteIcon.vue'
+import ClosedIssueIcon from '../components/icons/ClosedIssueIcon.vue'
+import ClosedMergeRequestIcon from '../components/icons/ClosedMergeRequestIcon.vue'
+import MergedMergeRequestIcon from '../components/icons/MergedMergeRequestIcon.vue'
 
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
@@ -251,17 +268,33 @@ export default {
 		},
 		iconComponent() {
 			if (this.isIssue) {
-				return IssueIcon
+				if (this.richObject.state === 'opened') {
+					return IssueIcon
+				} else if (this.richObject.state === 'closed') {
+					return ClosedIssueIcon
+				}
 			} else if (this.isPr) {
-				return MergeRequestIcon
+				if (this.richObject.state === 'opened') {
+					return MergeRequestIcon
+				} else if (this.richObject.state === 'closed') {
+					return ClosedMergeRequestIcon
+				} else if (this.richObject.state === 'merged') {
+					return MergedMergeRequestIcon
+				}
 			}
 			return IssueIcon
 		},
 		iconColor() {
 			if (this.richObject.state === 'opened') {
-				return '#3fb950'
+				return '#24663b'
 			} else if (this.richObject.state === 'closed') {
-				return '#a371f7'
+				if (this.isIssue) {
+					return '#1f75cb'
+				} else {
+					return '#ae1800'
+				}
+			} else if (this.richObject.state === 'merged') {
+				return '#1f75cb'
 			}
 			return '#8b949e'
 		},
@@ -283,32 +316,8 @@ export default {
 			}
 			return t('integration_gitlab', 'Unknown state')
 		},
-		subText() {
-			if (this.isPr) {
-				return this.createdAtText
-					+ (this.richObject.requested_reviewers?.length > 0 ? ' • ' + t('integration_gitlab', 'Review requested') : '')
-			}
-			return this.createdAtText
-		},
-		subTextTooltip() {
-			if (this.isIssue) {
-				if (this.richObject.state === 'opened') {
-					return this.createdAtFormatted
-				} else if (this.richObject.state === 'closed') {
-					return this.closedAtFormatted
-				}
-			} else if (this.isPr) {
-				if (this.richObject.state === 'opened') {
-					return this.createdAtFormatted
-				} else if (this.richObject.state === 'closed') {
-					if (this.richObject.merged) {
-						return this.closedAtFormatted
-					} else {
-						return this.closedAtFormatted
-					}
-				}
-			}
-			return ''
+		prSubText() {
+			return this.richObject.reviewers?.length > 0 ? ' • ' + t('integration_gitlab', 'Review requested') : ''
 		},
 		createdAtFormatted() {
 			return moment(this.richObject.created_at).format('LLL')
@@ -316,11 +325,11 @@ export default {
 		closedAtFormatted() {
 			return moment(this.richObject.closed_at).format('LLL')
 		},
+		updatedAtFormatted() {
+			return moment(this.richObject.updated_at).format('LLL')
+		},
 		createdAtText() {
-			return t('integration_gitlab', 'created {relativeDate} by {creator}', {
-				relativeDate: moment(this.richObject.created_at).fromNow(),
-				creator: this.getUserLink(this.richObject.author?.username),
-			}, null, { escape: false })
+			return t('integration_gitlab', 'created {relativeDate}', { relativeDate: moment(this.richObject.created_at).fromNow() })
 		},
 		closedAtText() {
 			return t('integration_gitlab', 'closed {relativeDate}', { relativeDate: moment(this.richObject.closed_at).fromNow() })
@@ -479,6 +488,7 @@ export default {
 				border-radius: var(--border-radius);
 				&--header {
 					display: flex;
+					align-items: center;
 					color: var(--color-text-maxcontrast);
 					.comment-author-display-name {
 						color: var(--color-main-text);
@@ -542,6 +552,7 @@ export default {
 		color: inherit;
 	}
 
+	.date-with-tooltip,
 	.milestone,
 	::v-deep .author-link,
 	.author-link:hover .comment-author-display-name,
