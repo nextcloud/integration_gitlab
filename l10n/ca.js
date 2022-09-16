@@ -50,6 +50,10 @@ OC.L10N.register(
     "A build has failed" : "Ha fallat una compilació",
     "Marked" : "Marcat",
     "You were directly addressed" : "Se us va dirigir directament",
+    "Unknown error" : "Error desconegut",
+    "Comments" : "Comentaris",
+    "Author" : "Autor/a",
+    "Owner" : "Propietari",
     "Failed to save GitLab OAuth state" : "No s'ha pogut desar l'estat de GitLab OAuth"
 },
 "nplurals=2; plural=(n != 1);");

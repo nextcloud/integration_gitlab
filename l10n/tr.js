@@ -60,6 +60,7 @@ OC.L10N.register(
     "Unknown error" : "Bilinmeyen sorun",
     "Comments" : "Yorumlar",
     "Author" : "İlgili",
+    "Owner" : "Sahibi",
     "Open issue" : "Konu aç",
     "Closed issue" : "Kapatılmış konu",
     "Unknown state" : "Durum bilinmiyor",

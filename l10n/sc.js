@@ -50,6 +50,10 @@ OC.L10N.register(
     "A build has failed" : "Una build est faddida",
     "Marked" : "Mercadu",
     "You were directly addressed" : "T'ant indicadu a tie e totu",
+    "Unknown error" : "Errore disconnotu",
+    "Comments" : "Cummentos",
+    "Author" : "Autoria",
+    "Owner" : "Mere",
     "Failed to save GitLab OAuth state" : "No at fatu a sarvare s'istadu OAuth de GitLab "
 },
 "nplurals=2; plural=(n != 1);");

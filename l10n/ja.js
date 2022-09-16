@@ -25,6 +25,7 @@ OC.L10N.register(
     "You were mentioned" : "あなたについて言及されました",
     "Unknown error" : "不明なエラー",
     "Comments" : "コメント",
-    "Author" : "作者"
+    "Author" : "作者",
+    "Owner" : "所有者"
 },
 "nplurals=1; plural=0;");

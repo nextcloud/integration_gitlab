@@ -31,6 +31,10 @@
     "You were assigned" : "您已被指派",
     "A build has failed" : "构建失败",
     "Marked" : "已标记",
-    "You were directly addressed" : "您被直接回复"
+    "You were directly addressed" : "您被直接回复",
+    "Unknown error" : "未知错误",
+    "Comments" : "评论",
+    "Author" : "作者",
+    "Owner" : "所有者"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

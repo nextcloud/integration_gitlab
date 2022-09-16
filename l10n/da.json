@@ -1,0 +1,7 @@
+{ "translations": {
+    "Mark as done" : "Marker som færdig",
+    "Unknown error" : "Ukendt fejl",
+    "Comments" : "Kommentarer",
+    "Owner" : "Ejer"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

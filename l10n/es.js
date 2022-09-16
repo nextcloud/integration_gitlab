@@ -55,6 +55,10 @@ OC.L10N.register(
     "Marked" : "Marcado",
     "You were directly addressed" : "Se han dirigido a ti",
     "Failed to edit GitLab To-Do" : "No ha sido posible editar la tarea de GitLab",
+    "Unknown error" : "Error desconocido",
+    "Comments" : "Comentarios",
+    "Author" : "Autor",
+    "Owner" : "Propietario",
     "Failed to save GitLab OAuth state" : "No ha sido posible guardar el estado de OAuth de GitLab"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -1,0 +1,8 @@
+{ "translations": {
+    "Connected accounts" : "Tilkopla kontoar",
+    "Application ID" : "Program-ID",
+    "Unknown error" : "Ukjend feil",
+    "Comments" : "Kommentarar",
+    "Owner" : "Owner"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

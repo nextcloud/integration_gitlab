@@ -6,6 +6,7 @@ OC.L10N.register(
     "Bad credentials" : "Påloggingsdetaljene er feil",
     "OAuth access token refused" : "OAuth access token ble avslått",
     "Unknown error" : "Ukjent feil",
-    "Comments" : "Kommentarer"
+    "Comments" : "Kommentarer",
+    "Owner" : "Eier"
 },
 "nplurals=2; plural=(n != 1);");

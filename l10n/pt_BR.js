@@ -58,6 +58,7 @@ OC.L10N.register(
     "Unknown error" : "Erro desconhecido",
     "Comments" : "Comentários",
     "Author" : "Autor",
+    "Owner" : "Proprietário",
     "Failed to save GitLab OAuth state" : "Falha ao salvar o estado GitLab OAuth"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

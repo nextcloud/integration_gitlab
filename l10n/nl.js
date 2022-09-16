@@ -55,6 +55,7 @@ OC.L10N.register(
     "Unknown error" : "Onbekende fout",
     "Comments" : "Reacties",
     "Author" : "Auteur",
+    "Owner" : "Eigenaar",
     "Failed to save GitLab OAuth state" : "Kan GitLab OAuth-status niet bewaren"
 },
 "nplurals=2; plural=(n != 1);");

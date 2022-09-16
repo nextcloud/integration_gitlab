@@ -13,6 +13,7 @@ OC.L10N.register(
     "You were mentioned" : "Споменати сте",
     "Unknown error" : "Непозната грешка",
     "Comments" : "Коментари",
-    "Author" : "Автор"
+    "Author" : "Автор",
+    "Owner" : "Сопственик"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
