@@ -367,28 +367,65 @@ class GitlabAPIService {
 	 * @param string $owner
 	 * @param string $repo
 	 * @return array
-	 * @throws Exception
+	 * @throws PreConditionNotMetException
 	 */
 	public function getProjectInfo(?string $userId, string $owner, string $repo): array {
 		return $this->request($userId, 'projects/' . urlencode($owner . '/' . $repo));
 	}
 
+	/**
+	 * @param string|null $userId
+	 * @param int $projectId
+	 * @return array|string[]
+	 * @throws PreConditionNotMetException
+	 */
 	public function getProjectLabels(?string $userId, int $projectId): array {
 		return $this->request($userId, 'projects/' . $projectId . '/labels');
 	}
 
+	/**
+	 * @param string|null $userId
+	 * @param int $projectId
+	 * @param int $issueId
+	 * @return array|string[]
+	 * @throws PreConditionNotMetException
+	 */
 	public function getIssueInfo(?string $userId, int $projectId, int $issueId): array {
 		return $this->request($userId, 'projects/' . $projectId . '/issues/' . $issueId);
 	}
 
+	/**
+	 * @param string|null $userId
+	 * @param int $projectId
+	 * @param int $issueId
+	 * @param int $commentId
+	 * @return array|string[]
+	 * @throws PreConditionNotMetException
+	 */
 	public function getIssueCommentInfo(?string $userId, int $projectId, int $issueId, int $commentId): array {
 		return $this->request($userId, 'projects/' . $projectId . '/issues/' . $issueId . '/notes/' . $commentId);
 	}
 
+	/**
+	 * @param string|null $userId
+	 * @param int $projectId
+	 * @param int $prId
+	 * @param string|null $gitlabUrl
+	 * @return array|string[]
+	 * @throws PreConditionNotMetException
+	 */
 	public function getPrInfo(?string $userId, int $projectId, int $prId): array {
 		return $this->request($userId, 'projects/' . $projectId . '/merge_requests/' . $prId);
 	}
 
+	/**
+	 * @param string|null $userId
+	 * @param int $projectId
+	 * @param int $prId
+	 * @param int $commentId
+	 * @return array|string[]
+	 * @throws PreConditionNotMetException
+	 */
 	public function getPrCommentInfo(?string $userId, int $projectId, int $prId, int $commentId): array {
 		return $this->request($userId, 'projects/' . $projectId . '/merge_requests/' . $prId . '/notes/' . $commentId);
 	}
@@ -405,7 +442,7 @@ class GitlabAPIService {
 		if ($userId !== null) {
 			$this->checkTokenExpiration($userId);
 		}
-		$baseUrl = $this->getGitlabUrl($userId);
+		$baseUrl = $this->getConnectedGitlabUrl($userId);
 		try {
 			$url = $baseUrl . '/api/v4/' . $endPoint;
 			$options = [
@@ -494,7 +531,7 @@ class GitlabAPIService {
 	 * @throws PreConditionNotMetException
 	 */
 	private function refreshToken(string $userId): bool {
-		$baseUrl = $this->getGitlabUrl($userId);
+		$baseUrl = $this->getConnectedGitlabUrl($userId);
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$redirect_uri = $this->config->getUserValue($userId, Application::APP_ID, 'redirect_uri');
@@ -534,13 +571,21 @@ class GitlabAPIService {
 		}
 	}
 
-	private function getGitlabUrl(string $userId): string {
+	/**
+	 * @param string $userId
+	 * @return string
+	 */
+	public function getConnectedGitlabUrl(string $userId): string {
 		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
 		return $this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 	}
 
+	/**
+	 * @param string $userId
+	 * @return array
+	 */
 	public function revokeOauthToken(string $userId): array {
-		$gitlabUrl = $this->getGitlabUrl($userId);
+		$gitlabUrl = $this->getConnectedGitlabUrl($userId);
 
 		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
 		$clientId = $this->config->getAppValue(Application::APP_ID, 'client_id');

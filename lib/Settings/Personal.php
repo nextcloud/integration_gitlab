@@ -36,10 +36,11 @@ class Personal implements ISettings {
 	 */
 	public function getForm(): TemplateResponse {
 		$token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
-		$searchEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_enabled', '0');
-		$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0');
-		$navigationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'navigation_enabled', '0');
-		$linkPreviewEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_preview_enabled', '1');
+		$searchEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_enabled', '0') === '1';
+		$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0') === '1';
+		$navigationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'navigation_enabled', '0') === '1';
+		$linkPreviewEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
+
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 		$userDisplayName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_displayname');
 
@@ -61,10 +62,10 @@ class Personal implements ISettings {
 			'use_popup' => ($usePopup === '1'),
 			'user_name' => $userName,
 			'user_displayname' => $userDisplayName,
-			'search_enabled' => ($searchEnabled === '1'),
-			'search_issues_enabled' => ($searchIssuesEnabled === '1'),
-			'navigation_enabled' => ($navigationEnabled === '1'),
-			'link_preview_enabled' => ($linkPreviewEnabled === '1'),
+			'search_enabled' => $searchEnabled,
+			'search_issues_enabled' => $searchIssuesEnabled,
+			'navigation_enabled' => $navigationEnabled ,
+			'link_preview_enabled' => $linkPreviewEnabled,
 		];
 		$this->initialStateService->provideInitialState('user-config', $userConfig);
 		return new TemplateResponse(Application::APP_ID, 'personalSettings');

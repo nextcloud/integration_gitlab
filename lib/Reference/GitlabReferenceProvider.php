@@ -29,6 +29,7 @@ use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\IConfig;
+use OCP\PreConditionNotMetException;
 
 class GitlabReferenceProvider implements IReferenceProvider {
 	private GitlabAPIService $gitlabAPIService;
@@ -37,13 +38,50 @@ class GitlabReferenceProvider implements IReferenceProvider {
 	private ?string $userId;
 
 	public function __construct(GitlabAPIService $gitlabAPIService,
-								IConfig          $config,
+								IConfig $config,
 								ReferenceManager $referenceManager,
-								?string          $userId) {
+								?string $userId) {
 		$this->gitlabAPIService = $gitlabAPIService;
 		$this->config = $config;
 		$this->referenceManager = $referenceManager;
 		$this->userId = $userId;
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getGitlabUrls(): array {
+		//if ($this->userId === null) {
+		//	return ['https://gitlab.com'];
+		//}
+		$urls = [$this->gitlabAPIService->getConnectedGitlabUrl($this->userId)];
+		// unfortunately most of what we need for reference stuff requires authentication
+		// let's not allow to handle multiple gitlab servers
+		//$extraUrls = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_urls');
+		//$extraUrls = explode(',', $extraUrls);
+		//foreach ($extraUrls as $url) {
+		//	$urls[] = trim($url, " \t\n\r\0\x0B/");
+		//}
+		return $urls;
+	}
+
+	/**
+	 * @param $referenceText
+	 * @return string|null
+	 */
+	private function getMatchingGitlabUrl($referenceText): ?string {
+		// example links
+		// https://gitlab.com/owner/repo/-/issues/16
+		// https://gitlab.com/owner/repo/-/issues/16#note_1049227787
+		// https://gitlab.com/owner/repo/-/merge_requests/15
+		// https://gitlab.com/owner/repo/-/merge_requests/15#note_411231913
+		foreach ($this->getGitlabUrls() as $url) {
+			if (preg_match('/^' . preg_quote($url, '/') . '\/[^\/\?]+\/[^\/\?]+\/-\/(issues|merge_requests)\/[0-9]+/', $referenceText) === 1) {
+				return $url;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -60,23 +98,17 @@ class GitlabReferenceProvider implements IReferenceProvider {
 		if (!$adminLinkPreviewEnabled) {
 			return false;
 		}
-		// example links
-		// https://gitlab.com/owner/repo/-/issues/16
-		// https://gitlab.com/owner/repo/-/issues/16#note_1049227787
-		// https://gitlab.com/owner/repo/-/merge_requests/15
-		// https://gitlab.com/owner/repo/-/merge_requests/15#note_411231913
-		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?gitlab\.com\/[^\/\?]+\/[^\/\?]+\/-\/(issues|merge_requests)\/[0-9]+/', $referenceText) === 1) {
-			return true;
-		}
-		return false;
+
+		return $this->getMatchingGitlabUrl($referenceText) !== null;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function resolveReference(string $referenceText): ?IReference {
-		if ($this->matchReference($referenceText)) {
-			$issuePath = $this->getIssuePath($referenceText);
+		$gitlabUrl = $this->getMatchingGitlabUrl($referenceText);
+		if ($gitlabUrl !== null) {
+			$issuePath = $this->getIssuePath($gitlabUrl, $referenceText);
 			if ($issuePath !== null) {
 				[$owner, $repo, $issueId, $end] = $issuePath;
 				$projectInfo = $this->gitlabAPIService->getProjectInfo($this->userId, $owner, $repo);
@@ -91,6 +123,7 @@ class GitlabReferenceProvider implements IReferenceProvider {
 					Application::APP_ID,
 					array_merge([
 						'gitlab_type' => isset($issueInfo['error']) ? 'issue-error' : 'issue',
+						'gitlab_url' => $gitlabUrl,
 						'gitlab_issue_id' => $issueId,
 						'gitlab_repo_owner' => $owner,
 						'gitlab_repo' => $repo,
@@ -101,7 +134,7 @@ class GitlabReferenceProvider implements IReferenceProvider {
 				);
 				return $reference;
 			} else {
-				$prPath = $this->getPrPath($referenceText);
+				$prPath = $this->getPrPath($gitlabUrl, $referenceText);
 				if ($prPath !== null) {
 					[$owner, $repo, $prId, $end] = $prPath;
 					$projectInfo = $this->gitlabAPIService->getProjectInfo($this->userId, $owner, $repo);
@@ -116,6 +149,7 @@ class GitlabReferenceProvider implements IReferenceProvider {
 						Application::APP_ID,
 						array_merge([
 							'gitlab_type' => isset($prInfo['error']) ? 'pr-error' : 'pr',
+							'gitlab_url' => $gitlabUrl,
 							'gitlab_pr_id' => $prId,
 							'gitlab_repo_owner' => $owner,
 							'gitlab_repo' => $repo,
@@ -133,20 +167,22 @@ class GitlabReferenceProvider implements IReferenceProvider {
 	}
 
 	/**
+	 * @param string $gitlabUrl
 	 * @param string $url
 	 * @return array|null
 	 */
-	private function getIssuePath(string $url): ?array {
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?gitlab\.com\/([^\/\?]+)\/([^\/\?]+)\/-\/issues\/([0-9]+)(.*$)/', $url, $matches);
+	private function getIssuePath(string $gitlabUrl, string $url): ?array {
+		preg_match('/^' . preg_quote($gitlabUrl, '/') . '\/([^\/\?]+)\/([^\/\?]+)\/-\/issues\/([0-9]+)(.*$)/', $url, $matches);
 		return count($matches) > 3 ? [$matches[1], $matches[2], $matches[3], $matches[4]] : null;
 	}
 
 	/**
+	 * @param string $gitlabUrl
 	 * @param string $url
 	 * @return array|null
 	 */
-	private function getPrPath(string $url): ?array {
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?gitlab\.com\/([^\/\?]+)\/([^\/\?]+)\/-\/merge_requests\/([0-9]+)(.*$)/', $url, $matches);
+	private function getPrPath(string $gitlabUrl, string $url): ?array {
+		preg_match('/^'. preg_quote($gitlabUrl, '/') . '\/([^\/\?]+)\/([^\/\?]+)\/-\/merge_requests\/([0-9]+)(.*$)/', $url, $matches);
 		return count($matches) > 3 ? [$matches[1], $matches[2], $matches[3], $matches[4]] : null;
 	}
 
@@ -164,6 +200,7 @@ class GitlabReferenceProvider implements IReferenceProvider {
 	 * @param int $issueId
 	 * @param string $end
 	 * @return array|null
+	 * @throws PreConditionNotMetException
 	 */
 	private function getIssueCommentInfo(int $projectId, int $issueId, string $end): ?array {
 		$commentId = $this->getCommentId($end);
@@ -175,6 +212,7 @@ class GitlabReferenceProvider implements IReferenceProvider {
 	 * @param int $prId
 	 * @param string $end
 	 * @return array|null
+	 * @throws PreConditionNotMetException
 	 */
 	private function getPrCommentInfo(int $projectId, int $prId, string $end): ?array {
 		$commentId = $this->getCommentId($end);
@@ -195,20 +233,6 @@ class GitlabReferenceProvider implements IReferenceProvider {
 	 * @inheritDoc
 	 */
 	public function getCacheKey(string $referenceId): ?string {
-		$issuePath = $this->getIssuePath($referenceId);
-		if ($issuePath !== null) {
-			[$owner, $repo, $id, $end] = $issuePath;
-			$commentId = $this->getCommentId($end);
-			return $owner . '/' . $repo . '/' . $id . '/' . $commentId;
-		} else {
-			$prPath = $this->getPrPath($referenceId);
-			if ($prPath !== null) {
-				[$owner, $repo, $id, $end] = $prPath;
-				$commentId = $this->getCommentId($end);
-				return $owner . '/' . $repo . '/' . $id . '/' . $commentId;
-			}
-		}
-
 		return $referenceId;
 	}
 

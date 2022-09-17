@@ -262,7 +262,7 @@ export default {
 			align-items: center;
 		}
 		> input {
-			width: 250px;
+			width: 300px;
 		}
 	}
 }

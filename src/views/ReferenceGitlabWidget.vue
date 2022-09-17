@@ -62,7 +62,7 @@
 						</a>
 						{{ gitlabId }}
 					</span>
-					<a :href="'https://gitlab.com/' + richObject.author.username" target="_blank" class="author-link">
+					<a :href="richObject.author.web_url" target="_blank" class="author-link">
 						{{ t('integration_gitlab', 'by {creator}', { creator: richObject.author.username }) }}
 					</a>
 					<span
@@ -151,7 +151,7 @@
 				<span class="comment--author--bubble-tip" />
 				<span class="comment--author--bubble">
 					<div class="comment--author--bubble--header">
-						<a :href="getUserUrl(richObject.gitlab_comment.author.username)" target="_blank" class="author-link">
+						<a :href="richObject.gitlab_comment.author.web_url" target="_blank" class="author-link">
 							<strong class="comment-author-display-name">{{ richObject.gitlab_comment.author.name }}</strong>
 							@{{ richObject.gitlab_comment.author.username }}
 						</a>
@@ -194,7 +194,6 @@ import MergedMergeRequestIcon from '../components/icons/MergedMergeRequestIcon.v
 
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
-import escapeHtml from 'escape-html'
 
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
@@ -251,7 +250,7 @@ export default {
 			return this.richObject.gitlab_repo_owner + '/' + this.richObject.gitlab_repo
 		},
 		repoUrl() {
-			return 'https://gitlab.com/' + this.slug
+			return this.richObject.gitlab_url + '/' + this.slug
 		},
 		gitlabId() {
 			if (this.isIssue) {
@@ -344,26 +343,15 @@ export default {
 			return moment(this.richObject.gitlab_comment.updated_at).format('LLL')
 		},
 		commentAuthorAvatarUrl() {
-			const userId = this.richObject.gitlab_comment.author?.id ?? ''
+			const userId = this.richObject.gitlab_comment?.author?.id ?? ''
 			return generateUrl('/apps/integration_gitlab/avatar/user/{userId}', { userId })
 		},
 		commentAuthorTooltip() {
-			return t('integration_gitlab', 'Comment from {username}', { username: this.richObject.gitlab_comment.author?.username ?? '' })
+			return t('integration_gitlab', 'Comment from @{username}', { username: this.richObject.gitlab_comment?.author?.username ?? '' })
 		},
 	},
 
 	methods: {
-		getUserLink(userName) {
-			if (userName) {
-				const cleanName = escapeHtml(userName)
-				return '<a href="' + this.getUserUrl(userName) + '" class="author-link" target="_blank">' + cleanName + '</a>'
-			}
-			return '??'
-		},
-		getUserUrl(userName) {
-			const cleanName = escapeHtml(userName)
-			return 'https://gitlab.com/' + cleanName
-		},
 		getAssigneeAvatarUrl(assignee) {
 			const userId = assignee.id ?? ''
 			return generateUrl('/apps/integration_gitlab/avatar/user/{userId}', { userId })
