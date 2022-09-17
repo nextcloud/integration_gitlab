@@ -75,10 +75,8 @@ OC.L10N.register(
     "Merged merge request" : "Обединена заявка за сливане",
     "Unknown state" : "Неизвестно състояние",
     "Review requested" : "Заявен преглед",
-    "created {relativeDate} by {creator}" : "създаден {relativeDate} от {creator}",
     "closed {relativeDate}" : "затворен {relativeDate}",
     "updated {relativeDate}" : "обновен {relativeDate}",
-    "Comment from {username}" : "Коментар от {username}",
     "Assigned to {username}" : "Зачислено на {username}",
     "Failed to save GitLab OAuth state" : "Неуспешно записване на състоянието на GitLab OAuth"
 },

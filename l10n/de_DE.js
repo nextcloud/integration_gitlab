@@ -75,10 +75,8 @@ OC.L10N.register(
     "Merged merge request" : "Zusammengeführte Zusammenführungs-Anfrage",
     "Unknown state" : "Unbekannter Zustand",
     "Review requested" : "Review wurde angefordert",
-    "created {relativeDate} by {creator}" : "Erstellt {relativeDate} von {creator}",
     "closed {relativeDate}" : "Geschlossen {relativeDate}",
     "updated {relativeDate}" : "Aktualisiert {relativeDate}",
-    "Comment from {username}" : "Kommentar von {username}",
     "Assigned to {username}" : "Zugewiesen an {username}",
     "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status"
 },

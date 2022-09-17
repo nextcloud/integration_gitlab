@@ -75,10 +75,8 @@ OC.L10N.register(
     "Merged merge request" : "Scalone żądanie scalenia",
     "Unknown state" : "Stan nieznany",
     "Review requested" : "Prośba o sprawdzenie",
-    "created {relativeDate} by {creator}" : "utworzone {relativeDate} przez {relativeDate}",
     "closed {relativeDate}" : "zamknięte {relativeDate}",
     "updated {relativeDate}" : "zaktualizowane {relativeDate}",
-    "Comment from {username}" : "Komentarz od {username}",
     "Assigned to {username}" : "Przypisane do użytkownika {username}",
     "Failed to save GitLab OAuth state" : "Nie udało się zapisać statusu OAuth GitLab"
 },

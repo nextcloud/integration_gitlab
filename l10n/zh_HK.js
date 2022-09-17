@@ -75,10 +75,8 @@ OC.L10N.register(
     "Merged merge request" : "已合併合併請求",
     "Unknown state" : "狀態不詳",
     "Review requested" : "已請求審核",
-    "created {relativeDate} by {creator}" : "由 {creator} 於 {relativeDate} 創建",
     "closed {relativeDate}" : "有效期至 {relativeDate}",
     "updated {relativeDate}" : "於 {relativeDate} 更新",
-    "Comment from {username}" : "來自 {username} 的評論",
     "Assigned to {username}" : "分配給 {username}",
     "Failed to save GitLab OAuth state" : "儲存 GitLab OAuth 狀態失敗"
 },

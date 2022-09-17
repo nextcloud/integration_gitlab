@@ -57,6 +57,7 @@ OC.L10N.register(
     "Marked" : "İşaretlendi",
     "You were directly addressed" : "Doğrudan adreslendiniz",
     "Failed to edit GitLab To-Do" : "GitLab yapılacak işleri düzenlenemedi",
+    "GitLab API error" : "GitLab API sorunu",
     "Unknown error" : "Bilinmeyen sorun",
     "Comments" : "Yorumlar",
     "Author" : "İlgili",
