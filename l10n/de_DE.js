@@ -61,6 +61,7 @@ OC.L10N.register(
     "GitLab API error" : "GitLab API-Fehler",
     "Unknown error" : "Unbekannter Fehler",
     "GitLab connected accounts settings" : "GitLab-Einstellungen für verbundene Konten",
+    "by {creator}" : "von {creator}",
     "CLOSED" : "GESCHLOSSEN",
     "MERGED" : "ZUSAMMENGEFÜHRT",
     "Upvotes" : "Positive Stimmen",
@@ -75,8 +76,10 @@ OC.L10N.register(
     "Merged merge request" : "Zusammengeführte Zusammenführungs-Anfrage",
     "Unknown state" : "Unbekannter Zustand",
     "Review requested" : "Review wurde angefordert",
+    "created {relativeDate}" : "erstellt {relativeDate}",
     "closed {relativeDate}" : "Geschlossen {relativeDate}",
     "updated {relativeDate}" : "Aktualisiert {relativeDate}",
+    "Comment from @{username}" : "Kommentar von @{username}",
     "Assigned to {username}" : "Zugewiesen an {username}",
     "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status"
 },

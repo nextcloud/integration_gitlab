@@ -59,6 +59,7 @@
     "GitLab API error" : "Błąd interfejsu GitLab API",
     "Unknown error" : "Nieznany błąd",
     "GitLab connected accounts settings" : "Ustawienia połączonych kont GitLaba",
+    "by {creator}" : "przez {creator}",
     "CLOSED" : "ZAMKNIĘTE",
     "MERGED" : "POŁĄCZONE",
     "Upvotes" : "Głosy za",
@@ -73,8 +74,10 @@
     "Merged merge request" : "Scalone żądanie scalenia",
     "Unknown state" : "Stan nieznany",
     "Review requested" : "Prośba o sprawdzenie",
+    "created {relativeDate}" : "utworzone {relativeDate}",
     "closed {relativeDate}" : "zamknięte {relativeDate}",
     "updated {relativeDate}" : "zaktualizowane {relativeDate}",
+    "Comment from @{username}" : "Komentarz od @{username}",
     "Assigned to {username}" : "Przypisane do użytkownika {username}",
     "Failed to save GitLab OAuth state" : "Nie udało się zapisać statusu OAuth GitLab"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
