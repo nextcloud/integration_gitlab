@@ -56,9 +56,14 @@ OC.L10N.register(
     "You were directly addressed" : "Zuzenean bideratua izan zara",
     "Failed to edit GitLab To-Do" : "GitLabeko egitekoak editatzeak huts egin du",
     "Unknown error" : "Errore ezezaguna",
+    "by {creator}" : "{creator}-(e)k sortua",
     "Comments" : "Iruzkinak",
     "Author" : "Egilea",
     "Owner" : "Jabea",
+    "Open issue" : "Arazo irekia",
+    "Closed issue" : "Arazo itxia",
+    "Unknown state" : "Egoera ezezaguna",
+    "Review requested" : "Berrikuspena eskatuta",
     "Failed to save GitLab OAuth state" : "GitLab OAuth egoera gordetzeak huts egin du"
 },
 "nplurals=2; plural=(n != 1);");

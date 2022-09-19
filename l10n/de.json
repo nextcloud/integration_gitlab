@@ -59,6 +59,7 @@
     "GitLab API error" : "GitLab API-Fehler",
     "Unknown error" : "Unbekannter Fehler",
     "GitLab connected accounts settings" : "GitLab-Einstellungen für verbundene Konten",
+    "by {creator}" : "von {creator}",
     "CLOSED" : "geschlossen",
     "MERGED" : "zusammengeführt",
     "Upvotes" : "Positive Stimmen",

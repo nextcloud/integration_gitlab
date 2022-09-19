@@ -61,6 +61,7 @@ OC.L10N.register(
     "GitLab API error" : "GitLab API 錯誤",
     "Unknown error" : "錯誤不詳",
     "GitLab connected accounts settings" : "GitLab 連接賬戶設定",
+    "by {creator}" : "由 {creator} 創作",
     "CLOSED" : "已關閉",
     "MERGED" : "已合併",
     "Upvotes" : "贊成票",
@@ -75,8 +76,10 @@ OC.L10N.register(
     "Merged merge request" : "已合併合併請求",
     "Unknown state" : "狀態不詳",
     "Review requested" : "已請求審核",
+    "created {relativeDate}" : "於 {relativeDate} 天前創建",
     "closed {relativeDate}" : "有效期至 {relativeDate}",
     "updated {relativeDate}" : "於 {relativeDate} 更新",
+    "Comment from @{username}" : "來自 @{username} 的評論",
     "Assigned to {username}" : "分配給 {username}",
     "Failed to save GitLab OAuth state" : "儲存 GitLab OAuth 狀態失敗"
 },
