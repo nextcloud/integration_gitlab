@@ -476,8 +476,12 @@ export default {
 		align-items: start;
 		&--author {
 			display: flex;
-			align-items: center;
+			align-items: start;
 			width: 100%;
+
+			&--avatar {
+				margin-top: 4px;
+			}
 
 			&--bubble {
 				// TODO improve this
@@ -508,6 +512,7 @@ export default {
 			&--bubble-tip {
 				margin-left: 15px;
 				position: relative;
+				top: 20px;
 				&:before {
 					content: '';
 					width: 0px;
