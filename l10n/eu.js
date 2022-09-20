@@ -57,6 +57,7 @@ OC.L10N.register(
     "Failed to edit GitLab To-Do" : "GitLabeko egitekoak editatzeak huts egin du",
     "Unknown error" : "Errore ezezaguna",
     "by {creator}" : "{creator}-(e)k sortua",
+    "CLOSED" : "ITXITA",
     "Comments" : "Iruzkinak",
     "Author" : "Egilea",
     "Owner" : "Jabea",
