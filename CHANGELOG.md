@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.7 – 2022-09-21
+### Added
+- reference widget for issues, MRs and comments
+
 ## 1.0.6 – 2022-08-30
 ### Added
 - new option to connect with OAuth in a popup
