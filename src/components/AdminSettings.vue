@@ -66,7 +66,7 @@
 			<NcCheckboxRadioSwitch
 				:checked="state.link_preview_enabled"
 				@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
-				{{ t('integration_github', 'Enable GitLab link previews in Talk') }}
+				{{ t('integration_gitlab', 'Enable GitLab link previews in Talk') }}
 			</NcCheckboxRadioSwitch>
 		</div>
 	</div>

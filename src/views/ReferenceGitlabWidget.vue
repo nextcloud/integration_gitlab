@@ -169,8 +169,18 @@
 							{{ t('integration_gitlab', 'Owner') }}
 						</div>
 					</div>
-					<div class="comment--author--bubble--content" :title="richObject.gitlab_comment.body">
+					<div v-show="shortComment"
+						v-tooltip.top="{ content: t('integration_gitlab', 'Click to expand comment') }"
+						class="comment--author--bubble--short-content"
+						@click="shortComment = false">
 						{{ richObject.gitlab_comment.body }}
+					</div>
+					<div v-show="!shortComment"
+						class="comment--author--bubble--full-content">
+						<RichText
+							:text="richObject.gitlab_comment.body"
+							:use-markdown="true"
+							@click.native="shortComment = true" />
 					</div>
 				</span>
 			</div>
@@ -195,6 +205,7 @@ import MergedMergeRequestIcon from '../components/icons/MergedMergeRequestIcon.v
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
 
+import { RichText } from '@nextcloud/vue-richtext'
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import Vue from 'vue'
@@ -204,6 +215,7 @@ export default {
 	name: 'ReferenceGitlabWidget',
 
 	components: {
+		RichText,
 		DownVoteIcon,
 		UpVoteIcon,
 		GitlabIcon,
@@ -233,6 +245,7 @@ export default {
 	data() {
 		return {
 			settingsUrl: generateUrl('/settings/user/connected-accounts#gitlab_prefs'),
+			shortComment: true,
 		}
 	},
 
@@ -482,7 +495,11 @@ export default {
 						color: var(--color-main-text);
 					}
 				}
-				&--content {
+				&--short-content,
+				&--full-content {
+					cursor: pointer;
+				}
+				&--short-content {
 					text-overflow: ellipsis;
 					overflow: hidden;
 					white-space: nowrap;
