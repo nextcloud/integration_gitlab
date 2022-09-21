@@ -59,6 +59,7 @@
     "GitLab API error" : "GitLab API 錯誤",
     "Unknown error" : "未知的錯誤",
     "GitLab connected accounts settings" : "GitLab 已連結帳號設定",
+    "by {creator}" : "由 {creator} 建立",
     "CLOSED" : "已關閉",
     "MERGED" : "已合併",
     "Upvotes" : "贊成票",

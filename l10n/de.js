@@ -76,6 +76,7 @@ OC.L10N.register(
     "Merged merge request" : "Zusammengeführter Merge-Request",
     "Unknown state" : "Unbekannter Zustand",
     "Review requested" : "Review wurde angefordert",
+    "created {relativeDate}" : "erstellt {relativeDate}",
     "closed {relativeDate}" : "geschlossen {relativeDate}",
     "updated {relativeDate}" : "aktualisiert {relativeDate}",
     "Assigned to {username}" : "Zugewiesen an {username}",
