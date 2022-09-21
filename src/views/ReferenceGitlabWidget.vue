@@ -149,10 +149,7 @@
 					:is-no-user="true"
 					:url="commentAuthorAvatarUrl" />
 				<span class="comment--author--bubble-tip" />
-				<span :class="{
-					'comment--author--bubble': true,
-					'short-comment': shortComment,
-				}">
+				<span class="comment--author--bubble">
 					<div class="comment--author--bubble--header">
 						<a :href="richObject.gitlab_comment.author.web_url" target="_blank" class="author-link">
 							<strong class="comment-author-display-name">{{ richObject.gitlab_comment.author.name }}</strong>
@@ -172,7 +169,10 @@
 							{{ t('integration_gitlab', 'Owner') }}
 						</div>
 					</div>
-					<div class="comment--author--bubble--content">
+					<div :class="{
+						'comment--author--bubble--content': true,
+						'short-comment': shortComment,
+					}">
 						<RichText
 							v-tooltip.top="{ content: shortComment ? t('integration_gitlab', 'Click to expand comment') : undefined }"
 							:text="richObject.gitlab_comment.body"
@@ -488,16 +488,10 @@ export default {
 				border: 1px solid var(--color-border-dark);
 				border-radius: var(--border-radius);
 
-				max-height: 250px;
-				overflow: scroll;
-				&.short-comment {
-					max-height: 60px;
-					overflow: hidden;
-				}
-
 				&--header {
 					display: flex;
 					align-items: center;
+					margin-bottom: 6px;
 					color: var(--color-text-maxcontrast);
 					.comment-author-display-name {
 						color: var(--color-main-text);
@@ -506,6 +500,12 @@ export default {
 
 				&--content {
 					cursor: pointer;
+					max-height: 250px;
+					overflow: scroll;
+					&.short-comment {
+						max-height: 25px;
+						overflow: hidden;
+					}
 				}
 			}
 			&--bubble-tip {
