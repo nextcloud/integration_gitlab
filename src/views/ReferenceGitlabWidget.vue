@@ -149,7 +149,10 @@
 					:is-no-user="true"
 					:url="commentAuthorAvatarUrl" />
 				<span class="comment--author--bubble-tip" />
-				<span class="comment--author--bubble">
+				<span :class="{
+					'comment--author--bubble': true,
+					'short-comment': shortComment,
+				}">
 					<div class="comment--author--bubble--header">
 						<a :href="richObject.gitlab_comment.author.web_url" target="_blank" class="author-link">
 							<strong class="comment-author-display-name">{{ richObject.gitlab_comment.author.name }}</strong>
@@ -169,18 +172,12 @@
 							{{ t('integration_gitlab', 'Owner') }}
 						</div>
 					</div>
-					<div v-show="shortComment"
-						v-tooltip.top="{ content: t('integration_gitlab', 'Click to expand comment') }"
-						class="comment--author--bubble--short-content"
-						@click="shortComment = false">
-						{{ richObject.gitlab_comment.body }}
-					</div>
-					<div v-show="!shortComment"
-						class="comment--author--bubble--full-content">
+					<div class="comment--author--bubble--content">
 						<RichText
+							v-tooltip.top="{ content: shortComment ? t('integration_gitlab', 'Click to expand comment') : undefined }"
 							:text="richObject.gitlab_comment.body"
 							:use-markdown="true"
-							@click.native="shortComment = true" />
+							@click.native="shortComment = !shortComment" />
 					</div>
 				</span>
 			</div>
@@ -484,13 +481,20 @@ export default {
 			}
 
 			&--bubble {
-				// TODO improve this
-				display: grid;
-				//flex-direction: column;
+				display: flex;
+				flex-direction: column;
 				width: 100%;
 				padding: 4px 8px;
 				border: 1px solid var(--color-border-dark);
 				border-radius: var(--border-radius);
+
+				max-height: 250px;
+				overflow: scroll;
+				&.short-comment {
+					max-height: 60px;
+					overflow: hidden;
+				}
+
 				&--header {
 					display: flex;
 					align-items: center;
@@ -499,14 +503,9 @@ export default {
 						color: var(--color-main-text);
 					}
 				}
-				&--short-content,
-				&--full-content {
+
+				&--content {
 					cursor: pointer;
-				}
-				&--short-content {
-					text-overflow: ellipsis;
-					overflow: hidden;
-					white-space: nowrap;
 				}
 			}
 			&--bubble-tip {
