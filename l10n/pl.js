@@ -69,6 +69,7 @@ OC.L10N.register(
     "Comments" : "Komentarze",
     "Author" : "Autor",
     "Owner" : "Właściciel",
+    "Click to expand comment" : "Kliknij, aby rozwinąć komentarz",
     "Open issue" : "Otwarty problem",
     "Closed issue" : "Zamknięty problem",
     "Open merge request" : "Otwórz żądanie o scalenie",

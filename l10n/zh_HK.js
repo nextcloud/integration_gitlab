@@ -69,6 +69,7 @@ OC.L10N.register(
     "Comments" : "備註",
     "Author" : "作者",
     "Owner" : "所有者",
+    "Click to expand comment" : "點擊展開評論",
     "Open issue" : "未解決的問題",
     "Closed issue" : "已關閉的問題",
     "Open merge request" : "打開合併請求",

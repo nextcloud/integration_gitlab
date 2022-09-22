@@ -69,6 +69,7 @@ OC.L10N.register(
     "Comments" : "Komentáře",
     "Author" : "Autor",
     "Owner" : "Vlastník",
+    "Click to expand comment" : "Komentář rozbalíte kliknutím",
     "Open issue" : "Otevřít hlášení problému",
     "Closed issue" : "Problém uzavřen",
     "Open merge request" : "Otevřený požadavek na začlenění",

@@ -67,6 +67,7 @@
     "Comments" : "留言",
     "Author" : "作者",
     "Owner" : "擁有者",
+    "Click to expand comment" : "點擊展開留言",
     "Open issue" : "開啟問題",
     "Closed issue" : "已關閉的問題",
     "Open merge request" : "開放的合併請求",
@@ -74,8 +75,10 @@
     "Merged merge request" : "已合併的合併請求",
     "Unknown state" : "未知狀態",
     "Review requested" : "已請求審閱",
+    "created {relativeDate}" : "建立於 {relativeDate}",
     "closed {relativeDate}" : "關閉於 {relativeDate}",
     "updated {relativeDate}" : "更新於 {relativeDate}",
+    "Comment from @{username}" : "來自 @{username} 的留言",
     "Assigned to {username}" : "指派給 {username}",
     "Failed to save GitLab OAuth state" : "儲存 GitLab OAuth 狀態失敗"
 },"pluralForm" :"nplurals=1; plural=0;"
