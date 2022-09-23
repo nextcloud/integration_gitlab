@@ -61,6 +61,7 @@ OC.L10N.register(
     "GitLab API error" : "Erro da API do GitLab",
     "Unknown error" : "Erro desconhecido",
     "GitLab connected accounts settings" : "Configurações de contas conectadas do GitLab",
+    "by {creator}" : "por {creator}",
     "CLOSED" : "FECHADO",
     "MERGED" : "INCORPORADO",
     "Upvotes" : "Votos positivos",
@@ -71,8 +72,15 @@ OC.L10N.register(
     "Open issue" : "Problema em aberto",
     "Closed issue" : "Problema encerrado",
     "Open merge request" : "Abrir solicitação de mesclagem",
+    "Closed merge request" : "Solicitação de mesclagem fechada",
+    "Merged merge request" : "Solicitação de mesclagem mesclada",
     "Unknown state" : "Estado desconhecido",
     "Review requested" : "Revisão solicitada",
+    "created {relativeDate}" : "criado {relativeDate}",
+    "closed {relativeDate}" : "fechada {relativeDate}",
+    "updated {relativeDate}" : "atualizada {relativeDate}",
+    "Comment from @{username}" : "Comentário de @{username}",
+    "Assigned to {username}" : "Atribuído a {username}",
     "Failed to save GitLab OAuth state" : "Falha ao salvar o estado GitLab OAuth"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
