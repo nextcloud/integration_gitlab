@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.8 – 2022-09-23
+### Fixed
+- reference widget style issues
+
 ## 1.0.7 – 2022-09-21
 ### Added
 - reference widget for issues, MRs and comments
