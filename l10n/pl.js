@@ -25,7 +25,6 @@ OC.L10N.register(
     "Application secret" : "Tajny klucz aplikacji",
     "Client secret of your GitLab application" : "Tajny klucz klienta aplikacji GitLab",
     "Use a popup to authenticate" : "Użyj wyskakującego okienka do uwierzytelnienia",
-    "Enable GitLab link previews in Talk" : "Włącz podgląd linków GitLaba w Talk",
     "GitLab admin options saved" : "Opcje administratora GitLaba zostały zapisane",
     "Failed to save GitLab admin options" : "Nie udało się zapisać opcji administratora GitLaba.",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Tworząc token dostępu, nadaj mu przynajmniej uprawnienia \"read_user\", \"read_api\" i \"read_repository\". Opcjonalnie zamiast tego \"api\".",

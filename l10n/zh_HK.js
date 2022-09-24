@@ -25,7 +25,6 @@ OC.L10N.register(
     "Application secret" : "應用程式密碼",
     "Client secret of your GitLab application" : "您 GitLab 應用程式的客戶端密碼",
     "Use a popup to authenticate" : "使用彈出窗口進行身份驗證",
-    "Enable GitLab link previews in Talk" : "在 Talk 中啟用 GitLab 連結預覽",
     "GitLab admin options saved" : "已儲存 GitLab 管理員選項",
     "Failed to save GitLab admin options" : "儲存 GitLab 管理員選項失敗",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "當您自己建立存取權杖時，至少給予 \"read_user\"、\"read_api\" 與 \"read_repository\" 權限。\"api\" 是非強制的。",

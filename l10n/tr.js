@@ -25,7 +25,6 @@ OC.L10N.register(
     "Application secret" : "Uygulama sırrı",
     "Client secret of your GitLab application" : "GitLab uygulamanızın istemci sırrı",
     "Use a popup to authenticate" : "Kimlik doğrulaması için açılan pencere kullanılsın",
-    "Enable GitLab link previews in Talk" : "Talk içinde GitLab bağlantıları ön izlenebilsin",
     "GitLab admin options saved" : "GitLab yönetici ayarları kaydedildi",
     "Failed to save GitLab admin options" : "GitLab yönetici ayarları kaydedilemedi",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Kendiniz için bir kişisel erişim kodu oluştururken en azından \"read_user\", \"read_api\" ve \"read_repository\" izinlerini verin. Bunun yerine isteğe göre \"api\".",
