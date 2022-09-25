@@ -23,6 +23,7 @@
     "Application secret" : "Anwendungsgeheimnis",
     "Client secret of your GitLab application" : "Client-Geheimnis von Ihrer GitLab-Anwendung",
     "Use a popup to authenticate" : "Popup zur Authentifizierung verwenden",
+    "Enable GitLab link previews" : "Vorschau von GitLab-Links aktivieren",
     "GitLab admin options saved" : "GitLab-Administrator-Einstellungen gespeichert",
     "Failed to save GitLab admin options" : "Fehler beim Speichern der GitLab-Administrator-Einstellungen",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Wenn Sie selbst ein Zugriffstoken erstellen, geben Sie ihm mindestens die Berechtigungen \"read_user\", \"read_api\" und \"read_repository\". Optional stattdessen \"api\".",
