@@ -22,7 +22,7 @@
 
 namespace OCA\Gitlab\Reference;
 
-use OC\Collaboration\Reference\Reference;
+use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Gitlab\AppInfo\Application;
 use OCA\Gitlab\Service\GitlabAPIService;
