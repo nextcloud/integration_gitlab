@@ -5,7 +5,7 @@
     <summary>Integration of GitLab software development management service</summary>
     <description><![CDATA[GitLab integration provides a dashboard widget displaying your most important notifications
     and a unified search provider for repositories, issues and merge requests.]]></description>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Gitlab</namespace>
