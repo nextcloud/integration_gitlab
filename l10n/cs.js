@@ -25,6 +25,7 @@ OC.L10N.register(
     "Application secret" : "Tajemství pro aplikaci",
     "Client secret of your GitLab application" : "Klientské tajemství vaší GitLab aplikace",
     "Use a popup to authenticate" : "Ověřte se ve vyskakovacím okně",
+    "Enable GitLab link previews" : "Zapnout náhledy odkazů na GitLab",
     "GitLab admin options saved" : "Předvolby správy GitLab uloženy",
     "Failed to save GitLab admin options" : "Nepodařilo se uložit předvolby správy GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Když si osobní přístupový token vytváříte sami, udělte mu přinejmenším oprávnění pro „read_user“, „read_api“ a „read_repository“. Volitelně namísto toho „api“.",

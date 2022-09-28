@@ -5,6 +5,7 @@ OC.L10N.register(
     "Bad HTTP method" : "Поганий метод HTTP",
     "Bad credentials" : "Погані облікові дані",
     "OAuth access token refused" : "Маркер доступу OAuth відхилено",
+    "Mark as done" : "Позначити як виконане",
     "Unknown error" : "Невідома помилка",
     "Comments" : "Коментарі",
     "Owner" : "Власник",
