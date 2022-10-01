@@ -15,6 +15,7 @@ OC.L10N.register(
     "Instance address" : "Instanssin osoite",
     "Application ID" : "Sovelluksen ID",
     "Application secret" : "Sovelluksen salaisuus",
+    "Use a popup to authenticate" : "Käytä ponnahdusikkunaa tunnistautumista varten",
     "Failed to save GitLab admin options" : "GitLab-ylläpitäjävalintojen tallentaminen epäonnistui",
     "GitLab instance address" : "GitLab-instanssin osoite",
     "Personal access token" : "Henkilökohtainen käyttöpoletti",
