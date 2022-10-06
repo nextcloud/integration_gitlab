@@ -41,9 +41,15 @@ OC.L10N.register(
     "A build has failed" : "Buildi on epäonnistunut",
     "Marked" : "Merkattu",
     "Unknown error" : "Tuntematon virhe",
+    "by {creator}" : "tehnyt {creator}",
     "Comments" : "Kommentit",
     "Author" : "Tekijä",
     "Owner" : "Omistaja",
+    "Click to expand comment" : "Napsauta laajentaaksesi kommentin",
+    "Open issue" : "Avaa issue",
+    "Closed issue" : "Suljettu issue",
+    "Unknown state" : "Tuntematon tila",
+    "Review requested" : "Katselmointi pyydetty",
     "Failed to save GitLab OAuth state" : "GitLab OAuth tilan tallentaminen epäonnistui"
 },
 "nplurals=2; plural=(n != 1);");
