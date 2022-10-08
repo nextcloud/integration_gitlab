@@ -21,6 +21,7 @@ OC.L10N.register(
     "ID of your GitLab application" : "ID vašej aplikácie GitLab",
     "Application secret" : "Aplikačný tajný kľúč",
     "Client secret of your GitLab application" : "Tajomstvo klienta vašej aplikácie GitLab",
+    "Use a popup to authenticate" : "Pre overenie použite kontextové okno",
     "GitLab admin options saved" : "Možnosti administrátora GitLab boli uložené",
     "Failed to save GitLab admin options" : "Nepodarilo sa uložiť možnosti administrátora GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Keď si sami vytvoríte prístupový token, udelte mu aspoň povolenia „read_user“, „read_api“ a „read_repository“. Voliteľne povoľte aj \"api\".",
@@ -52,9 +53,13 @@ OC.L10N.register(
     "Marked" : "Označené",
     "You were directly addressed" : "Boli ste priamo oslovení",
     "Unknown error" : "Neznáma chyba",
+    "by {creator}" : "od {creator}",
     "Comments" : "Komentáre",
     "Author" : "Autor",
     "Owner" : "Vlastník",
+    "Click to expand comment" : "Kliknite pre zobrazenie komentára",
+    "Open issue" : "Otvoriť problém",
+    "Closed issue" : "Zavretý problém",
     "Failed to save GitLab OAuth state" : "Nepodarilo sa uložiť stav OAuth GitLabu"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
