@@ -93,7 +93,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="spacer" />
 			<div class="right-content">
 				<div>
 					<span v-if="richObject.state === 'closed'" class="closed-prefix">
@@ -397,7 +396,16 @@ export default {
 	.issue-pr-wrapper {
 		width: 100%;
 		display: flex;
+		flex-wrap: wrap;
 		align-items: start;
+
+		.issue-pr-info {
+			display: flex;
+			flex: 1 1 300px;
+			max-width: fit-content;
+			align-items: center;
+			flex-wrap: wrap;
+		}
 
 		.assignee-avatars {
 			display: flex;
