@@ -53,9 +53,16 @@ OC.L10N.register(
     "Marked" : "Gemarkeerd",
     "You were directly addressed" : "Je werd rechtstreeks benaderd",
     "Unknown error" : "Onbekende fout",
+    "by {creator}" : "door {creator}",
+    "CLOSED" : "GESLOTEN",
+    "MERGED" : "SAMENGEVOEGD",
     "Comments" : "Reacties",
     "Author" : "Auteur",
     "Owner" : "Eigenaar",
+    "Open merge request" : "Samenvoegverzoek openen",
+    "Closed merge request" : "Gesloten samenvoegverzoek",
+    "Merged merge request" : "Samenvoegverzoek samengevoegd",
+    "Assigned to {username}" : "Toegewezen aan {username}",
     "Failed to save GitLab OAuth state" : "Kan GitLab OAuth-status niet bewaren"
 },
 "nplurals=2; plural=(n != 1);");
