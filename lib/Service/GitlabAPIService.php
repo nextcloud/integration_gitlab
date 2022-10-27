@@ -466,7 +466,7 @@ class GitlabAPIService {
 					foreach ($params as $key => $value) {
 						if (is_array($value)) {
 							foreach ($value as $oneArrayValue) {
-								$paramsContent .= $key . '[]=' . urlencode($oneArrayValue) . '&';
+								$paramsContent .= $key . urlencode($oneArrayValue) . '&';
 							}
 							unset($params[$key]);
 						}
