@@ -24,6 +24,7 @@
     "Successfully connected to GitLab!" : "成功连接到了GitLab！",
     "Error connecting to GitLab:" : "连接到GitLab时出现错误：",
     "Incorrect access token" : "访问令牌不正确",
+    "Failed to save GitLab options" : "保存 GitLab 选项失败",
     "Mark as done" : "标记为已完成",
     "No GitLab notifications!" : "无 GitLab 通知！",
     "You were mentioned" : "您被提及",
