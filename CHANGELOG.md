@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.10 – 2022-11-07
+### Changed
+- update npm pkgs
+- improve reference widget wrapping (when screen gets narrow)
+- improve reference widget style
+
+### Fixed
+- remove 'action' filter when getting todos (does not work with GitLab >= 15.5)
+
 ## 1.0.9 – 2022-09-27
 ### Changed
 - use new reference class
