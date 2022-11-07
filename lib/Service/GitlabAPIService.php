@@ -284,7 +284,6 @@ class GitlabAPIService {
 	 */
 	public function getTodos(string $userId, ?string $since = null): array {
 		$params = [
-			'action' => ['assigned', 'mentioned', 'build_failed', 'marked', 'approval_required', 'unmergeable', 'directly_addressed'],
 			'state' => 'pending',
 		];
 		$result = $this->request($userId, 'todos', $params);
