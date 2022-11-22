@@ -14,8 +14,13 @@ OC.L10N.register(
     "Enable navigation link" : "Aktivera navigeringslänk",
     "Incorrect access token" : "Ogiltig åtkomst-token",
     "Unknown error" : "Okänt fel",
+    "by {creator}" : "av {creator}",
     "Comments" : "Kommentarer",
     "Author" : "Upphovsman",
-    "Owner" : "Ägare"
+    "Owner" : "Ägare",
+    "Click to expand comment" : "Klicka för att utöka kommentaren",
+    "created {relativeDate}" : "skapad {relativeDate}",
+    "closed {relativeDate}" : "stängd {relativeDate}",
+    "updated {relativeDate}" : "uppdaterad {relativeDate}"
 },
 "nplurals=2; plural=(n != 1);");
