@@ -1,0 +1,9 @@
+{ "translations": {
+    "Connected accounts" : "Forbundne konti",
+    "Connected as {user}" : "Forbundet som {user}",
+    "Mark as done" : "Marker som færdig",
+    "Unknown error" : "Ukendt fejl",
+    "Comments" : "Kommentarer",
+    "Owner" : "Ejer"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
