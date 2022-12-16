@@ -83,6 +83,34 @@ class GitlabAPIService {
 	}
 
 	/**
+	 * @param int $offset
+	 * @param int $limit
+	 * @return array [perPage, page, leftPadding]
+	 */
+	public static function getGitLabPaginationValues(int $offset = 0, int $limit = 5): array {
+		// compute pagination values
+		// indexes offset => offset + limit
+		if (($offset % $limit) === 0) {
+			$perPage = $limit;
+			// page number starts at 1
+			$page = ($offset / $limit) + 1;
+			return [$perPage, $page, 0];
+		} else {
+			$firstIndex = $offset;
+			$lastIndex = $offset + $limit - 1;
+			$perPage = $limit;
+			// while there is no page that contains them'all
+			while (intdiv($firstIndex, $perPage) !== intdiv($lastIndex, $perPage)) {
+				$perPage++;
+			}
+			$page = intdiv($offset, $perPage) + 1;
+			$leftPadding = $firstIndex % $perPage;
+
+			return [$perPage, $page, $leftPadding];
+		}
+	}
+
+	/**
 	 * @param string $userId
 	 * @param string $term
 	 * @param int $offset
@@ -91,27 +119,19 @@ class GitlabAPIService {
 	 * @throws Exception
 	 */
 	public function searchRepositories(string $userId, string $term, int $offset = 0, int $limit = 5): array {
+		[$perPage, $page, $leftPadding] = self::getGitLabPaginationValues($offset, $limit);
 		$params = [
 			'scope' => 'projects',
 			'search' => $term,
+			'sort' => 'desc',
+			'per_page' => $perPage,
+			'page' => $page,
 		];
 		$projects = $this->request($userId, 'search', $params);
 		if (isset($projects['error'])) {
 			return $projects;
 		}
-		usort($projects, function($a, $b) {
-			$a = new Datetime($a['last_activity_at']);
-			$ta = $a->getTimestamp();
-			$b = new Datetime($b['last_activity_at']);
-			$tb = $b->getTimestamp();
-			return ($ta > $tb) ? -1 : 1;
-		});
-		//$a = usort($projects, function($a, $b) {
-		//	$sa = intval($a['star_count']);
-		//	$sb = intval($b['star_count']);
-		//	return ($sa > $sb) ? -1 : 1;
-		//});
-		return array_slice($projects, $offset, $limit);
+		return array_slice($projects, $leftPadding, $limit);
 	}
 
 	/**
@@ -123,14 +143,20 @@ class GitlabAPIService {
 	 * @throws Exception
 	 */
 	public function searchIssues(string $userId, string $term, int $offset = 0, int $limit = 5): array {
+		[$perPage, $page, $leftPadding] = self::getGitLabPaginationValues($offset, $limit);
 		$params = [
 			'scope' => 'issues',
 			'search' => $term,
+			'sort' => 'desc',
+			'per_page' => $perPage,
+			'page' => $page,
 		];
 		$issues = $this->request($userId, 'search', $params);
 		if (isset($issues['error'])) {
 			return $issues;
 		}
+		// TODO maybe split this in 2 search providers, or find a smart way to merge and return the correct number of items
+		$issues = array_slice($issues, $leftPadding, $limit);
 		foreach ($issues as $k => $issue) {
 			$issues[$k]['type'] = 'issue';
 		}
@@ -138,25 +164,20 @@ class GitlabAPIService {
 		$params = [
 			'scope' => 'merge_requests',
 			'search' => $term,
+			'sort' => 'desc',
+			'per_page' => $perPage,
+			'page' => $page,
 		];
 		$mergeRequests = $this->request($userId, 'search', $params);
 		if (isset($mergeRequests['error'])) {
 			return $mergeRequests;
 		}
+		$mergeRequests = array_slice($mergeRequests, $leftPadding, $limit);
 		foreach ($mergeRequests as $k => $mergeRequest) {
 			$mergeRequests[$k]['type'] = 'merge_request';
 		}
 
-		$results = array_merge($issues, $mergeRequests);
-
-		usort($results, function($a, $b) {
-			$a = new Datetime($a['updated_at']);
-			$ta = $a->getTimestamp();
-			$b = new Datetime($b['updated_at']);
-			$tb = $b->getTimestamp();
-			return ($ta > $tb) ? -1 : 1;
-		});
-		return array_slice($results, $offset, $limit);
+		return array_merge($issues, $mergeRequests);
 	}
 
 	/**

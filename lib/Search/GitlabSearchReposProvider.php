@@ -137,7 +137,7 @@ class GitlabSearchReposProvider implements IProvider {
 				$this->getSubline($entry),
 				$this->getLinkToGitlab($entry),
 				$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
-				false
+				true
 			);
 		}, $repos);
 

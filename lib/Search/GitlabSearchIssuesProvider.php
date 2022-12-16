@@ -135,7 +135,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 				$this->getSubline($entry, $url),
 				$this->getLinkToGitlab($entry),
 				$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
-				false
+				true
 			);
 		}, $issues);
 
@@ -197,7 +197,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 	protected function getThumbnailUrl(array $entry): string {
 		$userId = $entry['author']['id'] ?? '';
 		return $userId
-			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', []) . '?userId=' . urlencode(strval($userId))
+			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', ['userId' => $userId])
 			: '';
 	}
 }
