@@ -131,7 +131,7 @@ class GitlabSearchMergeRequestsProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getMainText(array $entry): string {
-		$stateChar = $entry['merged']
+		$stateChar = $entry['state'] === 'merged'
 			? '✅'
 			: ($entry['state'] === 'closed'
 				? '❌'
