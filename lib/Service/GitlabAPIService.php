@@ -155,12 +155,19 @@ class GitlabAPIService {
 		if (isset($issues['error'])) {
 			return $issues;
 		}
-		// TODO maybe split this in 2 search providers, or find a smart way to merge and return the correct number of items
-		$issues = array_slice($issues, $leftPadding, $limit);
-		foreach ($issues as $k => $issue) {
-			$issues[$k]['type'] = 'issue';
-		}
+		return array_slice($issues, $leftPadding, $limit);
+	}
 
+	/**
+	 * @param string $userId
+	 * @param string $term
+	 * @param int $offset
+	 * @param int $limit
+	 * @return array|string[]
+	 * @throws PreConditionNotMetException
+	 */
+	public function searchMergeRequests(string $userId, string $term, int $offset = 0, int $limit = 5): array {
+		[$perPage, $page, $leftPadding] = self::getGitLabPaginationValues($offset, $limit);
 		$params = [
 			'scope' => 'merge_requests',
 			'search' => $term,
@@ -172,12 +179,7 @@ class GitlabAPIService {
 		if (isset($mergeRequests['error'])) {
 			return $mergeRequests;
 		}
-		$mergeRequests = array_slice($mergeRequests, $leftPadding, $limit);
-		foreach ($mergeRequests as $k => $mergeRequest) {
-			$mergeRequests[$k]['type'] = 'merge_request';
-		}
-
-		return array_merge($issues, $mergeRequests);
+		return array_slice($mergeRequests, $leftPadding, $limit);
 	}
 
 	/**

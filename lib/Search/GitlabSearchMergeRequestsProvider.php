@@ -35,7 +35,7 @@ use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 
-class GitlabSearchIssuesProvider implements IProvider {
+class GitlabSearchMergeRequestsProvider implements IProvider {
 
 	private IAppManager $appManager;
 	private IL10N $l10n;
@@ -59,14 +59,14 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @inheritDoc
 	 */
 	public function getId(): string {
-		return 'gitlab-search-issues';
+		return 'gitlab-search-mrs';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getName(): string {
-		return $this->l10n->t('GitLab issues');
+		return $this->l10n->t('GitLab merge requests');
 	}
 
 	/**
@@ -97,12 +97,12 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
 		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
 		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
-		$searchIssuesEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_issues_enabled', '0') === '1';
-		if ($accessToken === '' || !$searchIssuesEnabled) {
+		$searchMRsEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_mrs_enabled', '0') === '1';
+		if ($accessToken === '' || !$searchMRsEnabled) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$issues = $this->service->searchIssues($user->getUID(), $term, $offset, $limit);
+		$mergeRequests = $this->service->searchMergeRequests($user->getUID(), $term, $offset, $limit);
 		if (isset($searchResult['error'])) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
@@ -117,7 +117,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 				$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
 				true
 			);
-		}, $issues);
+		}, $mergeRequests);
 
 		return SearchResult::paginated(
 			$this->getName(),
@@ -131,7 +131,11 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getMainText(array $entry): string {
-		$stateChar = $entry['state'] === 'closed' ? '❌' : '⋯';
+		$stateChar = $entry['merged']
+			? '✅'
+			: ($entry['state'] === 'closed'
+				? '❌'
+				: '⋯');
 		return $stateChar . ' ' . $entry['title'];
 	}
 
@@ -142,14 +146,13 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 */
 	protected function getSubline(array $entry, string $url): string {
 		$repoFullName = str_replace($url, '', $entry['web_url']);
-		$repoFullName = preg_replace('/\/issues\/.*/', '', $repoFullName);
 		$repoFullName = preg_replace('/^\//', '', $repoFullName);
 		$spl = explode('/', $repoFullName);
 //		$owner = $spl[0];
 		$repo = $spl[1];
 		$number = $entry['iid'];
-		$typeChar = '🂠';
-		$idChar = '#';
+		$typeChar = '⑃';
+		$idChar = '!';
 		return $typeChar . ' ' . $repo . $idChar . $number;
 	}
 

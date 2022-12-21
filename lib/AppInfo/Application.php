@@ -26,14 +26,10 @@ use OCP\AppFramework\Bootstrap\IBootstrap;
 
 use OCA\Gitlab\Dashboard\GitlabWidget;
 use OCA\Gitlab\Search\GitlabSearchIssuesProvider;
+use OCA\Gitlab\Search\GitlabSearchMergeRequestsProvider;
 use OCA\Gitlab\Search\GitlabSearchReposProvider;
 use OCP\Util;
 
-/**
- * Class Application
- *
- * @package OCA\Gitlab\AppInfo
- */
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'integration_gitlab';
 	/**
@@ -51,6 +47,7 @@ class Application extends App implements IBootstrap {
 	public function register(IRegistrationContext $context): void {
 		$context->registerDashboardWidget(GitlabWidget::class);
 		$context->registerSearchProvider(GitlabSearchIssuesProvider::class);
+		$context->registerSearchProvider(GitlabSearchMergeRequestsProvider::class);
 		$context->registerSearchProvider(GitlabSearchReposProvider::class);
 
 		$context->registerReferenceProvider(GitlabReferenceProvider::class);

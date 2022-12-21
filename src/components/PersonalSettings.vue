@@ -67,8 +67,12 @@
 				<NcCheckboxRadioSwitch
 					:checked="state.search_issues_enabled"
 					@update:checked="onCheckboxChanged($event, 'search_issues_enabled')">
-					{{ t('integration_gitlab', 'Enable searching for issues and merge requests') }}
-					{{ t('integration_gitlab', '(This may be slow or even fail on some GitLab instances)') }}
+					{{ t('integration_gitlab', 'Enable searching for issues') }}
+				</NcCheckboxRadioSwitch>
+				<NcCheckboxRadioSwitch
+					:checked="state.search_mrs_enabled"
+					@update:checked="onCheckboxChanged($event, 'search_mrs_enabled')">
+					{{ t('integration_gitlab', 'Enable searching for merge requests') }}
 				</NcCheckboxRadioSwitch>
 				<br>
 				<p v-if="state.search_enabled || state.search_issues_enabled" class="settings-hint">
