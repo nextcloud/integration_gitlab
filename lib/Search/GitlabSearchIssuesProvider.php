@@ -95,7 +95,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$offset = $offset ? intval($offset) : 0;
 
 		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
 		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 		$searchIssuesEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_issues_enabled', '0') === '1';
 		if ($accessToken === '' || !$searchIssuesEnabled) {

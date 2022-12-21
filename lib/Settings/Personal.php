@@ -49,7 +49,7 @@ class Personal implements ISettings {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		// don't expose the client secret to users
 		$clientSecret = ($this->config->getAppValue(Application::APP_ID, 'client_secret') !== '');
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
 		$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0');
 
 		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;

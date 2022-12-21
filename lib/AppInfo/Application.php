@@ -32,9 +32,8 @@ use OCP\Util;
 
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'integration_gitlab';
-	/**
-	 * @var mixed
-	 */
+	public const DEFAULT_GITLAB_URL = 'https://gitlab.com';
+
 	private $config;
 
 	public function __construct(array $urlParams = []) {
@@ -66,7 +65,7 @@ class Application extends App implements IBootstrap {
 			$container = $this->getContainer();
 
 			if ($this->config->getUserValue($userId, self::APP_ID, 'navigation_enabled', '0') === '1') {
-				$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', 'https://gitlab.com') ?: 'https://gitlab.com';
+				$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', self::DEFAULT_GITLAB_URL) ?: self::DEFAULT_GITLAB_URL;
 				$gitlabUrl = $this->config->getUserValue($userId, self::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 				$container->get(INavigationManager::class)->add(function () use ($container, $gitlabUrl) {
 					$urlGenerator = $container->get(IURLGenerator::class);
