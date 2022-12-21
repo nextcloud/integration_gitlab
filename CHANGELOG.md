@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.11 – 2022-12-21
+### Changed
+- split issue/MR search provider in 2
+- update npm pkgs
+
+### Fixed
+- avatar url generation in search providers
+
 ## 1.0.10 – 2022-11-07
 ### Changed
 - update npm pkgs
