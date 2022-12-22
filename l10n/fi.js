@@ -4,7 +4,6 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Virhe haettaessa OAuth-käyttöpolettia.",
     "Error during OAuth exchanges" : "Virhe OAuth-vaihdossa",
-    "GitLab issues and merge requests" : "GitLabin ongelmat ja yhdistämispyynnöt",
     "GitLab repositories" : "GitLabin tietovarastot",
     "Bad HTTP method" : "Virheellinen HTTP-metodi",
     "Bad credentials" : "Virheelliset kirjautumistiedot",
