@@ -10,7 +10,7 @@
     "Connected accounts" : "Konektaturiko kontuak",
     "GitLab integration" : "GitLab integrazioa",
     "Integration of GitLab software development management service" : "GitLab software garapen eta kudeaketa zerbitzuaren integrazioa",
-    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "GitLab integrazioak zure jakinarazpen garrantzitsuak erakusten dituen panel-widgeta eskaintzen du.\n\t eta biltegi, issue eta merge request-entzat bilatzaile bateratua.",
+    "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "GitLab integrazioak zure jakinarazpen garrantzitsuak erakusten dituen panel-trepeta eskaintzen du.\n\t eta biltegi, issue eta merge request-entzat bilatzaile bateratua.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Zure Nextcloud erabiltzaileei OAuth-ekin GitLab instantzia batean autentifikatzeko aukera eman nahi badiezu, sortu aplikazio bat zure GitLab administrazio-ezarpenetan eta jarri aplikazioaren IDa eta sekretua hemen.",
     "Make sure you set the \"Redirect URI\" to:" : "Ziurtatu \"Birbideratze URIa\" hona ezartzen duzula:",
     "Give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application. Optionally \"api\" instead." : "Aplikazioari \"read_user\", \"read_api\" eta \"read_repository\" baimenak eman. Aukeran \"api\", bestela.",
