@@ -58,7 +58,7 @@ OC.L10N.register(
     "A build has failed" : "Un build a échoué",
     "Marked" : "Marqué comme",
     "You were directly addressed" : "Vous avez été mentionné(e)",
-    "Failed to edit GitLab To-Do" : "Erreur à la modification du To-Do GitLab",
+    "Failed to edit GitLab To-Do" : "Échec de la modification des tâches GitLab",
     "GitLab API error" : "Erreur d'API GitLab",
     "Unknown error" : "Erreur inconnue",
     "GitLab connected accounts settings" : "Paramètres de comptes connectés pour GitLab",
