@@ -4,6 +4,7 @@
     "Error during OAuth exchanges" : "Fehler beim OAuth-Austausch",
     "GitLab To-Dos" : "GitLab Aufgaben",
     "GitLab issues" : "GitLab-Probleme",
+    "GitLab merge requests" : "GitLab-Zusammenführungsanfragen",
     "GitLab repositories" : "GitLab-Repositories",
     "Bad HTTP method" : "Ungültige HTTP-Methode",
     "Bad credentials" : "Falsche Anmeldeinformationen",
@@ -23,6 +24,7 @@
     "Application secret" : "Anwendungsgeheimnis",
     "Client secret of your GitLab application" : "Client-Geheimnis von deiner GitLab-Anwendung",
     "Use a popup to authenticate" : "Popup zur Authentifizierung verwenden",
+    "Enable GitLab link previews" : "Vorschau von GitLab-Links aktivieren",
     "GitLab admin options saved" : "GitLab-Administrator-Einstellungen gespeichert",
     "Failed to save GitLab admin options" : "Fehler beim Speichern der GitLab-Administrator-Einstellungen",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Wenn du selbst ein Zugriffstoken erstellst, gib ihm mindestens die Berechtigungen \"read_user\", \"read_api\" und \"read_repository\"; optional stattdessen \"api\".",
@@ -33,6 +35,8 @@
     "Connected as {user}" : "Verbunden als {user}",
     "Disconnect from GitLab" : "Von GitLab trennen",
     "Enable searching for repositories" : "Suche nach Repositories aktivieren",
+    "Enable searching for issues" : "Suche nach Problemen aktivieren",
+    "Enable searching for merge requests" : "Die Suche nach Zusammenführungsanforderungen aktivieren",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Achtung, alles, was du in die Suchleiste eingibst, wird an GitLab gesendet.",
     "Enable navigation link" : "Navigations-Link aktivieren",
     "Successfully connected to GitLab!" : "Erfolgreich verbunden mit GitLab!",
@@ -75,6 +79,7 @@
     "created {relativeDate}" : "erstellt {relativeDate}",
     "closed {relativeDate}" : "geschlossen {relativeDate}",
     "updated {relativeDate}" : "aktualisiert {relativeDate}",
+    "Comment from @{username}" : "Kommentar von @{username}",
     "Assigned to {username}" : "Zugewiesen an {username}",
     "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
