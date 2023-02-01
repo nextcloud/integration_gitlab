@@ -49,6 +49,10 @@ OC.L10N.register(
     "Closed issue" : "Suljettu issue",
     "Unknown state" : "Tuntematon tila",
     "Review requested" : "Katselmointi pyydetty",
+    "created {relativeDate}" : "luotu {relativeDate}",
+    "closed {relativeDate}" : "suljettu {relativeDate}",
+    "updated {relativeDate}" : "päivitetty {relativeDate}",
+    "Comment from @{username}" : "Kommentti käyttäjältä @{username}",
     "Failed to save GitLab OAuth state" : "GitLab OAuth tilan tallentaminen epäonnistui"
 },
 "nplurals=2; plural=(n != 1);");
