@@ -22,29 +22,91 @@
 
 namespace OCA\Gitlab\Reference;
 
+use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
+use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Gitlab\AppInfo\Application;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\Collaboration\Reference\IReference;
-use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\IConfig;
+use OCP\IL10N;
+use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
 
-class GitlabReferenceProvider implements IReferenceProvider {
+class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
 	private GitlabAPIService $gitlabAPIService;
 	private IConfig $config;
 	private ReferenceManager $referenceManager;
 	private ?string $userId;
+	private IURLGenerator $urlGenerator;
+	private IL10N $l10n;
 
 	public function __construct(GitlabAPIService $gitlabAPIService,
 								IConfig $config,
 								ReferenceManager $referenceManager,
+								IURLGenerator $urlGenerator,
+								IL10N $l10n,
 								?string $userId) {
 		$this->gitlabAPIService = $gitlabAPIService;
 		$this->config = $config;
 		$this->referenceManager = $referenceManager;
 		$this->userId = $userId;
+		$this->urlGenerator = $urlGenerator;
+		$this->l10n = $l10n;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getId(): string	{
+		return 'gitlab-issue-mr';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle(): string {
+		return $this->l10n->t('GitLab repositories, issues and merge requests');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getOrder(): int	{
+		return 10;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getIconUrl(): string {
+		return $this->urlGenerator->getAbsoluteURL(
+			$this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg')
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getSupportedSearchProviderIds(): array {
+		if ($this->userId !== null) {
+			$ids = [];
+			$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0') === '1';
+			$searchReposEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_enabled', '0') === '1';
+			$searchMRsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_mrs_enabled', '0') === '1';
+			if ($searchIssuesEnabled) {
+				$ids[] = 'gitlab-search-issues';
+			}
+			if ($searchReposEnabled) {
+				$ids[] = 'gitlab-search-repos';
+			}
+			if ($searchMRsEnabled) {
+				$ids[] = 'gitlab-search-mrs';
+			}
+			return $ids;
+		}
+		return ['gitlab-search-issues', 'gitlab-search-repos', 'gitlab-search-mrs'];
 	}
 
 	/**

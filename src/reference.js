@@ -20,11 +20,14 @@
  */
 
 import { registerWidget } from '@nextcloud/vue-richtext'
-import './bootstrap.js'
-import Vue from 'vue'
-import ReferenceGitlabWidget from './views/ReferenceGitlabWidget.vue'
 
-registerWidget('integration_gitlab', (el, { richObjectType, richObject, accessible }) => {
+__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
+__webpack_public_path__ = OC.linkTo('integration_gitlab', 'js/') // eslint-disable-line
+
+registerWidget('integration_gitlab', async (el, { richObjectType, richObject, accessible }) => {
+	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
+	Vue.mixin({ methods: { t, n } })
+	const { default: ReferenceGitlabWidget } = await import(/* webpackChunkName: "reference-lazy" */'./views/ReferenceGitlabWidget.vue')
 	const Widget = Vue.extend(ReferenceGitlabWidget)
 	new Widget({
 		propsData: {

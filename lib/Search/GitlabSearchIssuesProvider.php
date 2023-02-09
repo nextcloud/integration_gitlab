@@ -142,15 +142,15 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 */
 	protected function getSubline(array $entry, string $url): string {
 		$repoFullName = str_replace($url, '', $entry['web_url']);
-		$repoFullName = preg_replace('/\/issues\/.*/', '', $repoFullName);
+		$repoFullName = preg_replace('/\/?-?\/issues\/.*/', '', $repoFullName);
 		$repoFullName = preg_replace('/^\//', '', $repoFullName);
-		$spl = explode('/', $repoFullName);
+//		$spl = explode('/', $repoFullName);
 //		$owner = $spl[0];
-		$repo = $spl[1];
+//		$repo = $spl[1];
 		$number = $entry['iid'];
 		$typeChar = '🂠';
-		$idChar = '#';
-		return $typeChar . ' ' . $repo . $idChar . $number;
+		$idChar = ' #';
+		return $typeChar . ' ' . $idChar . $number . ' ' . $repoFullName;
 	}
 
 	/**
