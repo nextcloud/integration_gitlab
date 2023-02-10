@@ -2,10 +2,12 @@ OC.L10N.register(
     "integration_gitlab",
     {
     "Error during OAuth exchanges" : "Помилка під час обміну OAuth",
+    "GitLab To-Dos" : "Завдання на GitLab",
     "Bad HTTP method" : "Поганий метод HTTP",
     "Bad credentials" : "Погані облікові дані",
     "OAuth access token refused" : "Маркер доступу OAuth відхилено",
     "Mark as done" : "Позначити як виконане",
+    "Failed to edit GitLab To-Do" : "Не вдалося редагувати завдання на GitLab",
     "Unknown error" : "Невідома помилка",
     "Comments" : "Коментарі",
     "Owner" : "Власник",
