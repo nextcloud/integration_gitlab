@@ -3,6 +3,7 @@
     "Error getting OAuth access token. " : "Chyba při získávání přístupového OAuth přístupového tokenu.",
     "Error during OAuth exchanges" : "Chyba při výměnách informací v rámci OAuth",
     "GitLab To-Dos" : "GitLab úkoly",
+    "GitLab repositories, issues and merge requests" : "Repozitáře, hlášení problémů a požadavky na začlenění na GitLab",
     "GitLab issues" : "Hlášení problémů z GitLab",
     "GitLab merge requests" : "Požadavky na začlenění z GitLab",
     "GitLab repositories" : "GitLab repozitáře",

@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error getting OAuth access token. " : "取得 OAuth 存取權杖時發生錯誤。",
     "Error during OAuth exchanges" : "OAuth 交換時發生錯誤",
     "GitLab To-Dos" : "GitLab 待辦事項",
+    "GitLab repositories, issues and merge requests" : "GitLab 儲存庫、議題與合併請求",
     "GitLab issues" : "GitLab 議題",
     "GitLab merge requests" : "GitLab 合併請求",
     "GitLab repositories" : "GitLab 倉庫",

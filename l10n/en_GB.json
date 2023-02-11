@@ -3,6 +3,7 @@
     "Error getting OAuth access token. " : "Error getting OAuth access token. ",
     "Error during OAuth exchanges" : "Error during OAuth exchanges",
     "GitLab To-Dos" : "GitLab To-Dos",
+    "GitLab repositories, issues and merge requests" : "GitLab repositories, issues and merge requests",
     "GitLab issues" : "GitLab issues",
     "GitLab merge requests" : "GitLab merge requests",
     "GitLab repositories" : "GitLab repositories",
