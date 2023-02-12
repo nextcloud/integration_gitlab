@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error getting OAuth access token. " : "Errorea OAuth sarbide tokena eskuratzean.",
     "Error during OAuth exchanges" : "Errorea QAuth trukeak egitean",
     "GitLab To-Dos" : "GitLab eginbeharrak",
+    "GitLab repositories, issues and merge requests" : "GitLab biltegiak, gaiak eta bateratze eskaerak",
     "GitLab issues" : "GitLab gaiak",
     "GitLab merge requests" : "GitLab-en bateratze-eskaerak",
     "GitLab repositories" : "GitLab biltegiak",
