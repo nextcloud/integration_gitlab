@@ -1,0 +1,8 @@
+{ "translations": {
+    "Bad HTTP method" : "Phương thức HTTP không hợp lệ",
+    "You were mentioned" : "Bạn đã được nhắc tới",
+    "Unknown error" : "Lỗi không xác định",
+    "Comments" : "Các bình luận",
+    "Owner" : "Chủ"
+},"pluralForm" :"nplurals=1; plural=0;"
+}
