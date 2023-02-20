@@ -7,6 +7,7 @@ OC.L10N.register(
     "OAuth access token refused" : "OAuth access token ble avslått",
     "Unknown error" : "Ukjent feil",
     "Comments" : "Kommentarer",
+    "Author" : "Forfatter",
     "Owner" : "Eier"
 },
 "nplurals=2; plural=(n != 1);");
