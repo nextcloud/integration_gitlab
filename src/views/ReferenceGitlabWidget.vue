@@ -1,5 +1,5 @@
 <!--
-  - @copyright Copyright (c) 2022 2022 Julien Veyssier <eneiluj@posteo.net>
+  - @copyright Copyright (c) 2022 Julien Veyssier <eneiluj@posteo.net>
   -
   - @author 2022 Julien Veyssier <eneiluj@posteo.net>
   -
