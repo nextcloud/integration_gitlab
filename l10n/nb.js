@@ -8,6 +8,7 @@ OC.L10N.register(
     "Unknown error" : "Ukjent feil",
     "Comments" : "Kommentarer",
     "Author" : "Forfatter",
-    "Owner" : "Eier"
+    "Owner" : "Eier",
+    "Click to expand comment" : "Klikk for å utvide kommentaren"
 },
 "nplurals=2; plural=(n != 1);");
