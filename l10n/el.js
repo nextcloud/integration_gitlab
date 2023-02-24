@@ -53,6 +53,7 @@ OC.L10N.register(
     "Comments" : "Σχόλια",
     "Author" : "Δημιουργός",
     "Owner" : "Κάτοχος",
+    "Click to expand comment" : "Κλικ για επέκταση σχολίου",
     "Failed to save GitLab OAuth state" : "Αποτυχία αποθήκευσης της κατάστασης GitLab OAuth"
 },
 "nplurals=2; plural=(n != 1);");
