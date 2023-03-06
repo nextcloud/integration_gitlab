@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.13 – 2023-03-06
+### Added
+- smart picker provider
+
+### Changed
+- lazy load reference widget
+
 ## 1.0.12 – 2022-12-21
 ### Changed
 - split issue/MR search provider in 2
