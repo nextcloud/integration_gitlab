@@ -10,6 +10,7 @@ OC.L10N.register(
     "Connected as {user}" : "Поврзан како {user}",
     "Enable navigation link" : "Овозможи линк за навигација",
     "Incorrect access token" : "Неточен токен за пристап",
+    "Mark as done" : "Означи како готово",
     "You were mentioned" : "Споменати сте",
     "Unknown error" : "Непозната грешка",
     "Comments" : "Коментари",
