@@ -5,6 +5,7 @@ OC.L10N.register(
     "Bad HTTP method" : "Лоша HTTP метода",
     "Bad credentials" : "Лоши креденцијали",
     "OAuth access token refused" : "Одбијен је OAuth приступни жетон",
+    "Mark as done" : "Означи као завршен",
     "Unknown error" : "Непозната грешка",
     "Comments" : "Коментари",
     "Author" : "Аутор",
