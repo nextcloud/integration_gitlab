@@ -1,8 +1,10 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "GitLab To-Dos" : "قائمة المهام في قيت لاب",
     "Mark as done" : "تمييز كمُنجز",
     "You were mentioned" : "لقد ذكَرك أحدهم",
+    "Failed to edit GitLab To-Do" : "إخفاق في تعديل قائمة المهام في قيت لاب",
     "Unknown error" : "خطأ غير معروف",
     "Comments" : "تعليقات",
     "Owner" : "المالك"
