@@ -16,6 +16,7 @@ OC.L10N.register(
     "Application secret" : "Programos paslaptis",
     "Connected as {user}" : "Prisijungta kaip {user}",
     "Enable searching for repositories" : "Įjungti saugyklų paiešką",
+    "Mark as done" : "Žymėti kaip atliktą",
     "Unknown error" : "Nežinoma klaida",
     "Comments" : "Komentarai",
     "Author" : "Autorius",
