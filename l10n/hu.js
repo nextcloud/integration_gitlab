@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error getting OAuth access token. " : "Hiba történt az OAuth hozzáférési token lekérése során. ",
     "Error during OAuth exchanges" : "Hiba történt az OAuth üzenetváltások során",
     "GitLab To-Dos" : "GitLab teendők",
+    "GitLab repositories, issues and merge requests" : "GitLab tárolók, jegyek és beolvasztási kérések",
     "GitLab issues" : "GitLab jegyek",
     "GitLab merge requests" : "GitLab beolvasztási kérések",
     "GitLab repositories" : "GitLab tárolók",
