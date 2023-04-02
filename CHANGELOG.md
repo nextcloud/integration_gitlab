@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 1.0.14 – 2023-04-02
+## 1.0.15 – 2023-04-02
 ### Changed
 - update npm pkgs
 

@@ -51,8 +51,8 @@ jobs:
           echo "$APP_KEY" > ~/.nextcloud/certificates/${APP_ID}.key
           echo "###### install dependencies"
           export DEBIAN_FRONTEND=noninteractive
-          sudo apt update -y
-          sudo apt install make openssl -y
+          #sudo apt update -y
+          #sudo apt install make openssl -y
           echo "###### installing nextcloud"
           mkdir ~/html
           git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b master ~/html/nextcloud
