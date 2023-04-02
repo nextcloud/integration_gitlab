@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.14 – 2023-04-02
+### Changed
+- update npm pkgs
+
+### Fixed
+- screenshot URL
+
 ## 1.0.13 – 2023-03-06
 ### Added
 - smart picker provider
