@@ -51,6 +51,7 @@ OC.L10N.register(
     "Comments" : "Comentaris",
     "Author" : "Autor/a",
     "Owner" : "Propietari",
+    "Click to expand comment" : "Feu clic per ampliar el comentari",
     "Failed to save GitLab OAuth state" : "No s'ha pogut desar l'estat de GitLab OAuth"
 },
 "nplurals=2; plural=(n != 1);");
