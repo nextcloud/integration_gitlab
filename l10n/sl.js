@@ -4,7 +4,7 @@ OC.L10N.register(
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Napaka med pridobivanjem žetona OAuth za dostop",
     "Error during OAuth exchanges" : " Napaka med izmenjavo podatkov OAuth",
-    "GitLab To-Dos" : "Naloge GitLab",
+    "GitLab To-Dos" : "GitLab Naloge",
     "GitLab issues" : "Zadeve GitLab",
     "GitLab merge requests" : "Zahteve za združitev kode GitLab",
     "GitLab repositories" : "Skladišča GitLab",
