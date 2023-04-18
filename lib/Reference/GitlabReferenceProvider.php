@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2022 Julien Veyssier <eneiluj@posteo.net>
+ * @copyright Copyright (c) 2022 Julien Veyssier <julien-nc@posteo.net>
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -35,25 +35,13 @@ use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
 
 class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
-	private GitlabAPIService $gitlabAPIService;
-	private IConfig $config;
-	private ReferenceManager $referenceManager;
-	private ?string $userId;
-	private IURLGenerator $urlGenerator;
-	private IL10N $l10n;
 
-	public function __construct(GitlabAPIService $gitlabAPIService,
-								IConfig $config,
-								ReferenceManager $referenceManager,
-								IURLGenerator $urlGenerator,
-								IL10N $l10n,
-								?string $userId) {
-		$this->gitlabAPIService = $gitlabAPIService;
-		$this->config = $config;
-		$this->referenceManager = $referenceManager;
-		$this->userId = $userId;
-		$this->urlGenerator = $urlGenerator;
-		$this->l10n = $l10n;
+	public function __construct(private GitlabAPIService $gitlabAPIService,
+								private IConfig $config,
+								private ReferenceManager $referenceManager,
+								private IURLGenerator $urlGenerator,
+								private IL10N $l10n,
+								private ?string $userId) {
 	}
 
 	/**

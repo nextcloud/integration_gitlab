@@ -10,19 +10,8 @@ use OCA\Gitlab\AppInfo\Application;
 
 class Admin implements ISettings {
 
-	/**
-	 * @var IConfig
-	 */
-	private $config;
-	/**
-	 * @var IInitialState
-	 */
-	private $initialStateService;
-
-	public function __construct(IConfig $config,
-								IInitialState $initialStateService) {
-		$this->config = $config;
-		$this->initialStateService = $initialStateService;
+	public function __construct(private IConfig $config,
+								private IInitialState $initialStateService) {
 	}
 
 	/**

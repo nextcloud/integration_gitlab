@@ -5,7 +5,7 @@
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  * @copyright Julien Veyssier 2020
  */
 
@@ -30,49 +30,16 @@ use OCP\PreConditionNotMetException;
 
 class ConfigController extends Controller {
 
-	/**
-	 * @var IConfig
-	 */
-	private $config;
-	/**
-	 * @var IURLGenerator
-	 */
-	private $urlGenerator;
-	/**
-	 * @var IL10N
-	 */
-	private $l;
-	/**
-	 * @var GitlabAPIService
-	 */
-	private $gitlabAPIService;
-	/**
-	 * @var string|null
-	 */
-	private $userId;
-	/**
-	 * @var IInitialState
-	 */
-	private $initialStateService;
-	private GitlabReferenceProvider $gitlabReferenceProvider;
-
 	public function __construct(string $appName,
 								IRequest $request,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								IL10N $l,
-								IInitialState $initialStateService,
-								GitlabAPIService $gitlabAPIService,
-								GitlabReferenceProvider $gitlabReferenceProvider,
-								?string $userId) {
+								private IConfig $config,
+								private IURLGenerator $urlGenerator,
+								private IL10N $l,
+								private IInitialState $initialStateService,
+								private GitlabAPIService $gitlabAPIService,
+								private GitlabReferenceProvider $gitlabReferenceProvider,
+								private ?string $userId) {
 		parent::__construct($appName, $request);
-		$this->config = $config;
-		$this->urlGenerator = $urlGenerator;
-		$this->l = $l;
-		$this->gitlabAPIService = $gitlabAPIService;
-		$this->userId = $userId;
-		$this->initialStateService = $initialStateService;
-		$this->gitlabReferenceProvider = $gitlabReferenceProvider;
 	}
 
 	/**

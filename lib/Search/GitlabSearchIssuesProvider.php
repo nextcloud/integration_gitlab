@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020, Julien Veyssier
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  *
  * @license AGPL-3.0
  *
@@ -34,25 +34,15 @@ use OCP\IUser;
 use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
+use OCP\Search\SearchResultEntry;
 
 class GitlabSearchIssuesProvider implements IProvider {
 
-	private IAppManager $appManager;
-	private IL10N $l10n;
-	private IConfig $config;
-	private IURLGenerator $urlGenerator;
-	private GitlabAPIService $service;
-
-	public function __construct(IAppManager      $appManager,
-								IL10N            $l10n,
-								IConfig          $config,
-								IURLGenerator    $urlGenerator,
-								GitlabAPIService $service) {
-		$this->appManager = $appManager;
-		$this->l10n = $l10n;
-		$this->config = $config;
-		$this->urlGenerator = $urlGenerator;
-		$this->service = $service;
+	public function __construct(private IAppManager      $appManager,
+								private IL10N            $l10n,
+								private IConfig          $config,
+								private IURLGenerator    $urlGenerator,
+								private GitlabAPIService $service) {
 	}
 
 	/**
@@ -107,9 +97,9 @@ class GitlabSearchIssuesProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$formattedResults = array_map(function (array $entry) use ($url): GitlabSearchResultEntry {
+		$formattedResults = array_map(function (array $entry) use ($url): SearchResultEntry {
 			$finalThumbnailUrl = $this->getThumbnailUrl($entry);
-			return new GitlabSearchResultEntry(
+			return new SearchResultEntry(
 				$finalThumbnailUrl,
 				$this->getMainText($entry),
 				$this->getSubline($entry, $url),

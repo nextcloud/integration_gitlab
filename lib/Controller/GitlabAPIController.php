@@ -5,7 +5,7 @@
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  * @copyright Julien Veyssier 2020
  */
 
@@ -24,45 +24,19 @@ use OCP\IURLGenerator;
 
 class GitlabAPIController extends Controller {
 
-	/**
-	 * @var IConfig
-	 */
-	private $config;
-	/**
-	 * @var GitlabAPIService
-	 */
-	private $gitlabAPIService;
-	/**
-	 * @var string|null
-	 */
-	private $userId;
-	/**
-	 * @var string
-	 */
-	private $accessToken;
-	/**
-	 * @var string
-	 */
-	private $gitlabUrl;
-	/**
-	 * @var IURLGenerator
-	 */
-	private $urlGenerator;
+	private string $accessToken;
+	private string $gitlabUrl;
 
-	public function __construct(string $appName,
-								IRequest $request,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								GitlabAPIService $gitlabAPIService,
-								?string $userId) {
+	public function __construct(string                   $appName,
+								IRequest                 $request,
+								private IConfig          $config,
+								private IURLGenerator    $urlGenerator,
+								private GitlabAPIService $gitlabAPIService,
+								private ?string          $userId) {
 		parent::__construct($appName, $request);
-		$this->config = $config;
-		$this->gitlabAPIService = $gitlabAPIService;
-		$this->userId = $userId;
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
 		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
 		$this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
-		$this->urlGenerator = $urlGenerator;
 	}
 
 	/**

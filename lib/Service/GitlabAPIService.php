@@ -19,42 +19,26 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
 use OCA\Gitlab\AppInfo\Application;
+use OCP\Http\Client\IClient;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCP\Http\Client\IClientService;
 
+/**
+ * Service to make requests to GitLab v3 (JSON) API
+ */
 class GitlabAPIService {
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
-	/**
-	 * @var IL10N
-	 */
-	private $l10n;
-	/**
-	 * @var \OCP\Http\Client\IClient
-	 */
-	private $client;
-	/**
-	 * @var IConfig
-	 */
-	private $config;
 
-	/**
-	 * Service to make requests to GitLab v3 (JSON) API
-	 */
-	public function __construct (string $appName,
-								LoggerInterface $logger,
-								IL10N $l10n,
-								IConfig $config,
-								IClientService $clientService) {
-		$this->logger = $logger;
-		$this->l10n = $l10n;
+	private IClient $client;
+
+	public function __construct (string                  $appName,
+								 private LoggerInterface $logger,
+								 private IL10N           $l10n,
+								 private IConfig         $config,
+								 IClientService          $clientService) {
 		$this->client = $clientService->newClient();
-		$this->config = $config;
 	}
 
 	/**
