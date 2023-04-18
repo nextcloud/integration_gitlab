@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "OAuth erişim kodu alınırken sorun çıktı.",
-    "Error during OAuth exchanges" : "OAuth takasında sorun çıktı",
+    "Error during OAuth exchanges" : "OAuth alış verişinde sorun çıktı",
     "GitLab To-Dos" : "GitLab yapılacak işler",
     "GitLab repositories, issues and merge requests" : "GitLab depoları, sorunları ve birleştirme istekleri",
     "GitLab issues" : "GitLab sorunları",
