@@ -7,6 +7,7 @@ OC.L10N.register(
     "Bad credentials" : "Погані облікові дані",
     "OAuth access token refused" : "Маркер доступу OAuth відхилено",
     "Mark as done" : "Позначити як виконане",
+    "You were mentioned" : "Про вас згадували",
     "Failed to edit GitLab To-Do" : "Не вдалося редагувати завдання на GitLab",
     "Unknown error" : "Невідома помилка",
     "Comments" : "Коментарі",
