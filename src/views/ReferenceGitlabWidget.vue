@@ -172,7 +172,7 @@
 						'comment--author--bubble--content': true,
 						'short-comment': shortComment,
 					}">
-						<RichText
+						<NcRichText
 							v-tooltip.top="{ content: shortComment ? t('integration_gitlab', 'Click to expand comment') : undefined }"
 							:text="richObject.gitlab_comment.body"
 							:use-markdown="true"
@@ -201,7 +201,7 @@ import MergedMergeRequestIcon from '../components/icons/MergedMergeRequestIcon.v
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
 
-import { RichText } from '@nextcloud/vue-richtext'
+import { NcRichText } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import Vue from 'vue'
@@ -211,7 +211,7 @@ export default {
 	name: 'ReferenceGitlabWidget',
 
 	components: {
-		RichText,
+		NcRichText,
 		DownVoteIcon,
 		UpVoteIcon,
 		GitlabIcon,
