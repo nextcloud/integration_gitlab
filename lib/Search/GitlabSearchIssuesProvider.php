@@ -84,13 +84,21 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$offset = $query->getCursor();
 		$offset = $offset ? intval($offset) : 0;
 
-		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+		$routeFrom = $query->getRoute();
+		$requestedFromSmartPicker = $routeFrom === '' || $routeFrom === 'smart-picker';
+
 		$searchIssuesEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_issues_enabled', '0') === '1';
-		if ($accessToken === '' || !$searchIssuesEnabled) {
+		if (!$requestedFromSmartPicker && !$searchIssuesEnabled) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
+
+		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
+		if ($accessToken === '') {
+			return SearchResult::paginated($this->getName(), [], 0);
+		}
+
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
+		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 
 		$issues = $this->service->searchIssues($user->getUID(), $term, $offset, $limit);
 		if (isset($searchResult['error'])) {

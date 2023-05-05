@@ -22,6 +22,8 @@
 
 namespace OCA\Gitlab\Reference;
 
+use DateTime;
+use Exception;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
@@ -33,6 +35,7 @@ use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
+use Throwable;
 
 class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
 
@@ -78,22 +81,6 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 	 * @inheritDoc
 	 */
 	public function getSupportedSearchProviderIds(): array {
-		if ($this->userId !== null) {
-			$ids = [];
-			$searchIssuesEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_issues_enabled', '0') === '1';
-			$searchReposEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_enabled', '0') === '1';
-			$searchMRsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_mrs_enabled', '0') === '1';
-			if ($searchIssuesEnabled) {
-				$ids[] = 'gitlab-search-issues';
-			}
-			if ($searchReposEnabled) {
-				$ids[] = 'gitlab-search-repos';
-			}
-			if ($searchMRsEnabled) {
-				$ids[] = 'gitlab-search-mrs';
-			}
-			return $ids;
-		}
 		return ['gitlab-search-issues', 'gitlab-search-repos', 'gitlab-search-mrs'];
 	}
 
@@ -180,6 +167,8 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 						'gitlab_project_owner_username' => $projectInfo['owner']['username'] ?? '',
 						'gitlab_project_labels' => $projectLabels,
 						'gitlab_comment' => $commentInfo,
+						'vcs_comment' => $commentInfo ? $this->getGenericCommentInfo($commentInfo) : null,
+						'vcs_issue' => $this->getGenericIssueInfo($issueInfo, $projectLabels),
 					], $issueInfo)
 				);
 				return $reference;
@@ -206,6 +195,8 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 							'gitlab_project_owner_username' => $projectInfo['owner']['username'] ?? '',
 							'gitlab_project_labels' => $projectLabels,
 							'gitlab_comment' => $commentInfo,
+							'vcs_comment' => $commentInfo ? $this->getGenericCommentInfo($commentInfo) : null,
+							'vcs_pull_request' => $this->getGenericPrInfo($prInfo, $projectLabels),
 						], $prInfo),
 					);
 					return $reference;
@@ -214,6 +205,115 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param array $commentInfo
+	 * @return array
+	 */
+	private function getGenericCommentInfo(array $commentInfo): array {
+		$info = [
+			'body' => $commentInfo['body'] ?? '',
+		];
+		if (isset($commentInfo['created_at'])) {
+			try {
+				$ts = (new DateTime($commentInfo['created_at']))->getTimestamp();
+				$info['created_at'] = $ts;
+			} catch (Exception | Throwable $e) {
+			}
+		}
+		if (isset($commentInfo['updated_at'])) {
+			try {
+				$ts = (new DateTime($commentInfo['updated_at']))->getTimestamp();
+				$info['updated_at'] = $ts;
+			} catch (Exception | Throwable $e) {
+			}
+		}
+		if (isset($commentInfo['author'], $commentInfo['author']['username'])) {
+			$info['author'] = $commentInfo['author']['username'];
+		}
+
+		return $info;
+	}
+
+	/**
+	 * @param array $issueInfo
+	 * @param array $projectLabels
+	 * @return array
+	 */
+	private function getGenericIssueInfo(array $issueInfo, array $projectLabels): array {
+		$info = [
+			'id' => $issueInfo['iid'] ?? null,
+			'url' => $issueInfo['web_url'] ?? null,
+			'title' => $issueInfo['title'] ?? '',
+			'comment_count' => $issueInfo['user_notes_count'] ?? 0,
+			'state' => $issueInfo['state'],
+		];
+
+		if (isset($issueInfo['labels']) && is_array($issueInfo['labels'])) {
+			$labelsByName = [];
+			foreach ($projectLabels as $label) {
+				$labelsByName[$label['name']] = $label;
+			}
+			$info['labels'] = array_map(static function(string $label) use ($labelsByName) {
+				return [
+					'name' => $label,
+					'color' => $labelsByName[$label]['text_color'],
+				];
+			}, $issueInfo['labels']);
+		}
+		if (isset($issueInfo['created_at'])) {
+			try {
+				$ts = (new DateTime($issueInfo['created_at']))->getTimestamp();
+				$info['created_at'] = $ts;
+			} catch (Exception | Throwable $e) {
+			}
+		}
+		if (isset($issueInfo['author'], $issueInfo['author']['username'])) {
+			$info['author'] = $issueInfo['author']['username'];
+		}
+
+		return $info;
+	}
+
+	/**
+	 * @param array $prInfo
+	 * @param array $projectLabels
+	 * @return array
+	 */
+	private function getGenericPrInfo(array $prInfo, array $projectLabels): array {
+		$info = [
+			'id' => $prInfo['iid'] ?? null,
+			'url' => $prInfo['web_url'] ?? null,
+			'title' => $prInfo['title'] ?? '',
+			'comment_count' => $prInfo['user_notes_count'] ?? 0,
+			'state' => $prInfo['state'],
+		];
+
+		if (isset($prInfo['labels']) && is_array($prInfo['labels'])) {
+			$labelsByName = [];
+			foreach ($projectLabels as $label) {
+				$labelsByName[$label['name']] = $label;
+			}
+			$info['labels'] = array_map(static function(string $label) use ($labelsByName) {
+				return [
+					'name' => $label,
+					'color' => $labelsByName[$label]['text_color'],
+				];
+			}, $prInfo['labels']);
+		}
+		if (isset($prInfo['created_at'])) {
+			try {
+				$ts = (new DateTime($prInfo['created_at']))->getTimestamp();
+				$info['created_at'] = $ts;
+			} catch (Exception | Throwable $e) {
+			}
+		}
+		if (isset($prInfo['author'], $prInfo['author']['username'])) {
+			$info['author'] = $prInfo['author']['username'];
+		}
+
+		return $info;
 	}
 
 	/**
