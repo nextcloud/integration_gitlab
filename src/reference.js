@@ -20,9 +20,11 @@
  */
 
 import { registerWidget } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { linkTo } from '@nextcloud/router'
+import { getRequestToken } from '@nextcloud/auth'
 
-__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
-__webpack_public_path__ = OC.linkTo('integration_gitlab', 'js/') // eslint-disable-line
+__webpack_nonce__ = btoa(getRequestToken()) // eslint-disable-line
+__webpack_public_path__ = linkTo('integration_gitlab', 'js/') // eslint-disable-line
 
 registerWidget('integration_gitlab', async (el, { richObjectType, richObject, accessible }) => {
 	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
