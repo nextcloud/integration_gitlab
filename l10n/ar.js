@@ -8,6 +8,7 @@ OC.L10N.register(
     "Bad credentials" : "معلومات تسجيل الدخول غير صحيحة",
     "OAuth access token refused" : "أمارة token مرفوضة",
     "Connected accounts" : "حسابات مترابطة",
+    "Instance address" : "عنوان نسخة التطبيق العاملة",
     "Application ID" : "الرقم المُعرّف للتطبيق ",
     "Application secret" : "الرمر السري للتطبيق",
     "Use a popup to authenticate" : "استخدم النافذة المنبثقة للتعريف عن نفسك ",
@@ -17,6 +18,7 @@ OC.L10N.register(
     "Failed to edit GitLab To-Do" : "إخفاق في تعديل قائمة المهام في قيت لاب",
     "Unknown error" : "خطأ غير معروف",
     "Comments" : "تعليقات",
-    "Owner" : "المالك"
+    "Owner" : "المالك",
+    "Click to expand comment" : "إضغط للتوسع في الملاحظات"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");
