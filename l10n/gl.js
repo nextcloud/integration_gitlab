@@ -20,7 +20,7 @@ OC.L10N.register(
     "ID of your GitLab application" : "ID do cliente da súa aplicación de GitLab",
     "Application secret" : "Segredo da aplicación",
     "Client secret of your GitLab application" : " Segredo do cliente da súa aplicación de GitLab",
-    "Use a popup to authenticate" : "Use unha ventá emerxente para autenticarse",
+    "Use a popup to authenticate" : "Use unha xanela emerxente para autenticarse",
     "GitLab admin options saved" : "Gardáronse as opcións de administración de GitLab",
     "Failed to save GitLab admin options" : "Produciuse un fallo ao gardar as opcións de administración de GitLab.",
     "GitLab instance address" : "Enderezo da instancia de GitLab",
