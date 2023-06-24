@@ -13,6 +13,7 @@ OC.L10N.register(
     "Application secret" : "الرمر السري للتطبيق",
     "Use a popup to authenticate" : "استخدم النافذة المنبثقة للتعريف عن نفسك ",
     "Connected as {user}" : "متصل بصفته {user}",
+    "Enable navigation link" : "تميكن رابط التنقُّل",
     "Mark as done" : "تمييز كمُنجز",
     "You were mentioned" : "لقد ذكَرك أحدهم",
     "Failed to edit GitLab To-Do" : "إخفاق في تعديل قائمة المهام في قيت لاب",
