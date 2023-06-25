@@ -32,7 +32,7 @@ OC.L10N.register(
     "Enable searching for repositories" : "Activar a busca de repositorios",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Advertencia, todo o que escriba na barra de buscas enviarase a GitLab.",
     "Enable navigation link" : "Activar a ligazón de navegación",
-    "Successfully connected to GitLab!" : "Conectou satisfactoriamente con GitLab",
+    "Successfully connected to GitLab!" : "Conectou satisfactoriamente con GitLab!",
     "Error connecting to GitLab:" : "Produciuse un erro ao conectar con GitLab:",
     "Incorrect access token" : "Testemuño de acceso incorrecto",
     "GitLab options saved" : "Gardáronse as opcións de GitLab",
