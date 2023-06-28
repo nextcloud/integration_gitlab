@@ -46,6 +46,7 @@ OC.L10N.register(
     "Comments" : "评论",
     "Author" : "作者",
     "Owner" : "所有者",
+    "Click to expand comment" : "点击展开评论",
     "Open issue" : "开启议题",
     "Closed issue" : "已关闭的议题"
 },

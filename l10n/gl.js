@@ -17,7 +17,7 @@ OC.L10N.register(
     "OAuth app instance address" : "Enderezo da instancia de OAuth",
     "Instance address" : "Enderezo da instancia",
     "Application ID" : "ID da aplicación",
-    "ID of your GitLab application" : "ID do cliente da súa aplicación de GitLab",
+    "ID of your GitLab application" : "ID de cliente da súa aplicación de GitLab",
     "Application secret" : "Segredo da aplicación",
     "Client secret of your GitLab application" : " Segredo do cliente da súa aplicación de GitLab",
     "Use a popup to authenticate" : "Use unha xanela emerxente para autenticarse",
@@ -50,10 +50,14 @@ OC.L10N.register(
     "Marked" : "Marcado",
     "You were directly addressed" : "Dirixíuselle directamente",
     "Unknown error" : "Erro descoñecido",
+    "by {creator}" : "por {creator}",
     "Comments" : "Comentarios",
     "Author" : "Autor",
     "Owner" : "Propietario",
     "Click to expand comment" : "Prema para ampliar o comentario",
+    "created {relativeDate}" : "creado o {relativeDate}",
+    "closed {relativeDate}" : "pechado o {relativeDate}",
+    "updated {relativeDate}" : "actualizado o  {relativeDate}",
     "Failed to save GitLab OAuth state" : "Produciuse un fallo ao gardar o estado do OAuth de GitLab"
 },
 "nplurals=2; plural=(n != 1);");
