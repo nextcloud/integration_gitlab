@@ -19,6 +19,7 @@ OC.L10N.register(
     "Failed to edit GitLab To-Do" : "إخفاق في تعديل قائمة المهام في قيت لاب",
     "Unknown error" : "خطأ غير معروف",
     "Comments" : "تعليقات",
+    "Author" : "الكاتب",
     "Owner" : "المالك",
     "Click to expand comment" : "إضغط للتوسع في الملاحظات"
 },
