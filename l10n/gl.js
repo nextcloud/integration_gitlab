@@ -71,7 +71,7 @@ OC.L10N.register(
     "Comments" : "Comentarios",
     "Author" : "Autor",
     "Owner" : "Propietario",
-    "Click to expand comment" : "Prema para ampliar o comentario",
+    "Click to expand comment" : "Prema para despregar o comentario",
     "Open issue" : "Incidencia (issue) aberta",
     "Closed issue" : "Incidencia (issue) pechada",
     "Open merge request" : "Solicitude de fusión (merge request) aberta",
