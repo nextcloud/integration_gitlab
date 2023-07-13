@@ -25,6 +25,7 @@ OC.L10N.register(
     "Connect to GitLab" : "连接到GitLab",
     "Connected as {user}" : "作为 {user} 已连接",
     "Disconnect from GitLab" : "断开GitLab连接",
+    "Enable searching for repositories" : "启用仓库搜索",
     "Enable searching for issues" : "启用议题搜索",
     "Enable navigation link" : "启用导航链接",
     "Successfully connected to GitLab!" : "成功连接到了GitLab！",
@@ -43,11 +44,14 @@ OC.L10N.register(
     "Marked" : "已标记",
     "You were directly addressed" : "您被直接回复",
     "Unknown error" : "未知错误",
+    "by {creator}" : "由{creator}创建",
     "Comments" : "评论",
     "Author" : "作者",
     "Owner" : "所有者",
     "Click to expand comment" : "点击展开评论",
     "Open issue" : "开启议题",
-    "Closed issue" : "已关闭的议题"
+    "Closed issue" : "已关闭的议题",
+    "Unknown state" : "未知状态",
+    "Review requested" : "已请求审阅"
 },
 "nplurals=1; plural=0;");
