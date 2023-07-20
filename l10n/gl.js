@@ -54,7 +54,7 @@ OC.L10N.register(
     "No GitLab notifications!" : "Non hai notificacións de GitLab.",
     "Failed to get GitLab notifications" : "Produciuse un fallo ao obter as notificacións de GitLab",
     "You were mentioned" : "Vde. foi mencionado",
-    "Your approval is required" : "É necesaria a súa aprobación",
+    "Your approval is required" : "Precisase a súa aprobación",
     "You were assigned" : "Foi asignado",
     "A build has failed" : "Fallou unha compilación",
     "Marked" : "Marcado",
