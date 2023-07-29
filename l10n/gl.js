@@ -47,7 +47,7 @@ OC.L10N.register(
     "Incorrect access token" : "Testemuño de acceso incorrecto",
     "GitLab options saved" : "Gardáronse as opcións de GitLab",
     "Failed to save GitLab options" : "Produciuse un fallo ao gardar as opcións de GitLab.",
-    "Connect to {url}" : "conectarConectar con {url}",
+    "Connect to {url}" : "Conectar con {url}",
     "Mark as done" : "Marcar como feito",
     "No GitLab account connected" : "Non hai ningunha conta de GitLab conectada",
     "Error connecting to GitLab" : "Produciuse un erro ao conectar con GitLab",
