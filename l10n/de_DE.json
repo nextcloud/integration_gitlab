@@ -24,7 +24,7 @@
     "ID of your GitLab application" : "ID von Ihrer GitLab-Anwendung",
     "Application secret" : "Anwendungsgeheimnis",
     "Client secret of your GitLab application" : "Geheime Zeichenkette des Clients von Ihrer GitLab-Anwendung",
-    "Use a popup to authenticate" : "Popup zur Authentifizierung verwenden",
+    "Use a popup to authenticate" : "Pop-up zur Authentifizierung verwenden",
     "Enable GitLab link previews" : "Vorschau von GitLab-Links aktivieren",
     "GitLab admin options saved" : "GitLab-Administrator-Einstellungen gespeichert",
     "Failed to save GitLab admin options" : "Fehler beim Speichern der GitLab-Administrator-Einstellungen",
