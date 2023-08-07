@@ -6,6 +6,8 @@ OC.L10N.register(
     "Bad credentials" : "اعتبارنامه بد",
     "OAuth access token refused" : "نشانه دسترسی OAuth رد شد",
     "Connected accounts" : "حساب‌های متصل",
+    "Instance address" : "آدرس نمونه",
+    "Connected as {user}" : "متصل به عنوان {user}",
     "Mark as done" : "علامت گذاری به عنوان انجام شده",
     "Unknown error" : "خطای ناشناخته",
     "Comments" : "نظرات",
