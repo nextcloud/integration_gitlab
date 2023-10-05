@@ -21,6 +21,7 @@ OC.L10N.register(
     "ID of your GitLab application" : "Идентификатор вашего приложения GitLab",
     "Application secret" : "Секрет приложения",
     "Client secret of your GitLab application" : "Секрет клиента вашего приложения GitLab",
+    "Use a popup to authenticate" : "Используйте всплывающее окно для аутентификации",
     "GitLab admin options saved" : "Параметры администратора GitLab сохранены",
     "Failed to save GitLab admin options" : "Не удалось сохранить параметры администратора GitLab",
     "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Когда вы создаете токен доступа самостоятельно, дайте ему, по крайней мере, разрешения \"read_user\", \"read_api\" и \"read_repository\". При желании вместо этого используйте \"api\".",
