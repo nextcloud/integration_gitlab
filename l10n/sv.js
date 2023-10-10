@@ -13,6 +13,7 @@ OC.L10N.register(
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varning, allt du skriver i sökfältet skickas till GitLab.",
     "Enable navigation link" : "Aktivera navigeringslänk",
     "Incorrect access token" : "Ogiltig åtkomst-token",
+    "You were mentioned" : "Du blev omnämnd",
     "Unknown error" : "Okänt fel",
     "by {creator}" : "av {creator}",
     "Comments" : "Kommentarer",
