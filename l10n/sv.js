@@ -1,12 +1,15 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "Error getting OAuth access token. " : "Det gick inte att hämta OAuth-åtkomsttoken.",
     "Error during OAuth exchanges" : "Fel vid utväxling av OAuth-token",
     "GitLab repositories" : "GitLab-arkiv",
     "Bad HTTP method" : "Felaktig HTTP-metod",
     "Bad credentials" : "Ogiltiga inloggningsuppgifter",
     "OAuth access token refused" : "OAuth-token avvisades",
     "Connected accounts" : "Anslutna konton",
+    "Application secret" : "Applikationshemlighet",
+    "Use a popup to authenticate" : "Använd en popup för att autentisera",
     "Personal access token" : "Personlig åtkomst-token",
     "Connected as {user}" : "Ansluten som {user}",
     "Enable searching for repositories" : "Aktivera sökning efter arkiv",
