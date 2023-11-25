@@ -11,6 +11,7 @@ OC.L10N.register(
     "You were mentioned" : "Ați fost menționat",
     "Unknown error" : "Eroare necunoscută",
     "Comments" : "Comentarii",
+    "Author" : "Autor",
     "Owner" : "Proprietar",
     "Click to expand comment" : "Click pentru extindere comentariu"
 },
