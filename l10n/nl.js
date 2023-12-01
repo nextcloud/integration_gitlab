@@ -56,6 +56,7 @@ OC.L10N.register(
     "Comments" : "Reacties",
     "Author" : "Auteur",
     "Owner" : "Eigenaar",
+    "Click to expand comment" : "Klik om de reactie uit te vouwen",
     "Open merge request" : "Samenvoegverzoek openen",
     "Closed merge request" : "Gesloten samenvoegverzoek",
     "Merged merge request" : "Samenvoegverzoek samengevoegd",
