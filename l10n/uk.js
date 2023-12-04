@@ -12,6 +12,7 @@ OC.L10N.register(
     "Failed to edit GitLab To-Do" : "Не вдалося редагувати завдання на GitLab",
     "Unknown error" : "Невідома помилка",
     "Comments" : "Коментарі",
+    "Author" : "Автор",
     "Owner" : "Власник",
     "Open issue" : "Відкрите питання",
     "Closed issue" : "Закрите питання",
