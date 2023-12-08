@@ -12,6 +12,7 @@ OC.L10N.register(
     "Unknown error" : "Óþekkt villa",
     "Comments" : "Athugasemdir",
     "Author" : "Höfundur",
-    "Owner" : "Eigandi"
+    "Owner" : "Eigandi",
+    "Click to expand comment" : "Smelltu til að fella út athugasemd"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
