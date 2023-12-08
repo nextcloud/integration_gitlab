@@ -24,13 +24,13 @@ namespace OCA\Gitlab\Reference;
 
 use DateTime;
 use Exception;
-use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
-use OCP\Collaboration\Reference\ISearchableReferenceProvider;
-use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Gitlab\AppInfo\Application;
 use OCA\Gitlab\Service\GitlabAPIService;
+use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
+use OCP\Collaboration\Reference\ISearchableReferenceProvider;
+use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -40,17 +40,17 @@ use Throwable;
 class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
 
 	public function __construct(private GitlabAPIService $gitlabAPIService,
-								private IConfig $config,
-								private ReferenceManager $referenceManager,
-								private IURLGenerator $urlGenerator,
-								private IL10N $l10n,
-								private ?string $userId) {
+		private IConfig $config,
+		private ReferenceManager $referenceManager,
+		private IURLGenerator $urlGenerator,
+		private IL10N $l10n,
+		private ?string $userId) {
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getId(): string	{
+	public function getId(): string {
 		return 'gitlab-issue-mr';
 	}
 
@@ -64,7 +64,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 	/**
 	 * @inheritDoc
 	 */
-	public function getOrder(): int	{
+	public function getOrder(): int {
 		return 10;
 	}
 
@@ -255,7 +255,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 			foreach ($projectLabels as $label) {
 				$labelsByName[$label['name']] = $label;
 			}
-			$info['labels'] = array_map(static function(string $label) use ($labelsByName) {
+			$info['labels'] = array_map(static function (string $label) use ($labelsByName) {
 				return [
 					'name' => $label,
 					'color' => $labelsByName[$label]['text_color'],
@@ -295,7 +295,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 			foreach ($projectLabels as $label) {
 				$labelsByName[$label['name']] = $label;
 			}
-			$info['labels'] = array_map(static function(string $label) use ($labelsByName) {
+			$info['labels'] = array_map(static function (string $label) use ($labelsByName) {
 				return [
 					'name' => $label,
 					'color' => $labelsByName[$label]['text_color'],

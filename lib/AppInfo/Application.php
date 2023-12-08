@@ -10,24 +10,24 @@
 namespace OCA\Gitlab\AppInfo;
 
 use Closure;
+use OCA\Gitlab\Dashboard\GitlabWidget;
 use OCA\Gitlab\Listener\GitlabReferenceListener;
 use OCA\Gitlab\Reference\GitlabReferenceProvider;
+use OCA\Gitlab\Search\GitlabSearchIssuesProvider;
+use OCA\Gitlab\Search\GitlabSearchMergeRequestsProvider;
+use OCA\Gitlab\Search\GitlabSearchReposProvider;
+use OCP\AppFramework\App;
+use OCP\AppFramework\Bootstrap\IBootContext;
+
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCP\IConfig;
+
 use OCP\IL10N;
 use OCP\INavigationManager;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
-
-use OCP\AppFramework\App;
-use OCP\AppFramework\Bootstrap\IRegistrationContext;
-use OCP\AppFramework\Bootstrap\IBootContext;
-use OCP\AppFramework\Bootstrap\IBootstrap;
-
-use OCA\Gitlab\Dashboard\GitlabWidget;
-use OCA\Gitlab\Search\GitlabSearchIssuesProvider;
-use OCA\Gitlab\Search\GitlabSearchMergeRequestsProvider;
-use OCA\Gitlab\Search\GitlabSearchReposProvider;
 use OCP\Util;
 
 class Application extends App implements IBootstrap {
@@ -83,4 +83,3 @@ class Application extends App implements IBootstrap {
 		}
 	}
 }
-

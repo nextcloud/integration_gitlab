@@ -24,11 +24,11 @@ declare(strict_types=1);
  */
 namespace OCA\Gitlab\Search;
 
-use OCA\Gitlab\Service\GitlabAPIService;
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\App\IAppManager;
-use OCP\IL10N;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Search\IProvider;
@@ -39,10 +39,10 @@ use OCP\Search\SearchResultEntry;
 class GitlabSearchReposProvider implements IProvider {
 
 	public function __construct(private IAppManager $appManager,
-								private IL10N $l10n,
-								private IConfig $config,
-								private IURLGenerator $urlGenerator,
-								private GitlabAPIService $service) {
+		private IL10N $l10n,
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
+		private GitlabAPIService $service) {
 	}
 
 	/**

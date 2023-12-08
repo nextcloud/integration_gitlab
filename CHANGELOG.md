@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Php unit tests for all API controller methods @MB-Finski
+
 ## 1.0.18 – 2023-07-20
 
 ### Changed
