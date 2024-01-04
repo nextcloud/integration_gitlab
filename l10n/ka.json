@@ -1,0 +1,10 @@
+{ "translations": {
+    "Mark as done" : "Mark as done",
+    "You were mentioned" : "You were mentioned",
+    "Unknown error" : "Unknown error",
+    "Comments" : "Comments",
+    "Author" : "Author",
+    "Owner" : "Owner",
+    "Click to expand comment" : "Click to expand comment"
+},"pluralForm" :"nplurals=2; plural=(n!=1);"
+}
