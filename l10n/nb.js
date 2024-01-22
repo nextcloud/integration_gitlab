@@ -14,6 +14,7 @@ OC.L10N.register(
     "Enable navigation link" : "Aktiver navigasjonskobling",
     "Incorrect access token" : "Feil tilgangstoken",
     "Connect to {url}" : "Koble til {url}",
+    "You were mentioned" : "Du ble nevnt",
     "Unknown error" : "Ukjent feil",
     "Comments" : "Kommentarer",
     "Author" : "Forfatter",
