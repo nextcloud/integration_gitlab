@@ -12,33 +12,33 @@
 namespace OCA\Gitlab\Controller;
 
 use DateTime;
+use OCA\Gitlab\AppInfo\Application;
 use OCA\Gitlab\Reference\GitlabReferenceProvider;
+use OCA\Gitlab\Service\GitlabAPIService;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
-use OCP\IURLGenerator;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\AppFramework\Http\RedirectResponse;
-use OCP\IRequest;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Controller;
 
-use OCA\Gitlab\Service\GitlabAPIService;
-use OCA\Gitlab\AppInfo\Application;
+use OCP\IRequest;
+use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
 
 class ConfigController extends Controller {
 
 	public function __construct(string $appName,
-								IRequest $request,
-								private IConfig $config,
-								private IURLGenerator $urlGenerator,
-								private IL10N $l,
-								private IInitialState $initialStateService,
-								private GitlabAPIService $gitlabAPIService,
-								private GitlabReferenceProvider $gitlabReferenceProvider,
-								private ?string $userId) {
+		IRequest $request,
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
+		private IL10N $l,
+		private IInitialState $initialStateService,
+		private GitlabAPIService $gitlabAPIService,
+		private GitlabReferenceProvider $gitlabReferenceProvider,
+		private ?string $userId) {
 		parent::__construct($appName, $request);
 	}
 

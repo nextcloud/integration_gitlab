@@ -23,22 +23,22 @@
 
 namespace OCA\Gitlab\Dashboard;
 
+use OCA\Gitlab\AppInfo\Application;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\Dashboard\IWidget;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
-use OCP\Util;
 
-use OCA\Gitlab\AppInfo\Application;
+use OCP\Util;
 
 class GitlabWidget implements IWidget {
 
 	public function __construct(private IL10N $l10n,
-								private IConfig $config,
-								private IURLGenerator $url,
-								private IInitialState $initialStateService,
-								private ?string $userId) {
+		private IConfig $config,
+		private IURLGenerator $url,
+		private IInitialState $initialStateService,
+		private ?string $userId) {
 	}
 
 	/**
@@ -53,7 +53,7 @@ class GitlabWidget implements IWidget {
 	 */
 	public function getTitle(): string {
 		return $this->l10n->t('GitLab To-Dos');
-		}
+	}
 
 	/**
 	 * @inheritDoc

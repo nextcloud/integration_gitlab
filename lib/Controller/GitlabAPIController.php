@@ -11,15 +11,15 @@
 
 namespace OCA\Gitlab\Controller;
 
+use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\GitlabAPIService;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
+
 use OCP\IConfig;
 use OCP\IRequest;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Controller;
-
-use OCA\Gitlab\Service\GitlabAPIService;
-use OCA\Gitlab\AppInfo\Application;
 use OCP\IURLGenerator;
 
 class GitlabAPIController extends Controller {
@@ -28,11 +28,11 @@ class GitlabAPIController extends Controller {
 	private string $gitlabUrl;
 
 	public function __construct(string                   $appName,
-								IRequest                 $request,
-								private IConfig          $config,
-								private IURLGenerator    $urlGenerator,
-								private GitlabAPIService $gitlabAPIService,
-								private ?string          $userId) {
+		IRequest                 $request,
+		private IConfig          $config,
+		private IURLGenerator    $urlGenerator,
+		private GitlabAPIService $gitlabAPIService,
+		private ?string          $userId) {
 		parent::__construct($appName, $request);
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
 		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
@@ -66,7 +66,7 @@ class GitlabAPIController extends Controller {
 			return new RedirectResponse($fallbackAvatarUrl);
 		} else {
 			$response = new DataDisplayResponse($result['avatarContent']);
-			$response->cacheFor(60*60*24);
+			$response->cacheFor(60 * 60 * 24);
 			return $response;
 		}
 	}
@@ -88,7 +88,7 @@ class GitlabAPIController extends Controller {
 			return new RedirectResponse($fallbackAvatarUrl);
 		} else {
 			$response = new DataDisplayResponse($result['avatarContent']);
-			$response->cacheFor(60*60*24);
+			$response->cacheFor(60 * 60 * 24);
 			return $response;
 		}
 	}

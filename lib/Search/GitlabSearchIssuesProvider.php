@@ -24,11 +24,11 @@ declare(strict_types=1);
  */
 namespace OCA\Gitlab\Search;
 
-use OCA\Gitlab\Service\GitlabAPIService;
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\App\IAppManager;
-use OCP\IL10N;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Search\IProvider;
@@ -39,10 +39,10 @@ use OCP\Search\SearchResultEntry;
 class GitlabSearchIssuesProvider implements IProvider {
 
 	public function __construct(private IAppManager      $appManager,
-								private IL10N            $l10n,
-								private IConfig          $config,
-								private IURLGenerator    $urlGenerator,
-								private GitlabAPIService $service) {
+		private IL10N            $l10n,
+		private IConfig          $config,
+		private IURLGenerator    $urlGenerator,
+		private GitlabAPIService $service) {
 	}
 
 	/**
@@ -142,9 +142,9 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$repoFullName = str_replace($url, '', $entry['web_url']);
 		$repoFullName = preg_replace('/\/?-?\/issues\/.*/', '', $repoFullName);
 		$repoFullName = preg_replace('/^\//', '', $repoFullName);
-//		$spl = explode('/', $repoFullName);
-//		$owner = $spl[0];
-//		$repo = $spl[1];
+		//		$spl = explode('/', $repoFullName);
+		//		$owner = $spl[0];
+		//		$repo = $spl[1];
 		$number = $entry['iid'];
 		$typeChar = '🂠';
 		$idChar = ' #';

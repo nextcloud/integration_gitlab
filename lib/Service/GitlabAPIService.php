@@ -20,11 +20,11 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
 use OCA\Gitlab\AppInfo\Application;
 use OCP\Http\Client\IClient;
+use OCP\Http\Client\IClientService;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
-use OCP\Http\Client\IClientService;
 
 /**
  * Service to make requests to GitLab v3 (JSON) API
@@ -33,11 +33,11 @@ class GitlabAPIService {
 
 	private IClient $client;
 
-	public function __construct (string                  $appName,
-								 private LoggerInterface $logger,
-								 private IL10N           $l10n,
-								 private IConfig         $config,
-								 IClientService          $clientService) {
+	public function __construct(string                  $appName,
+		private LoggerInterface $logger,
+		private IL10N           $l10n,
+		private IConfig         $config,
+		IClientService          $clientService) {
 		$this->client = $clientService->newClient();
 	}
 
@@ -241,7 +241,7 @@ class GitlabAPIService {
 
 		// filter merged results by date
 		if (!is_null($since)) {
-			$result = array_filter($result, function($elem) use ($sinceTimestamp) {
+			$result = array_filter($result, function ($elem) use ($sinceTimestamp) {
 				$date = new Datetime($elem['created_at']);
 				$ts = $date->getTimestamp();
 				return $ts > $sinceTimestamp;
@@ -249,14 +249,14 @@ class GitlabAPIService {
 		}
 
 		// avoid what has been done by me
-		$result = array_filter($result, function($elem) use ($user) {
+		$result = array_filter($result, function ($elem) use ($user) {
 			return $elem['author_id'] !== $user['id'];
 		});
 		// make sure it's an array and not a hastable
 		$result = array_values($result);
 
 		// sort merged results by date
-		usort($result, function($a, $b) {
+		usort($result, function ($a, $b) {
 			$a = new Datetime($a['created_at']);
 			$ta = $a->getTimestamp();
 			$b = new Datetime($b['created_at']);
@@ -304,7 +304,7 @@ class GitlabAPIService {
 			$sinceDate = new DateTime($since);
 			$sinceTimestamp = $sinceDate->getTimestamp();
 
-			$result = array_filter($result, function($elem) use ($sinceTimestamp) {
+			$result = array_filter($result, function ($elem) use ($sinceTimestamp) {
 				$date = new Datetime($elem['updated_at']);
 				$ts = $date->getTimestamp();
 				return $ts > $sinceTimestamp;
@@ -487,11 +487,11 @@ class GitlabAPIService {
 
 			if ($method === 'GET') {
 				$response = $this->client->get($url, $options);
-			} else if ($method === 'POST') {
+			} elseif ($method === 'POST') {
 				$response = $this->client->post($url, $options);
-			} else if ($method === 'PUT') {
+			} elseif ($method === 'PUT') {
 				$response = $this->client->put($url, $options);
-			} else if ($method === 'DELETE') {
+			} elseif ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
 			} else {
 				return ['error' => $this->l10n->t('Bad HTTP method')];
@@ -636,7 +636,7 @@ class GitlabAPIService {
 			$url = $url . '/oauth/token';
 			$options = [
 				'headers' => [
-					'User-Agent'  => 'Nextcloud GitLab integration',
+					'User-Agent' => 'Nextcloud GitLab integration',
 				]
 			];
 
@@ -651,11 +651,11 @@ class GitlabAPIService {
 
 			if ($method === 'GET') {
 				$response = $this->client->get($url, $options);
-			} else if ($method === 'POST') {
+			} elseif ($method === 'POST') {
 				$response = $this->client->post($url, $options);
-			} else if ($method === 'PUT') {
+			} elseif ($method === 'PUT') {
 				$response = $this->client->put($url, $options);
-			} else if ($method === 'DELETE') {
+			} elseif ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
 			} else {
 				return ['error' => $this->l10n->t('Bad HTTP method')];

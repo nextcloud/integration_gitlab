@@ -6,3 +6,7 @@ js/
 .vscode-upload.json
 .*.sw*
 node_modules
+vendor
+tests/.phpunit.result.cache
+.php-cs-fixer.cache
+

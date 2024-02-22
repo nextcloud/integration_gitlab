@@ -1,18 +1,19 @@
 <?php
+
 namespace OCA\Gitlab\Settings;
 
+use OCA\Gitlab\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
-use OCP\Settings\ISettings;
 
-use OCA\Gitlab\AppInfo\Application;
+use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
 
 	public function __construct(private IConfig $config,
-								private IInitialState $initialStateService,
-								private ?string $userId) {
+		private IInitialState $initialStateService,
+		private ?string $userId) {
 	}
 
 	/**
