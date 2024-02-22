@@ -12,7 +12,7 @@
 namespace OCA\Gitlab\Service;
 
 use DateInterval;
-use Datetime;
+use DateTime;
 use DateTimeImmutable;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
@@ -242,7 +242,7 @@ class GitlabAPIService {
 		// filter merged results by date
 		if (!is_null($since)) {
 			$result = array_filter($result, function ($elem) use ($sinceTimestamp) {
-				$date = new Datetime($elem['created_at']);
+				$date = new DateTime($elem['created_at']);
 				$ts = $date->getTimestamp();
 				return $ts > $sinceTimestamp;
 			});
@@ -257,9 +257,9 @@ class GitlabAPIService {
 
 		// sort merged results by date
 		usort($result, function ($a, $b) {
-			$a = new Datetime($a['created_at']);
+			$a = new DateTime($a['created_at']);
 			$ta = $a->getTimestamp();
-			$b = new Datetime($b['created_at']);
+			$b = new DateTime($b['created_at']);
 			$tb = $b->getTimestamp();
 			return ($ta > $tb) ? -1 : 1;
 		});
@@ -305,7 +305,7 @@ class GitlabAPIService {
 			$sinceTimestamp = $sinceDate->getTimestamp();
 
 			$result = array_filter($result, function ($elem) use ($sinceTimestamp) {
-				$date = new Datetime($elem['updated_at']);
+				$date = new DateTime($elem['updated_at']);
 				$ts = $date->getTimestamp();
 				return $ts > $sinceTimestamp;
 			});
@@ -522,7 +522,7 @@ class GitlabAPIService {
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 		$expireAt = $this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
 		if ($refreshToken !== '' && $expireAt !== '') {
-			$nowTs = (new Datetime())->getTimestamp();
+			$nowTs = (new DateTime())->getTimestamp();
 			$expireAt = (int) $expireAt;
 			// if token expires in less than a minute or is already expired
 			if ($nowTs > $expireAt - 60) {
@@ -560,9 +560,9 @@ class GitlabAPIService {
 			$this->config->setUserValue($userId, Application::APP_ID, 'token', $accessToken);
 			$this->config->setUserValue($userId, Application::APP_ID, 'refresh_token', $refreshToken);
 			if (isset($result['expires_in'])) {
-				$nowTs = (new Datetime())->getTimestamp();
+				$nowTs = (new DateTime())->getTimestamp();
 				$expiresAt = $nowTs + (int) $result['expires_in'];
-				$this->config->setUserValue($userId, Application::APP_ID, 'token_expires_at', $expiresAt);
+				$this->config->setUserValue($userId, Application::APP_ID, 'token_expires_at', strval($expiresAt));
 			}
 			return true;
 		} else {
@@ -570,7 +570,7 @@ class GitlabAPIService {
 			$this->logger->error(
 				'Token is not valid anymore. Impossible to refresh it. '
 					. $result['error'] . ' '
-					. $result['error_description'] ?? '[no error description]',
+					. $result['error_description'] ?: '[no error description]',
 				['app' => Application::APP_ID]
 			);
 			return false;
@@ -578,12 +578,12 @@ class GitlabAPIService {
 	}
 
 	/**
-	 * @param string $userId
+	 * @param ?string $userId
 	 * @return string
 	 */
-	public function getConnectedGitlabUrl(string $userId): string {
+	public function getConnectedGitlabUrl(?string $userId): string {
 		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-		return $this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+		return $userId === null ? $adminOauthUrl : ($this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl);
 	}
 
 	/**
@@ -669,7 +669,7 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (Exception $e) {
-			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), array('app' => Application::APP_ID));
+			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}

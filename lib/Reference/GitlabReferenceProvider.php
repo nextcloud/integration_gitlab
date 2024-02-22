@@ -342,7 +342,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 	 */
 	private function getCommentId(string $urlEnd): ?int {
 		preg_match('/^#note_([0-9]+)$/', $urlEnd, $matches);
-		return (is_array($matches) && count($matches) > 1) ? ((int) $matches[1]) : null;
+		return (count($matches) > 1) ? ((int) $matches[1]) : null;
 	}
 
 	/**

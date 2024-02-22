@@ -101,7 +101,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 
 		$issues = $this->service->searchIssues($user->getUID(), $term, $offset, $limit);
-		if (isset($searchResult['error'])) {
+		if (isset($issues['error'])) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 

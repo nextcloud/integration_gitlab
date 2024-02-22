@@ -101,7 +101,7 @@ class GitlabSearchMergeRequestsProvider implements IProvider {
 		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 
 		$mergeRequests = $this->service->searchMergeRequests($user->getUID(), $term, $offset, $limit);
-		if (isset($searchResult['error'])) {
+		if (isset($mergeRequests['error'])) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
