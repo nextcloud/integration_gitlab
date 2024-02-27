@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Php unit tests for all API controller methods @MB-Finski
+- Psalm and cs:fix configs and related workflows @MB-Finksi
+
+### Fixed
+
+- All psalm errors @MB-Finski
 
 ## 1.0.18 – 2023-07-20
 

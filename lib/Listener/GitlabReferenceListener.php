@@ -28,6 +28,10 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
+/**
+ * @implements IEventListener<Event>
+ *
+ */
 class GitlabReferenceListener implements IEventListener {
 	public function handle(Event $event): void {
 		if (!$event instanceof RenderReferenceEvent) {
