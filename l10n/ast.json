@@ -1,0 +1,8 @@
+{ "translations": {
+    "GitLab" : "GitLab",
+    "Unknown error" : "Error desconocíu",
+    "Comments" : "Comentarios",
+    "Author" : "Autoría",
+    "Owner" : "Propietariu"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
