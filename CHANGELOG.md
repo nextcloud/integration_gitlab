@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## 1.0.19 – 2024-03-06
+
+### Changed
+
+- Updated node packages (mainly nc/vue8) @kyteinsky
+- bump supported version to NC 29 @kyteinsky
 
 ### Added
 
