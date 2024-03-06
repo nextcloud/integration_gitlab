@@ -51,7 +51,7 @@ export function oauthConnect(gitlabUrl, clientId, oauthOrigin, usePopup = false)
 		}).catch((error) => {
 			showError(
 				t('integration_gitlab', 'Failed to save GitLab OAuth state')
-				+ ': ' + (error.response?.request?.responseText ?? '')
+				+ ': ' + (error.response?.request?.responseText ?? ''),
 			)
 			console.error(error)
 		})
@@ -73,7 +73,7 @@ export function oauthConnectConfirmDialog(gitlabUrl) {
 				'You can choose another GitLab server in the {settingsHtmlLink} section of your personal settings.',
 				{ settingsHtmlLink },
 				null,
-				{ escape: false }
+				{ escape: false },
 			),
 			t('integration_gitlab', 'Connect to GitLab'),
 			'none',

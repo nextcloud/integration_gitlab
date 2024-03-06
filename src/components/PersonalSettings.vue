@@ -203,7 +203,7 @@ export default {
 			}).catch((error) => {
 				showError(
 					t('integration_gitlab', 'Failed to save GitLab options')
-					+ ': ' + (error.response?.data?.error ?? '')
+					+ ': ' + (error.response?.data?.error ?? ''),
 				)
 				console.debug(error)
 			}).then(() => {
