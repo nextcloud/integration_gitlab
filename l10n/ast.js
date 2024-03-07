@@ -2,6 +2,8 @@ OC.L10N.register(
     "integration_gitlab",
     {
     "GitLab" : "GitLab",
+    "Failed to save GitLab options" : "Nun se puen guardar les opciones de GitLab",
+    "Failed to get GitLab notifications" : "Nun se puen consiguir los avisos de GitLab",
     "Unknown error" : "Error desconocíu",
     "Comments" : "Comentarios",
     "Author" : "Autoría",
