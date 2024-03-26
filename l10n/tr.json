@@ -1,7 +1,7 @@
 { "translations": {
     "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "OAuth erişim kodu alınırken sorun çıktı.",
-    "Error during OAuth exchanges" : "OAuth alış verişinde sorun çıktı",
+    "Error during OAuth exchanges" : "OAuth alışverişinde sorun çıktı",
     "GitLab To-Dos" : "GitLab yapılacak işler",
     "GitLab repositories, issues and merge requests" : "GitLab depoları, sorunları ve birleştirme istekleri",
     "GitLab issues" : "GitLab sorunları",
