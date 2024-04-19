@@ -60,7 +60,7 @@
     "Failed to edit GitLab To-Do" : "編輯 GitLab 待辦事項失敗",
     "GitLab API error" : "GitLab API 錯誤",
     "Unknown error" : "錯誤不詳",
-    "GitLab connected accounts settings" : "GitLab 連接賬戶設定",
+    "GitLab connected accounts settings" : "GitLab 連接帳戶設定",
     "by {creator}" : "由 {creator} 創作",
     "CLOSED" : "已關閉",
     "MERGED" : "已合併",
