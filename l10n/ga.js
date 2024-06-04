@@ -5,6 +5,7 @@ OC.L10N.register(
     "Unknown error" : "Earráid anaithnid",
     "Comments" : "Tuairimí",
     "Author" : "Údar",
-    "Owner" : "Úinéir"
+    "Owner" : "Úinéir",
+    "Click to expand comment" : "Cliceáil chun trácht a leathnú"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
