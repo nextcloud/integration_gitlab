@@ -24,6 +24,7 @@
     "Unknown error" : "不明なエラー",
     "Comments" : "コメント",
     "Author" : "作者",
-    "Owner" : "所有者"
+    "Owner" : "所有者",
+    "Click to expand comment" : "コメントを展開するにはクリックしてください"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
