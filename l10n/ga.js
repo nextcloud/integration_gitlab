@@ -2,6 +2,7 @@ OC.L10N.register(
     "integration_gitlab",
     {
     "Mark as done" : "Marcáil mar a rinneadh",
+    "You were mentioned" : "Bhí tú luaite",
     "Unknown error" : "Earráid anaithnid",
     "Comments" : "Tuairimí",
     "Author" : "Údar",
