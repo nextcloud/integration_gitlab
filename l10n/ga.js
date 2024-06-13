@@ -1,6 +1,10 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "Error during OAuth exchanges" : "Earráid le linn malartuithe OAuth",
+    "Bad HTTP method" : "Droch-mhodh HTTP",
+    "Bad credentials" : "Dintiúir dona",
+    "OAuth access token refused" : "Diúltaíodh comhartha rochtana OAuth",
     "Mark as done" : "Marcáil mar a rinneadh",
     "You were mentioned" : "Bhí tú luaite",
     "Unknown error" : "Earráid anaithnid",
