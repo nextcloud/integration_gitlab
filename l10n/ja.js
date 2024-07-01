@@ -26,6 +26,7 @@ OC.L10N.register(
     "Unknown error" : "不明なエラー",
     "Comments" : "コメント",
     "Author" : "作者",
-    "Owner" : "所有者"
+    "Owner" : "所有者",
+    "Click to expand comment" : "コメントを展開するにはクリックしてください"
 },
 "nplurals=1; plural=0;");

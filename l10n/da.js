@@ -6,6 +6,7 @@ OC.L10N.register(
     "Mark as done" : "Marker som færdig",
     "Unknown error" : "Ukendt fejl",
     "Comments" : "Kommentarer",
+    "Author" : "Forfatter",
     "Owner" : "Ejer"
 },
 "nplurals=2; plural=(n != 1);");
