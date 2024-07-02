@@ -22,12 +22,13 @@ declare(strict_types=1);
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  *
  */
+
 namespace OCA\Gitlab\Search;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\App\IAppManager;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -38,11 +39,13 @@ use OCP\Search\SearchResultEntry;
 
 class GitlabSearchReposProvider implements IProvider {
 
-	public function __construct(private IAppManager $appManager,
+	public function __construct(
+		private IAppManager $appManager,
 		private IL10N $l10n,
-		private IConfig $config,
+		private ConfigService $config,
 		private IURLGenerator $urlGenerator,
-		private GitlabAPIService $service) {
+		private GitlabAPIService $service,
+	) {
 	}
 
 	/**
@@ -87,12 +90,12 @@ class GitlabSearchReposProvider implements IProvider {
 		$routeFrom = $query->getRoute();
 		$requestedFromSmartPicker = $routeFrom === '' || $routeFrom === 'smart-picker';
 
-		$searchEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_enabled', '0') === '1';
+		$searchEnabled = $this->config->getUserSearchEnabled($user->getUID());
 		if (!$requestedFromSmartPicker && !$searchEnabled) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
+		$accessToken = $this->config->getUserToken($user->getUID());
 		if ($accessToken === '') {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}

@@ -13,7 +13,10 @@ namespace OCA\Gitlab\Controller;
 
 use DateTime;
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Model\AdminConfig;
+use OCA\Gitlab\Model\UserConfig;
 use OCA\Gitlab\Reference\GitlabReferenceProvider;
+use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -21,7 +24,6 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -29,15 +31,17 @@ use OCP\PreConditionNotMetException;
 
 class ConfigController extends Controller {
 
-	public function __construct(string $appName,
+	public function __construct(
+		string $appName,
 		IRequest $request,
-		private IConfig $config,
+		private ConfigService $config,
 		private IURLGenerator $urlGenerator,
 		private IL10N $l,
 		private IInitialState $initialStateService,
 		private GitlabAPIService $gitlabAPIService,
 		private GitlabReferenceProvider $gitlabReferenceProvider,
-		private ?string $userId) {
+		private string $userId,
+	) {
 		parent::__construct($appName, $request);
 	}
 
@@ -48,13 +52,12 @@ class ConfigController extends Controller {
 	 * @throws PreConditionNotMetException
 	 */
 	public function setConfig(array $values): DataResponse {
-		foreach ($values as $key => $value) {
-			if ($key === 'url' || $key === 'token') {
-				return new DataResponse([], Http::STATUS_BAD_REQUEST);
-			}
-
-			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
+		$userConfig = UserConfig::fromArray($values);
+		if ($userConfig->url !== null || $userConfig->token !== null) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
+
+		$userConfig->saveConfig($this->userId, $this->config);
 
 		return new DataResponse([]);
 	}
@@ -66,28 +69,27 @@ class ConfigController extends Controller {
 	 * @throws PreConditionNotMetException
 	 */
 	public function setSensitiveConfig(array $values): DataResponse {
+		$userConfig = UserConfig::fromArray($values);
+		$userConfig->saveConfig($this->userId, $this->config);
+
 		// revoke the oauth token if needed
-		if (isset($values['token']) && $values['token'] === '') {
-			$tokenType = $this->config->getUserValue($this->userId, Application::APP_ID, 'token_type');
+		if ($userConfig->token === '') {
+			$tokenType = $this->config->getUserTokenType($this->userId);
 			if ($tokenType === 'oauth') {
 				$this->gitlabAPIService->revokeOauthToken($this->userId);
 			}
 		}
 
-		foreach ($values as $key => $value) {
-			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
-		}
-
 		$result = [];
 
-		if (isset($values['token'])) {
+		if ($userConfig->token !== null) {
 			// if the token is set, cleanup refresh token and expiration date
-			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_type');
-			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'refresh_token');
-			$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token_expires_at');
+			$this->config->deleteUserTokenType($this->userId);
+			$this->config->deleteUserRefreshToken($this->userId);
+			$this->config->deleteUserTokenExpiresAt($this->userId);
 			$this->gitlabReferenceProvider->invalidateUserCache($this->userId);
 
-			if ($values['token'] && $values['token'] !== '') {
+			if ($userConfig->token !== '') {
 				$info = $this->storeUserInfo();
 				if (isset($info['error'])) {
 					return new DataResponse(['error' => $info['error']], Http::STATUS_BAD_REQUEST);
@@ -96,13 +98,13 @@ class ConfigController extends Controller {
 				$result['user_displayname'] = $info['userdisplayname'] ?? '';
 				// store token type if it's valid (so we have a user name)
 				if ($result['user_name'] !== '') {
-					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_type', 'personal');
+					$this->config->setUserTokenType($this->userId, 'personal');
 				}
 			} else {
-				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_id');
-				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_name');
-				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'user_displayname');
-				$this->config->deleteUserValue($this->userId, Application::APP_ID, 'token');
+				$this->config->deleteUserId($this->userId);
+				$this->config->deleteUserName($this->userId);
+				$this->config->deleteUserDisplayName($this->userId);
+				$this->config->deleteUserToken($this->userId);
 				$result['user_name'] = '';
 			}
 		}
@@ -116,13 +118,12 @@ class ConfigController extends Controller {
 	 * @return DataResponse
 	 */
 	public function setAdminConfig(array $values): DataResponse {
-		foreach ($values as $key => $value) {
-			if ($key === 'client_id' || $key === 'client_secret' || $key === 'oauth_instance_url') {
-				return new DataResponse([], Http::STATUS_BAD_REQUEST);
-			}
-
-			$this->config->setAppValue(Application::APP_ID, $key, $value);
+		$adminConfig = AdminConfig::fromArray($values);
+		if ($adminConfig->client_id !== null || $adminConfig->client_secret !== null || $adminConfig->oauth_instance_url !== null) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
+
+		$adminConfig->saveConfig($this->config);
 		return new DataResponse(1);
 	}
 
@@ -130,9 +131,9 @@ class ConfigController extends Controller {
 	 * @PasswordConfirmationRequired
 	 */
 	public function setSensitiveAdminConfig(array $values): DataResponse {
-		foreach ($values as $key => $value) {
-			$this->config->setAppValue(Application::APP_ID, $key, $value);
-		}
+		$adminConfig = AdminConfig::fromArray($values);
+		$adminConfig->saveConfig($this->config);
+
 		return new DataResponse(1);
 	}
 
@@ -160,21 +161,20 @@ class ConfigController extends Controller {
 	 * @throws PreConditionNotMetException
 	 */
 	public function oauthRedirect(string $code = '', string $state = ''): RedirectResponse {
-		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$configState = $this->config->getUserOauthState($this->userId);
+		$clientID = $this->config->getAdminClientId();
+		$clientSecret = $this->config->getAdminClientSecret();
 
 		// anyway, reset state
-		$this->config->deleteUserValue($this->userId, Application::APP_ID, 'oauth_state');
+		$this->config->deleteUserOauthState($this->userId);
 
 		if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
-			$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri');
-			$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
+			$adminOauthUrl = $this->config->getAdminOauthUrl();
 			$result = $this->gitlabAPIService->requestOAuthAccessToken($adminOauthUrl, [
 				'client_id' => $clientID,
 				'client_secret' => $clientSecret,
 				'code' => $code,
-				'redirect_uri' => $redirect_uri,
+				'redirect_uri' => $this->config->getUserRedirectUri($this->userId),
 				'grant_type' => 'authorization_code'
 			], 'POST');
 			if (isset($result['access_token'])) {
@@ -184,16 +184,15 @@ class ConfigController extends Controller {
 				if (isset($result['expires_in'])) {
 					$nowTs = (new Datetime())->getTimestamp();
 					$expiresAt = $nowTs + (int)$result['expires_in'];
-					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_expires_at', strval($expiresAt));
+					$this->config->setUserTokenExpiresAt($this->userId, $expiresAt);
 				}
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl);
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'token_type', 'oauth');
+				$this->config->setUserUrl($this->userId, $adminOauthUrl);
+				$this->config->setUserToken($this->userId, $accessToken);
+				$this->config->setUserRefreshToken($this->userId, $refreshToken);
+				$this->config->setUserTokenType($this->userId, 'oauth');
 				$userInfo = $this->storeUserInfo();
 
-				$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0') === '1';
-				if ($usePopup) {
+				if ($this->config->getAdminUsePopup()) {
 					return new RedirectResponse(
 						$this->urlGenerator->linkToRoute('integration_gitlab.config.popupSuccessPage', [
 							'user_name' => $userInfo['username'] ?? '',
@@ -201,8 +200,8 @@ class ConfigController extends Controller {
 						])
 					);
 				} else {
-					$oauthOrigin = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_origin');
-					$this->config->deleteUserValue($this->userId, Application::APP_ID, 'oauth_origin');
+					$oauthOrigin = $this->config->getUserOauthOrigin($this->userId);
+					$this->config->deleteUserOauthOrigin($this->userId);
 					if ($oauthOrigin === 'settings') {
 						return new RedirectResponse(
 							$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
@@ -236,17 +235,17 @@ class ConfigController extends Controller {
 	private function storeUserInfo(): array {
 		$info = $this->gitlabAPIService->request($this->userId, 'user');
 		if (isset($info['username']) && isset($info['id'])) {
-			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
-			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['username']);
-			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_displayname', $info['name']);
+			$this->config->setUserId($this->userId, $info['id']);
+			$this->config->setUserName($this->userId, $info['username']);
+			$this->config->setUserDisplayName($this->userId, $info['name']);
 			return [
 				'username' => $info['username'],
 				'userid' => $info['id'],
 				'userdisplayname' => $info['name'],
 			];
 		} else {
-			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', '');
-			$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', '');
+			$this->config->deleteUserId($this->userId);
+			$this->config->deleteUserName($this->userId);
 			return $info;
 		}
 	}

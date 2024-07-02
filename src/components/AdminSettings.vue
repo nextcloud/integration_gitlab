@@ -120,7 +120,7 @@ export default {
 		onCheckboxChanged(newValue, key) {
 			this.state[key] = newValue
 			axios.put(generateUrl('/apps/integration_gitlab/admin-config'), {
-				values: { [key]: this.state[key] ? '1' : '0' },
+				values: { [key]: this.state[key] },
 			}).then((response) => {
 				showSuccess(t('integration_gitlab', 'GitLab admin options saved'))
 			}).catch((error) => {

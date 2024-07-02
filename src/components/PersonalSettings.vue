@@ -179,7 +179,7 @@ export default {
 
 			try {
 				await axios.put(generateUrl('/apps/integration_gitlab/config'), {
-					values: { [key]: this.state[key] ? '1' : '0' },
+					values: { [key]: this.state[key] },
 				})
 				showSuccess(t('integration_gitlab', 'GitLab options saved'))
 			} catch (error) {

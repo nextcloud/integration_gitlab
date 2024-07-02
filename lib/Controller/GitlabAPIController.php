@@ -11,14 +11,13 @@
 
 namespace OCA\Gitlab\Controller;
 
-use OCA\Gitlab\AppInfo\Application;
+use Exception;
+use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
-
-use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 
@@ -26,14 +25,16 @@ class GitlabAPIController extends Controller {
 
 	private string $accessToken;
 
-	public function __construct(string                   $appName,
-		IRequest                 $request,
-		private IConfig          $config,
-		private IURLGenerator    $urlGenerator,
+	public function __construct(
+		string $appName,
+		IRequest $request,
+		private ConfigService $config,
+		private IURLGenerator $urlGenerator,
 		private GitlabAPIService $gitlabAPIService,
-		private ?string          $userId) {
+		private string $userId,
+	) {
 		parent::__construct($appName, $request);
-		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
+		$this->accessToken = $this->config->getUserToken($userId);
 	}
 
 	/**
@@ -43,7 +44,7 @@ class GitlabAPIController extends Controller {
 	 *
 	 * @param int $userId
 	 * @return DataDisplayResponse|RedirectResponse
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getUserAvatar(int $userId) {
 		$result = $this->gitlabAPIService->getUserAvatar($this->userId, $userId);
@@ -65,7 +66,7 @@ class GitlabAPIController extends Controller {
 	 *
 	 * @param int $projectId
 	 * @return DataDisplayResponse|RedirectResponse
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getProjectAvatar(int $projectId) {
 		$result = $this->gitlabAPIService->getProjectAvatar($this->userId, $projectId);
@@ -86,7 +87,7 @@ class GitlabAPIController extends Controller {
 	 *
 	 * @param string|null $since
 	 * @return DataResponse
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getEvents(?string $since = null): DataResponse {
 		if ($this->accessToken === '') {
@@ -107,7 +108,7 @@ class GitlabAPIController extends Controller {
 	 *
 	 * @param string|null $since
 	 * @return DataResponse
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getTodos(?string $since = null): DataResponse {
 		if ($this->accessToken === '') {
@@ -127,7 +128,7 @@ class GitlabAPIController extends Controller {
 	 *
 	 * @param int $id
 	 * @return DataResponse
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function markTodoAsDone(int $id): DataResponse {
 		if ($this->accessToken === '') {

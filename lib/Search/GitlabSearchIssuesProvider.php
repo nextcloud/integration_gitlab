@@ -22,12 +22,13 @@ declare(strict_types=1);
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  *
  */
+
 namespace OCA\Gitlab\Search;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\App\IAppManager;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -38,11 +39,13 @@ use OCP\Search\SearchResultEntry;
 
 class GitlabSearchIssuesProvider implements IProvider {
 
-	public function __construct(private IAppManager      $appManager,
-		private IL10N            $l10n,
-		private IConfig          $config,
-		private IURLGenerator    $urlGenerator,
-		private GitlabAPIService $service) {
+	public function __construct(
+		private IAppManager $appManager,
+		private IL10N $l10n,
+		private ConfigService $config,
+		private IURLGenerator $urlGenerator,
+		private GitlabAPIService $service,
+	) {
 	}
 
 	/**
@@ -87,18 +90,17 @@ class GitlabSearchIssuesProvider implements IProvider {
 		$routeFrom = $query->getRoute();
 		$requestedFromSmartPicker = $routeFrom === '' || $routeFrom === 'smart-picker';
 
-		$searchIssuesEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_issues_enabled', '0') === '1';
+		$searchIssuesEnabled = $this->config->getUserSearchIssuesEnabled($user->getUID());
 		if (!$requestedFromSmartPicker && !$searchIssuesEnabled) {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
+		$accessToken = $this->config->getUserToken($user->getUID());
 		if ($accessToken === '') {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-		$url = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+		$url = $this->config->getUserUrl($user->getUID());
 
 		$issues = $this->service->searchIssues($user->getUID(), $term, $offset, $limit);
 		if (isset($issues['error'])) {
