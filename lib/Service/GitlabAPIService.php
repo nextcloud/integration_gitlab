@@ -19,11 +19,11 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
 use OCA\Gitlab\AppInfo\Application;
+use OCP\Http\Client\IClientService;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
-use OCP\Http\Client\IClientService;
 
 class GitlabAPIService {
 	/**
@@ -464,7 +464,12 @@ class GitlabAPIService {
 		if ($userId !== null) {
 			$this->checkTokenExpiration($userId);
 		}
-		$baseUrl = $this->getConnectedGitlabUrl($userId);
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
+		if ($userId === null) {
+			$baseUrl = $adminOauthUrl;
+		} else {
+			$baseUrl = $this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+		}
 		try {
 			$url = $baseUrl . '/api/v4/' . $endPoint;
 			$options = [
@@ -553,7 +558,7 @@ class GitlabAPIService {
 	 * @throws PreConditionNotMetException
 	 */
 	private function refreshToken(string $userId): bool {
-		$baseUrl = $this->getConnectedGitlabUrl($userId);
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$redirect_uri = $this->config->getUserValue($userId, Application::APP_ID, 'redirect_uri');
@@ -562,7 +567,7 @@ class GitlabAPIService {
 			$this->logger->error('No GitLab refresh token found', ['app' => Application::APP_ID]);
 			return false;
 		}
-		$result = $this->requestOAuthAccessToken($baseUrl, [
+		$result = $this->requestOAuthAccessToken($adminOauthUrl, [
 			'client_id' => $clientID,
 			'client_secret' => $clientSecret,
 			'grant_type' => 'refresh_token',
@@ -573,6 +578,7 @@ class GitlabAPIService {
 			$this->logger->info('GitLab access token successfully refreshed', ['app' => Application::APP_ID]);
 			$accessToken = $result['access_token'];
 			$refreshToken = $result['refresh_token'];
+			$this->config->setUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl);
 			$this->config->setUserValue($userId, Application::APP_ID, 'token', $accessToken);
 			$this->config->setUserValue($userId, Application::APP_ID, 'refresh_token', $refreshToken);
 			if (isset($result['expires_in'])) {
@@ -595,26 +601,17 @@ class GitlabAPIService {
 
 	/**
 	 * @param string $userId
-	 * @return string
-	 */
-	public function getConnectedGitlabUrl(string $userId): string {
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-		return $this->config->getUserValue($userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
-	}
-
-	/**
-	 * @param string $userId
 	 * @return array
 	 */
 	public function revokeOauthToken(string $userId): array {
-		$gitlabUrl = $this->getConnectedGitlabUrl($userId);
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
 
 		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
 		$clientId = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$endPoint = 'oauth/revoke';
 		try {
-			$url = $gitlabUrl . '/' . $endPoint;
+			$url = $adminOauthUrl . '/' . $endPoint;
 			$options = [
 				'headers' => [
 					'User-Agent' => 'Nextcloud GitLab integration',
