@@ -25,7 +25,6 @@ use OCP\IURLGenerator;
 class GitlabAPIController extends Controller {
 
 	private string $accessToken;
-	private string $gitlabUrl;
 
 	public function __construct(string                   $appName,
 		IRequest                 $request,
@@ -35,18 +34,6 @@ class GitlabAPIController extends Controller {
 		private ?string          $userId) {
 		parent::__construct($appName, $request);
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-		$this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
-	}
-
-	/**
-	 * get notification list
-	 * @NoAdminRequired
-	 *
-	 * @return DataResponse
-	 */
-	public function getGitlabUrl(): DataResponse {
-		return new DataResponse($this->gitlabUrl);
 	}
 
 	/**

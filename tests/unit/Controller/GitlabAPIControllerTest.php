@@ -80,13 +80,6 @@ class GitlabAPIControllerTest extends TestCase {
 		$this->config->setUserValue(self::TEST_USER1, Application::APP_ID, 'token', self::API_TOKEN);
 	}
 
-	public function testGetGitlabUrl(): void {
-		$expected = 'https://gitlab.com';
-		$this->config->setUserValue(self::TEST_USER1, Application::APP_ID, 'url', $expected);
-		$response = $this->gitlabApiController->getGitlabUrl();
-		$this->assertEquals($expected, $response->getData());
-	}
-
 	public function testGetUserAvatar(): void {
 		$firstUrl = 'https://gitlab.com/api/v4/users/1';
 		$secondUrl = 'https://gitlab.com/avatar.jpg';
