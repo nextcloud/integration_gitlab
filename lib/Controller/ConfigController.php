@@ -140,8 +140,7 @@ class ConfigController extends Controller {
 		if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
 			$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri');
 			$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-			$gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
-			$result = $this->gitlabAPIService->requestOAuthAccessToken($gitlabUrl, [
+			$result = $this->gitlabAPIService->requestOAuthAccessToken($adminOauthUrl, [
 				'client_id' => $clientID,
 				'client_secret' => $clientSecret,
 				'code' => $code,
@@ -157,6 +156,7 @@ class ConfigController extends Controller {
 					$expiresAt = $nowTs + (int) $result['expires_in'];
 					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_expires_at', strval($expiresAt));
 				}
+				$this->config->setUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token_type', 'oauth');
