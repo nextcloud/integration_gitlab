@@ -11,15 +11,15 @@
 
 namespace OCA\Gitlab\Controller;
 
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
 use OCP\IRequest;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Controller;
 
-use OCA\Gitlab\Service\GitlabAPIService;
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\IURLGenerator;
 
 class GitlabAPIController extends Controller {
@@ -41,10 +41,6 @@ class GitlabAPIController extends Controller {
 	 */
 	private $accessToken;
 	/**
-	 * @var string
-	 */
-	private $gitlabUrl;
-	/**
 	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
@@ -60,19 +56,7 @@ class GitlabAPIController extends Controller {
 		$this->gitlabAPIService = $gitlabAPIService;
 		$this->userId = $userId;
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-		$this->gitlabUrl = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
 		$this->urlGenerator = $urlGenerator;
-	}
-
-	/**
-	 * get notification list
-	 * @NoAdminRequired
-	 *
-	 * @return DataResponse
-	 */
-	public function getGitlabUrl(): DataResponse {
-		return new DataResponse($this->gitlabUrl);
 	}
 
 	/**
