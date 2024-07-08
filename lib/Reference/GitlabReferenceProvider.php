@@ -91,7 +91,13 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 		//if ($this->userId === null) {
 		//	return ['https://gitlab.com'];
 		//}
-		$urls = [$this->gitlabAPIService->getConnectedGitlabUrl($this->userId)];
+		$urls = [];
+		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
+		if ($this->userId !== null) {
+			$urls[] = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+		} else {
+			$urls[] = $adminOauthUrl;
+		}
 		// unfortunately most of what we need for reference stuff requires authentication
 		// let's not allow to handle multiple gitlab servers
 		//$extraUrls = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_urls');
