@@ -21,7 +21,7 @@
     "Client secret of your GitLab application" : "Client secret van je GitLab applicatie",
     "GitLab admin options saved" : "GitLab beheeropties bewaard",
     "Failed to save GitLab admin options" : "Kon GitLab admin-opties niet opslaan",
-    "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Wanneer je zelf een toegangscode genereert, geef minstens \"read_user\", \"read_api\" en \"read_repository\" machtigingen aan de applicatie. Optioneel alleen \"api\" machtiging.",
+    "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Als je zelf een access token aanmaakt, geef het dan minimaal \"read:user\", \"read_api\" en \"read_repository\" permissies.",
     "GitLab instance address" : "GitLab instance adres",
     "Personal access token" : "Persoonlijk access token",
     "GitLab personal access token" : "GitLab persoonlijk access token",

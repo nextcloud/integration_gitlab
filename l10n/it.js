@@ -22,7 +22,6 @@ OC.L10N.register(
     "Client secret of your GitLab application" : "Segreto del client della tua applicazione GitLab",
     "GitLab admin options saved" : "Opzioni amministrative di GitLab salvate",
     "Failed to save GitLab admin options" : "Salvataggio delle opzioni amministrative di GitLab non riuscito",
-    "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Quando crei da solo un token di accesso, assegnagli almeno i permessi \"read_user\", \"read_api\" e \"read_repository\". Invece facoltativamente \"api\".",
     "GitLab instance address" : "Indirizzo istanza GitLab",
     "Personal access token" : "Token di accesso personale",
     "GitLab personal access token" : "Token di accesso personale di GitLab",

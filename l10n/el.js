@@ -23,7 +23,6 @@ OC.L10N.register(
     "Use a popup to authenticate" : "Χρησιμοποιήστε ένα αναδυόμενο παράθυρο για έλεγχο ταυτότητας",
     "GitLab admin options saved" : "Οι επιλογές διαχειριστή GitLab αποθηκεύτηκαν",
     "Failed to save GitLab admin options" : "Αποτυχία αποθήκευσης των επιλογών διαχειριστή GitLab",
-    "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions. Optionally \"api\" instead." : "Όταν δημιουργείτε μόνοι σας ένα διακριτικό πρόσβασης, δώστε του τουλάχιστον δικαιώματα \"read_user\", \"read_api\" και \"read_repository\". Προαιρετικά \"api\" αντί αυτού.",
     "GitLab instance address" : "Διεύθυνση instance GitLab",
     "Personal access token" : "Token προσωπικής πρόσβασης",
     "GitLab personal access token" : "Token προσωπικής πρόσβασης GitLab",
