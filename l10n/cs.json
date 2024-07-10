@@ -27,6 +27,7 @@
     "Enable GitLab link previews" : "Zapnout náhledy odkazů na GitLab",
     "GitLab admin options saved" : "Předvolby správy GitLab uloženy",
     "Failed to save GitLab admin options" : "Nepodařilo se uložit předvolby správy GitLab",
+    "When you create an access token yourself, give it at least \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Když si osobní přístupový token vytváříte sami, udělte mu přinejmenším oprávnění pro „read_user“ a „read_repository“.",
     "GitLab instance address" : "Adresa instance GitLab",
     "Personal access token" : "Osobní přístupový token",
     "GitLab personal access token" : "GitLab osobní přístupový token",
