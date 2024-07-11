@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.0 – 2024-07-11
+
+### Changed
+
+- Remove unused endpoint @provokateurin
+
+### Added
+
+- Add Nextcloud 30 support @nickvergessen
+- Add simple test setup for development @provokateurin
+
+### Fixed
+
+- Do not suggest wrong scope @provokateurin
+- Only send Oauth credentials to the right URLs @provokateurin
+
 ## 1.0.19 – 2024-03-06
 
 ### Changed
