@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.0.0 - 2024-07-11
+### Changed
+- Remove unused endpoint @provokateurin
+- update app build publish workflow @kyteinsky
+
+### Fixed
+- Only send Oauth credentials to the right URLs @provokateurin
+
+### Added
+- add krankerl.toml @kyteinsky
+
 ## 1.0.12 – 2022-12-21
 ### Changed
 - split issue/MR search provider in 2
