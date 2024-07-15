@@ -86,6 +86,7 @@ import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import { confirmPassword } from '@nextcloud/password-confirmation'
 
 export default {
 	name: 'AdminSettings',
@@ -118,23 +119,9 @@ export default {
 	methods: {
 		onCheckboxChanged(newValue, key) {
 			this.state[key] = newValue
-			this.saveOptions({ [key]: this.state[key] ? '1' : '0' })
-		},
-		onInput() {
-			delay(() => {
-				this.saveOptions({
-					client_id: this.state.client_id,
-					client_secret: this.state.client_secret,
-					oauth_instance_url: this.state.oauth_instance_url,
-				})
-			}, 2000)()
-		},
-		saveOptions(values) {
-			const req = {
-				values,
-			}
-			const url = generateUrl('/apps/integration_gitlab/admin-config')
-			axios.put(url, req).then((response) => {
+			axios.put(generateUrl('/apps/integration_gitlab/admin-config'), {
+				values: { [key]: this.state[key] ? '1' : '0' },
+			}).then((response) => {
 				showSuccess(t('integration_gitlab', 'GitLab admin options saved'))
 			}).catch((error) => {
 				showError(
@@ -143,6 +130,30 @@ export default {
 				)
 				console.debug(error)
 			})
+		},
+		onInput() {
+			delay(async () => {
+				await confirmPassword()
+
+				const values = {
+					client_id: this.state.client_id,
+					oauth_instance_url: this.state.oauth_instance_url,
+				}
+				if (this.state.client_secret !== 'dummyToken') {
+					values.client_secret = this.state.client_secret
+				}
+				axios.put(generateUrl('/apps/integration_gitlab/sensitive-admin-config'), {
+					values,
+				}).then((response) => {
+					showSuccess(t('integration_gitlab', 'GitLab admin options saved'))
+				}).catch((error) => {
+					showError(
+						t('integration_gitlab', 'Failed to save GitLab admin options')
+						+ ': ' + (error.response?.request?.responseText ?? ''),
+					)
+					console.debug(error)
+				})
+			}, 2000)()
 		},
 	},
 }
