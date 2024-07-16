@@ -80,11 +80,7 @@
 					{{ t('integration_gitlab', 'Warning, everything you type in the search bar will be sent to GitLab.') }}
 				</p>
 			</div>
-			<NcCheckboxRadioSwitch
-				:checked="state.navigation_enabled"
-				@update:checked="onCheckboxChanged($event, 'navigation_enabled')">
-				{{ t('integration_gitlab', 'Enable navigation link') }}
-			</NcCheckboxRadioSwitch>
+			<p>{{ t('integration_gitlab', 'Please use the External Sites app to add GitLab to your navigation bar:') }} <a href="https://apps.nextcloud.com/apps/external" target="_blank" rel="noopener">https://apps.nextcloud.com/apps/external</a></p>
 			<NcCheckboxRadioSwitch
 				:checked="state.link_preview_enabled"
 				@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
