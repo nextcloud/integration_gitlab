@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Terjadi kesalahan mendapatkan token akses OAuth.",
     "Error during OAuth exchanges" : "Terjadi kesalahan saat penukaran OAuth",
     "GitLab To-Dos" : "Tugas GitLab",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "Enable searching for issues" : "Aktifkan pencarian isu",
     "Enable searching for merge requests" : "Aktifkan pencarian permintaan penggabungan",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Peringatan, semua yang Anda ketik dalam bilah pencarian akan dikirim ke GitLab.",
-    "Enable navigation link" : "Aktifkan tautan navigasi",
     "Successfully connected to GitLab!" : "Berhasil menghubungkan ke GitLab!",
     "Error connecting to GitLab:" : "Terjadi kesalahan menghubungkan ke GitLab:",
     "Incorrect access token" : "Token akses tidak benar",

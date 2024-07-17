@@ -1,5 +1,4 @@
 { "translations": {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "获取 OAuth 访问令牌时出错",
     "Error during OAuth exchanges" : "交换 OAuth 时出错",
     "GitLab repositories, issues and merge requests" : "GitLab仓库、议题与合并请求",
@@ -25,7 +24,6 @@
     "Disconnect from GitLab" : "断开GitLab连接",
     "Enable searching for repositories" : "启用仓库搜索",
     "Enable searching for issues" : "启用议题搜索",
-    "Enable navigation link" : "启用导航链接",
     "Successfully connected to GitLab!" : "成功连接到了GitLab！",
     "Error connecting to GitLab:" : "连接到GitLab时出现错误：",
     "Incorrect access token" : "访问令牌不正确",

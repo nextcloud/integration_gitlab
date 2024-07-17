@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Napaka med pridobivanjem žetona OAuth za dostop",
     "Error during OAuth exchanges" : " Napaka med izmenjavo podatkov OAuth",
     "GitLab To-Dos" : "GitLab Naloge",
@@ -38,7 +37,6 @@ OC.L10N.register(
     "Enable searching for issues" : "Omogoči iskanje po zadevah",
     "Enable searching for merge requests" : "Omogoči iskanje med zahtevami za združitev kode.",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Opozorilo! Karkoli vpišete v iskalno polje bo poslano na strežnik GitLab.",
-    "Enable navigation link" : "Omogoči povezave za krmarjenje",
     "Successfully connected to GitLab!" : "Povezava z računom GitLab je uspešno vzpostavljena!",
     "Error connecting to GitLab:" : "Napaka povezovanja z računom GitLab:",
     "Incorrect access token" : " Neveljaven žetona za dostop",

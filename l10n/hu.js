@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Hiba történt az OAuth hozzáférési token lekérése során. ",
     "Error during OAuth exchanges" : "Hiba történt az OAuth üzenetváltások során",
     "GitLab To-Dos" : "GitLab teendők",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "Enable searching for issues" : "Jegyek keresésének engedélyezése",
     "Enable searching for merge requests" : "Beolvasztási kérések keresésének engedélyezése",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Figyelem, minden el lesz küldve a GitLabnek, amit a keresősávba ír.",
-    "Enable navigation link" : "Navigációs hivatkozás engedélyezése",
     "Successfully connected to GitLab!" : "Sikeresen kapcsolódott a GitLabhez!",
     "Error connecting to GitLab:" : "Hiba történt a GitLabhez történő kapcsolódáskor:",
     "Incorrect access token" : "Helytelen hozzáférési token",

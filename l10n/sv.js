@@ -14,7 +14,6 @@ OC.L10N.register(
     "Connected as {user}" : "Ansluten som {user}",
     "Enable searching for repositories" : "Aktivera sökning efter arkiv",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varning, allt du skriver i sökfältet skickas till GitLab.",
-    "Enable navigation link" : "Aktivera navigeringslänk",
     "Incorrect access token" : "Ogiltig åtkomst-token",
     "Mark as done" : "Markera som klar",
     "You were mentioned" : "Du blev omnämnd",

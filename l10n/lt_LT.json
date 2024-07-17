@@ -1,5 +1,4 @@
 { "translations": {
-    "GitLab" : "„GitLab“",
     "Error getting OAuth access token. " : "Klaida gaunant „OAuth“ prieigos raktą. ",
     "Error during OAuth exchanges" : "Klaida „OAuth“ apsikeitimo metu",
     "GitLab repositories" : "„GitLab“ saugyklos",

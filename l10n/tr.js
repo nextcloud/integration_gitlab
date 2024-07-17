@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "OAuth erişim kodu alınırken sorun çıktı.",
     "Error during OAuth exchanges" : "OAuth alışverişinde sorun çıktı",
     "GitLab To-Dos" : "GitLab yapılacak işler",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Enable searching for issues" : "Sorunlarda arama yapılabilsin",
     "Enable searching for merge requests" : "Birleştirme isteklerinde arama yapılabilsin",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Uyarı, arama çubuğuna yazdığınız her şey GitLab üzerine gönderilecek.",
-    "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
     "Successfully connected to GitLab!" : "GitLab ile bağlantı kuruldu!",
     "Error connecting to GitLab:" : "GitLab ile bağlantı kurulurken sorun çıktı:",
     "Incorrect access token" : "Erişim kodu geçersiz",

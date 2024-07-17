@@ -1,5 +1,4 @@
 { "translations": {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Error al obtener el token de acceso de OAuth.",
     "Error during OAuth exchanges" : "Error durante los intercambios de OAuth",
     "GitLab To-Dos" : "GitLab Tareas pendientes",
@@ -37,7 +36,6 @@
     "Enable searching for issues" : "Habilitar búsqueda de incidencias",
     "Enable searching for merge requests" : "Habilitar búsqueda de solicitudes de combinación",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Advertencia, todo lo que escribas en la barra de búsqueda será enviado a GitLab.",
-    "Enable navigation link" : "Habilitar enlace de navegación",
     "Successfully connected to GitLab!" : "¡Conectado a GitLab!",
     "Error connecting to GitLab:" : "Error al conectarse a GitLab:",
     "Incorrect access token" : "Token de acceso incorrecto",

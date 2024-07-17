@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Errore otenende token de intrada OAuth.",
     "Error during OAuth exchanges" : "Errore cuncambiende OAuth",
     "GitLab repositories" : "Magasinos GitLab ",
@@ -30,7 +29,6 @@ OC.L10N.register(
     "Disconnect from GitLab" : "Disconnete dae GitLab",
     "Enable searching for repositories" : "Ativa sa chirca de is magasinos",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Avisu: totu su chi iscries in s'istanca de chirca s'at a imbiare a GitHub.",
-    "Enable navigation link" : "Ativa su ligòngiu de navigatzione",
     "Successfully connected to GitLab!" : "Connètidu a Gitlab in manera curreta!",
     "Error connecting to GitLab:" : "Errore connetende·si a GitLab:",
     "Incorrect access token" : "Token de intrada non bàlidu",

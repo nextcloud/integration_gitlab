@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Σφάλμα κατά τη λήψη  token πρόσβασης OAuth.",
     "Error during OAuth exchanges" : "Σφάλμα κατά την ανταλλαγή OAuth",
     "GitLab repositories" : "Αποθετήρια GitLab",
@@ -31,7 +30,6 @@ OC.L10N.register(
     "Disconnect from GitLab" : "Αποσύνδεση από το GitLab",
     "Enable searching for repositories" : "Ενεργοποίηση αναζήτησης για αποθετήρια",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Προειδοποίηση, όλα όσα πληκτρολογείτε στη γραμμή αναζήτησης θα σταλούν στο GitLab.",
-    "Enable navigation link" : "Ενεργοποίηση συνδέσμου πλοήγησης",
     "Successfully connected to GitLab!" : "Συνδέθηκε με επιτυχία στο GitLab!",
     "Error connecting to GitLab:" : "Σφάλμα σύνδεσης στο GitLab:",
     "Incorrect access token" : "Λανθασμένο token πρόσβασης",

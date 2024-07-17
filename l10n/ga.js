@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Earráid agus comhartha rochtana OAuth á fháil.",
     "Error during OAuth exchanges" : "Earráid le linn malartuithe OAuth",
     "GitLab To-Dos" : "Le Déanamh GitLab",
@@ -41,7 +40,6 @@ OC.L10N.register(
     "Enable searching for issues" : "Cumasaigh cuardach le haghaidh saincheisteanna",
     "Enable searching for merge requests" : "Cumasaigh cuardach le haghaidh iarratais chumaisc",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Rabhadh, seolfar gach rud a chlóscríobhann tú sa bharra cuardaigh chuig GitLab.",
-    "Enable navigation link" : "Cumasaigh nasc nascleanúna",
     "Successfully connected to GitLab!" : "D'éirigh le ceangal le GitLab!",
     "Error connecting to GitLab:" : "Earráid ag nascadh le GitLab:",
     "Incorrect access token" : "Comhartha rochtana mícheart",

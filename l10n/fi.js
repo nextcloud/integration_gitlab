@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Virhe haettaessa OAuth-käyttöpolettia.",
     "Error during OAuth exchanges" : "Virhe OAuth-vaihdossa",
     "GitLab repositories" : "GitLabin tietovarastot",
@@ -23,7 +22,6 @@ OC.L10N.register(
     "Connected as {user}" : "Yhdistetty käyttäjänä {user}",
     "Disconnect from GitLab" : "Katkaise yhteys GitLabiin",
     "Enable searching for repositories" : "Ota käyttöön tietovarastojen haku",
-    "Enable navigation link" : "Ota navigointilinkki käyttöön",
     "Successfully connected to GitLab!" : "Yhdistetty GitLabiin!",
     "Error connecting to GitLab:" : "Virhe yhdistäessä GitLabiin:",
     "Incorrect access token" : "Virheellinen käyttöpoletti",

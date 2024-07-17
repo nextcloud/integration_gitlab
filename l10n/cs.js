@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Chyba při získávání přístupového OAuth přístupového tokenu.",
     "Error during OAuth exchanges" : "Chyba při výměnách informací v rámci OAuth",
     "GitLab To-Dos" : "GitLab úkoly",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Enable searching for issues" : "Zapnout vyhledávání v hlášeních problémů",
     "Enable searching for merge requests" : "Zapnout vyhledávání v požadavcích na začlenění",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varování – cokoli zadáte do kolonky vyhledávání bude odesláno do GitLab.",
-    "Enable navigation link" : "Povolit navigační odkaz",
     "Successfully connected to GitLab!" : "Úspěšně spojeno s GitLab!",
     "Error connecting to GitLab:" : "Chyba při připojování se ke GitLab:",
     "Incorrect access token" : "Nesprávný přístupový token",

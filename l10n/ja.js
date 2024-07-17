@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "GitLab",
     "Error during OAuth exchanges" : "OAuth通信中のエラー",
     "GitLab repositories" : "GitLab のリポジトリ",
     "Bad credentials" : "不正な資格情報",
@@ -16,7 +15,6 @@ OC.L10N.register(
     "Connect to GitLab" : "GitLab に接続",
     "Connected as {user}" : "{user} を接続済み",
     "Disconnect from GitLab" : "GitLab から切断",
-    "Enable navigation link" : "ナビゲーションリンクを有効化",
     "Successfully connected to GitLab!" : "GitLabへの接続に成功しました！",
     "Incorrect access token" : "正しくないアクセストークン",
     "Mark as done" : "完了としてマーク",

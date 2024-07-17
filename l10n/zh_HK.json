@@ -1,5 +1,4 @@
 { "translations": {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "取得 OAuth 存取權杖時發生錯誤。",
     "Error during OAuth exchanges" : "OAuth 交換時發生錯誤",
     "GitLab To-Dos" : "GitLab 待辦事項",
@@ -39,7 +38,6 @@
     "Enable searching for issues" : "啟用搜尋議題",
     "Enable searching for merge requests" : "啟用搜尋合併請求",
     "Warning, everything you type in the search bar will be sent to GitLab." : "警告，您在搜尋列中輸入的所有東西都會傳送到 GitLab。",
-    "Enable navigation link" : "啟用導覽連結",
     "Successfully connected to GitLab!" : "與 GitLab 連線成功！",
     "Error connecting to GitLab:" : "連線到 GItLab 時發生錯誤：",
     "Incorrect access token" : "不正確的存取權杖",

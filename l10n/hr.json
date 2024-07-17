@@ -1,5 +1,4 @@
 { "translations": {
-    "GitLab" : "GitLab",
     "Error getting OAuth access token. " : "Pogreška pri dohvaćanju tokena za pristup OAuth. ",
     "Error during OAuth exchanges" : "Pogreška tijekom razmjene radi autentifikacije OAuth",
     "GitLab repositories" : "GitLab spremišta podataka",
@@ -28,7 +27,6 @@
     "Disconnect from GitLab" : "Odspoji se s GitLaba",
     "Enable searching for repositories" : "Omogući traženje spremišta podataka",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Upozorenje, sve što upišete u traku za pretraživanje bit će poslano GitLabu.",
-    "Enable navigation link" : "Omogući navigacijsku poveznicu",
     "Successfully connected to GitLab!" : "Uspješno povezivanje s GitLabom!",
     "Error connecting to GitLab:" : "Pogreška pri povezivanju s GitLabom:",
     "Incorrect access token" : "Pogrešan token za pristup",

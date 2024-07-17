@@ -1,7 +1,6 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "GitLab" : "„GitLab“",
     "Error getting OAuth access token. " : "Klaida gaunant „OAuth“ prieigos raktą. ",
     "Error during OAuth exchanges" : "Klaida „OAuth“ apsikeitimo metu",
     "GitLab repositories" : "„GitLab“ saugyklos",
