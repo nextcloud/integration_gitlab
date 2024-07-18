@@ -38,6 +38,7 @@
     "Enable searching for issues" : "Activar a busca de incidencias (issues)",
     "Enable searching for merge requests" : "Activar a busca de solicitudes de fusión (merge request)",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Advertencia, todo o que escriba na barra de buscas enviarase a GitLab.",
+    "Please use the External Sites app to add GitLab to your navigation bar:" : "Use a aplicación de sitios externos para engadir GitLab á súa barra de navegación:",
     "Successfully connected to GitLab!" : "Conectou satisfactoriamente con GitLab!",
     "Error connecting to GitLab:" : "Produciuse un erro ao conectar con GitLab:",
     "Incorrect access token" : "Testemuño de acceso incorrecto",

@@ -38,6 +38,7 @@
     "Enable searching for issues" : "Cumasaigh cuardach le haghaidh saincheisteanna",
     "Enable searching for merge requests" : "Cumasaigh cuardach le haghaidh iarratais chumaisc",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Rabhadh, seolfar gach rud a chlóscríobhann tú sa bharra cuardaigh chuig GitLab.",
+    "Please use the External Sites app to add GitLab to your navigation bar:" : "Bain úsáid as an aip Shuíomhanna Seachtracha chun GitLab a chur le do bharra nascleanúna:",
     "Successfully connected to GitLab!" : "D'éirigh le ceangal le GitLab!",
     "Error connecting to GitLab:" : "Earráid ag nascadh le GitLab:",
     "Incorrect access token" : "Comhartha rochtana mícheart",

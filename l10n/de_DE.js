@@ -40,6 +40,7 @@ OC.L10N.register(
     "Enable searching for issues" : "Suche nach Problemen aktivieren",
     "Enable searching for merge requests" : "Die Suche nach Zusammenführungsanforderungen aktivieren",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Achtung, alles, was Sie in die Suchleiste eingeben, wird an GitLab gesendet.",
+    "Please use the External Sites app to add GitLab to your navigation bar:" : "Bitte verwenden Sie die App „External Sites“, um GitLab zu Ihrer Navigationsleiste hinzuzufügen:",
     "Successfully connected to GitLab!" : "Erfolgreich verbunden mit GitLab!",
     "Error connecting to GitLab:" : "Fehler bei der Verbindung zu GitLab:",
     "Incorrect access token" : "Zugriffstoken nicht korrekt",
