@@ -38,6 +38,7 @@
     "Enable searching for issues" : "Aktiver søk etter problemer",
     "Enable searching for merge requests" : "Aktiver søk etter fletteforespørsler",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Advarsel, alt du skriver i søkefeltet vil bli sendt til GitLab.",
+    "Please use the External Sites app to add GitLab to your navigation bar:" : "Bruk Eksterne Nettsteder-appen for å legge til GitLab i navigasjonsfeltet:",
     "Successfully connected to GitLab!" : "Koblet til GitLab!",
     "Error connecting to GitLab:" : "Feil ved tilkobling til GitLab:",
     "Incorrect access token" : "Feil tilgangstoken",
