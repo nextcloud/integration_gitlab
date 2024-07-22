@@ -108,6 +108,8 @@ import { showSuccess, showError } from '@nextcloud/dialogs'
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import { confirmPassword } from '@nextcloud/password-confirmation'
+import '@nextcloud/password-confirmation/dist/style.css'
 
 export default {
 	name: 'PersonalSettings',
@@ -165,26 +167,44 @@ export default {
 	},
 
 	methods: {
-		onLogoutClick() {
-			this.state.token = ''
-			this.saveOptions({ token: '' })
+		async onLogoutClick() {
+			if (await this.saveSensitiveOptions({ token: '' })) {
+				this.state.token = ''
+			}
 		},
-		onCheckboxChanged(newValue, key) {
+		async onCheckboxChanged(newValue, key) {
 			this.state[key] = newValue
-			this.saveOptions({ [key]: this.state[key] ? '1' : '0' })
+
+			this.loading = true
+
+			try {
+				await axios.put(generateUrl('/apps/integration_gitlab/config'), {
+					values: { [key]: this.state[key] ? '1' : '0' },
+				})
+				showSuccess(t('integration_gitlab', 'GitLab options saved'))
+			} catch (error) {
+				showError(t('integration_gitlab', 'Failed to save GitLab options') + ': ' + (error.response?.data?.error ?? ''))
+				console.debug(error)
+			}
+
+			this.loading = false
 		},
 		onInput() {
-			this.loading = true
 			delay(() => {
-				this.saveOptions({ url: this.state.url })
+				this.saveSensitiveOptions({ url: this.state.url })
 			}, 2000)()
 		},
-		saveOptions(values) {
-			const req = {
-				values,
-			}
-			const url = generateUrl('/apps/integration_gitlab/config')
-			axios.put(url, req).then((response) => {
+		async saveSensitiveOptions(values) {
+			await confirmPassword()
+
+			this.loading = true
+
+			try {
+				const req = {
+					values,
+				}
+				const url = generateUrl('/apps/integration_gitlab/sensitive-config')
+				const response = await axios.put(url, req)
 				if (response.data.user_name !== undefined) {
 					this.state.user_name = response.data.user_name
 					this.state.user_displayname = response.data.user_displayname
@@ -196,15 +216,14 @@ export default {
 				} else {
 					showSuccess(t('integration_gitlab', 'GitLab options saved'))
 				}
-			}).catch((error) => {
-				showError(
-					t('integration_gitlab', 'Failed to save GitLab options')
-					+ ': ' + (error.response?.data?.error ?? ''),
-				)
-				console.debug(error)
-			}).then(() => {
 				this.loading = false
-			})
+				return true
+			} catch (error) {
+				showError(t('integration_gitlab', 'Failed to save GitLab options') + ': ' + (error.response?.data?.error ?? ''))
+				console.debug(error)
+				this.loading = false
+				return false
+			}
 		},
 		onConnectClick() {
 			if (this.showOAuth) {
@@ -215,10 +234,14 @@ export default {
 		},
 		connectWithToken() {
 			this.loading = true
-			this.saveOptions({
-				token: this.state.token,
+			const values = {
 				url: this.state.url,
-			})
+			}
+			// Do not overwrite the saved token if it is just the dummy token
+			if (this.state.token !== 'dummyToken') {
+				values.token = this.state.token
+			}
+			this.saveSensitiveOptions(values)
 		},
 		connectWithOauth() {
 			if (this.state.use_popup) {

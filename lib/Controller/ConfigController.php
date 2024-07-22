@@ -23,7 +23,6 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\IL10N;
-
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
@@ -46,11 +45,27 @@ class ConfigController extends Controller {
 	 * set config values
 	 * @NoAdminRequired
 	 *
-	 * @param array $values
-	 * @return DataResponse
 	 * @throws PreConditionNotMetException
 	 */
 	public function setConfig(array $values): DataResponse {
+		foreach ($values as $key => $value) {
+			if ($key === 'url' || $key === 'token') {
+				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			}
+
+			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
+		}
+
+		return new DataResponse([]);
+	}
+
+	/**
+	 * @PasswordConfirmationRequired
+	 * @NoAdminRequired
+	 *
+	 * @throws PreConditionNotMetException
+	 */
+	public function setSensitiveConfig(array $values): DataResponse {
 		// revoke the oauth token if needed
 		if (isset($values['token']) && $values['token'] === '') {
 			$tokenType = $this->config->getUserValue($this->userId, Application::APP_ID, 'token_type');
@@ -62,6 +77,7 @@ class ConfigController extends Controller {
 		foreach ($values as $key => $value) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 		}
+
 		$result = [];
 
 		if (isset($values['token'])) {
@@ -100,6 +116,20 @@ class ConfigController extends Controller {
 	 * @return DataResponse
 	 */
 	public function setAdminConfig(array $values): DataResponse {
+		foreach ($values as $key => $value) {
+			if ($key === 'client_id' || $key === 'client_secret' || $key === 'oauth_instance_url') {
+				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			}
+
+			$this->config->setAppValue(Application::APP_ID, $key, $value);
+		}
+		return new DataResponse(1);
+	}
+
+	/**
+	 * @PasswordConfirmationRequired
+	 */
+	public function setSensitiveAdminConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
 			$this->config->setAppValue(Application::APP_ID, $key, $value);
 		}
@@ -153,7 +183,7 @@ class ConfigController extends Controller {
 				$refreshToken = $result['refresh_token'] ?? '';
 				if (isset($result['expires_in'])) {
 					$nowTs = (new Datetime())->getTimestamp();
-					$expiresAt = $nowTs + (int) $result['expires_in'];
+					$expiresAt = $nowTs + (int)$result['expires_in'];
 					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_expires_at', strval($expiresAt));
 				}
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl);
