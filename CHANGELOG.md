@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.1 – 2024-07-23
+
+### Changed
+
+- Remove navigation in favor of external sites app @provokateurin
+
+### Fixed
+- add vendor-bin to .nextcloudignore @kyteinsky
+- Fix incorrect config handling (#91) @provokateurin
+
 ## 3.0.0 – 2024-07-11
 
 ### Changed
