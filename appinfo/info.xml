@@ -5,7 +5,7 @@
     <summary>Integration of GitLab software development management service</summary>
     <description><![CDATA[GitLab integration provides a dashboard widget displaying your most important notifications
     and a unified search provider for repositories, issues and merge requests.]]></description>
-    <version>3.0.1</version>
+    <version>3.1.0</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Gitlab</namespace>
@@ -26,4 +26,9 @@
         <personal>OCA\Gitlab\Settings\Personal</personal>
         <personal-section>OCA\Gitlab\Settings\PersonalSection</personal-section>
     </settings>
+	<repair-steps>
+		<post-migration>
+			<step>OCA\Gitlab\Migration\MultiAccountRepairStep</step>
+		</post-migration>
+	</repair-steps>
 </info>
