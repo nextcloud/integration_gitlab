@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<info>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>integration_gitlab</id>
     <name>GitLab integration</name>
     <summary>Integration of GitLab software development management service</summary>
     <description><![CDATA[GitLab integration provides a dashboard widget displaying your most important notifications
     and a unified search provider for repositories, issues and merge requests.]]></description>
-    <version>3.0.1</version>
+    <version>3.1.0</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Gitlab</namespace>
@@ -20,6 +20,11 @@
     <dependencies>
         <nextcloud min-version="26" max-version="30"/>
     </dependencies>
+	<repair-steps>
+		<post-migration>
+			<step>OCA\Gitlab\Migration\MultiAccountRepairStep</step>
+		</post-migration>
+	</repair-steps>
     <settings>
         <admin>OCA\Gitlab\Settings\Admin</admin>
         <admin-section>OCA\Gitlab\Settings\AdminSection</admin-section>

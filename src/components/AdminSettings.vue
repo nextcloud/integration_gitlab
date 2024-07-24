@@ -59,11 +59,6 @@
 					@input="onInput">
 			</div>
 			<NcCheckboxRadioSwitch
-				:checked="state.use_popup"
-				@update:checked="onCheckboxChanged($event, 'use_popup')">
-				{{ t('integration_gitlab', 'Use a popup to authenticate') }}
-			</NcCheckboxRadioSwitch>
-			<NcCheckboxRadioSwitch
 				:checked="state.link_preview_enabled"
 				@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
 				{{ t('integration_gitlab', 'Enable GitLab link previews') }}

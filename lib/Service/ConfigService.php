@@ -42,14 +42,6 @@ class ConfigService {
 		$this->config->setAppValue(Application::APP_ID, 'oauth_instance_url', $url);
 	}
 
-	public function getAdminUsePopup(): bool {
-		return $this->config->getAppValue(Application::APP_ID, 'use_popup', '0') === '1';
-	}
-
-	public function setAdminUsePopup(bool $enabled): void {
-		$this->config->setAppValue(Application::APP_ID, 'use_popup', $enabled ? '1' : '0');
-	}
-
 	public function getAdminLinkPreviewEnabled(): bool {
 		return $this->config->getAppValue(Application::APP_ID, 'link_preview_enabled', '1') === '1';
 	}
@@ -62,22 +54,12 @@ class ConfigService {
 		return $this->config->getUserValue($userId, Application::APP_ID, 'url') ?: $this->getAdminOauthUrl();
 	}
 
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserUrl(string $userId, string $url): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'url', $url);
+	public function deleteUserUrl(string $userId): void {
+		$this->config->deleteUserValue($userId, Application::APP_ID, 'url');
 	}
 
 	public function getUserTokenType(string $userId): string {
 		return $this->config->getUserValue($userId, Application::APP_ID, 'token_type');
-	}
-
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserTokenType(string $userId, string $type): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'token_type', $type);
 	}
 
 	public function deleteUserTokenType(string $userId): void {
@@ -92,13 +74,6 @@ class ConfigService {
 		return $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 	}
 
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserRefreshToken(string $userId, string $refreshToken): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'refresh_token', $refreshToken);
-	}
-
 	public function deleteUserRefreshToken(string $userId): void {
 		$this->config->deleteUserValue($userId, Application::APP_ID, 'refresh_token');
 	}
@@ -111,22 +86,8 @@ class ConfigService {
 		return (int)$this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
 	}
 
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserTokenExpiresAt(string $userId, int $expiresAt): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'token_expires_at', (string)$expiresAt);
-	}
-
 	public function deleteUserTokenExpiresAt(string $userId): void {
 		$this->config->deleteUserValue($userId, Application::APP_ID, 'token_expires_at');
-	}
-
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserId(string $userId, string $id): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'user_id', $id);
 	}
 
 	public function deleteUserId(string $userId): void {
@@ -137,13 +98,6 @@ class ConfigService {
 		return $this->config->getUserValue($userId, Application::APP_ID, 'user_name');
 	}
 
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserName(string $userId, string $name): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'user_name', $name);
-	}
-
 	public function deleteUserName(string $userId): void {
 		$this->config->deleteUserValue($userId, Application::APP_ID, 'user_name');
 	}
@@ -152,26 +106,12 @@ class ConfigService {
 		return $this->config->getUserValue($userId, Application::APP_ID, 'user_displayname');
 	}
 
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserDisplayName(string $userId, string $displayName): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'user_displayname', $displayName);
-	}
-
 	public function deleteUserDisplayName(string $userId): void {
 		$this->config->deleteUserValue($userId, Application::APP_ID, 'user_displayname');
 	}
 
 	public function getUserToken(string $userId): string {
 		return $this->config->getUserValue($userId, Application::APP_ID, 'token');
-	}
-
-	/**
-	 * @throws PreConditionNotMetException
-	 */
-	public function setUserToken(string $userId, string $token): void {
-		$this->config->setUserValue($userId, Application::APP_ID, 'token', $token);
 	}
 
 	public function deleteUserToken(string $userId): void {
@@ -272,5 +212,16 @@ class ConfigService {
 	 */
 	public function setUserLinkPreviewEnabled(string $userId, bool $enabled): void {
 		$this->config->setUserValue($userId, Application::APP_ID, 'link_preview_enabled', $enabled ? '1' : '0');
+	}
+
+	public function getUserWidgetAccountId(string $userId): int {
+		return (int)$this->config->getUserValue($userId, Application::APP_ID, 'widget_account_id', '0');
+	}
+
+	/**
+	 * @throws PreConditionNotMetException
+	 */
+	public function setUserWidgetAccountId(string $userId, int $id): void {
+		$this->config->setUserValue($userId, Application::APP_ID, 'widget_account_id', (string)$id);
 	}
 }
