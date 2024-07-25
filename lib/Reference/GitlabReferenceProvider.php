@@ -26,12 +26,12 @@ use DateTime;
 use Exception;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
@@ -39,12 +39,14 @@ use Throwable;
 
 class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
 
-	public function __construct(private GitlabAPIService $gitlabAPIService,
-		private IConfig $config,
+	public function __construct(
+		private GitlabAPIService $gitlabAPIService,
+		private ConfigService $config,
 		private ReferenceManager $referenceManager,
 		private IURLGenerator $urlGenerator,
 		private IL10N $l10n,
-		private ?string $userId) {
+		private ?string $userId,
+	) {
 	}
 
 	/**
@@ -92,11 +94,10 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 		//	return ['https://gitlab.com'];
 		//}
 		$urls = [];
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
 		if ($this->userId !== null) {
-			$urls[] = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
+			$urls[] = $this->config->getUserUrl($this->userId);
 		} else {
-			$urls[] = $adminOauthUrl;
+			$urls[] = $this->config->getAdminOauthUrl();
 		}
 		// unfortunately most of what we need for reference stuff requires authentication
 		// let's not allow to handle multiple gitlab servers
@@ -132,12 +133,12 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 	 */
 	public function matchReference(string $referenceText): bool {
 		if ($this->userId !== null) {
-			$linkPreviewEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
+			$linkPreviewEnabled = $this->config->getUserLinkPreviewEnabled($this->userId);
 			if (!$linkPreviewEnabled) {
 				return false;
 			}
 		}
-		$adminLinkPreviewEnabled = $this->config->getAppValue(Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$adminLinkPreviewEnabled = $this->config->getAdminLinkPreviewEnabled();
 		if (!$adminLinkPreviewEnabled) {
 			return false;
 		}
@@ -225,14 +226,14 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 			try {
 				$ts = (new DateTime($commentInfo['created_at']))->getTimestamp();
 				$info['created_at'] = $ts;
-			} catch (Exception | Throwable $e) {
+			} catch (Exception|Throwable $e) {
 			}
 		}
 		if (isset($commentInfo['updated_at'])) {
 			try {
 				$ts = (new DateTime($commentInfo['updated_at']))->getTimestamp();
 				$info['updated_at'] = $ts;
-			} catch (Exception | Throwable $e) {
+			} catch (Exception|Throwable $e) {
 			}
 		}
 		if (isset($commentInfo['author'], $commentInfo['author']['username'])) {
@@ -272,7 +273,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 			try {
 				$ts = (new DateTime($issueInfo['created_at']))->getTimestamp();
 				$info['created_at'] = $ts;
-			} catch (Exception | Throwable $e) {
+			} catch (Exception|Throwable $e) {
 			}
 		}
 		if (isset($issueInfo['author'], $issueInfo['author']['username'])) {
@@ -312,7 +313,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 			try {
 				$ts = (new DateTime($prInfo['created_at']))->getTimestamp();
 				$info['created_at'] = $ts;
-			} catch (Exception | Throwable $e) {
+			} catch (Exception|Throwable $e) {
 			}
 		}
 		if (isset($prInfo['author'], $prInfo['author']['username'])) {
@@ -338,7 +339,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 	 * @return array|null
 	 */
 	private function getPrPath(string $gitlabUrl, string $url): ?array {
-		preg_match('/^'. preg_quote($gitlabUrl, '/') . '\/([^\/\?]+)\/([^\/\?]+)\/-\/merge_requests\/([0-9]+)(.*$)/', $url, $matches);
+		preg_match('/^' . preg_quote($gitlabUrl, '/') . '\/([^\/\?]+)\/([^\/\?]+)\/-\/merge_requests\/([0-9]+)(.*$)/', $url, $matches);
 		return count($matches) > 3 ? [$matches[1], $matches[2], $matches[3], $matches[4]] : null;
 	}
 
@@ -348,7 +349,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 	 */
 	private function getCommentId(string $urlEnd): ?int {
 		preg_match('/^#note_([0-9]+)$/', $urlEnd, $matches);
-		return (count($matches) > 1) ? ((int) $matches[1]) : null;
+		return (count($matches) > 1) ? ((int)$matches[1]) : null;
 	}
 
 	/**

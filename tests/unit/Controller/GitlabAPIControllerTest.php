@@ -7,11 +7,11 @@ namespace OCA\Gitlab\Tests;
 
 use OCA\Gitlab\AppInfo\Application;
 use OCA\Gitlab\Controller\GitlabAPIController;
+use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\Http\Client\IClient;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\IResponse;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -60,24 +60,24 @@ class GitlabAPIControllerTest extends TestCase {
 		$clientService->method('newClient')->willReturn($this->iClient);
 
 		$this->gitlabApiService = new GitlabAPIService(
-			self::APP_NAME,
 			\OC::$server->get(\Psr\Log\LoggerInterface::class),
 			$this->createMock(IL10N::class),
-			\OC::$server->get(IConfig::class),
+			\OC::$server->get(ConfigService::class),
 			$clientService,
 		);
 
 		$this->gitlabApiController = new GitlabAPIController(
 			self::APP_NAME,
 			$this->createMock(IRequest::class),
-			\OC::$server->get(IConfig::class),
+			\OC::$server->get(ConfigService::class),
 			\OC::$server->get(IURLGenerator::class),
 			$this->gitlabApiService,
 			self::TEST_USER1
 		);
 
-		$this->config = \OC::$server->get(IConfig::class);
-		$this->config->setUserValue(self::TEST_USER1, Application::APP_ID, 'token', self::API_TOKEN);
+		$this->config = \OC::$server->get(ConfigService::class);
+		$this->config->setUserToken(self::TEST_USER1, self::API_TOKEN);
+		$this->config->setUserUrl(self::TEST_USER1, Application::DEFAULT_GITLAB_URL);
 	}
 
 	public function testGetUserAvatar(): void {

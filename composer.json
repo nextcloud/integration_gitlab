@@ -50,5 +50,10 @@
 			"target-directory": "vendor-bin",
 			"forward-command": true
 		}
+	},
+	"autoload": {
+		"psr-4": {
+			"OCA\\Gitlab\\": "lib/"
+		}
 	}
 }

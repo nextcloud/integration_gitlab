@@ -24,21 +24,22 @@
 namespace OCA\Gitlab\Dashboard;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Service\ConfigService;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\Dashboard\IWidget;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
-
 use OCP\Util;
 
 class GitlabWidget implements IWidget {
 
-	public function __construct(private IL10N $l10n,
-		private IConfig $config,
+	public function __construct(
+		private IL10N $l10n,
+		private ConfigService $config,
 		private IURLGenerator $url,
 		private IInitialState $initialStateService,
-		private ?string $userId) {
+		private string $userId,
+	) {
 	}
 
 	/**
@@ -80,16 +81,15 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
-		$adminOauthUrl = $this->config->getAppValue(Application::APP_ID, 'oauth_instance_url', Application::DEFAULT_GITLAB_URL) ?: Application::DEFAULT_GITLAB_URL;
-		$url = $this->config->getUserValue($this->userId, Application::APP_ID, 'url', $adminOauthUrl) ?: $adminOauthUrl;
-		$oauthPossible = $clientID !== '' && $clientSecret !== '' && $url === $adminOauthUrl;
-		$usePopup = $this->config->getAppValue(Application::APP_ID, 'use_popup', '0');
+		$clientID = $this->config->getAdminClientId();
+		$clientSecret = $this->config->getAdminClientSecret();
+		$adminOauthUrl = $this->config->getAdminOauthUrl();
+		$url = $this->config->getUserUrl($this->userId);
+		$usePopup = $this->config->getAdminUsePopup();
 
 		$userConfig = [
-			'oauth_is_possible' => $oauthPossible,
-			'use_popup' => ($usePopup === '1'),
+			'oauth_is_possible' => $clientID !== '' && $clientSecret !== '' && $url === $adminOauthUrl,
+			'use_popup' => $usePopup,
 			'url' => $url,
 			'client_id' => $clientID,
 		];
