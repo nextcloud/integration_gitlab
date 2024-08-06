@@ -5,7 +5,7 @@ OC.L10N.register(
     "GitLab To-Dos" : "Завдання на GitLab",
     "Bad HTTP method" : "Поганий метод HTTP",
     "Bad credentials" : "Погані облікові дані",
-    "OAuth access token refused" : "Маркер доступу OAuth відхилено",
+    "OAuth access token refused" : "Токен доступу OAuth відхилено",
     "Connected accounts" : "Підключені облікові записи",
     "Mark as done" : "Позначити як виконане",
     "You were mentioned" : "Про вас згадували",
