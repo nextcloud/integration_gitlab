@@ -1,35 +1,13 @@
 <template>
 	<NcDashboardWidget :items="items"
-		:show-more-url="showMoreUrl"
+		:show-more-url="config?.url?.replace(/\/+$/, '') + '/dashboard/todos'"
 		:show-more-text="title"
-		:loading="state === 'loading'"
-		:item-menu="itemMenu"
-		@markDone="onMarkDone">
+		:loading="state === 'loading'">
 		<template #empty-content>
 			<NcEmptyContent v-if="emptyContentMessage"
 				:title="emptyContentMessage">
 				<template #icon>
 					<component :is="emptyContentIcon" />
-				</template>
-				<template #action>
-					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
-						<a v-if="!initialState.oauth_is_possible"
-							:href="settingsUrl">
-							<NcButton>
-								<template #icon>
-									<LoginVariantIcon />
-								</template>
-								{{ t('integration_gitlab', 'Connect to GitLab') }}
-							</NcButton>
-						</a>
-						<NcButton v-else
-							@click="onOauthClick">
-							<template #icon>
-								<LoginVariantIcon />
-							</template>
-							{{ t('integration_gitlab', 'Connect to {url}', { url: gitlabUrl }) }}
-						</NcButton>
-					</div>
 				</template>
 			</NcEmptyContent>
 		</template>
@@ -52,8 +30,6 @@ import moment from '@nextcloud/moment'
 
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-
-import { oauthConnect, oauthConnectConfirmDialog } from '../utils.js'
 
 export default {
 	name: 'Dashboard',
@@ -78,25 +54,12 @@ export default {
 			loop: null,
 			state: 'loading',
 			settingsUrl: generateUrl('/settings/user/connected-accounts'),
-			themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
-			itemMenu: {
-				markDone: {
-					text: t('integration_gitlab', 'Mark as done'),
-					icon: 'icon-checkmark',
-				},
-			},
-			initialState: loadState('integration_gitlab', 'user-config'),
+			config: loadState('integration_gitlab', 'user-config'),
 			windowVisibility: true,
 		}
 	},
 
 	computed: {
-		gitlabUrl() {
-			return this.initialState?.url?.replace(/\/+$/, '')
-		},
-		showMoreUrl() {
-			return this.gitlabUrl + '/dashboard/todos'
-		},
 		items() {
 			return this.notifications.map((n) => {
 				return {
@@ -120,7 +83,7 @@ export default {
 			return moment(this.lastDate)
 		},
 		emptyContentMessage() {
-			if (this.state === 'no-token') {
+			if (this.state === 'no-account') {
 				return t('integration_gitlab', 'No GitLab account connected')
 			} else if (this.state === 'error') {
 				return t('integration_gitlab', 'Error connecting to GitLab')
@@ -130,7 +93,7 @@ export default {
 			return ''
 		},
 		emptyContentIcon() {
-			if (this.state === 'no-token') {
+			if (this.state === 'no-account') {
 				return GitlabIcon
 			} else if (this.state === 'error') {
 				return CloseIcon
@@ -164,22 +127,6 @@ export default {
 	},
 
 	methods: {
-		onOauthClick() {
-			oauthConnectConfirmDialog(this.gitlabUrl).then((result) => {
-				if (result) {
-					if (this.initialState.use_popup) {
-						this.state = 'loading'
-						oauthConnect(this.gitlabUrl, this.initialState.client_id, null, true)
-							.then((data) => {
-								this.stopLoop()
-								this.launchLoop()
-							})
-					} else {
-						oauthConnect(this.gitlabUrl, this.initialState.client_id, 'dashboard')
-					}
-				}
-			})
-		},
 		changeWindowVisibility() {
 			this.windowVisibility = !document.hidden
 		},
@@ -191,26 +138,25 @@ export default {
 			this.loop = setInterval(() => this.fetchNotifications(), 60000)
 		},
 		fetchNotifications() {
+			if (this.config.widget_account_id === 0) {
+				this.state = 'no-account'
+				return
+			}
+
 			const req = {}
 			if (this.lastDate) {
 				req.params = {
 					since: this.lastDate,
 				}
 			}
-			axios.get(generateUrl('/apps/integration_gitlab/todos'), req).then((response) => {
+			axios.get(generateUrl(`/apps/integration_gitlab/gitlab/${this.config.widget_account_id}/todos`), req).then((response) => {
 				this.processNotifications(response.data)
 				this.state = 'ok'
 			}).catch((error) => {
 				clearInterval(this.loop)
-				if (error.response && error.response.status === 400) {
-					this.state = 'no-token'
-				} else if (error.response && error.response.status === 401) {
-					showError(t('integration_gitlab', 'Failed to get GitLab notifications'))
-					this.state = 'error'
-				} else {
-					// there was an error in notif processing
-					console.debug(error)
-				}
+				showError(t('integration_gitlab', 'Failed to get GitLab notifications'))
+				this.state = 'error'
+				console.debug(error)
 			})
 		},
 		processNotifications(newNotifications) {
@@ -242,42 +188,13 @@ export default {
 		},
 		getNotificationImage(n) {
 			return (n.project && n.project.id && n.project.visibility !== 'private')
-				? generateUrl('/apps/integration_gitlab/avatar/project?') + encodeURIComponent('projectId') + '=' + encodeURIComponent(n.project.id)
+				? generateUrl(`/apps/integration_gitlab/gitlab/${this.config.widget_account_id}/avatar/project?`) + encodeURIComponent('projectId') + '=' + encodeURIComponent(n.project.id)
 				: undefined
-		},
-		getAuthorFullName(n) {
-			return n.author.name
-				? (n.author.name + ' (@' + n.author.username + ')')
-				: n.author.username
-		},
-		getAuthorAvatarUrl(n) {
-			return (n.author && n.author.id)
-				? generateUrl('/apps/integration_gitlab/avatar/user/{userId}', { userId: n.author.id })
-				: ''
 		},
 		getRepositoryName(n) {
 			return n.project.path
 				? n.project.path
 				: ''
-		},
-		getNotificationProjectName(n) {
-			return n.project.path_with_namespace
-		},
-		getNotificationContent(n) {
-			if (n.action_name === 'mentioned') {
-				return t('integration_gitlab', 'You were mentioned')
-			} else if (n.action_name === 'approval_required') {
-				return t('integration_gitlab', 'Your approval is required')
-			} else if (n.action_name === 'assigned') {
-				return t('integration_gitlab', 'You were assigned')
-			} else if (n.action_name === 'build_failed') {
-				return t('integration_gitlab', 'A build has failed')
-			} else if (n.action_name === 'marked') {
-				return t('integration_gitlab', 'Marked')
-			} else if (n.action_name === 'directly_addressed') {
-				return t('integration_gitlab', 'You were directly addressed')
-			}
-			return ''
 		},
 		getNotificationTypeImage(n) {
 			if (n.target_type === 'MergeRequest') {
@@ -304,14 +221,8 @@ export default {
 		getSubline(n) {
 			return this.getNotificationActionChar(n) + ' ' + n.project.path_with_namespace + this.getTargetIdentifier(n)
 		},
-		getTargetContent(n) {
-			return n.body
-		},
 		getTargetTitle(n) {
 			return n.target.title
-		},
-		getProjectPath(n) {
-			return n.project.path_with_namespace
 		},
 		getTargetIdentifier(n) {
 			if (n.target_type === 'MergeRequest') {
@@ -320,26 +231,6 @@ export default {
 				return '#' + n.target.iid
 			}
 			return ''
-		},
-		getFormattedDate(n) {
-			return moment(n.updated_at).format('LLL')
-		},
-		onMarkDone(item) {
-			// TODO adapt vue-dashboard to give ID in item and use following line
-			// const i = this.notifications.findIndex((n) => this.getUniqueKey(n) === item.id)
-			const i = this.notifications.findIndex((n) => n.target_url === item.targetUrl)
-			if (i !== -1) {
-				const id = this.notifications[i].id
-				this.notifications.splice(i, 1)
-				this.editTodo(id, 'mark-done')
-			}
-		},
-		editTodo(id, action) {
-			axios.put(generateUrl('/apps/integration_gitlab/todos/' + id + '/' + action)).then((response) => {
-			}).catch((error) => {
-				showError(t('integration_gitlab', 'Failed to edit GitLab To-Do'))
-				console.debug(error)
-			})
 		},
 	},
 }

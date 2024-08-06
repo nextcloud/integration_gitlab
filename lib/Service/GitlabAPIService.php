@@ -11,18 +11,17 @@
 
 namespace OCA\Gitlab\Service;
 
-use DateInterval;
 use DateTime;
-use DateTimeImmutable;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Db\GitlabAccount;
+use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCP\Http\Client\IClient;
 use OCP\Http\Client\IClientService;
 use OCP\IL10N;
-use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -37,20 +36,17 @@ class GitlabAPIService {
 		private IL10N $l10n,
 		private ConfigService $config,
 		IClientService $clientService,
+		private GitlabAccountMapper $accountMapper,
+		private string $userId,
 	) {
 		$this->client = $clientService->newClient();
 	}
 
-	/**
-	 * @param string $userId
-	 * @return array
-	 * @throws Exception
-	 */
-	private function getMyProjectsInfo(string $userId): array {
+	private function getMyProjectsInfo(GitlabAccount $account): array {
 		$params = [
 			'membership' => 'true',
 		];
-		$projects = $this->request($userId, 'projects', $params);
+		$projects = $this->request($account, $account->getUrl(), 'projects', $params);
 		if (isset($projects['error'])) {
 			return $projects;
 		}
@@ -94,15 +90,7 @@ class GitlabAPIService {
 		}
 	}
 
-	/**
-	 * @param string $userId
-	 * @param string $term
-	 * @param int $offset
-	 * @param int $limit
-	 * @return array
-	 * @throws Exception
-	 */
-	public function searchRepositories(string $userId, string $term, int $offset = 0, int $limit = 5): array {
+	public function searchRepositories(GitlabAccount $account, string $term, int $offset = 0, int $limit = 5): array {
 		[$perPage, $page, $leftPadding] = self::getGitLabPaginationValues($offset, $limit);
 		$params = [
 			'scope' => 'projects',
@@ -111,22 +99,14 @@ class GitlabAPIService {
 			'per_page' => $perPage,
 			'page' => $page,
 		];
-		$projects = $this->request($userId, 'search', $params);
+		$projects = $this->request($account, $account->getUrl(), 'search', $params);
 		if (isset($projects['error'])) {
 			return $projects;
 		}
 		return array_slice($projects, $leftPadding, $limit);
 	}
 
-	/**
-	 * @param string $userId
-	 * @param string $term
-	 * @param int $offset
-	 * @param int $limit
-	 * @return array
-	 * @throws Exception
-	 */
-	public function searchIssues(string $userId, string $term, int $offset = 0, int $limit = 5): array {
+	public function searchIssues(GitlabAccount $account, string $term, int $offset = 0, int $limit = 5): array {
 		[$perPage, $page, $leftPadding] = self::getGitLabPaginationValues($offset, $limit);
 		$params = [
 			'scope' => 'issues',
@@ -135,22 +115,14 @@ class GitlabAPIService {
 			'per_page' => $perPage,
 			'page' => $page,
 		];
-		$issues = $this->request($userId, 'search', $params);
+		$issues = $this->request($account, $account->getUrl(), 'search', $params);
 		if (isset($issues['error'])) {
 			return $issues;
 		}
 		return array_slice($issues, $leftPadding, $limit);
 	}
 
-	/**
-	 * @param string $userId
-	 * @param string $term
-	 * @param int $offset
-	 * @param int $limit
-	 * @return array|string[]
-	 * @throws PreConditionNotMetException
-	 */
-	public function searchMergeRequests(string $userId, string $term, int $offset = 0, int $limit = 5): array {
+	public function searchMergeRequests(GitlabAccount $account, string $term, int $offset = 0, int $limit = 5): array {
 		[$perPage, $page, $leftPadding] = self::getGitLabPaginationValues($offset, $limit);
 		$params = [
 			'scope' => 'merge_requests',
@@ -159,141 +131,18 @@ class GitlabAPIService {
 			'per_page' => $perPage,
 			'page' => $page,
 		];
-		$mergeRequests = $this->request($userId, 'search', $params);
+		$mergeRequests = $this->request($account, $account->getUrl(), 'search', $params);
 		if (isset($mergeRequests['error'])) {
 			return $mergeRequests;
 		}
 		return array_slice($mergeRequests, $leftPadding, $limit);
 	}
 
-	/**
-	 * @param string $userId
-	 * @param ?string $since
-	 * @return array
-	 * @throws Exception
-	 */
-	public function getEvents(string $userId, ?string $since = null): array {
-		// first get list of the projects i'm member of
-		$projectsInfo = $this->getMyProjectsInfo($userId);
-		if (isset($projectsInfo['error'])) {
-			return $projectsInfo;
-		}
-		// get current user ID
-		$user = $this->request($userId, 'user');
-		if (isset($user['error'])) {
-			return $user;
-		}
-
-		// then get many things
-		$params = [
-			'scope' => 'all',
-		];
-		if (is_null($since)) {
-			$twoWeeksEarlier = new DateTime();
-			$twoWeeksEarlier->sub(new DateInterval('P14D'));
-			$params['after'] = $twoWeeksEarlier->format('Y-m-d');
-		} else {
-			// we get a full ISO date, the API only wants a day (non inclusive)
-			$sinceDate = new DateTimeImmutable($since);
-			$sinceTimestamp = $sinceDate->getTimestamp();
-			$minusOneDayDate = $sinceDate->sub(new DateInterval('P1D'));
-			$params['after'] = $minusOneDayDate->format('Y-m-d');
-		}
-		// merge requests created
-		$params['target_type'] = 'merge_request';
-		$params['action'] = 'created';
-		$result = $this->request($userId, 'events', $params);
-		if (isset($result['error'])) {
-			return $result;
-		}
-		// merge requests merged
-		$params['target_type'] = 'merge_request';
-		$params['action'] = 'merged';
-		$mrm = $this->request($userId, 'events', $params);
-		if (isset($mrm['error'])) {
-			return $mrm;
-		}
-		$result = array_merge($result, $mrm);
-		// issues created
-		$params['target_type'] = 'issue';
-		$params['action'] = 'created';
-		$ic = $this->request($userId, 'events', $params);
-		if (isset($ic['error'])) {
-			return $ic;
-		}
-		$result = array_merge($result, $ic);
-		// issues closed
-		$params['target_type'] = 'issue';
-		$params['action'] = 'closed';
-		$icl = $this->request($userId, 'events', $params);
-		if (isset($icl['error'])) {
-			return $icl;
-		}
-		$result = array_merge($result, $icl);
-		// issue comments
-		$params['target_type'] = 'note';
-		$params['action'] = 'commented';
-		$ico = $this->request($userId, 'events', $params);
-		if (isset($ico['error'])) {
-			return $ico;
-		}
-		$result = array_merge($result, $ico);
-
-		// filter merged results by date
-		if (!is_null($since)) {
-			$result = array_filter($result, function ($elem) use ($sinceTimestamp) {
-				$date = new DateTime($elem['created_at']);
-				$ts = $date->getTimestamp();
-				return $ts > $sinceTimestamp;
-			});
-		}
-
-		// avoid what has been done by me
-		$result = array_filter($result, function ($elem) use ($user) {
-			return $elem['author_id'] !== $user['id'];
-		});
-		// make sure it's an array and not a hastable
-		$result = array_values($result);
-
-		// sort merged results by date
-		usort($result, function ($a, $b) {
-			$a = new DateTime($a['created_at']);
-			$ta = $a->getTimestamp();
-			$b = new DateTime($b['created_at']);
-			$tb = $b->getTimestamp();
-			return ($ta > $tb) ? -1 : 1;
-		});
-
-		// add project path in results
-		foreach ($result as $k => $r) {
-			$pid = $r['project_id'];
-			$result[$k]['project_path'] = $projectsInfo[$pid]['path_with_namespace'];
-			$result[$k]['project_avatar_url'] = $projectsInfo[$pid]['avatar_url'];
-		}
-		return $result;
-	}
-
-	/**
-	 * @param string $userId
-	 * @param int $id
-	 * @return array
-	 * @throws Exception
-	 */
-	public function markTodoAsDone(string $userId, int $id): array {
-		return $this->request($userId, 'todos/' . $id . '/mark_as_done', [], 'POST');
-	}
-
-	/**
-	 * @param string $userId
-	 * @param ?string $since
-	 * @return array
-	 * @throws Exception
-	 */
-	public function getTodos(string $userId, ?string $since = null): array {
+	public function getTodos(GitlabAccount $account, ?string $since = null): array {
 		$params = [
 			'state' => 'pending',
 		];
-		$result = $this->request($userId, 'todos', $params);
+		$result = $this->request($account, $account->getUrl(), 'todos', $params);
 		if (isset($result['error'])) {
 			return $result;
 		}
@@ -315,7 +164,7 @@ class GitlabAPIService {
 		$result = array_values($result);
 
 		// add project avatars to results
-		$projectsInfo = $this->getMyProjectsInfo($userId);
+		$projectsInfo = $this->getMyProjectsInfo($account);
 		foreach ($result as $k => $todo) {
 			$pid = $todo['project']['id'];
 			if (array_key_exists($pid, $projectsInfo)) {
@@ -323,7 +172,7 @@ class GitlabAPIService {
 				$result[$k]['project']['visibility'] = $projectsInfo[$pid]['visibility'];
 			} else {
 				// get the project avatar
-				$projectInfo = $this->request($userId, 'projects/' . $pid);
+				$projectInfo = $this->request($account, $account->getUrl(), 'projects/' . $pid);
 				if (isset($projectInfo['error'])) {
 					return $projectInfo;
 				}
@@ -340,118 +189,49 @@ class GitlabAPIService {
 		return $result;
 	}
 
-	/**
-	 * @param string $userId
-	 * @param int $gitlabUserId
-	 * @return array
-	 * @throws Exception
-	 */
-	public function getUserAvatar(string $userId, int $gitlabUserId): array {
-		$userInfo = $this->request($userId, 'users/' . $gitlabUserId);
+	public function getUserAvatar(GitlabAccount $account, string $baseUrl, int $gitlabUserId): array {
+		$userInfo = $this->request($account, $baseUrl, 'users/' . $gitlabUserId);
 		if (!isset($userInfo['error']) && isset($userInfo['avatar_url'])) {
 			return ['avatarContent' => $this->client->get($userInfo['avatar_url'])->getBody()];
 		}
 		return ['userInfo' => $userInfo];
 	}
 
-	/**
-	 * @param string $userId
-	 * @param int $projectId
-	 * @return array
-	 * @throws Exception
-	 */
-	public function getProjectAvatar(string $userId, int $projectId): array {
-		$projectInfo = $this->request($userId, 'projects/' . $projectId);
+	public function getProjectAvatar(GitlabAccount $account, string $baseUrl, int $projectId): array {
+		$projectInfo = $this->request($account, $baseUrl, 'projects/' . $projectId);
 		if (!isset($projectInfo['error']) && isset($projectInfo['avatar_url'])) {
 			return ['avatarContent' => $this->client->get($projectInfo['avatar_url'])->getBody()];
 		}
 		return ['projectInfo' => $projectInfo];
 	}
 
-	/**
-	 * @param string|null $userId
-	 * @param string $owner
-	 * @param string $repo
-	 * @return array
-	 * @throws PreConditionNotMetException
-	 */
-	public function getProjectInfo(?string $userId, string $owner, string $repo): array {
-		return $this->request($userId, 'projects/' . urlencode($owner . '/' . $repo));
+	public function getProjectInfo(?GitlabAccount $account, string $baseUrl, string $owner, string $repo): array {
+		return $this->request($account, $baseUrl, 'projects/' . urlencode($owner . '/' . $repo));
 	}
 
-	/**
-	 * @param string|null $userId
-	 * @param int $projectId
-	 * @return array|string[]
-	 * @throws PreConditionNotMetException
-	 */
-	public function getProjectLabels(?string $userId, int $projectId): array {
-		return $this->request($userId, 'projects/' . $projectId . '/labels');
+	public function getProjectLabels(GitlabAccount $account, string $baseUrl, int $projectId): array {
+		return $this->request($account, $baseUrl, 'projects/' . $projectId . '/labels');
 	}
 
-	/**
-	 * @param string|null $userId
-	 * @param int $projectId
-	 * @param int $issueId
-	 * @return array|string[]
-	 * @throws PreConditionNotMetException
-	 */
-	public function getIssueInfo(?string $userId, int $projectId, int $issueId): array {
-		return $this->request($userId, 'projects/' . $projectId . '/issues/' . $issueId);
+	public function getIssueInfo(?GitlabAccount $account, string $baseUrl, int $projectId, int $issueId): array {
+		return $this->request($account, $baseUrl, 'projects/' . $projectId . '/issues/' . $issueId);
 	}
 
-	/**
-	 * @param string|null $userId
-	 * @param int $projectId
-	 * @param int $issueId
-	 * @param int $commentId
-	 * @return array|string[]
-	 * @throws PreConditionNotMetException
-	 */
-	public function getIssueCommentInfo(?string $userId, int $projectId, int $issueId, int $commentId): array {
-		return $this->request($userId, 'projects/' . $projectId . '/issues/' . $issueId . '/notes/' . $commentId);
+	public function getIssueCommentInfo(?GitlabAccount $account, string $baseUrl, int $projectId, int $issueId, int $commentId): array {
+		return $this->request($account, $baseUrl, 'projects/' . $projectId . '/issues/' . $issueId . '/notes/' . $commentId);
 	}
 
-	/**
-	 * @param string|null $userId
-	 * @param int $projectId
-	 * @param int $prId
-	 * @param string|null $gitlabUrl
-	 * @return array|string[]
-	 * @throws PreConditionNotMetException
-	 */
-	public function getPrInfo(?string $userId, int $projectId, int $prId): array {
-		return $this->request($userId, 'projects/' . $projectId . '/merge_requests/' . $prId);
+	public function getPrInfo(?GitlabAccount $account, string $baseUrl, int $projectId, int $prId): array {
+		return $this->request($account, $baseUrl, 'projects/' . $projectId . '/merge_requests/' . $prId);
 	}
 
-	/**
-	 * @param string|null $userId
-	 * @param int $projectId
-	 * @param int $prId
-	 * @param int $commentId
-	 * @return array|string[]
-	 * @throws PreConditionNotMetException
-	 */
-	public function getPrCommentInfo(?string $userId, int $projectId, int $prId, int $commentId): array {
-		return $this->request($userId, 'projects/' . $projectId . '/merge_requests/' . $prId . '/notes/' . $commentId);
+	public function getPrCommentInfo(?GitlabAccount $account, string $baseUrl, int $projectId, int $prId, int $commentId): array {
+		return $this->request($account, $baseUrl, 'projects/' . $projectId . '/merge_requests/' . $prId . '/notes/' . $commentId);
 	}
 
-	/**
-	 * @param string|null $userId
-	 * @param string $endPoint
-	 * @param array $params
-	 * @param string $method
-	 * @return array
-	 * @throws PreConditionNotMetException
-	 */
-	public function request(?string $userId, string $endPoint, array $params = [], string $method = 'GET'): array {
-		if ($userId !== null) {
-			$this->checkTokenExpiration($userId);
-		}
-		if ($userId === null) {
-			$baseUrl = $this->config->getAdminOauthUrl();
-		} else {
-			$baseUrl = $this->config->getUserUrl($userId);
+	public function request(?GitlabAccount $account, string $baseUrl, string $endPoint, array $params = [], string $method = 'GET'): array {
+		if ($account !== null) {
+			$this->checkTokenExpiration($account);
 		}
 		try {
 			$url = $baseUrl . '/api/v4/' . $endPoint;
@@ -462,8 +242,8 @@ class GitlabAPIService {
 			];
 
 			// try anonymous request if no user (public page) or user not connected to a gitlab account
-			if ($userId !== null) {
-				$accessToken = $this->config->getUserToken($userId);
+			if ($account !== null) {
+				$accessToken = $account->getToken();
 				if ($accessToken !== '') {
 					$options['headers']['Authorization'] = 'Bearer ' . $accessToken;
 				}
@@ -517,29 +297,19 @@ class GitlabAPIService {
 		}
 	}
 
-	/**
-	 * @param string $userId
-	 * @return void
-	 * @throws PreConditionNotMetException
-	 */
-	private function checkTokenExpiration(string $userId): void {
-		if ($this->config->hasUserRefreshToken($userId) && $this->config->hasUserTokenExpiresAt($userId)) {
+	private function checkTokenExpiration(GitlabAccount $account): void {
+		if ($account->getRefreshToken() && $account->getTokenExpiresAt()) {
 			$nowTs = (new DateTime())->getTimestamp();
 			// if token expires in less than a minute or is already expired
-			if ($nowTs > $this->config->getUserTokenExpiresAt($userId) - 60) {
-				$this->refreshToken($userId);
+			if ($nowTs > $account->getTokenExpiresAt() - 60) {
+				$this->refreshToken($account);
 			}
 		}
 	}
 
-	/**
-	 * @param string $userId
-	 * @return bool
-	 * @throws PreConditionNotMetException
-	 */
-	private function refreshToken(string $userId): bool {
+	private function refreshToken(GitlabAccount $account): bool {
 		$adminOauthUrl = $this->config->getAdminOauthUrl();
-		$refreshToken = $this->config->getUserRefreshToken($userId);
+		$refreshToken = $account->getRefreshToken();
 		if (!$refreshToken) {
 			$this->logger->error('No GitLab refresh token found', ['app' => Application::APP_ID]);
 			return false;
@@ -548,21 +318,22 @@ class GitlabAPIService {
 			'client_id' => $this->config->getAdminClientId(),
 			'client_secret' => $this->config->getAdminClientSecret(),
 			'grant_type' => 'refresh_token',
-			'redirect_uri' => $this->config->getUserRedirectUri($userId),
+			'redirect_uri' => $this->config->getUserRedirectUri($this->userId),
 			'refresh_token' => $refreshToken,
 		], 'POST');
 		if (isset($result['access_token'])) {
 			$this->logger->info('GitLab access token successfully refreshed', ['app' => Application::APP_ID]);
 			$accessToken = $result['access_token'];
 			$refreshToken = $result['refresh_token'];
-			$this->config->setUserUrl($userId, $adminOauthUrl);
-			$this->config->setUserToken($userId, $accessToken);
-			$this->config->setUserRefreshToken($userId, $refreshToken);
+			$account->setUrl($adminOauthUrl);
+			$account->setToken($accessToken);
+			$account->setRefreshToken($refreshToken);
 			if (isset($result['expires_in'])) {
 				$nowTs = (new DateTime())->getTimestamp();
 				$expiresAt = $nowTs + (int) $result['expires_in'];
-				$this->config->setUserTokenExpiresAt($userId, $expiresAt);
+				$account->setTokenExpiresAt($expiresAt);
 			}
+			$this->accountMapper->update($account);
 			return true;
 		} else {
 			// impossible to refresh the token
@@ -576,11 +347,7 @@ class GitlabAPIService {
 		}
 	}
 
-	/**
-	 * @param string $userId
-	 * @return array
-	 */
-	public function revokeOauthToken(string $userId): array {
+	public function revokeOauthToken(GitlabAccount $account): array {
 		try {
 			$url = $this->config->getAdminOauthUrl() . '/oauth/revoke';
 			$options = [
@@ -591,7 +358,7 @@ class GitlabAPIService {
 				'body' => json_encode([
 					'client_id' => $this->config->getAdminClientId(),
 					'client_secret' => $this->config->getAdminClientSecret(),
-					'token' => $this->config->getUserToken($userId),
+					'token' => $account->getToken(),
 				]),
 			];
 

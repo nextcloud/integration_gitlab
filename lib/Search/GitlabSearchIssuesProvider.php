@@ -26,6 +26,8 @@ declare(strict_types=1);
 namespace OCA\Gitlab\Search;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Db\GitlabAccount;
+use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\App\IAppManager;
@@ -45,6 +47,7 @@ class GitlabSearchIssuesProvider implements IProvider {
 		private ConfigService $config,
 		private IURLGenerator $urlGenerator,
 		private GitlabAPIService $service,
+		private GitlabAccountMapper $accountMapper,
 	) {
 	}
 
@@ -95,33 +98,36 @@ class GitlabSearchIssuesProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$accessToken = $this->config->getUserToken($user->getUID());
-		if ($accessToken === '') {
-			return SearchResult::paginated($this->getName(), [], 0);
+		$formattedResults = [];
+
+		$accounts = $this->accountMapper->find($user->getUID());
+		foreach ($accounts as $account) {
+			$accessToken = $account->getToken();
+			if ($accessToken === '') {
+				continue;
+			}
+
+			$searchResult = $this->service->searchIssues($account, $term, $offset, $limit);
+			if (isset($searchResult['error'])) {
+				continue;
+			}
+
+			$formattedResults[] = array_map(function (array $entry) use ($account): SearchResultEntry {
+				$finalThumbnailUrl = $this->getThumbnailUrl($account, $entry);
+				return new SearchResultEntry(
+					$finalThumbnailUrl,
+					$this->getMainText($entry),
+					$this->getSubline($entry, $account->getUrl()),
+					$this->getLinkToGitlab($entry),
+					$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
+					true
+				);
+			}, $searchResult);
 		}
-
-		$url = $this->config->getUserUrl($user->getUID());
-
-		$issues = $this->service->searchIssues($user->getUID(), $term, $offset, $limit);
-		if (isset($issues['error'])) {
-			return SearchResult::paginated($this->getName(), [], 0);
-		}
-
-		$formattedResults = array_map(function (array $entry) use ($url): SearchResultEntry {
-			$finalThumbnailUrl = $this->getThumbnailUrl($entry);
-			return new SearchResultEntry(
-				$finalThumbnailUrl,
-				$this->getMainText($entry),
-				$this->getSubline($entry, $url),
-				$this->getLinkToGitlab($entry),
-				$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
-				true
-			);
-		}, $issues);
 
 		return SearchResult::paginated(
 			$this->getName(),
-			$formattedResults,
+			array_merge(...$formattedResults),
 			$offset + $limit
 		);
 	}
@@ -166,10 +172,10 @@ class GitlabSearchIssuesProvider implements IProvider {
 	 * @param string $thumbnailUrl
 	 * @return string
 	 */
-	protected function getThumbnailUrl(array $entry): string {
+	protected function getThumbnailUrl(GitlabAccount $account, array $entry): string {
 		$userId = $entry['author']['id'] ?? '';
 		return $userId
-			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', ['userId' => $userId])
+			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getUserAvatar', ['accountId' => $account->getId(), 'userId' => $userId])
 			: '';
 	}
 }

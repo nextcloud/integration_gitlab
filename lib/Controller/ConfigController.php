@@ -12,22 +12,25 @@
 namespace OCA\Gitlab\Controller;
 
 use DateTime;
-use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Db\GitlabAccount;
+use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCA\Gitlab\Model\AdminConfig;
 use OCA\Gitlab\Model\UserConfig;
 use OCA\Gitlab\Reference\GitlabReferenceProvider;
 use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
+use OCP\DB\Exception;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
+use Psr\Log\LoggerInterface;
 
 class ConfigController extends Controller {
 
@@ -41,6 +44,8 @@ class ConfigController extends Controller {
 		private GitlabAPIService $gitlabAPIService,
 		private GitlabReferenceProvider $gitlabReferenceProvider,
 		private string $userId,
+		private GitlabAccountMapper $accountMapper,
+		private LoggerInterface $logger,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -53,10 +58,6 @@ class ConfigController extends Controller {
 	 */
 	public function setConfig(array $values): DataResponse {
 		$userConfig = UserConfig::fromArray($values);
-		if ($userConfig->url !== null || $userConfig->token !== null) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
-		}
-
 		$userConfig->saveConfig($this->userId, $this->config);
 
 		return new DataResponse([]);
@@ -65,50 +66,69 @@ class ConfigController extends Controller {
 	/**
 	 * @PasswordConfirmationRequired
 	 * @NoAdminRequired
-	 *
-	 * @throws PreConditionNotMetException
 	 */
-	public function setSensitiveConfig(array $values): DataResponse {
-		$userConfig = UserConfig::fromArray($values);
-		$userConfig->saveConfig($this->userId, $this->config);
+	public function addAccount(string $url, string $token) {
+		try {
+			$account = new GitlabAccount();
+			$account->setUserId($this->userId);
+			$account->setUrl($url);
+			$account->setToken($token);
+			$account->setTokenType('personal');
 
-		// revoke the oauth token if needed
-		if ($userConfig->token === '') {
-			$tokenType = $this->config->getUserTokenType($this->userId);
-			if ($tokenType === 'oauth') {
-				$this->gitlabAPIService->revokeOauthToken($this->userId);
+			$this->accountMapper->insert($account);
+			$this->storeUserInfo($account);
+			$this->updateAccountsConfig();
+
+			return new DataResponse([
+				'account' => $account->jsonSerialize(),
+				'config' => UserConfig::loadConfig($this->userId, $this->config)->toArray(),
+			]);
+		} catch (Exception $e) {
+			$this->logger->error('Failed to query Gitlab account: ' . $e->getMessage(), ['exception' => $e]);
+			return new DataResponse([], 500);
+		}
+	}
+
+	/**
+	 * @PasswordConfirmationRequired
+	 * @NoAdminRequired
+	 */
+	public function deleteAccount(int $id) {
+		try {
+			$account = $this->accountMapper->findById($this->userId, $id);
+			$this->accountMapper->delete($account);
+
+			$this->updateAccountsConfig();
+
+			return new DataResponse([
+				'config' => UserConfig::loadConfig($this->userId, $this->config)->toArray(),
+			]);
+		} catch (DoesNotExistException $e) {
+			$this->logger->error('Requested Gitlab account with id ' . $id . 'not found');
+			return new DataResponse([], 404);
+		} catch (Exception $e) {
+			$this->logger->error('Failed to query Gitlab account: ' . $e->getMessage(), ['exception' => $e]);
+			return new DataResponse([], 500);
+		}
+	}
+
+	private function updateAccountsConfig(): void {
+		$widgetAccountId = $this->config->getUserWidgetAccountId($this->userId);
+
+		$accounts = $this->accountMapper->find($this->userId);
+
+		if (count($accounts) === 0) {
+			$widgetAccountId = 0;
+		} elseif (count($accounts) === 1) {
+			$widgetAccountId = $accounts[0]->getId();
+		} else {
+			$account = array_filter($accounts, static fn (GitlabAccount $account) => $account->getId() === $widgetAccountId);
+			if (count($account) !== 1) {
+				$widgetAccountId = 0;
 			}
 		}
 
-		$result = [];
-
-		if ($userConfig->token !== null) {
-			// if the token is set, cleanup refresh token and expiration date
-			$this->config->deleteUserTokenType($this->userId);
-			$this->config->deleteUserRefreshToken($this->userId);
-			$this->config->deleteUserTokenExpiresAt($this->userId);
-			$this->gitlabReferenceProvider->invalidateUserCache($this->userId);
-
-			if ($userConfig->token !== '') {
-				$info = $this->storeUserInfo();
-				if (isset($info['error'])) {
-					return new DataResponse(['error' => $info['error']], Http::STATUS_BAD_REQUEST);
-				}
-				$result['user_name'] = $info['username'] ?? '';
-				$result['user_displayname'] = $info['userdisplayname'] ?? '';
-				// store token type if it's valid (so we have a user name)
-				if ($result['user_name'] !== '') {
-					$this->config->setUserTokenType($this->userId, 'personal');
-				}
-			} else {
-				$this->config->deleteUserId($this->userId);
-				$this->config->deleteUserName($this->userId);
-				$this->config->deleteUserDisplayName($this->userId);
-				$this->config->deleteUserToken($this->userId);
-				$result['user_name'] = '';
-			}
-		}
-		return new DataResponse($result);
+		$this->config->setUserWidgetAccountId($this->userId, $widgetAccountId);
 	}
 
 	/**
@@ -135,19 +155,6 @@ class ConfigController extends Controller {
 		$adminConfig->saveConfig($this->config);
 
 		return new DataResponse(1);
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 *
-	 * @param string $user_name
-	 * @param string $user_displayname
-	 * @return TemplateResponse
-	 */
-	public function popupSuccessPage(string $user_name, string $user_displayname): TemplateResponse {
-		$this->initialStateService->provideInitialState('popup-data', ['user_name' => $user_name, 'user_displayname' => $user_displayname]);
-		return new TemplateResponse(Application::APP_ID, 'popupSuccess', [], TemplateResponse::RENDER_AS_GUEST);
 	}
 
 	/**
@@ -179,44 +186,40 @@ class ConfigController extends Controller {
 			], 'POST');
 			if (isset($result['access_token'])) {
 				$this->gitlabReferenceProvider->invalidateUserCache($this->userId);
-				$accessToken = $result['access_token'];
-				$refreshToken = $result['refresh_token'] ?? '';
+
+				$account = new GitlabAccount();
+				$account->setUserId($this->userId);
+				$account->setUrl($adminOauthUrl);
+				$account->setToken($result['access_token']);
+				$account->setTokenType('oauth');
+				$account->setRefreshToken($result['refresh_token'] ?? '');
 				if (isset($result['expires_in'])) {
 					$nowTs = (new Datetime())->getTimestamp();
 					$expiresAt = $nowTs + (int)$result['expires_in'];
-					$this->config->setUserTokenExpiresAt($this->userId, $expiresAt);
+					$account->setTokenExpiresAt($expiresAt);
 				}
-				$this->config->setUserUrl($this->userId, $adminOauthUrl);
-				$this->config->setUserToken($this->userId, $accessToken);
-				$this->config->setUserRefreshToken($this->userId, $refreshToken);
-				$this->config->setUserTokenType($this->userId, 'oauth');
-				$userInfo = $this->storeUserInfo();
+				$this->accountMapper->insert($account);
+				$this->storeUserInfo($account);
 
-				if ($this->config->getAdminUsePopup()) {
-					return new RedirectResponse(
-						$this->urlGenerator->linkToRoute('integration_gitlab.config.popupSuccessPage', [
-							'user_name' => $userInfo['username'] ?? '',
-							'user_displayname' => $userInfo['userdisplayname'] ?? '',
-						])
-					);
-				} else {
-					$oauthOrigin = $this->config->getUserOauthOrigin($this->userId);
-					$this->config->deleteUserOauthOrigin($this->userId);
-					if ($oauthOrigin === 'settings') {
-						return new RedirectResponse(
-							$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-							'?gitlabToken=success'
-						);
-					} elseif ($oauthOrigin === 'dashboard') {
-						return new RedirectResponse(
-							$this->urlGenerator->linkToRoute('dashboard.dashboard.index')
-						);
-					}
+				$this->updateAccountsConfig();
+
+				$oauthOrigin = $this->config->getUserOauthOrigin($this->userId);
+				$this->config->deleteUserOauthOrigin($this->userId);
+				if ($oauthOrigin === 'settings') {
 					return new RedirectResponse(
 						$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
 						'?gitlabToken=success'
 					);
 				}
+				if ($oauthOrigin === 'dashboard') {
+					return new RedirectResponse(
+						$this->urlGenerator->linkToRoute('dashboard.dashboard.index')
+					);
+				}
+				return new RedirectResponse(
+					$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
+					'?gitlabToken=success'
+				);
 			}
 			$result = $this->l->t('Error getting OAuth access token. ' . $result['error']);
 		} else {
@@ -228,25 +231,12 @@ class ConfigController extends Controller {
 		);
 	}
 
-	/**
-	 * @return array
-	 * @throws PreConditionNotMetException
-	 */
-	private function storeUserInfo(): array {
-		$info = $this->gitlabAPIService->request($this->userId, 'user');
+	private function storeUserInfo(GitlabAccount $account): void {
+		$info = $this->gitlabAPIService->request($account, $account->getUrl(), 'user');
 		if (isset($info['username']) && isset($info['id'])) {
-			$this->config->setUserId($this->userId, $info['id']);
-			$this->config->setUserName($this->userId, $info['username']);
-			$this->config->setUserDisplayName($this->userId, $info['name']);
-			return [
-				'username' => $info['username'],
-				'userid' => $info['id'],
-				'userdisplayname' => $info['name'],
-			];
-		} else {
-			$this->config->deleteUserId($this->userId);
-			$this->config->deleteUserName($this->userId);
-			return $info;
+			$account->setUserInfoName($info['username']);
+			$account->setUserInfoDisplayName($info['name']);
+			$this->accountMapper->update($account);
 		}
 	}
 }

@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace OCA\Gitlab\Search;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\App\IAppManager;
@@ -45,6 +46,7 @@ class GitlabSearchReposProvider implements IProvider {
 		private ConfigService $config,
 		private IURLGenerator $urlGenerator,
 		private GitlabAPIService $service,
+		private GitlabAccountMapper $accountMapper,
 	) {
 	}
 
@@ -95,33 +97,36 @@ class GitlabSearchReposProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$accessToken = $this->config->getUserToken($user->getUID());
-		if ($accessToken === '') {
-			return SearchResult::paginated($this->getName(), [], 0);
-		}
+		$formattedResults = [];
 
-		$searchResult = $this->service->searchRepositories($user->getUID(), $term, $offset, $limit);
-		if (isset($searchResult['error'])) {
-			$repos = [];
-		} else {
-			$repos = $searchResult;
-		}
+		$accounts = $this->accountMapper->find($user->getUID());
+		foreach ($accounts as $account) {
+			$accessToken = $account->getToken();
+			if ($accessToken === '') {
+				continue;
+			}
 
-		$formattedResults = array_map(function (array $entry): SearchResultEntry {
-			$finalThumbnailUrl = $this->getThumbnailUrl($entry);
-			return new SearchResultEntry(
-				$finalThumbnailUrl,
-				$this->getMainText($entry),
-				$this->getSubline($entry),
-				$this->getLinkToGitlab($entry),
-				$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
-				true
-			);
-		}, $repos);
+			$searchResult = $this->service->searchRepositories($account, $term, $offset, $limit);
+			if (isset($searchResult['error'])) {
+				continue;
+			}
+
+			$formattedResults[] = array_map(function (array $entry): SearchResultEntry {
+				$finalThumbnailUrl = $this->getThumbnailUrl($entry);
+				return new SearchResultEntry(
+					$finalThumbnailUrl,
+					$this->getMainText($entry),
+					$this->getSubline($entry),
+					$this->getLinkToGitlab($entry),
+					$finalThumbnailUrl === '' ? 'icon-gitlab-search-fallback' : '',
+					true
+				);
+			}, $searchResult);
+		}
 
 		return SearchResult::paginated(
 			$this->getName(),
-			$formattedResults,
+			array_merge(...$formattedResults),
 			$offset + $limit
 		);
 	}

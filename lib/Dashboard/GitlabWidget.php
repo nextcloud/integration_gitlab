@@ -24,6 +24,7 @@
 namespace OCA\Gitlab\Dashboard;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Model\UserConfig;
 use OCA\Gitlab\Service\ConfigService;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\Dashboard\IWidget;
@@ -81,19 +82,7 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-		$clientID = $this->config->getAdminClientId();
-		$clientSecret = $this->config->getAdminClientSecret();
-		$adminOauthUrl = $this->config->getAdminOauthUrl();
-		$url = $this->config->getUserUrl($this->userId);
-		$usePopup = $this->config->getAdminUsePopup();
-
-		$userConfig = [
-			'oauth_is_possible' => $clientID !== '' && $clientSecret !== '' && $url === $adminOauthUrl,
-			'use_popup' => $usePopup,
-			'url' => $url,
-			'client_id' => $clientID,
-		];
-		$this->initialStateService->provideInitialState('user-config', $userConfig);
+		$this->initialStateService->provideInitialState('user-config', UserConfig::loadConfig($this->userId, $this->config)->toArray());
 		Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');
 		Util::addStyle(Application::APP_ID, 'dashboard');
 	}

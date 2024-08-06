@@ -26,6 +26,8 @@ use DateTime;
 use Exception;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Db\GitlabAccount;
+use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCA\Gitlab\Service\ConfigService;
 use OCA\Gitlab\Service\GitlabAPIService;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
@@ -34,7 +36,7 @@ use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IL10N;
 use OCP\IURLGenerator;
-use OCP\PreConditionNotMetException;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
@@ -46,6 +48,8 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 		private IURLGenerator $urlGenerator,
 		private IL10N $l10n,
 		private ?string $userId,
+		private GitlabAccountMapper $accountMapper,
+		private LoggerInterface $logger,
 	) {
 	}
 
@@ -86,46 +90,8 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 		return ['gitlab-search-issues', 'gitlab-search-repos', 'gitlab-search-mrs'];
 	}
 
-	/**
-	 * @return array
-	 */
-	private function getGitlabUrls(): array {
-		//if ($this->userId === null) {
-		//	return ['https://gitlab.com'];
-		//}
-		$urls = [];
-		if ($this->userId !== null) {
-			$urls[] = $this->config->getUserUrl($this->userId);
-		} else {
-			$urls[] = $this->config->getAdminOauthUrl();
-		}
-		// unfortunately most of what we need for reference stuff requires authentication
-		// let's not allow to handle multiple gitlab servers
-		//$extraUrls = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_urls');
-		//$extraUrls = explode(',', $extraUrls);
-		//foreach ($extraUrls as $url) {
-		//	$urls[] = trim($url, " \t\n\r\0\x0B/");
-		//}
-		return $urls;
-	}
-
-	/**
-	 * @param $referenceText
-	 * @return string|null
-	 */
-	private function getMatchingGitlabUrl($referenceText): ?string {
-		// example links
-		// https://gitlab.com/owner/repo/-/issues/16
-		// https://gitlab.com/owner/repo/-/issues/16#note_1049227787
-		// https://gitlab.com/owner/repo/-/merge_requests/15
-		// https://gitlab.com/owner/repo/-/merge_requests/15#note_411231913
-		foreach ($this->getGitlabUrls() as $url) {
-			if (preg_match('/^' . preg_quote($url, '/') . '\/[^\/\?]+\/[^\/\?]+\/-\/(issues|merge_requests)\/[0-9]+/', $referenceText) === 1) {
-				return $url;
-			}
-		}
-
-		return null;
+	private function urlMatchesText(string $url, string $referenceText): bool {
+		return preg_match('/^' . preg_quote($url, '/') . '\/[^\/\?]+\/[^\/\?]+\/-\/(issues|merge_requests)\/[0-9]+/', $referenceText) === 1;
 	}
 
 	/**
@@ -143,59 +109,86 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 			return false;
 		}
 
-		return $this->getMatchingGitlabUrl($referenceText) !== null;
+		$urls = array_map(static fn (GitlabAccount $account) => $account->getUrl(), $this->accountMapper->find($this->userId));
+		$adminOauthUrl = $this->config->getAdminOauthUrl();
+		if ($adminOauthUrl !== '') {
+			$urls[] = $adminOauthUrl;
+		}
+
+		foreach ($urls as $url) {
+			if ($this->urlMatchesText($url, $referenceText)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function resolveReference(string $referenceText): ?IReference {
-		$gitlabUrl = $this->getMatchingGitlabUrl($referenceText);
-		if ($gitlabUrl !== null) {
-			$issuePath = $this->getIssuePath($gitlabUrl, $referenceText);
-			if ($issuePath !== null) {
-				[$owner, $repo, $issueId, $end] = $issuePath;
-				$projectInfo = $this->gitlabAPIService->getProjectInfo($this->userId, $owner, $repo);
-				if (isset($projectInfo['error'])) {
-					return null;
-				}
-				$projectLabels = $this->gitlabAPIService->getProjectLabels($this->userId, $projectInfo['id']);
-				$commentInfo = $this->getIssueCommentInfo($projectInfo['id'], $issueId, $end);
-				$issueInfo = $this->gitlabAPIService->getIssueInfo($this->userId, $projectInfo['id'], $issueId);
-				$reference = new Reference($referenceText);
-				$reference->setRichObject(
-					Application::APP_ID,
-					array_merge([
-						'gitlab_type' => isset($issueInfo['error']) ? 'issue-error' : 'issue',
-						'gitlab_url' => $gitlabUrl,
-						'gitlab_issue_id' => $issueId,
-						'gitlab_repo_owner' => $owner,
-						'gitlab_repo' => $repo,
-						'gitlab_project_owner_username' => $projectInfo['owner']['username'] ?? '',
-						'gitlab_project_labels' => $projectLabels,
-						'gitlab_comment' => $commentInfo,
-						'vcs_comment' => $commentInfo ? $this->getGenericCommentInfo($commentInfo) : null,
-						'vcs_issue' => $this->getGenericIssueInfo($issueInfo, $projectLabels),
-					], $issueInfo)
-				);
-				return $reference;
-			} else {
-				$prPath = $this->getPrPath($gitlabUrl, $referenceText);
-				if ($prPath !== null) {
-					[$owner, $repo, $prId, $end] = $prPath;
-					$projectInfo = $this->gitlabAPIService->getProjectInfo($this->userId, $owner, $repo);
+		$accounts = $this->accountMapper->find($this->userId);
+		$adminOauthUrl = $this->config->getAdminOauthUrl();
+		if ($adminOauthUrl !== '') {
+			$accounts[] = null;
+		}
+
+		foreach ($accounts as $account) {
+			$baseUrl = $account !== null ? $account->getUrl() : $adminOauthUrl;
+			if (!$this->urlMatchesText($baseUrl, $referenceText)) {
+				continue;
+			}
+
+			// The account might not have the permissions, so catch any errors and try the remaining accounts
+			try {
+				$issuePath = $this->getIssuePath($baseUrl, $referenceText);
+				if ($issuePath !== null) {
+					[$owner, $repo, $issueId, $end] = $issuePath;
+					$projectInfo = $this->gitlabAPIService->getProjectInfo($account, $baseUrl, $owner, $repo);
 					if (isset($projectInfo['error'])) {
 						return null;
 					}
-					$projectLabels = $this->gitlabAPIService->getProjectLabels($this->userId, $projectInfo['id']);
-					$commentInfo = $this->getPrCommentInfo($projectInfo['id'], $prId, $end);
-					$prInfo = $this->gitlabAPIService->getPrInfo($this->userId, $projectInfo['id'], $prId);
+					$projectLabels = $account !== null ? $this->gitlabAPIService->getProjectLabels($account, $baseUrl, $projectInfo['id']) : [];
+					$commentInfo = $this->getIssueCommentInfo($account, $baseUrl, $projectInfo['id'], $issueId, $end);
+					$issueInfo = $this->gitlabAPIService->getIssueInfo($account, $baseUrl, $projectInfo['id'], $issueId);
 					$reference = new Reference($referenceText);
 					$reference->setRichObject(
 						Application::APP_ID,
 						array_merge([
+							'account_id' => $account?->getId(),
+							'gitlab_type' => isset($issueInfo['error']) ? 'issue-error' : 'issue',
+							'gitlab_url' => $baseUrl,
+							'gitlab_issue_id' => $issueId,
+							'gitlab_repo_owner' => $owner,
+							'gitlab_repo' => $repo,
+							'gitlab_project_owner_username' => $projectInfo['owner']['username'] ?? '',
+							'gitlab_project_labels' => $projectLabels,
+							'gitlab_comment' => $commentInfo,
+							'vcs_comment' => $commentInfo ? $this->getGenericCommentInfo($commentInfo) : null,
+							'vcs_issue' => $this->getGenericIssueInfo($issueInfo, $projectLabels),
+						], $issueInfo)
+					);
+					return $reference;
+				}
+
+				$prPath = $this->getPrPath($baseUrl, $referenceText);
+				if ($prPath !== null) {
+					[$owner, $repo, $prId, $end] = $prPath;
+					$projectInfo = $this->gitlabAPIService->getProjectInfo($account, $baseUrl, $owner, $repo);
+					if (isset($projectInfo['error'])) {
+						return null;
+					}
+					$projectLabels = $account !== null ? $this->gitlabAPIService->getProjectLabels($account, $baseUrl, $projectInfo['id']) : [];
+					$commentInfo = $this->getPrCommentInfo($account, $baseUrl, $projectInfo['id'], $prId, $end);
+					$prInfo = $this->gitlabAPIService->getPrInfo($account, $baseUrl, $projectInfo['id'], $prId);
+					$reference = new Reference($referenceText);
+					$reference->setRichObject(
+						Application::APP_ID,
+						array_merge([
+							'account_id' => $account?->getId(),
 							'gitlab_type' => isset($prInfo['error']) ? 'pr-error' : 'pr',
-							'gitlab_url' => $gitlabUrl,
+							'gitlab_url' => $baseUrl,
 							'gitlab_pr_id' => $prId,
 							'gitlab_repo_owner' => $owner,
 							'gitlab_repo' => $repo,
@@ -208,6 +201,8 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 					);
 					return $reference;
 				}
+			} catch (Exception $e) {
+				$this->logger->error('Failed to resolve reference for url ' . $baseUrl . ' with account id ' . $account?->getId(), ['exception' => $e]);
 			}
 		}
 
@@ -352,28 +347,14 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 		return (count($matches) > 1) ? ((int)$matches[1]) : null;
 	}
 
-	/**
-	 * @param int $projectId
-	 * @param int $issueId
-	 * @param string $end
-	 * @return array|null
-	 * @throws PreConditionNotMetException
-	 */
-	private function getIssueCommentInfo(int $projectId, int $issueId, string $end): ?array {
+	private function getIssueCommentInfo(?GitlabAccount $account, string $baseUrl, int $projectId, int $issueId, string $end): ?array {
 		$commentId = $this->getCommentId($end);
-		return $commentId !== null ? $this->gitlabAPIService->getIssueCommentInfo($this->userId, $projectId, $issueId, $commentId) : null;
+		return $commentId !== null ? $this->gitlabAPIService->getIssueCommentInfo($account, $baseUrl, $projectId, $issueId, $commentId) : null;
 	}
 
-	/**
-	 * @param int $projectId
-	 * @param int $prId
-	 * @param string $end
-	 * @return array|null
-	 * @throws PreConditionNotMetException
-	 */
-	private function getPrCommentInfo(int $projectId, int $prId, string $end): ?array {
+	private function getPrCommentInfo(?GitlabAccount $account, string $baseUrl, int $projectId, int $prId, string $end): ?array {
 		$commentId = $this->getCommentId($end);
-		return $commentId !== null ? $this->gitlabAPIService->getPrCommentInfo($this->userId, $projectId, $prId, $commentId) : null;
+		return $commentId !== null ? $this->gitlabAPIService->getPrCommentInfo($account, $baseUrl, $projectId, $prId, $commentId) : null;
 	}
 
 	/**
