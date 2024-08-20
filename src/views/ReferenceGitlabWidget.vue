@@ -353,7 +353,7 @@ export default {
 		},
 		commentAuthorAvatarUrl() {
 			const userId = this.richObject.gitlab_comment?.author?.id ?? ''
-			return generateUrl('/apps/integration_gitlab/avatar/user/{userId}', { userId })
+			return generateUrl(`/apps/integration_gitlab/gitlab/${this.richObject.account_id}/avatar/user/${userId}`)
 		},
 		commentAuthorTooltip() {
 			return t('integration_gitlab', 'Comment from @{username}', { username: this.richObject.gitlab_comment?.author?.username ?? '' })
@@ -363,7 +363,7 @@ export default {
 	methods: {
 		getAssigneeAvatarUrl(assignee) {
 			const userId = assignee.id ?? ''
-			return generateUrl('/apps/integration_gitlab/avatar/user/{userId}', { userId })
+			return generateUrl(`/apps/integration_gitlab/gitlab/${this.richObject.account_id}/avatar/user/${userId}`)
 		},
 		getAssigneeTooltip(assignee) {
 			return t('integration_gitlab', 'Assigned to {username}', { username: assignee.username })

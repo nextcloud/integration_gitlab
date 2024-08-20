@@ -3,6 +3,8 @@
 namespace OCA\Gitlab\Settings;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Db\GitlabAccount;
+use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCA\Gitlab\Model\UserConfig;
 use OCA\Gitlab\Service\ConfigService;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -15,6 +17,7 @@ class Personal implements ISettings {
 		private ConfigService $config,
 		private IInitialState $initialStateService,
 		private string $userId,
+		private GitlabAccountMapper $accountMapper,
 	) {
 	}
 
@@ -22,7 +25,9 @@ class Personal implements ISettings {
 	 * @return TemplateResponse
 	 */
 	public function getForm(): TemplateResponse {
+		$this->initialStateService->provideInitialState('accounts', array_map(static fn (GitlabAccount $account) => $account->jsonSerialize(), $this->accountMapper->find($this->userId)));
 		$this->initialStateService->provideInitialState('user-config', UserConfig::loadConfig($this->userId, $this->config)->toArray());
+		$this->initialStateService->provideInitialState('admin-config', ['oauth_is_possible' => $this->config->getAdminClientId() !== '' && $this->config->getAdminClientSecret() !== '']);
 		return new TemplateResponse(Application::APP_ID, 'personalSettings');
 	}
 
