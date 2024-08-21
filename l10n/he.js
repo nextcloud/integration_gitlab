@@ -8,7 +8,6 @@ OC.L10N.register(
     "OAuth access token refused" : "אסימון הגישה ב־OAuth סורב",
     "Connected accounts" : "חשבונות מקושרים",
     "Personal access token" : "אסימון גישה פרטי",
-    "Incorrect access token" : "אסימון הגישה שגוי",
     "Unknown error" : "שגיאה בלתי ידועה",
     "Comments" : "תגובות",
     "Owner" : "בעלות"

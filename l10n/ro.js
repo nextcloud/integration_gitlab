@@ -6,8 +6,6 @@ OC.L10N.register(
     "Bad credentials" : "Credențiale greșite",
     "OAuth access token refused" : "Token-ul OAuth a fost refuzat",
     "Connected accounts" : "Conturile conectate",
-    "Mark as done" : "Marchează ca efectuat",
-    "You were mentioned" : "Ați fost menționat",
     "Unknown error" : "Eroare necunoscută",
     "Comments" : "Comentarii",
     "Author" : "Autor",

@@ -1,7 +1,7 @@
 OC.L10N.register(
     "integration_gitlab",
     {
-    "Mark as done" : "Marcar como hecho",
+    "Remove account" : "Cerrar sesión",
     "Unknown error" : "Se presentó un error desconocido",
     "Comments" : "Comentarios",
     "Author" : "Autor",
