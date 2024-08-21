@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.0 – 2024-08-21
+
+### Changed
+
+- Centralize config handling and use strong typing @provokateurin
+- Bump max NC version to 31
+
+### Added
+
+- Support multiple accounts @provokateurin
+- Add PSR-4 autoloading to make tests work @provokateurin
+
 ## 3.0.1 – 2024-07-23
 
 ### Changed

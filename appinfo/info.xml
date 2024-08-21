@@ -18,7 +18,7 @@
     <bugs>https://github.com/nextcloud/integration_gitlab/issues</bugs>
     <screenshot>https://github.com/nextcloud/integration_gitlab/raw/main/img/screenshot1.jpg</screenshot>
     <dependencies>
-        <nextcloud min-version="26" max-version="30"/>
+        <nextcloud min-version="26" max-version="31"/>
     </dependencies>
 	<repair-steps>
 		<post-migration>
