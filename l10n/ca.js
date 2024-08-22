@@ -24,6 +24,7 @@ OC.L10N.register(
     "GitLab instance address" : "Adreça de la instància de GitLab",
     "Personal access token" : "Testimoni d'accés personal",
     "GitLab personal access token" : "Testimoni d'accés personal de GitLab",
+    "Remove account" : "Elimina el compte",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Avís, tot el que escriviu a la barra de cerca s'enviarà a GitLab.",
     "Enable searching for repositories" : "Habilita la cerca de repositoris",
     "Successfully connected to GitLab!" : "S'ha connectat satisfactòriament a GitLab!",

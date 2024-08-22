@@ -1,4 +1,5 @@
 { "translations": {
+    "Remove account" : "Quitar la cuenta",
     "Failed to save GitLab options" : "Nun se puen guardar les opciones de GitLab",
     "Failed to get GitLab notifications" : "Nun se puen consiguir los avisos de GitLab",
     "Unknown error" : "Error desconocíu",
