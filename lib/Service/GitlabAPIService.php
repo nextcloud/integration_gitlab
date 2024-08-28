@@ -37,7 +37,7 @@ class GitlabAPIService {
 		private ConfigService $config,
 		IClientService $clientService,
 		private GitlabAccountMapper $accountMapper,
-		private string $userId,
+		private ?string $userId,
 	) {
 		$this->client = $clientService->newClient();
 	}
@@ -230,7 +230,7 @@ class GitlabAPIService {
 	}
 
 	public function request(?GitlabAccount $account, string $baseUrl, string $endPoint, array $params = [], string $method = 'GET'): array {
-		if ($account !== null) {
+		if ($account !== null && $this->userId !== null) {
 			$this->checkTokenExpiration($account);
 		}
 		try {
