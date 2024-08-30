@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.1 – 2024-08-30
+
+### Fixed
+
+- userId can be null in the service (the reference provider can now be used in public contexts) (#97) @julien-nc
+- infer token_type in repair step (#98) @kyteinsky
+
+
 ## 3.1.0 – 2024-08-21
 
 ### Changed
