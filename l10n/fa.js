@@ -44,7 +44,6 @@ OC.L10N.register(
     "Failed to get GitLab notifications" : "Failed to get GitLab notifications",
     "GitLab API error" : "GitLab API error",
     "Unknown error" : "خطای ناشناخته",
-    "GitLab connected accounts settings" : "GitLab connected accounts settings",
     "by {creator}" : "by {creator}",
     "CLOSED" : "CLOSED",
     "MERGED" : "MERGED",
