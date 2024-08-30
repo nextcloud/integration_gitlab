@@ -32,6 +32,13 @@ class MultiAccountRepairStep implements IRepairStep {
 				$account->setUrl($this->config->getUserUrl($userId));
 				$account->setToken($this->config->getUserToken($userId));
 				$account->setTokenType($this->config->getUserTokenType($userId));
+				if (!$account->getTokenType()) {
+					if ($this->config->hasUserRefreshToken($userId)) {
+						$account->setTokenType('oauth');
+					} else {
+						$account->setTokenType('personal');
+					}
+				}
 				if ($this->config->hasUserTokenExpiresAt($userId)) {
 					$account->setTokenExpiresAt($this->config->getUserTokenExpiresAt($userId));
 				}
