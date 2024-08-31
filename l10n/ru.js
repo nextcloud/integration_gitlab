@@ -28,6 +28,7 @@ OC.L10N.register(
     "Remove account" : "Удалить аккаунт",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Предупреждение, все, что вы вводите в строку поиска, будет отправлено в GitLab.",
     "Enable searching for repositories" : "Включить поиск репозиториев",
+    "Enable searching for merge requests" : "Включить поиск запросов на слияние",
     "Successfully connected to GitLab!" : "Успешно подключено к GitLab!",
     "Error connecting to GitLab:" : "Ошибка подключения к GitLab:",
     "GitLab options saved" : "Параметры GitLab сохранены",
@@ -41,6 +42,10 @@ OC.L10N.register(
     "Author" : "Автор",
     "Owner" : "Владелец",
     "Click to expand comment" : "Нажмите, чтобы развернуть комментарии",
+    "Open merge request" : "Открыть запрос на слияние",
+    "Closed merge request" : "Закрытый запрос на слияние",
+    "Merged merge request" : "Объединенный запрос на слияние",
+    "Review requested" : "Запрошенный обзор",
     "Failed to save GitLab OAuth state" : "Не удалось сохранить состояние GitLab OAuth"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
