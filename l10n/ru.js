@@ -28,6 +28,7 @@ OC.L10N.register(
     "Remove account" : "Удалить аккаунт",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Предупреждение, все, что вы вводите в строку поиска, будет отправлено в GitLab.",
     "Enable searching for repositories" : "Включить поиск репозиториев",
+    "Enable searching for issues" : "Включить поиск проблем",
     "Enable searching for merge requests" : "Включить поиск запросов на слияние",
     "Successfully connected to GitLab!" : "Успешно подключено к GitLab!",
     "Error connecting to GitLab:" : "Ошибка подключения к GitLab:",
