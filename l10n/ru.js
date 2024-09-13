@@ -34,6 +34,7 @@ OC.L10N.register(
     "Enable searching for merge requests" : "Включить поиск запросов на слияние",
     "Successfully connected to GitLab!" : "Успешно подключено к GitLab!",
     "Error connecting to GitLab:" : "Ошибка подключения к GitLab:",
+    "Account deleted" : "Аккаунт удален",
     "GitLab options saved" : "Параметры GitLab сохранены",
     "Failed to save GitLab options" : "Не удалось сохранить параметры GitLab",
     "No GitLab account connected" : "Учетная запись GitLab не подключена",
