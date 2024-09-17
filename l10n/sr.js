@@ -28,6 +28,7 @@ OC.L10N.register(
     "Enable GitLab link previews" : "Укључи прегледе GitLab линкова",
     "GitLab admin options saved" : "Сачуване су GitLab админ опције",
     "Failed to save GitLab admin options" : "Није успело чување GitLab админ опција",
+    "Connect to GitLab using OAuth" : "Повежи се са GitLab користећи OAuth",
     "GitLab instance address" : "Адреса GitLab инстанце",
     "Personal access token" : "Лични приступни жетон",
     "GitLab personal access token" : "GitLab лични приступни жетон",
