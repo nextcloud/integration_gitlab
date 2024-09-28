@@ -8,6 +8,7 @@ OC.L10N.register(
     "Bad credentials" : "Ogiltiga inloggningsuppgifter",
     "OAuth access token refused" : "OAuth-token avvisades",
     "Connected accounts" : "Anslutna konton",
+    "Application ID" : "Applikations-ID",
     "Application secret" : "Applikationshemlighet",
     "Personal access token" : "Personlig åtkomst-token",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varning, allt du skriver i sökfältet skickas till GitLab.",
