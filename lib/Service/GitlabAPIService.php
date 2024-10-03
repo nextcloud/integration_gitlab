@@ -278,22 +278,25 @@ class GitlabAPIService {
 			} elseif ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
 			} else {
-				return ['error' => $this->l10n->t('Bad HTTP method')];
+				return ['error' => $this->l10n->t('Bad HTTP method'), 'code' => 405];
 			}
 			$body = $response->getBody();
 			$respCode = $response->getStatusCode();
 
 			if ($respCode >= 400) {
-				return ['error' => $this->l10n->t('Bad credentials')];
+				return ['error' => $this->l10n->t('Bad credentials'), 'code' => $respCode];
 			} else {
 				return json_decode($body, true);
 			}
 		} catch (ServerException | ClientException $e) {
 			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
-			return ['error' => 'Authentication failed'];
+			if ($e->getCode() == 401) {
+				return ['error' => $this->l10n->t('Bad credentials'), 'code' => 401];
+			}
+			return ['error' => 'Gitlab API error, please check the server logs for more details', 'code' => $e->getCode()];
 		} catch (ConnectException $e) {
 			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
-			return ['error' => $e->getMessage()];
+			return ['error' => 'Connection error, please check the server logs for more details', 'code' => 500];
 		}
 	}
 

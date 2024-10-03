@@ -68,15 +68,22 @@ class ConfigController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function addAccount(string $url, string $token) {
-		try {
-			$account = new GitlabAccount();
-			$account->setUserId($this->userId);
-			$account->setUrl($url);
-			$account->setToken($token);
-			$account->setTokenType('personal');
+		$account = new GitlabAccount();
+		$account->setUserId($this->userId);
+		$account->setUrl($url);
+		$account->setToken($token);
+		$account->setTokenType('personal');
 
+		try {
+			$userInfo = $this->getUserInfo($account);
+			$account->setUserInfoName($userInfo['username']);
+			$account->setUserInfoDisplayName($userInfo['name']);
+		} catch (Exception $e) {
+			return new DataResponse(['error' => $e->getMessage()], $e->getCode());
+		}
+
+		try {
 			$this->accountMapper->insert($account);
-			$this->storeUserInfo($account);
 			$this->updateAccountsConfig();
 
 			return new DataResponse([
@@ -84,8 +91,8 @@ class ConfigController extends Controller {
 				'config' => UserConfig::loadConfig($this->userId, $this->config)->toArray(),
 			]);
 		} catch (Exception $e) {
-			$this->logger->error('Failed to query Gitlab account: ' . $e->getMessage(), ['exception' => $e]);
-			return new DataResponse([], 500);
+			$this->logger->error('Failed to save the Gitlab account: ' . $e->getMessage(), ['exception' => $e]);
+			return new DataResponse(['error' => 'Server Error: Failed to save the Gitlab account'], 500);
 		}
 	}
 
@@ -198,9 +205,18 @@ class ConfigController extends Controller {
 					$expiresAt = $nowTs + (int)$result['expires_in'];
 					$account->setTokenExpiresAt($expiresAt);
 				}
-				$this->accountMapper->insert($account);
-				$this->storeUserInfo($account);
 
+				try {
+					$userInfo = $this->getUserInfo($account);
+					$account->setUserInfoName($userInfo['username']);
+					$account->setUserInfoDisplayName($userInfo['name']);
+				} catch (Exception $e) {
+					return new RedirectResponse(
+						$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
+						'?gitlabToken=error&message=' . urlencode($e->getMessage())
+					);
+				}
+				$this->accountMapper->insert($account);
 				$this->updateAccountsConfig();
 
 				$oauthOrigin = $this->config->getUserOauthOrigin($this->userId);
@@ -231,12 +247,22 @@ class ConfigController extends Controller {
 		);
 	}
 
-	private function storeUserInfo(GitlabAccount $account): void {
+	/**
+	 * @param GitlabAccount $account
+	 * @return array{username: string, name: string}
+	 * @throws Exception
+	 */
+	private function getUserInfo(GitlabAccount $account): array {
 		$info = $this->gitlabAPIService->request($account, $account->getUrl(), 'user');
-		if (isset($info['username']) && isset($info['id'])) {
-			$account->setUserInfoName($info['username']);
-			$account->setUserInfoDisplayName($info['name']);
-			$this->accountMapper->update($account);
+		if (isset($info['error'])) {
+			throw new Exception($info['error'], $info['code'] ?? 500);
 		}
+		if (!isset($info['username'])) {
+			throw new Exception('Invalid response from Gitlab API, missing username', 500);
+		}
+		return [
+			'username' => $info['username'],
+			'name' => $info['name'] ?? $info['username'],
+		];
 	}
 }
