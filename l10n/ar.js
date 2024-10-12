@@ -32,7 +32,7 @@ OC.L10N.register(
     "GitLab instance address" : "عنوان خادوم GitLab",
     "Personal access token" : "أَمَارَة الوصول access token الشخصي ",
     "GitLab personal access token" : "أَمَارَة الوصول access token الشخصي لـ GitLab",
-    "Give the token the \"read_user\", \"read_api\" and \"read_repository\" permissions." : "منح الأَمَارَة صلاحيات \"read_user\"، و \"read_api\"، و \"read_repository\".",
+    "Give the token the \"read_user\", \"read_api\" and \"read_repository\" permissions." : "منح التوكن صلاحيات \"read_user\"، و \"read_api\"، و \"read_repository\".",
     "Connect to GitLab using Personal Access Token" : "التوصيل مع GitLab باستعمال \"أَمَارَة الوصول الشخصية Personal Access Token\"",
     "Connected to {url} as {displayname} ({name})" : "متصل بـ {url} كـ {displayname} ({name})",
     "Remove account" : "حذف الحساب",
