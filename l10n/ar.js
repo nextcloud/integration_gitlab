@@ -13,7 +13,7 @@ OC.L10N.register(
     "OAuth access token refused" : "أمارة token مرفوضة",
     "Connected accounts" : "حسابات مترابطة",
     "GitLab integration" : "مُكاملة GitLab",
-    "Integration of GitLab software development management service" : "مُكاملة خدمة تطوير البرمجيات من GitLab ",
+    "Integration of GitLab software development management service" : "تكامل خدمة تطوير البرمجيات من GitLab ",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "تُوفِّر مُكاملة GitLab وَدْجَةً Widget للوحة القيادة تعرض أهم إشعاراتك، و مُزوِّد بحث موحد للمستودعات، و المسائل، و طلبات الدمج.",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "إذا كنت تريد السماح لمستخدمي نكست كلاود لديك باستخدام تطبيق OAuth للمصادقة على خادوم GitLab، فيجب أن تقوم بإنشاء تطبيق في إعدادات GitLab وتعيين مُعرّف التطبيق و كلمة سره هنا.",
     "Make sure you set the \"Redirect URI\" to:" : "تأكد من تعيين \"إعادة توجيه URI\" على:",
