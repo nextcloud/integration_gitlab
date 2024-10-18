@@ -42,6 +42,11 @@
 		<div v-if="isIssue || isPr" class="issue-pr-wrapper">
 			<div class="issue-pr-info">
 				<div class="line">
+					<component :is="iconComponent"
+						v-tooltip.top="{ content: stateTooltip }"
+						:size="16"
+						class="icon"
+						:fill-color="iconColor" />
 					<div class="title">
 						<a :href="richObject.web_url" class="issue-pr-link" target="_blank">
 							<strong>
@@ -51,11 +56,6 @@
 					</div>
 				</div>
 				<div class="sub-text">
-					<component :is="iconComponent"
-						v-tooltip.top="{ content: stateTooltip }"
-						:size="16"
-						class="icon"
-						:fill-color="iconColor" />
 					<span>
 						<a :href="repoUrl" class="slug-link" target="_blank">
 							{{ slug }}
@@ -398,13 +398,13 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: start;
+		justify-content: space-between;
 
 		.issue-pr-info {
 			display: flex;
-			flex: 1 1 300px;
+			flex-direction: column;
 			max-width: fit-content;
-			align-items: center;
-			flex-wrap: wrap;
+			align-items: start;
 		}
 
 		.assignee-avatars {
@@ -428,10 +428,7 @@ export default {
 		.line {
 			display: flex;
 			align-items: center;
-
-			> .icon {
-				margin: 0 16px 0 8px;
-			}
+			gap: 4px;
 		}
 
 		.sub-text {
@@ -443,9 +440,6 @@ export default {
 				margin-right: 4px;
 			}
 
-			.icon {
-				margin-right: 4px;
-			}
 			.milestone {
 				display: flex;
 				align-items: center;
