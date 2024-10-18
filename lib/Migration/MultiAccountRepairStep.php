@@ -30,7 +30,7 @@ class MultiAccountRepairStep implements IRepairStep {
 				$account = new GitlabAccount();
 				$account->setUserId($user->getUID());
 				$account->setUrl($this->config->getUserUrl($userId));
-				$account->setToken($this->config->getUserToken($userId));
+				$account->setEncryptedToken($this->config->getUserToken($userId));
 				$account->setTokenType($this->config->getUserTokenType($userId));
 				if (!$account->getTokenType()) {
 					if ($this->config->hasUserRefreshToken($userId)) {
@@ -43,7 +43,7 @@ class MultiAccountRepairStep implements IRepairStep {
 					$account->setTokenExpiresAt($this->config->getUserTokenExpiresAt($userId));
 				}
 				if ($this->config->hasUserRefreshToken($userId)) {
-					$account->setRefreshToken($this->config->getUserRefreshToken($userId));
+					$account->setEncryptedRefreshToken($this->config->getUserRefreshToken($userId));
 				}
 				$account->setUserInfoName($this->config->getUserName($userId));
 				$account->setUserInfoDisplayName($this->config->getUserDisplayName($userId));

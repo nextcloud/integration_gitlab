@@ -243,7 +243,7 @@ class GitlabAPIService {
 
 			// try anonymous request if no user (public page) or user not connected to a gitlab account
 			if ($account !== null) {
-				$accessToken = $account->getToken();
+				$accessToken = $account->getClearToken();
 				if ($accessToken !== '') {
 					$options['headers']['Authorization'] = 'Bearer ' . $accessToken;
 				}
@@ -301,7 +301,7 @@ class GitlabAPIService {
 	}
 
 	private function checkTokenExpiration(GitlabAccount $account): void {
-		if ($account->getRefreshToken() && $account->getTokenExpiresAt()) {
+		if ($account->getClearRefreshToken() && $account->getTokenExpiresAt()) {
 			$nowTs = (new DateTime())->getTimestamp();
 			// if token expires in less than a minute or is already expired
 			if ($nowTs > $account->getTokenExpiresAt() - 60) {
@@ -312,7 +312,7 @@ class GitlabAPIService {
 
 	private function refreshToken(GitlabAccount $account): bool {
 		$adminOauthUrl = $this->config->getAdminOauthUrl();
-		$refreshToken = $account->getRefreshToken();
+		$refreshToken = $account->getClearRefreshToken();
 		if (!$refreshToken) {
 			$this->logger->error('No GitLab refresh token found', ['app' => Application::APP_ID]);
 			return false;
@@ -329,8 +329,8 @@ class GitlabAPIService {
 			$accessToken = $result['access_token'];
 			$refreshToken = $result['refresh_token'];
 			$account->setUrl($adminOauthUrl);
-			$account->setToken($accessToken);
-			$account->setRefreshToken($refreshToken);
+			$account->setEncryptedToken($accessToken);
+			$account->setEncryptedRefreshToken($refreshToken);
 			if (isset($result['expires_in'])) {
 				$nowTs = (new DateTime())->getTimestamp();
 				$expiresAt = $nowTs + (int) $result['expires_in'];
@@ -361,7 +361,7 @@ class GitlabAPIService {
 				'body' => json_encode([
 					'client_id' => $this->config->getAdminClientId(),
 					'client_secret' => $this->config->getAdminClientSecret(),
-					'token' => $account->getToken(),
+					'token' => $account->getClearToken(),
 				]),
 			];
 
