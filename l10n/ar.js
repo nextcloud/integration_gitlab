@@ -9,7 +9,7 @@ OC.L10N.register(
     "GitLab merge requests" : "طلبات دمج GitLab",
     "GitLab repositories" : "مستودعات GitLab",
     "Bad HTTP method" : "دالة HTTP  غير صحيحة",
-    "Bad credentials" : "حيثيّات الدخول credentials غير صحيحة",
+    "Bad credentials" : "بيانات تسجيل الدخول غير صحيحة",
     "OAuth access token refused" : "أمارة token مرفوضة",
     "Connected accounts" : "حسابات مترابطة",
     "GitLab integration" : "مُكاملة GitLab",
