@@ -71,7 +71,7 @@ class ConfigController extends Controller {
 		$account = new GitlabAccount();
 		$account->setUserId($this->userId);
 		$account->setUrl($url);
-		$account->setToken($token);
+		$account->setEncryptedToken($token);
 		$account->setTokenType('personal');
 
 		try {
@@ -197,9 +197,9 @@ class ConfigController extends Controller {
 				$account = new GitlabAccount();
 				$account->setUserId($this->userId);
 				$account->setUrl($adminOauthUrl);
-				$account->setToken($result['access_token']);
+				$account->setEncryptedToken($result['access_token']);
 				$account->setTokenType('oauth');
-				$account->setRefreshToken($result['refresh_token'] ?? '');
+				$account->setEncryptedRefreshToken($result['refresh_token'] ?? '');
 				if (isset($result['expires_in'])) {
 					$nowTs = (new Datetime())->getTimestamp();
 					$expiresAt = $nowTs + (int)$result['expires_in'];

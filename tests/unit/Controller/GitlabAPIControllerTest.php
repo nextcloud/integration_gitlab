@@ -62,7 +62,7 @@ class GitlabAPIControllerTest extends TestCase {
 
 		$account = new GitlabAccount();
 		$account->setUrl('https://gitlab.com');
-		$account->setToken(self::API_TOKEN);
+		$account->setEncryptedToken(self::API_TOKEN);
 
 		$accountMapper = $this->createMock(GitlabAccountMapper::class);
 		$accountMapper->method('findById')->willReturn($account);

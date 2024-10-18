@@ -6,6 +6,7 @@ namespace OCA\Gitlab\Db;
 
 use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
+use OCP\Security\ICrypto;
 
 /**
  * @method void setUserId(string $userId)
@@ -25,14 +26,29 @@ use OCP\AppFramework\Db\Entity;
  * @method void setUserInfoDisplayName(string $userInfoDisplayName)
  */
 class GitlabAccount extends Entity implements JsonSerializable {
-	protected string $userId = '';
-	protected string $url = '';
-	protected string $token = '';
-	protected string $tokenType = '';
-	protected ?int $tokenExpiresAt = null;
-	protected ?string $refreshToken = null;
-	protected ?string $userInfoName = null;
-	protected ?string $userInfoDisplayName = null;
+	protected $userId;
+	protected $url;
+	protected $token;
+	protected $tokenType;
+	protected $tokenExpiresAt;
+	protected $refreshToken;
+	protected $userInfoName;
+	protected $userInfoDisplayName;
+
+	private ICrypto $crypto;
+
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('url', 'string');
+		$this->addType('token', 'string');
+		$this->addType('token_type', 'string');
+		$this->addType('token_expires_at', 'integer');
+		$this->addType('refresh_token', 'string');
+		$this->addType('user_info_name', 'string');
+		$this->addType('user_info_display_name', 'string');
+
+		$this->crypto = \OC::$server->get(ICrypto::class);
+	}
 
 	public function jsonSerialize(): array {
 		return [
@@ -45,5 +61,35 @@ class GitlabAccount extends Entity implements JsonSerializable {
 			'userInfoName' => $this->userInfoName,
 			'userInfoDisplayName' => $this->userInfoDisplayName,
 		];
+	}
+
+	public function getClearToken(): string {
+		if (is_string($this->token) && $this->token !== '') {
+			return $this->crypto->decrypt($this->token);
+		}
+		return $this->token;
+	}
+
+	public function setEncryptedToken(string $token): void {
+		if ($token !== '') {
+			$this->setter('token', [$this->crypto->encrypt($token)]);
+		} else {
+			$this->setter('token', [$token]);
+		}
+	}
+
+	public function getClearRefreshToken(): ?string {
+		if (is_string($this->refreshToken) && $this->refreshToken !== '') {
+			return $this->crypto->decrypt($this->refreshToken);
+		}
+		return $this->refreshToken;
+	}
+
+	public function setEncryptedRefreshToken(?string $refreshToken): void {
+		if (is_string($refreshToken) && $refreshToken !== '') {
+			$this->setter('refreshToken', [$this->crypto->encrypt($refreshToken)]);
+		} else {
+			$this->setter('refreshToken', [$refreshToken]);
+		}
 	}
 }

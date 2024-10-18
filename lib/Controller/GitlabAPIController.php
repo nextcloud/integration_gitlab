@@ -48,7 +48,7 @@ class GitlabAPIController extends Controller {
 	public function getUserAvatar(int $accountId, int $userId) {
 		try {
 			$account = $this->accountMapper->findById($this->userId, $accountId);
-			if ($account->getToken() === '') {
+			if ($account->getClearToken() === '') {
 				return new DataResponse('', 400);
 			}
 
@@ -83,7 +83,7 @@ class GitlabAPIController extends Controller {
 	public function getProjectAvatar(int $accountId, int $projectId) {
 		try {
 			$account = $this->accountMapper->findById($this->userId, $accountId);
-			if ($account->getToken() === '') {
+			if ($account->getClearToken() === '') {
 				return new DataResponse('', 400);
 			}
 
@@ -117,7 +117,7 @@ class GitlabAPIController extends Controller {
 	public function getTodos(int $accountId, ?string $since = null): DataResponse {
 		try {
 			$account = $this->accountMapper->findById($this->userId, $accountId);
-			if ($account->getToken() === '') {
+			if ($account->getClearToken() === '') {
 				return new DataResponse('', 400);
 			}
 

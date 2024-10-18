@@ -102,7 +102,7 @@ class GitlabSearchReposProvider implements IProvider {
 
 		$accounts = $this->accountMapper->find($user->getUID());
 		foreach ($accounts as $account) {
-			$accessToken = $account->getToken();
+			$accessToken = $account->getClearToken();
 			if ($accessToken === '') {
 				continue;
 			}

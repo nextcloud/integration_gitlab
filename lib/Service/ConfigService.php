@@ -7,19 +7,38 @@ namespace OCA\Gitlab\Service;
 use OCA\Gitlab\AppInfo\Application;
 use OCP\IConfig;
 use OCP\PreConditionNotMetException;
+use OCP\Security\ICrypto;
 
 class ConfigService {
 	public function __construct(
 		private IConfig $config,
+		private ICrypto $crypto,
 	) {
 	}
 
+	public function getClearAppValue(string $key): string {
+		$value = $this->config->getAppValue(Application::APP_ID, $key);
+		if ($value === '') {
+			return $value;
+		}
+		return $this->crypto->decrypt($value);
+	}
+
+	public function setEncryptedAppValue(string $key, string $value): void {
+		if ($value === '') {
+			$this->config->setAppValue(Application::APP_ID, $key, $value);
+		} else {
+			$encryptedValue = $this->crypto->encrypt($value);
+			$this->config->setAppValue(Application::APP_ID, $key, $encryptedValue);
+		}
+	}
+
 	public function getAdminClientId(): string {
-		return $this->config->getAppValue(Application::APP_ID, 'client_id');
+		return $this->getClearAppValue('client_id');
 	}
 
 	public function setAdminClientId(string $clientId): void {
-		$this->config->setAppValue(Application::APP_ID, 'client_id', $clientId);
+		$this->setEncryptedAppValue('client_id', $clientId);
 	}
 
 	public function hasAdminClientSecret(): bool {
@@ -27,11 +46,11 @@ class ConfigService {
 	}
 
 	public function getAdminClientSecret(): string {
-		return $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		return $this->getClearAppValue('client_secret');
 	}
 
 	public function setAdminClientSecret(string $clientSecret): void {
-		$this->config->setAppValue(Application::APP_ID, 'client_secret', $clientSecret);
+		$this->setEncryptedAppValue('client_secret', $clientSecret);
 	}
 
 	public function getAdminOauthUrl(): string {

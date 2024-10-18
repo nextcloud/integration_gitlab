@@ -30,6 +30,7 @@
 				<referencedClass name="GuzzleHttp\Exception\ServerException" />
 				<referencedClass name="GuzzleHttp\Exception\ClientException" />
 				<referencedClass name="GuzzleHttp\Exception\ConnectException" />
+				<referencedClass name="OC" />
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>
