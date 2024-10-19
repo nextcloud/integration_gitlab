@@ -18,7 +18,7 @@
     "GitLab instance address" : "GitLab 实例地址",
     "Personal access token" : "个人访问令牌",
     "GitLab personal access token" : "GitLab personal access token",
-    "Remove account" : "移除账户",
+    "Remove account" : "移除账号",
     "Enable searching for repositories" : "启用仓库搜索",
     "Enable searching for issues" : "启用议题搜索",
     "Successfully connected to GitLab!" : "成功连接到了GitLab！",
