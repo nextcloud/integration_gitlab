@@ -32,7 +32,7 @@
     "GitLab personal access token" : "GitLab شەخسىي زىيارەت بەلگىسى",
     "Give the token the \"read_user\", \"read_api\" and \"read_repository\" permissions." : "بەلگە «read_user» ، «read_api» ۋە «read_repository» ئىجازەتنامىسىنى بېرىڭ.",
     "Connect to GitLab using Personal Access Token" : "شەخسىي زىيارەت توكەننى ئىشلىتىپ GitLab غا ئۇلاڭ",
-    "Connected to {url} as {displayname} ({name})" : "{Url} غا {displayname} ({name}) غا ئۇلاندى",
+    "Connected to {url} as {displayname} ({name})" : "{url} غا {displayname} ({name}) غا ئۇلاندى",
     "Remove account" : "ھېساباتنى ئۆچۈرۈڭ",
     "Warning, everything you type in the search bar will be sent to GitLab." : "ئاگاھلاندۇرۇش ، ئىزدەش ستونىغا يازغانلىرىڭىزنىڭ ھەممىسى GitLab غا ئەۋەتىلىدۇ.",
     "Please use the External Sites app to add GitLab to your navigation bar:" : "سىرتقى تور بېكەت دېتالىنى ئىشلىتىپ يولباشچىڭىزغا GitLab نى قوشۇڭ:",
@@ -75,8 +75,8 @@
     "created {relativeDate}" : "created {relativeDate}",
     "closed {relativeDate}" : "closed {relativeDate}",
     "updated {relativeDate}" : "يېڭىلاندى {relativeDate}",
-    "Comment from @{username}" : "@ {ئىشلەتكۈچى ئىسمى} دىن باھا",
-    "Assigned to {username}" : "{ئىشلەتكۈچى ئىسمى} غا تەقسىم قىلىندى",
+    "Comment from @{username}" : "@ {username} ئىسمى} دىن باھا",
+    "Assigned to {username}" : "{username} ئىسمى} غا تەقسىم قىلىندى",
     "Failed to save GitLab OAuth state" : "GitLab OAuth ھالىتىنى ساقلاپ قالالمىدى"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
