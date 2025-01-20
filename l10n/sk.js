@@ -4,6 +4,8 @@ OC.L10N.register(
     "Error getting OAuth access token. " : "Chyba pri získavaní prístupového tokenu OAuth.",
     "Error during OAuth exchanges" : "Chyba počas výmeny OAuth",
     "GitLab To-Dos" : "GitLab Úlohy",
+    "GitLab issues" : "Chyby v GitLab",
+    "GitLab merge requests" : "Žiadosti o začlenenie GitLab",
     "GitLab repositories" : "GitLab repozitáre",
     "Bad HTTP method" : "Zlá metóda HTTP",
     "Bad credentials" : "Nesprávne prihlasovacie údaje",
