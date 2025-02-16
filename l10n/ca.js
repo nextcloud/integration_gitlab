@@ -36,6 +36,7 @@ OC.L10N.register(
     "No GitLab notifications!" : "No hi ha notificacions de GitLab!",
     "Failed to get GitLab notifications" : "No s'han pogut rebre les notificacions del GitLab",
     "Unknown error" : "Error desconegut",
+    "by {creator}" : "per {creator}",
     "Comments" : "Comentaris",
     "Author" : "Autor/a",
     "Owner" : "Propietari",
