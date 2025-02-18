@@ -4,6 +4,7 @@ OC.L10N.register(
     "Bad HTTP method" : "Dårlig HTTP metode",
     "Bad credentials" : "Forkerte legitimationsoplysninger",
     "Connected accounts" : "Forbundne konti",
+    "Personal access token" : "Personligt adgangstoken",
     "Unknown error" : "Ukendt fejl",
     "by {creator}" : "af {creator}",
     "Comments" : "Kommentarer",
