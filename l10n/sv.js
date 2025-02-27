@@ -13,14 +13,14 @@ OC.L10N.register(
     "Personal access token" : "Personlig åtkomst-token",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varning, allt du skriver i sökfältet skickas till GitLab.",
     "Enable searching for repositories" : "Aktivera sökning efter arkiv",
+    "created {relativeDate}" : "skapad {relativeDate}",
+    "closed {relativeDate}" : "stängd {relativeDate}",
+    "updated {relativeDate}" : "uppdaterad {relativeDate}",
     "Unknown error" : "Okänt fel",
     "by {creator}" : "av {creator}",
     "Comments" : "Kommentarer",
     "Author" : "Upphovsman",
     "Owner" : "Ägare",
-    "Click to expand comment" : "Klicka för att utöka kommentaren",
-    "created {relativeDate}" : "skapad {relativeDate}",
-    "closed {relativeDate}" : "stängd {relativeDate}",
-    "updated {relativeDate}" : "uppdaterad {relativeDate}"
+    "Click to expand comment" : "Klicka för att utöka kommentaren"
 },
 "nplurals=2; plural=(n != 1);");
