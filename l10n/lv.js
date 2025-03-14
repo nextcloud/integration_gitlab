@@ -3,8 +3,10 @@ OC.L10N.register(
     {
     "Bad HTTP method" : "Nederīgs HTTP pieprasījuma veids",
     "Bad credentials" : "Nederīgi pieteikšanās dati",
-    "Connected accounts" : "Savienotie konti",
+    "Connected accounts" : "Sasaistītie konti",
+    "No GitLab account connected" : "Nav sasaistītu GitLab kontu",
     "Unknown error" : "Nezināma kļūda",
+    "GitLab connected accounts settings" : "Sasaistīto GitLab kontu iestatījumi",
     "Comments" : "Piebildes",
     "Owner" : "Īpašnieks"
 },
