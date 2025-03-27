@@ -1,0 +1,7 @@
+{ "translations": {
+    "Unknown error" : "Tundmatu viga",
+    "Comments" : "Kommentaarid",
+    "Author" : "Autor",
+    "Owner" : "Omanik"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
