@@ -1,5 +1,6 @@
 { "translations": {
     "Unknown error" : "Tundmatu viga",
+    "by {creator}" : "kasutajalt {creator}",
     "Comments" : "Kommentaarid",
     "Author" : "Autor",
     "Owner" : "Omanik"
