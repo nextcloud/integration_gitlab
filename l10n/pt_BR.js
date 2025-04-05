@@ -16,7 +16,7 @@ OC.L10N.register(
     "Integration of GitLab software development management service" : "Integração do serviço de gerenciamento de desenvolvimento de software GitLab",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "A integração do GitLab fornece um widget de painel exibindo suas notificações mais importantes\ne um provedor de pesquisa unificado para repositórios, questões e solicitações de mesclagem.",
     "GitLab admin options saved" : "Opções de administração do GitLab salvas",
-    "Failed to save GitLab admin options" : "Falha ao salvar as opções de administrador do GitLab",
+    "Failed to save GitLab admin options" : "Falha ao salvar as opções de administração do GitLab",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Se você deseja permitir que seus usuários do Nextcloud usem o OAuth para se autenticar em uma instância do GitLab de sua escolha, crie um aplicativo nas configurações do GitLab e defina o ID e a chave aqui.",
     "Make sure you set the \"Redirect URI\" to:" : "Certifique-se de definir o \"URI de redirecionamento\" para:",
     "Give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "Dê permissões \"read_user\", \"read_api\" e \"read_repository\" ao aplicativo.",
@@ -78,6 +78,6 @@ OC.L10N.register(
     "Author" : "Autor",
     "Owner" : "Proprietário",
     "Click to expand comment" : "Clique para expandir o comentário",
-    "Failed to save GitLab OAuth state" : "Falha ao salvar o estado GitLab OAuth"
+    "Failed to save GitLab OAuth state" : "Falha ao salvar o estado OAuth de GitLab"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
