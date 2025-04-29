@@ -16,7 +16,7 @@ OC.L10N.register(
     "Integration of GitLab software development management service" : "Einbindung des GitLab Software Development Management Service",
     "GitLab integration provides a dashboard widget displaying your most important notifications\n    and a unified search provider for repositories, issues and merge requests." : "Die GitLab-Einbindung bietet ein Dashboard-Widget mit wichtigen Benachrichtigungen \n  und einen einheitlichen Suchanbieter für die Suche nach Repositorys, Issues und Merge-Requests.",
     "GitLab admin options saved" : "GitLab-Administrationseinstellungen gespeichert",
-    "Failed to save GitLab admin options" : "Fehler beim Speichern der GitLab-Administrationseinstellungen",
+    "Failed to save GitLab admin options" : "GitLab-Administrationseinstellungen konnten nicht gespeichert werden",
     "If you want to allow your Nextcloud users to use OAuth to authenticate to a GitLab instance of your choice, create an application in your GitLab settings and set the ID and secret here." : "Wenn Sie Ihren Nextcloud-Benutzern erlauben möchten, sich mit OAuth bei einer GitLab-Instanz Ihrer Wahl zu authentifizieren, erstellen Sie eine Anwendung in Ihren GitLab-Einstellungen und legen Sie hier die ID und das Geheimnis fest.",
     "Make sure you set the \"Redirect URI\" to:" : "Stellen Sie sicher, dass die \"Weiterleitungs-URI\" gesetzt ist auf:",
     "Give \"read_user\", \"read_api\" and \"read_repository\" permissions to the application." : "\"read_user\", \"read_api\" und \"read_repository\" Berechtigungen für die Anwendung geben.",
@@ -32,11 +32,11 @@ OC.L10N.register(
     "Error connecting to GitLab:" : "Fehler bei der Verbindung zu GitLab:",
     "{url} as {displayname} ({name})" : "{url} als {displayname} ({name})",
     "Account added" : "Konto hinzugefügt",
-    "Failed to add account" : "Fehler beim Hinzufügen des Kontos",
+    "Failed to add account" : "Konto konnte nicht hinzugefügt werden",
     "Account deleted" : "Konto gelöscht",
-    "Failed to delete account" : "Fehler beim Löschen des Kontos",
+    "Failed to delete account" : "Konto konnte nicht gelöscht werden",
     "GitLab options saved" : "GitLab-Einstellungen gespeichert",
-    "Failed to save GitLab options" : "Fehler beim Speichern der GitLab-Einstellungen",
+    "Failed to save GitLab options" : "GitLab-Einstellungen konnten nicht gespeichert werden",
     "Connect to GitLab using OAuth" : "Mittels OAuth eine Verbindung zu GitLab herstellen",
     "GitLab instance address" : "Adresse der GitLab-Instanz",
     "Personal access token" : "Persönlicher Zugriffsschlüssel",
@@ -78,6 +78,6 @@ OC.L10N.register(
     "Author" : "Autor",
     "Owner" : "Besitzer",
     "Click to expand comment" : "Klicken, um den Kommentar zu erweitern",
-    "Failed to save GitLab OAuth state" : "Fehler beim Speichern des GitLab OAuth-Status"
+    "Failed to save GitLab OAuth state" : "GitLab OAuth-Status konnte nicht gespeichert werden"
 },
 "nplurals=2; plural=(n != 1);");
