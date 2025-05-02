@@ -4,6 +4,8 @@ OC.L10N.register(
     "Bad HTTP method" : "Nederīgs HTTP pieprasījuma veids",
     "Bad credentials" : "Nederīgi pieteikšanās dati",
     "Connected accounts" : "Sasaistītie konti",
+    "Account added" : "Konts pievienots",
+    "Failed to add account" : "Neizdevās pievienot kontu",
     "No GitLab account connected" : "Nav sasaistītu GitLab kontu",
     "Unknown error" : "Nezināma kļūda",
     "GitLab connected accounts settings" : "Sasaistīto GitLab kontu iestatījumi",
