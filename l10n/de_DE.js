@@ -28,7 +28,7 @@ OC.L10N.register(
     "Application secret" : "Anwendungsgeheimnis",
     "Client secret of your GitLab application" : "Geheime Zeichenkette des Clients von Ihrer GitLab-Anwendung",
     "Enable GitLab link previews" : "Vorschau von GitLab-Links aktivieren",
-    "Successfully connected to GitLab!" : "Erfolgreich verbunden mit GitLab!",
+    "Successfully connected to GitLab!" : "Erfolgreich mit GitLab verbunden!",
     "Error connecting to GitLab:" : "Fehler bei der Verbindung zu GitLab:",
     "{url} as {displayname} ({name})" : "{url} als {displayname} ({name})",
     "Account added" : "Konto hinzugefügt",
