@@ -55,7 +55,7 @@ class GitlabAccountMapper extends QBMapper {
 	/**
 	 * @throws Exception
 	 */
-	public function updateFilters(string $accountId, array $widget_projects, array $widget_groups): int {
+	public function updateFilters(int $accountId, array $widget_projects, array $widget_groups): int {
 		$qb = $this->db->getQueryBuilder();
 
 		$qb->update('gitlab_accounts')

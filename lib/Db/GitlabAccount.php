@@ -52,8 +52,8 @@ class GitlabAccount extends Entity implements JsonSerializable {
 		$this->addType('refresh_token', 'string');
 		$this->addType('user_info_name', 'string');
 		$this->addType('user_info_display_name', 'string');
-		$this->addType('widget_projects', 'array');
-		$this->addType('widget_groups', 'array');
+		$this->addType('widget_projects', 'json');
+		$this->addType('widget_groups', 'json');
 
 		$this->crypto = \OC::$server->get(ICrypto::class);
 	}

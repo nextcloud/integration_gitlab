@@ -28,7 +28,7 @@ class GitlabAPIControllerTest extends TestCase {
 	public const APP_NAME = 'integration_gitlab';
 	public const TEST_USER1 = 'testuser1';
 	public const API_TOKEN = 'testtoken';
-	public const DEFAULT_HEADERS = ['User-Agent' => 'Nextcloud GitLab integration', 'Authorization' => 'Bearer '.self::API_TOKEN];
+	public const DEFAULT_HEADERS = ['User-Agent' => 'Nextcloud GitLab integration', 'Authorization' => 'Bearer ' . self::API_TOKEN];
 
 	private GitlabAPIController $gitlabApiController;
 	private GitlabAPIService $gitlabApiService;
@@ -93,8 +93,8 @@ class GitlabAPIControllerTest extends TestCase {
 		$firstUrl = 'https://gitlab.com/api/v4/users/1';
 		$secondUrl = 'https://gitlab.com/avatar.jpg';
 
-		$firstResponse = file_get_contents(__DIR__.'/data/users_with_id.json');
-		$secondResponse = file_get_contents(__DIR__.'/data/avatar.jpg');
+		$firstResponse = file_get_contents(__DIR__ . '/data/users_with_id.json');
+		$secondResponse = file_get_contents(__DIR__ . '/data/avatar.jpg');
 
 		$options = [
 			'headers' => self::DEFAULT_HEADERS,
@@ -129,8 +129,8 @@ class GitlabAPIControllerTest extends TestCase {
 		$firstUrl = 'https://gitlab.com/api/v4/projects/1';
 		$secondUrl = 'http://example.com/uploads/project/avatar/3/uploads/avatar.png';
 
-		$firstResponse = file_get_contents(__DIR__.'/data/projects_with_id.json');
-		$secondResponse = file_get_contents(__DIR__.'/data/avatar.jpg');
+		$firstResponse = file_get_contents(__DIR__ . '/data/projects_with_id.json');
+		$secondResponse = file_get_contents(__DIR__ . '/data/avatar.jpg');
 
 		$options = [
 			'headers' => self::DEFAULT_HEADERS,
@@ -164,25 +164,25 @@ class GitlabAPIControllerTest extends TestCase {
 	private function getProjectsResponse(int $numResponses): string {
 		// Here we recycle the projects.json file contents and just change the project id for each project.
 		// All other fields remain constant.
-		$response = json_decode(file_get_contents(__DIR__.'/data/projects.json'), true);
+		$response = json_decode(file_get_contents(__DIR__ . '/data/projects.json'), true);
 
 		$projectId = 1;
 
 		$response[0]['id'] = $projectId;
-		$response[0]['path_with_namespace'] = 'example/example'.strval($projectId);
-		$response[0]['avatar_url'] = 'http://example.com/uploads/project/avatar/'.strval($projectId).'/uploads/avatar.png';
+		$response[0]['path_with_namespace'] = 'example/example' . strval($projectId);
+		$response[0]['avatar_url'] = 'http://example.com/uploads/project/avatar/' . strval($projectId) . '/uploads/avatar.png';
 		$projectId++;
 
 		// Duplicate the first element $numResponses-1 times
-		while(--$numResponses) {
+		while (--$numResponses) {
 			$response[] = $response[0];
 			// Get the last element key
 			end($response);
 			$key = key($response);
 
 			$response[$key]['id'] = $projectId;
-			$response[$key]['path_with_namespace'] = 'example/example'.strval($projectId);
-			$response[$key]['avatar_url'] = 'http://example.com/uploads/project/avatar/'.strval($projectId).'/uploads/avatar.png';
+			$response[$key]['path_with_namespace'] = 'example/example' . strval($projectId);
+			$response[$key]['avatar_url'] = 'http://example.com/uploads/project/avatar/' . strval($projectId) . '/uploads/avatar.png';
 			$projectId++;
 		}
 
@@ -197,23 +197,23 @@ class GitlabAPIControllerTest extends TestCase {
 		$responses = []; // Responses for the repeated calls to the iClient in the GitlabAPIService::request method
 
 		// Get todos
-		$arguments[] = [$baseUrl.'/todos?'.http_build_query(['state' => 'pending']), ['headers' => self::DEFAULT_HEADERS]];
+		$arguments[] = [$baseUrl . '/todos?' . http_build_query(['state' => 'pending']), ['headers' => self::DEFAULT_HEADERS]];
 		$iResponse = $this->createMock(IResponse::class);
-		$iResponse->method('getBody')->willReturn(file_get_contents(__DIR__.'/data/todos.json'));
+		$iResponse->method('getBody')->willReturn(file_get_contents(__DIR__ . '/data/todos.json'));
 		$iResponse->method('getStatusCode')->willReturn(200);
 		$responses[] = $iResponse;
 
 		// Get projects of the user
-		$arguments[] = [$baseUrl.'/projects?'.http_build_query(['membership' => 'true']), ['headers' => self::DEFAULT_HEADERS]];
+		$arguments[] = [$baseUrl . '/projects?' . http_build_query(['membership' => 'true']), ['headers' => self::DEFAULT_HEADERS]];
 		$iResponse = $this->createMock(IResponse::class);
 		$iResponse->method('getBody')->willReturn($this->getProjectsResponse(20));
 		$iResponse->method('getStatusCode')->willReturn(200);
 		$responses[] = $iResponse;
 
 		// Get the projects/id for the project id 999 since it is not in the projects list of the user
-		$arguments[] = [$baseUrl.'/projects/999', ['headers' => self::DEFAULT_HEADERS]];
+		$arguments[] = [$baseUrl . '/projects/999', ['headers' => self::DEFAULT_HEADERS]];
 		$iResponse = $this->createMock(IResponse::class);
-		$iResponse->method('getBody')->willReturn(file_get_contents(__DIR__.'/data/projects_with_id.json'));
+		$iResponse->method('getBody')->willReturn(file_get_contents(__DIR__ . '/data/projects_with_id.json'));
 		$iResponse->method('getStatusCode')->willReturn(200);
 		$responses[] = $iResponse;
 
@@ -239,7 +239,7 @@ class GitlabAPIControllerTest extends TestCase {
 		$this->assertEquals(99, $todos[1]['id']);
 
 		// Also, check that the avatar url and visibility are set for each todo's project
-		foreach($todos as $todo) {
+		foreach ($todos as $todo) {
 			$this->assertArrayHasKey('avatar_url', $todo['project']);
 			$this->assertArrayHasKey('visibility', $todo['project']);
 		}

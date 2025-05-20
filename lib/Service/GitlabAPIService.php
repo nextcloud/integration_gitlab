@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Nextcloud - gitlab
  *
@@ -309,14 +310,14 @@ class GitlabAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (ServerException | ClientException $e) {
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+		} catch (ServerException|ClientException $e) {
+			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			if ($e->getCode() == 401) {
 				return ['error' => $this->l10n->t('Bad credentials'), 'code' => 401];
 			}
 			return ['error' => 'Gitlab API error, please check the server logs for more details', 'code' => $e->getCode()];
 		} catch (ConnectException $e) {
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => 'Connection error, please check the server logs for more details', 'code' => 500];
 		}
 	}
@@ -354,7 +355,7 @@ class GitlabAPIService {
 			$account->setEncryptedRefreshToken($refreshToken);
 			if (isset($result['expires_in'])) {
 				$nowTs = (new DateTime())->getTimestamp();
-				$expiresAt = $nowTs + (int) $result['expires_in'];
+				$expiresAt = $nowTs + (int)$result['expires_in'];
 				$account->setTokenExpiresAt($expiresAt);
 			}
 			$this->accountMapper->update($account);
@@ -395,7 +396,7 @@ class GitlabAPIService {
 				return [];
 			}
 		} catch (Exception $e) {
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}
@@ -444,7 +445,7 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (Exception $e) {
-			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->warning('GitLab OAuth error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}
