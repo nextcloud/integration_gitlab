@@ -12,6 +12,7 @@ class AdminConfig {
 		public ?string $client_secret,
 		public ?string $oauth_instance_url,
 		public ?bool $link_preview_enabled,
+		public ?string $force_gitlab_instance_url,
 	) {
 	}
 
@@ -21,6 +22,7 @@ class AdminConfig {
 			client_secret: $config->getAdminClientSecret(),
 			oauth_instance_url: $config->getAdminOauthUrl(),
 			link_preview_enabled: $config->getAdminLinkPreviewEnabled(),
+			force_gitlab_instance_url: $config->getAdminForceGitlabInstanceUrl(),
 		);
 	}
 
@@ -37,6 +39,9 @@ class AdminConfig {
 		if ($this->link_preview_enabled !== null) {
 			$config->setAdminLinkPreviewEnabled($this->link_preview_enabled);
 		}
+		if ($this->force_gitlab_instance_url !== null) {
+			$config->setAdminForceGitlabInstanceUrl($this->force_gitlab_instance_url);
+		}
 	}
 
 	public static function fromArray(array $config): AdminConfig {
@@ -45,6 +50,7 @@ class AdminConfig {
 			client_secret: $config['client_secret'] ?? null,
 			oauth_instance_url: $config['oauth_instance_url'] ?? null,
 			link_preview_enabled: $config['link_preview_enabled'] ?? null,
+			force_gitlab_instance_url: $config['force_gitlab_instance_url'] ?? null,
 		);
 	}
 
@@ -54,6 +60,7 @@ class AdminConfig {
 			'client_secret' => $this->client_secret !== null && $this->client_secret !== '' ? 'dummyToken' : $this->client_secret,
 			'oauth_instance_url' => $this->oauth_instance_url,
 			'link_preview_enabled' => $this->link_preview_enabled,
+			'force_gitlab_instance_url' => $this->force_gitlab_instance_url,
 		];
 	}
 }

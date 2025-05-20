@@ -24,6 +24,7 @@
 namespace OCA\Gitlab\Dashboard;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCA\Gitlab\Model\UserConfig;
 use OCA\Gitlab\Service\ConfigService;
 use OCP\AppFramework\Services\IInitialState;
@@ -39,6 +40,7 @@ class GitlabWidget implements IWidget {
 		private ConfigService $config,
 		private IURLGenerator $url,
 		private IInitialState $initialStateService,
+		private GitlabAccountMapper $accountMapper,
 		private string $userId,
 	) {
 	}
@@ -82,7 +84,18 @@ class GitlabWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-		$this->initialStateService->provideInitialState('user-config', UserConfig::loadConfig($this->userId, $this->config)->toArray());
+		$userConfig = UserConfig::loadConfig($this->userId, $this->config)->toArray();
+
+		try {
+			$account = $this->accountMapper->findById($this->userId, $userConfig['widget_account_id'])->jsonSerialize();
+			$userConfig['widget_projects'] = $account['widgetProjects'];
+			$userConfig['widget_groups'] = $account['widgetGroups'];
+		} catch (\Exception) {
+			$userConfig['widget_projects'] = [];
+			$userConfig['widget_groups'] = [];
+		}
+
+		$this->initialStateService->provideInitialState('user-config', $userConfig);
 		Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');
 		Util::addStyle(Application::APP_ID, 'dashboard');
 	}

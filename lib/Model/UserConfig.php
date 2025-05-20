@@ -23,6 +23,7 @@ class UserConfig {
 		public ?string $redirect_uri,
 		public ?string $oauth_origin,
 		public ?int $widget_account_id,
+		public ?string $force_gitlab_instance_url,
 	) {
 	}
 
@@ -40,6 +41,7 @@ class UserConfig {
 			redirect_uri: $config->getUserRedirectUri($userId),
 			oauth_origin: $config->getUserOauthOrigin($userId),
 			widget_account_id: $config->getUserWidgetAccountId($userId),
+			force_gitlab_instance_url: $config->getAdminForceGitlabInstanceUrl(),
 		);
 	}
 
@@ -93,6 +95,7 @@ class UserConfig {
 			redirect_uri: $config['redirect_uri'] ?? null,
 			oauth_origin: $config['oauth_origin'] ?? null,
 			widget_account_id: $config['widget_account_id'] ?? null,
+			force_gitlab_instance_url: $config['force_gitlab_instance_url'] ?? null,
 		);
 	}
 
@@ -110,6 +113,7 @@ class UserConfig {
 			'redirect_uri' => $this->redirect_uri,
 			'oauth_origin' => $this->oauth_origin,
 			'widget_account_id' => $this->widget_account_id,
+			'force_gitlab_instance_url' => $this->force_gitlab_instance_url,
 		];
 	}
 }

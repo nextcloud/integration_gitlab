@@ -27,7 +27,11 @@ class Personal implements ISettings {
 	public function getForm(): TemplateResponse {
 		$this->initialStateService->provideInitialState('accounts', array_map(static fn (GitlabAccount $account) => $account->jsonSerialize(), $this->accountMapper->find($this->userId)));
 		$this->initialStateService->provideInitialState('user-config', UserConfig::loadConfig($this->userId, $this->config)->toArray());
-		$this->initialStateService->provideInitialState('admin-config', ['oauth_is_possible' => $this->config->getAdminClientId() !== '' && $this->config->getAdminClientSecret() !== '']);
+		$this->initialStateService->provideInitialState('admin-config', [
+			'oauth_is_possible' => $this->config->getAdminClientId() !== '' && $this->config->getAdminClientSecret() !== '',
+			'oauth_instance_url' => $this->config->getAdminOauthUrl(),
+			'force_gitlab_instance_url' => $this->config->getAdminForceGitlabInstanceUrl(),
+		]);
 		return new TemplateResponse(Application::APP_ID, 'personalSettings');
 	}
 

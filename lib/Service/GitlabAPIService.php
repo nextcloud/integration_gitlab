@@ -138,10 +138,13 @@ class GitlabAPIService {
 		return array_slice($mergeRequests, $leftPadding, $limit);
 	}
 
-	public function getTodos(GitlabAccount $account, ?string $since = null): array {
+	public function getTodos(GitlabAccount $account, ?string $since = null, ?string $groupId = null): array {
 		$params = [
 			'state' => 'pending',
 		];
+		if ($groupId) {
+			$params['group_id'] = $groupId;
+		}
 		$result = $this->request($account, $account->getUrl(), 'todos', $params);
 		if (isset($result['error'])) {
 			return $result;
@@ -187,6 +190,24 @@ class GitlabAPIService {
 		}
 
 		return $result;
+	}
+
+	public function getProjectsList(GitLabAccount $account, ?string $since = null): array {
+		$params = [
+			'membership' => 'true',
+		];
+		if ($since) {
+			$params['updated_after'] = $since;
+		}
+
+		return $this->request($account, $account->getUrl(), 'projects', $params);
+	}
+
+	public function getGroupsList(GitLabAccount $account): array {
+		$params = [
+			'membership' => 'true',
+		];
+		return $this->request($account, $account->getUrl(), 'groups', $params);
 	}
 
 	public function getUserAvatar(GitlabAccount $account, string $baseUrl, int $gitlabUserId): array {

@@ -96,6 +96,23 @@ class ConfigController extends Controller {
 		}
 	}
 
+	public function updateAccountFilters(int $id, array $projects = [], array $groups = []) {
+		try {
+			$result = $this->accountMapper->updateFilters($id, $projects, $groups) === 1;
+
+			if (!$result) {
+				return new DataResponse([], 500);
+			}
+			return new DataResponse([]);
+		} catch (DoesNotExistException $e) {
+			$this->logger->error('Requested Gitlab account with id ' . $id . 'not found');
+			return new DataResponse([], 404);
+		} catch (Exception $e) {
+			$this->logger->error('Failed to update Gitlab account: ' . $e->getMessage(), ['exception' => $e]);
+			return new DataResponse([], 500);
+		}
+	}
+
 	/**
 	 * @PasswordConfirmationRequired
 	 * @NoAdminRequired
