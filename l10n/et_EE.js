@@ -5,6 +5,7 @@ OC.L10N.register(
     "Bad credentials" : "Vale kasutajanimi, salasõna või tunnusluba",
     "Connected accounts" : "Ühendatud kasutajakontod",
     "Instance address" : "Serveri aadress",
+    "Personal access token" : "Isiklik tunnusluba ligipääsuks",
     "Gitlab Account for Dashboard widget" : "Gitlabi kasutajakonto for Juhtpaneeli vidina jaoks",
     "Unknown error" : "Tundmatu viga",
     "by {creator}" : "kasutajalt {creator}",
