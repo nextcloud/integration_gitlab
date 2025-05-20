@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.2.0 - 2025-05-20
+
+Maintenance update
+
+### Added
+
+- Enforce GitLab instance URL setting
+- Added account Projects filter for Dashboard widget
+- Added account Group filter for Dashboard widget
+
 ## 3.1.2 – 2024-10-10
 
 ### Fixed
