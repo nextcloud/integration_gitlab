@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Nextcloud - gitlab
  *
@@ -138,10 +139,13 @@ class GitlabAPIService {
 		return array_slice($mergeRequests, $leftPadding, $limit);
 	}
 
-	public function getTodos(GitlabAccount $account, ?string $since = null): array {
+	public function getTodos(GitlabAccount $account, ?string $since = null, ?string $groupId = null): array {
 		$params = [
 			'state' => 'pending',
 		];
+		if ($groupId) {
+			$params['group_id'] = $groupId;
+		}
 		$result = $this->request($account, $account->getUrl(), 'todos', $params);
 		if (isset($result['error'])) {
 			return $result;
@@ -187,6 +191,24 @@ class GitlabAPIService {
 		}
 
 		return $result;
+	}
+
+	public function getProjectsList(GitLabAccount $account, ?string $since = null): array {
+		$params = [
+			'membership' => 'true',
+		];
+		if ($since) {
+			$params['updated_after'] = $since;
+		}
+
+		return $this->request($account, $account->getUrl(), 'projects', $params);
+	}
+
+	public function getGroupsList(GitLabAccount $account): array {
+		$params = [
+			'membership' => 'true',
+		];
+		return $this->request($account, $account->getUrl(), 'groups', $params);
 	}
 
 	public function getUserAvatar(GitlabAccount $account, string $baseUrl, int $gitlabUserId): array {
@@ -288,14 +310,14 @@ class GitlabAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (ServerException | ClientException $e) {
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+		} catch (ServerException|ClientException $e) {
+			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			if ($e->getCode() == 401) {
 				return ['error' => $this->l10n->t('Bad credentials'), 'code' => 401];
 			}
 			return ['error' => 'Gitlab API error, please check the server logs for more details', 'code' => $e->getCode()];
 		} catch (ConnectException $e) {
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => 'Connection error, please check the server logs for more details', 'code' => 500];
 		}
 	}
@@ -333,7 +355,7 @@ class GitlabAPIService {
 			$account->setEncryptedRefreshToken($refreshToken);
 			if (isset($result['expires_in'])) {
 				$nowTs = (new DateTime())->getTimestamp();
-				$expiresAt = $nowTs + (int) $result['expires_in'];
+				$expiresAt = $nowTs + (int)$result['expires_in'];
 				$account->setTokenExpiresAt($expiresAt);
 			}
 			$this->accountMapper->update($account);
@@ -374,7 +396,7 @@ class GitlabAPIService {
 				return [];
 			}
 		} catch (Exception $e) {
-			$this->logger->warning('GitLab API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}
@@ -423,7 +445,7 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (Exception $e) {
-			$this->logger->warning('GitLab OAuth error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->warning('GitLab OAuth error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}

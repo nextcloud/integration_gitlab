@@ -51,4 +51,20 @@ class GitlabAccountMapper extends QBMapper {
 
 		return $this->findEntity($qb);
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function updateFilters(int $accountId, array $widget_projects, array $widget_groups): int {
+		$qb = $this->db->getQueryBuilder();
+
+		$qb->update('gitlab_accounts')
+			->set('widget_projects', $qb->createNamedParameter($widget_projects, IQueryBuilder::PARAM_JSON))
+			->set('widget_groups', $qb->createNamedParameter($widget_groups, IQueryBuilder::PARAM_JSON))
+			->where(
+				$qb->expr()->eq('id', $qb->createNamedParameter($accountId, IQueryBuilder::PARAM_INT))
+			);
+
+		return $qb->executeStatement();
+	}
 }

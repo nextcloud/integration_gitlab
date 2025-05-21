@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Nextcloud - gitlab
  *
@@ -114,14 +115,58 @@ class GitlabAPIController extends Controller {
 	 * @return DataResponse
 	 * @throws Exception
 	 */
-	public function getTodos(int $accountId, ?string $since = null): DataResponse {
+	public function getTodos(int $accountId, ?string $since = null, ?string $groupId = null): DataResponse {
 		try {
 			$account = $this->accountMapper->findById($this->userId, $accountId);
 			if ($account->getClearToken() === '') {
 				return new DataResponse('', 400);
 			}
 
-			$result = $this->gitlabAPIService->getTodos($account, $since);
+			$result = $this->gitlabAPIService->getTodos($account, $since, $groupId);
+			if (isset($result['error'])) {
+				return new DataResponse($result, 401);
+			}
+
+			return new DataResponse($result);
+		} catch (DoesNotExistException $e) {
+			$this->logger->error('Requested Gitlab account with id ' . $accountId . 'not found');
+			return new DataResponse([], 404);
+		} catch (\OCP\DB\Exception $e) {
+			$this->logger->error('Failed to query Gitlab account with id ' . $accountId . ': ' . $e->getMessage(), ['exception' => $e]);
+			return new DataResponse([], 500);
+		}
+	}
+
+	public function getProjectsList(int $accountId): DataResponse {
+		try {
+			$account = $this->accountMapper->findById($this->userId, $accountId);
+			if ($account->getClearToken() === '') {
+				return new DataResponse('', 400);
+			}
+
+			$result = $this->gitlabAPIService->getProjectsList($account);
+			if (isset($result['error'])) {
+				return new DataResponse($result, 401);
+			}
+
+			return new DataResponse($result);
+		} catch (DoesNotExistException $e) {
+			$this->logger->error('Requested Gitlab account with id ' . $accountId . 'not found');
+			return new DataResponse([], 404);
+		} catch (\OCP\DB\Exception $e) {
+			$this->logger->error('Failed to query Gitlab account with id ' . $accountId . ': ' . $e->getMessage(), ['exception' => $e]);
+			return new DataResponse([], 500);
+		}
+	}
+
+	public function getGroupsList(int $accountId): DataResponse {
+		try {
+			$account = $this->accountMapper->findById($this->userId, $accountId);
+			if ($account->getClearToken() === '') {
+				return new DataResponse('', 400);
+			}
+
+			$result = $this->gitlabAPIService->getGroupsList($account);
 			if (isset($result['error'])) {
 				return new DataResponse($result, 401);
 			}

@@ -33,6 +33,17 @@
 					@input="onInput">
 			</div>
 			<div class="line">
+				<label for="gitlab-force-instance-url">
+					<EarthIcon :size="20" class="icon" />
+					{{ t('integration_gitlab', 'Restrict GitLab instance URL') }}
+				</label>
+				<input id="gitlab-force-instance-url"
+					v-model="state.force_gitlab_instance_url"
+					type="text"
+					:placeholder="t('integration_gitlab', 'Restrict GitLab instance URL')"
+					@input="onInput">
+			</div>
+			<div class="line">
 				<label for="gitlab-client-id">
 					<KeyIcon :size="20" class="icon" />
 					{{ t('integration_gitlab', 'Application ID') }}
@@ -133,6 +144,7 @@ export default {
 				const values = {
 					client_id: this.state.client_id,
 					oauth_instance_url: this.state.oauth_instance_url,
+					force_gitlab_instance_url: this.state.force_gitlab_instance_url,
 				}
 				if (this.state.client_secret !== 'dummyToken') {
 					values.client_secret = this.state.client_secret

@@ -5,7 +5,7 @@
     <summary>Integration of GitLab software development management service</summary>
     <description><![CDATA[GitLab integration provides a dashboard widget displaying your most important notifications
     and a unified search provider for repositories, issues and merge requests.]]></description>
-    <version>3.1.3</version>
+    <version>3.2.0</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Gitlab</namespace>
@@ -18,13 +18,13 @@
     <bugs>https://github.com/nextcloud/integration_gitlab/issues</bugs>
     <screenshot>https://github.com/nextcloud/integration_gitlab/raw/main/img/screenshot1.jpg</screenshot>
     <dependencies>
-        <nextcloud min-version="26" max-version="31"/>
+        <nextcloud min-version="29" max-version="32"/>
     </dependencies>
-	<repair-steps>
-		<post-migration>
-			<step>OCA\Gitlab\Migration\MultiAccountRepairStep</step>
-		</post-migration>
-	</repair-steps>
+    <repair-steps>
+        <post-migration>
+            <step>OCA\Gitlab\Migration\MultiAccountRepairStep</step>
+        </post-migration>
+    </repair-steps>
     <settings>
         <admin>OCA\Gitlab\Settings\Admin</admin>
         <admin-section>OCA\Gitlab\Settings\AdminSection</admin-section>

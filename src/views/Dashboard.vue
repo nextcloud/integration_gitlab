@@ -102,6 +102,12 @@ export default {
 			}
 			return CheckIcon
 		},
+		widgetProjectsFilter() {
+			if (this.config.widget_projects) {
+				return this.config.widget_projects.map((p) => p.id)
+			}
+			return []
+		},
 	},
 
 	watch: {
@@ -121,9 +127,6 @@ export default {
 	beforeMount() {
 		this.launchLoop()
 		document.addEventListener('visibilitychange', this.changeWindowVisibility)
-	},
-
-	mounted() {
 	},
 
 	methods: {
@@ -149,6 +152,12 @@ export default {
 					since: this.lastDate,
 				}
 			}
+
+			if (this.config.widget_groups && this.config.widget_groups.length === 1) {
+				req.params = req.params || {}
+				req.params.groupId = this.config.widget_groups[0].id
+			}
+
 			axios.get(generateUrl(`/apps/integration_gitlab/gitlab/${this.config.widget_account_id}/todos`), req).then((response) => {
 				this.processNotifications(response.data)
 				this.state = 'ok'
@@ -176,6 +185,11 @@ export default {
 			}
 		},
 		filter(notifications) {
+			if (this.widgetProjectsFilter.length > 0) {
+				notifications = notifications.filter((n) => {
+					return this.widgetProjectsFilter.includes(n.project.id)
+				})
+			}
 			return notifications.filter((n) => {
 				return n.action_name !== 'marked'
 			})

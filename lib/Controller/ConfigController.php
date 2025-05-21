@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Nextcloud - gitlab
  *
@@ -93,6 +94,21 @@ class ConfigController extends Controller {
 		} catch (Exception $e) {
 			$this->logger->error('Failed to save the Gitlab account: ' . $e->getMessage(), ['exception' => $e]);
 			return new DataResponse(['error' => 'Server Error: Failed to save the Gitlab account'], 500);
+		}
+	}
+
+	public function updateAccountFilters(int $id, array $projects = [], array $groups = []): DataResponse {
+		try {
+			$result = $this->accountMapper->updateFilters($id, $projects, $groups) === 1;
+
+			if (!$result) {
+				return new DataResponse(['error' => 'No Gitlab account filters updated'], 404);
+			}
+
+			return new DataResponse(['error' => '']);
+		} catch (Exception $e) {
+			$this->logger->error('Failed to update Gitlab account: ' . $e->getMessage(), ['exception' => $e]);
+			return new DataResponse(['error' => 'Server Error: Failed to update the Gitlab account filters'], 500);
 		}
 	}
 

@@ -69,6 +69,14 @@ class ConfigService {
 		$this->config->setAppValue(Application::APP_ID, 'link_preview_enabled', $enabled ? '1' : '0');
 	}
 
+	public function getAdminForceGitlabInstanceUrl(): string {
+		return $this->config->getAppValue(Application::APP_ID, 'force_gitlab_instance_url');
+	}
+
+	public function setAdminForceGitlabInstanceUrl(string $url): void {
+		$this->config->setAppValue(Application::APP_ID, 'force_gitlab_instance_url', $url);
+	}
+
 	public function getUserUrl(string $userId): string {
 		return $this->config->getUserValue($userId, Application::APP_ID, 'url') ?: $this->getAdminOauthUrl();
 	}

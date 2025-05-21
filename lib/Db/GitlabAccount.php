@@ -24,6 +24,10 @@ use OCP\Security\ICrypto;
  * @method void setUserInfoName(string $userInfoName)
  * @method string|null getUserInfoDisplayName()
  * @method void setUserInfoDisplayName(string $userInfoDisplayName)
+ * @method array|null getWidgetProjects()
+ * @method void setWidgetProjects(array $widgetProjects)
+ * @method array|null getWidgetGroups()
+ * @method void setWidgetGroups(array $widgetGroups)
  */
 class GitlabAccount extends Entity implements JsonSerializable {
 	protected $userId;
@@ -34,6 +38,8 @@ class GitlabAccount extends Entity implements JsonSerializable {
 	protected $refreshToken;
 	protected $userInfoName;
 	protected $userInfoDisplayName;
+	protected $widgetProjects;
+	protected $widgetGroups;
 
 	private ICrypto $crypto;
 
@@ -46,6 +52,8 @@ class GitlabAccount extends Entity implements JsonSerializable {
 		$this->addType('refresh_token', 'string');
 		$this->addType('user_info_name', 'string');
 		$this->addType('user_info_display_name', 'string');
+		$this->addType('widget_projects', 'json');
+		$this->addType('widget_groups', 'json');
 
 		$this->crypto = \OC::$server->get(ICrypto::class);
 	}
@@ -60,6 +68,8 @@ class GitlabAccount extends Entity implements JsonSerializable {
 			'refreshToken' => $this->refreshToken !== '' ? 'dummyToken' : '',
 			'userInfoName' => $this->userInfoName,
 			'userInfoDisplayName' => $this->userInfoDisplayName,
+			'widgetProjects' => $this->widgetProjects && !is_array($this->widgetProjects) ? json_decode($this->widgetProjects) : [],
+			'widgetGroups' => $this->widgetGroups && !is_array($this->widgetGroups) ? json_decode($this->widgetGroups) : [],
 		];
 	}
 

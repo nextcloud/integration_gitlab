@@ -17,6 +17,9 @@
 					{{ t('integration_gitlab', 'Connect to GitLab using OAuth') }}
 				</NcButton>
 				<br>
+				<p class="settings-hint">
+					{{ t('integration_gitlab', 'OAuth instance URL') }}:&nbsp;<span>{{ adminConfig.oauth_instance_url }}</span>
+				</p>
 				<hr>
 				<br>
 			</div>
@@ -25,10 +28,15 @@
 				<label for="gitlab-url">
 					<EarthIcon :size="20" class="icon" />
 					{{ t('integration_gitlab', 'GitLab instance address') }}
+					<span v-if="adminConfig.force_gitlab_instance_url !== ''" style="font-style: italic;">
+						&nbsp;({{ t('integration_gitlab', 'enforced by administrator') }})
+					</span>
 				</label>
-				<input id="gitlab-url"
+				<input
+					id="gitlab-url"
 					v-model="state.url"
 					type="text"
+					:disabled="adminConfig.force_gitlab_instance_url !== ''"
 					:placeholder="t('integration_gitlab', 'GitLab instance address')">
 			</div>
 			<div class="line">
@@ -129,6 +137,21 @@
 					:input-label="t('integration_gitlab', 'Gitlab Account for Dashboard widget')"
 					:options="selectableAccounts"
 					@input="(value) => onConfigChanged(value?.id ?? 0, 'widget_account_id')" />
+
+				<NcSelect
+					:value="selectedProjectsFilter"
+					:input-label="t('integration_gitlab', 'Projects filter for widget')"
+					:placeholder="t('integration_gitlab', 'Projects filter for widget')"
+					:multiple="true"
+					:options="widgetProjectOptions"
+					@input="(value) => onSelectedProjectChange(value)" />
+
+				<NcSelect
+					:value="selectedGroupsFilter"
+					:input-label="t('integration_gitlab', 'Groups filter for widget')"
+					:placeholder="t('integration_gitlab', 'Groups filter for widget')"
+					:options="widgetGroupOptions"
+					@input="(value) => onSelectedGroupChange(value)" />
 			</div>
 		</div>
 	</div>
@@ -184,6 +207,8 @@ export default {
 			userConfig: loadState('integration_gitlab', 'user-config'),
 			adminConfig: loadState('integration_gitlab', 'admin-config'),
 			accounts: loadState('integration_gitlab', 'accounts'),
+			widget_projects_list: [],
+			widget_groups_list: [],
 		}
 	},
 
@@ -200,9 +225,45 @@ export default {
 
 			return this.formatAccountForSelect(account)
 		},
+		selectedProjectsFilter() {
+			if (!this.selectedAccount) {
+				return []
+			}
+
+			const account = this.accounts.find((account) => account.id === this.userConfig.widget_account_id)
+
+			return account.widgetProjects ?? []
+		},
+		selectedGroupsFilter() {
+			if (!this.selectedAccount) {
+				return []
+			}
+
+			const account = this.accounts.find((account) => account.id === this.userConfig.widget_account_id)
+			return account.widgetGroups ?? []
+		},
+		widgetProjectOptions() {
+			return this.widget_projects_list.map((project) => ({
+				id: project.id,
+				label: project.name,
+			}))
+		},
+		widgetGroupOptions() {
+			return this.widget_groups_list.map((group) => ({
+				id: group.id,
+				label: group.name,
+			}))
+		},
 	},
 
-	watch: {},
+	watch: {
+		selectedAccount(newValue) {
+			if (newValue) {
+				this.fetchAccountProjectsList()
+				this.fetchAccountGroupsList()
+			}
+		},
+	},
 
 	mounted() {
 		const paramString = window.location.search.slice(1)
@@ -214,6 +275,11 @@ export default {
 		} else if (glToken === 'error') {
 			showError(t('integration_gitlab', 'Error connecting to GitLab:') + ' ' + urlParams.get('message'))
 		}
+		if (this.adminConfig.force_gitlab_instance_url !== '') {
+			this.state.url = this.adminConfig.force_gitlab_instance_url
+		}
+		this.fetchAccountProjectsList()
+		this.fetchAccountGroupsList()
 	},
 
 	methods: {
@@ -237,7 +303,9 @@ export default {
 					token: this.state.token,
 				})
 				showSuccess(t('integration_gitlab', 'Account added'))
-				this.state.url = ''
+				if (this.adminConfig.force_gitlab_instance_url === '') {
+					this.state.url = '' // Reset instance URL only if not enforced
+				}
 				this.state.token = ''
 				this.accounts.push(response.data.account)
 				this.userConfig = response.data.config
@@ -280,6 +348,53 @@ export default {
 		},
 		connectWithOauth() {
 			oauthConnect(this.userConfig.oauth_instance_url, this.userConfig.client_id, 'settings')
+		},
+		fetchAccountProjectsList() {
+			const url = generateUrl(`/apps/integration_gitlab/gitlab/${this.userConfig.widget_account_id}/projects`)
+			return axios.get(url).then((response) => {
+				this.widget_projects_list = response.data
+			}).catch((error) => {
+				showError(t('integration_gitlab', 'Failed to get GitLab projects'))
+				console.debug(error)
+			})
+		},
+		onSelectedProjectChange(value) {
+			const account = this.accounts.find((account) => account.id === this.userConfig.widget_account_id)
+			const previousProjects = account.widgetProjects
+			account.widgetProjects = value
+			this.updateAccountFilters().catch(() => {
+				account.widgetProjects = previousProjects
+			})
+		},
+		fetchAccountGroupsList() {
+			const url = generateUrl(`/apps/integration_gitlab/gitlab/${this.userConfig.widget_account_id}/groups`)
+			return axios.get(url).then((response) => {
+				this.widget_groups_list = response.data
+			}).catch((error) => {
+				showError(t('integration_gitlab', 'Failed to get GitLab groups'))
+				console.debug(error)
+			})
+		},
+		onSelectedGroupChange(value) {
+			const account = this.accounts.find((account) => account.id === this.userConfig.widget_account_id)
+			const previousGroups = account.widgetGroups
+			account.widgetGroups = value ? [value] : []
+			this.updateAccountFilters().catch(() => {
+				account.widgetGroups = previousGroups
+			})
+		},
+		updateAccountFilters() {
+			const url = generateUrl(`/apps/integration_gitlab/account/${this.userConfig.widget_account_id}/filters`)
+			const account = this.accounts.find((account) => account.id === this.userConfig.widget_account_id)
+			return axios.put(url, {
+				projects: account?.widgetProjects ?? [],
+				groups: account?.widgetGroups ?? [],
+			}).then(() => {
+				showSuccess(t('integration_gitlab', 'Selected account filters updated'))
+			}).catch((error) => {
+				showError(t('integration_gitlab', 'Failed to update GitLab filters') + (`: ${error.response?.data?.error}` ?? ''))
+				console.debug(error)
+			})
 		},
 	},
 }
