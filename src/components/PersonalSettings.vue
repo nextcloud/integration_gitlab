@@ -392,7 +392,7 @@ export default {
 			}).then(() => {
 				showSuccess(t('integration_gitlab', 'Selected account filters updated'))
 			}).catch((error) => {
-				showError(t('integration_gitlab', 'Failed to update GitLab filters'))
+				showError(t('integration_gitlab', 'Failed to update GitLab filters') + (`: ${error.response?.data?.error}` ?? ''))
 				console.debug(error)
 			})
 		},
