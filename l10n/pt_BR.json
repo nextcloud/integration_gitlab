@@ -1,6 +1,6 @@
 { "translations": {
     "Error getting OAuth access token. " : "Erro ao obter o token de acesso OAuth.",
-    "Error during OAuth exchanges" : "Erro ao obter o token de acesso OAuth",
+    "Error during OAuth exchanges" : "Erro nas trocas OAuth",
     "GitLab To-Dos" : "Tarefas do GitLab",
     "GitLab repositories, issues and merge requests" : "Repositórios, problemas e solicitações de mesclagem do GitLab",
     "GitLab issues" : "Problemas do GitLab",
@@ -71,7 +71,7 @@
     "GitLab connected accounts settings" : "Configurações de contas conectadas do GitLab",
     "by {creator}" : "por {creator}",
     "CLOSED" : "FECHADO",
-    "MERGED" : "INCORPORADO",
+    "MERGED" : "MESCLADO",
     "Upvotes" : "Votos positivos",
     "Downvotes" : "Votos negativos",
     "Comments" : "Comentários",
