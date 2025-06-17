@@ -1,7 +1,9 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "Error getting OAuth access token. " : "Fejl ved anmodning om OAuth adgangsnøgle",
     "Error during OAuth exchanges" : "Fejl under OAuth-udvekslinger",
+    "GitLab To-Dos" : "GitLab To-Dos",
     "Bad HTTP method" : "Dårlig HTTP metode",
     "Bad credentials" : "Forkerte legitimationsoplysninger",
     "OAuth access token refused" : "OAuth adgangsnøgle afvist",
