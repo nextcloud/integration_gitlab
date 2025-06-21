@@ -1,0 +1,14 @@
+OC.L10N.register(
+    "integration_gitlab",
+    {
+    "Error during OAuth exchanges" : "Hitilafu wakati wa kubadilishana OAuth",
+    "Bad HTTP method" : "Njia mbaya ya HTTP ",
+    "Bad credentials" : "Sifa mbaya",
+    "OAuth access token refused" : "Ufikiaji wa token za OAuth umekataliwa",
+    "Connected accounts" : "Akaunti zilizounganishwa",
+    "Unknown error" : "Hitilafu isiyojulikana",
+    "Comments" : "Maoni",
+    "Owner" : "Mmiliki",
+    "Click to expand comment" : "Bonyeza kupanua maoni"
+},
+"nplurals=2; plural=(n != 1);");
