@@ -1,9 +1,11 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "Error getting OAuth access token. " : "Viga OAuthi tunnusloa laadimisel.",
     "Error during OAuth exchanges" : "Viga OAuth andmevahetusel",
     "Bad HTTP method" : "Vigane HTTP-meetod",
     "Bad credentials" : "Vale kasutajanimi, salasõna või tunnusluba",
+    "OAuth access token refused" : "OAuthi tunnusluba pole õige.",
     "Connected accounts" : "Ühendatud kasutajakontod",
     "GitLab integration" : "Lõiming GitLabiga",
     "Instance address" : "Serveri aadress",
