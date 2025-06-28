@@ -57,6 +57,7 @@
     "No GitLab account connected" : "未連線至 GitLab 帳號",
     "Error connecting to GitLab" : "連線至 GitLab 時發生錯誤",
     "No GitLab notifications!" : "無 GitLab 通知！",
+    "Failed to get GitLab notifications" : "未能獲取 GitLab 通知",
     "Open issue" : "未解決的問題",
     "Closed issue" : "已關閉的問題",
     "Open merge request" : "打開合併請求",

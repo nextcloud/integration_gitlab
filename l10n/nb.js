@@ -54,6 +54,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Ingen GitLab-konto tilkoblet",
     "Error connecting to GitLab" : "Feil ved tilkobling til GitLab",
     "No GitLab notifications!" : "Ingen GitLab-varsler!",
+    "Failed to get GitLab notifications" : "Henting av GitLab-varsler feilet",
     "Open issue" : "Åpne sak",
     "Closed issue" : "Lukket sak",
     "Open merge request" : "Åpne fletteforespørsel",

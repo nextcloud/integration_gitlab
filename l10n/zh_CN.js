@@ -29,6 +29,7 @@ OC.L10N.register(
     "Enable searching for issues" : "启用议题搜索",
     "Error connecting to GitLab" : "连接至 GitLab 时出错",
     "No GitLab notifications!" : "无 GitLab 通知！",
+    "Failed to get GitLab notifications" : "获取GitLab通知失败",
     "Open issue" : "开启议题",
     "Closed issue" : "已关闭的议题",
     "Unknown state" : "未知状态",

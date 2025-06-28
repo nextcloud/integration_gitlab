@@ -33,6 +33,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Nessun account GitLab connesso",
     "Error connecting to GitLab" : "Errore durante la connessione a GitLab",
     "No GitLab notifications!" : "Nessuna notifica GitLab!",
+    "Failed to get GitLab notifications" : "Impossibile ricevere le notifiche di GitLab",
     "Unknown error" : "Errore sconosciuto",
     "CLOSED" : "CHIUSO",
     "MERGED" : "UNITI",

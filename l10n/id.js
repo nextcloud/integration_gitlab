@@ -41,6 +41,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Tidak ada akun GitLab terhubung",
     "Error connecting to GitLab" : "Terjadi kesalahan menghubungkan ke GitLab",
     "No GitLab notifications!" : "Tidak ada notifikasi GitLab!",
+    "Failed to get GitLab notifications" : "Gagal mendapatkan notifikasi GitLab",
     "Open issue" : "Isu terbuka",
     "Closed issue" : "Isu tertutup",
     "Open merge request" : "Permintaan penggabungan terbuka",

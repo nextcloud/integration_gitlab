@@ -42,6 +42,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Nincs GitLab-fiók csatlakoztatva",
     "Error connecting to GitLab" : "Hiba történt a GitLabhez történő kapcsolódáskor",
     "No GitLab notifications!" : "Nincsenek GitLab-értesítések.",
+    "Failed to get GitLab notifications" : "A GitLab értesítések lekérése sikertelen",
     "Open issue" : "Nyitott jegy",
     "Closed issue" : "Lezárt jegy",
     "Open merge request" : "Nyitott beolvasztási kérés",

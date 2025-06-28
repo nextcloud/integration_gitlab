@@ -35,6 +35,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Geen GitLab-account verbonden",
     "Error connecting to GitLab" : "Fout bij het verbinden met Google",
     "No GitLab notifications!" : "Geen GitLab meldingen!",
+    "Failed to get GitLab notifications" : "Kon GitLab-meldingen niet ophalen.",
     "Open merge request" : "Samenvoegverzoek openen",
     "Closed merge request" : "Gesloten samenvoegverzoek",
     "Merged merge request" : "Samenvoegverzoek samengevoegd",

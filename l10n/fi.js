@@ -25,6 +25,7 @@ OC.L10N.register(
     "No GitLab account connected" : "GitLab-tiliä ei ole yhdistetty",
     "Error connecting to GitLab" : "Virhe yhdistäessä GitLabiin",
     "No GitLab notifications!" : "Ei GitLab-ilmoituksia!",
+    "Failed to get GitLab notifications" : "GitLab-ilmoitusten hakeminen epäonnistui",
     "Open issue" : "Avaa issue",
     "Closed issue" : "Suljettu issue",
     "Closed merge request" : "Suljettu yhdistämispyyntö",

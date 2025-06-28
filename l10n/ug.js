@@ -54,6 +54,7 @@ OC.L10N.register(
     "No GitLab account connected" : "GitLab ھېساباتى ئۇلانمىدى",
     "Error connecting to GitLab" : "GitLab غا ئۇلىنىش خاتا",
     "No GitLab notifications!" : "GitLab ئۇقتۇرۇشى يوق!",
+    "Failed to get GitLab notifications" : "GitLab ئۇقتۇرۇشىغا ئېرىشەلمىدى",
     "Open issue" : "ئوچۇق مەسىلە",
     "Closed issue" : "يېپىق مەسىلە",
     "Open merge request" : "بىرلەشتۈرۈش تەلىپىنى ئېچىڭ",

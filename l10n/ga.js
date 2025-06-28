@@ -59,6 +59,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Níl aon chuntas GitLab nasctha",
     "Error connecting to GitLab" : "Earráid agus tú ag nascadh le GitLab",
     "No GitLab notifications!" : "Gan fógraí GitLab!",
+    "Failed to get GitLab notifications" : "Theip ar fhógraí GitLab a fháil",
     "Open issue" : "Eagrán oscailte",
     "Closed issue" : "Eisiúint dúnta",
     "Open merge request" : "Oscail iarratas cumaisc",

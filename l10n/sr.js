@@ -59,6 +59,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Није повезан ниједан GitLab налог",
     "Error connecting to GitLab" : "Грешка приликом повезивања са GitLab",
     "No GitLab notifications!" : "Нема GitLab обавештења!",
+    "Failed to get GitLab notifications" : "Нису могла да се добију GitLab обавештења",
     "Open issue" : "Отвори проблем",
     "Closed issue" : "Затворени проблем",
     "Open merge request" : "Отвори захтев за спајање",

@@ -34,6 +34,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Nema povezanih GitLab računa",
     "Error connecting to GitLab" : "Pogreška pri povezivanju s GitLabom",
     "No GitLab notifications!" : "Nema GitLab obavijesti!",
+    "Failed to get GitLab notifications" : "Dohvaćanje GitLab obavijesti nije uspjelo",
     "Unknown error" : "Nepoznata pogreška",
     "Comments" : "Komentari",
     "Author" : "Autor",

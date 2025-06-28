@@ -33,6 +33,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Δεν έχει συνδεθεί λογαριασμός GitLab",
     "Error connecting to GitLab" : "Σφάλμα σύνδεσης στο GitLab",
     "No GitLab notifications!" : "Χωρίς ειδοποιήσεις GitLab!",
+    "Failed to get GitLab notifications" : "Αποτυχία λήψης ειδοποιήσεων GitLab",
     "Unknown error" : "Άγνωστο σφάλμα",
     "Comments" : "Σχόλια",
     "Author" : "Δημιουργός",

@@ -54,6 +54,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Bağlı bir GitLab hesabı yok",
     "Error connecting to GitLab" : "GitLab ile bağlantı kurulurken sorun çıktı",
     "No GitLab notifications!" : "Herhangi bir GitLab bildirimi yok!",
+    "Failed to get GitLab notifications" : "GitLab bildirimleri alınamadı",
     "Open issue" : "Konu aç",
     "Closed issue" : "Kapatılmış konu",
     "Open merge request" : "Birleştirme isteği aç",

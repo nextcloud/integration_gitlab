@@ -54,6 +54,7 @@ OC.L10N.register(
     "No GitLab account connected" : "Non hai ningunha conta de GitLab conectada",
     "Error connecting to GitLab" : "Produciuse un erro ao conectar con GitLab",
     "No GitLab notifications!" : "Non hai notificacións de GitLab.",
+    "Failed to get GitLab notifications" : "Produciuse un fallo ao obter as notificacións de GitLab",
     "Open issue" : "Incidencia (issue) aberta",
     "Closed issue" : "Incidencia (issue) pechada",
     "Open merge request" : "Solicitude de fusión (merge request) aberta",
