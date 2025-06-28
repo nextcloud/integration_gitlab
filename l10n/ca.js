@@ -34,6 +34,7 @@ OC.L10N.register(
     "No GitLab account connected" : "No s'ha connectat cap compte de GitLab",
     "Error connecting to GitLab" : "S'ha produït un error en connectar-se a GitLab",
     "No GitLab notifications!" : "No hi ha notificacions de GitLab!",
+    "Failed to get GitLab notifications" : "No s'han pogut rebre les notificacions del GitLab",
     "Unknown error" : "Error desconegut",
     "by {creator}" : "per {creator}",
     "Comments" : "Comentaris",
