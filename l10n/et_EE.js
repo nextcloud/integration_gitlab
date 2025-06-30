@@ -44,6 +44,7 @@ OC.L10N.register(
     "by {creator}" : "kasutajalt {creator}",
     "Comments" : "Kommentaarid",
     "Author" : "Autor",
-    "Owner" : "Omanik"
+    "Owner" : "Omanik",
+    "Click to expand comment" : "Klõpsi kogu kommentaari vaatamiseks"
 },
 "nplurals=2; plural=(n != 1);");

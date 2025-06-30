@@ -42,6 +42,7 @@
     "by {creator}" : "kasutajalt {creator}",
     "Comments" : "Kommentaarid",
     "Author" : "Autor",
-    "Owner" : "Omanik"
+    "Owner" : "Omanik",
+    "Click to expand comment" : "Klõpsi kogu kommentaari vaatamiseks"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
