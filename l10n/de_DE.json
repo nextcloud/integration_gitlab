@@ -38,7 +38,7 @@
     "Failed to save GitLab options" : "GitLab-Einstellungen konnten nicht gespeichert werden",
     "Failed to get GitLab projects" : "GitLab-Projekte konnten nicht abgerufen werden",
     "Failed to get GitLab groups" : "GitLab-Gruppen konnten nicht abgerufen werden",
-    "Selected account filters updated" : "Ausgewählte Kontenfilter aktualisiert ",
+    "Selected account filters updated" : "Ausgewählte Kontenfilter aktualisiert",
     "Failed to update GitLab filters" : "GitLab-Filter konnten nicht aktualisiert werden",
     "Connect to GitLab using OAuth" : "Mittels OAuth eine Verbindung zu GitLab herstellen",
     "OAuth instance URL" : "URL der OAuth-Instanz",

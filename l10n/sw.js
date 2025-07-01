@@ -6,6 +6,7 @@ OC.L10N.register(
     "Bad credentials" : "Sifa mbaya",
     "OAuth access token refused" : "Ufikiaji wa token za OAuth umekataliwa",
     "Connected accounts" : "Akaunti zilizounganishwa",
+    "Remove account" : "Ondoa akaunti",
     "Unknown error" : "Hitilafu isiyojulikana",
     "Comments" : "Maoni",
     "Owner" : "Mmiliki",
