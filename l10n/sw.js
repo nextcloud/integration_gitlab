@@ -8,6 +8,7 @@ OC.L10N.register(
     "Connected accounts" : "Akaunti zilizounganishwa",
     "Remove account" : "Ondoa akaunti",
     "Unknown error" : "Hitilafu isiyojulikana",
+    "by {creator}" : "kwa {creator}",
     "Comments" : "Maoni",
     "Owner" : "Mmiliki",
     "Click to expand comment" : "Bonyeza kupanua maoni"
