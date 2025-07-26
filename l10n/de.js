@@ -25,7 +25,7 @@ OC.L10N.register(
     "Instance address" : "Adresse der Instanz",
     "Restrict GitLab instance URL" : "URL der GitLab-Instanz einschränken",
     "Application ID" : "Anwendungs-ID",
-    "ID of your GitLab application" : "Client-ID von deiner GitLab-Anwendung",
+    "ID of your GitLab application" : "Client-ID deiner GitLab-Anwendung",
     "Application secret" : "Anwendungsgeheimnis",
     "Client secret of your GitLab application" : "Client-Geheimnis deiner GitLab-Anwendung",
     "Enable GitLab link previews" : "Vorschau von GitLab-Links aktivieren",
