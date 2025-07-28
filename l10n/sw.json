@@ -1,10 +1,13 @@
 { "translations": {
+    "Error getting OAuth access token. " : "Error getting OAuth access token. ",
     "Error during OAuth exchanges" : "Hitilafu wakati wa kubadilishana OAuth",
     "Bad HTTP method" : "Njia mbaya ya HTTP ",
     "Bad credentials" : "Sifa mbaya",
     "OAuth access token refused" : "Ufikiaji wa token za OAuth umekataliwa",
     "Connected accounts" : "Akaunti zilizounganishwa",
     "Instance address" : "Instance address",
+    "Application ID" : "Application ID",
+    "Application secret" : "Application secret",
     "Personal access token" : "Personal access token",
     "Remove account" : "Ondoa akaunti",
     "Unknown error" : "Hitilafu isiyojulikana",
