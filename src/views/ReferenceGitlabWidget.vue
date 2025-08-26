@@ -1,23 +1,7 @@
 <!--
-  - @copyright Copyright (c) 2022 Julien Veyssier <julien-nc@posteo.net>
-  -
-  - @author 2022 Julien Veyssier <julien-nc@posteo.net>
-  -
-  - @license GNU AGPL version 3 or any later version
-  -
-  - This program is free software: you can redistribute it and/or modify
-  - it under the terms of the GNU Affero General Public License as
-  - published by the Free Software Foundation, either version 3 of the
-  - License, or (at your option) any later version.
-  -
-  - This program is distributed in the hope that it will be useful,
-  - but WITHOUT ANY WARRANTY; without even the implied warranty of
-  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  - GNU Affero General Public License for more details.
-  -
-  - You should have received a copy of the GNU Affero General Public License
-  - along with this program. If not, see <http://www.gnu.org/licenses/>.
-  -->
+  - SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 
 <template>
 	<div class="gitlab-reference">
@@ -201,11 +185,8 @@ import MergedMergeRequestIcon from '../components/icons/MergedMergeRequestIcon.v
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
 
-import { NcRichText } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
-import Vue from 'vue'
-Vue.directive('tooltip', Tooltip)
+import { NcRichText } from '@nextcloud/vue/components/NcRichText'
+import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 
 export default {
 	name: 'ReferenceGitlabWidget',
@@ -566,14 +547,14 @@ export default {
 	}
 
 	.milestone,
-	::v-deep .author-link,
+	:deep(.author-link),
 	.slug-link {
 		color: inherit !important;
 	}
 
 	.date-with-tooltip,
 	.milestone,
-	::v-deep .author-link,
+	:deep(.author-link),
 	.author-link:hover .comment-author-display-name,
 	.slug-link,
 	.issue-pr-link {

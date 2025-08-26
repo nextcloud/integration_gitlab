@@ -1,25 +1,11 @@
-/* jshint esversion: 6 */
-
 /**
- * Nextcloud - gitlab
- *
- *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
- *
- * @author Julien Veyssier <julien-nc@posteo.net>
- * @copyright Julien Veyssier 2020
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Vue from 'vue'
-import './bootstrap.js'
+import { createApp } from 'vue'
 import AdminSettings from './components/AdminSettings.vue'
 
-// eslint-disable-next-line
-'use strict'
-
-// eslint-disable-next-line
-new Vue({
-	el: '#gitlab_prefs',
-	render: h => h(AdminSettings),
-})
+const app = createApp(AdminSettings)
+app.mixin({ methods: { t, n } })
+app.mount('#gitlab_prefs')

@@ -1,41 +1,22 @@
 /**
- * @copyright Copyright (c) 2022 Julien Veyssier <julien-nc@posteo.net>
- *
- * @author Julien Veyssier <julien-nc@posteo.net>
- *
- * @license AGPL-3.0-or-later
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { registerWidget } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { linkTo } from '@nextcloud/router'
-import { getRequestToken } from '@nextcloud/auth'
-
-__webpack_nonce__ = btoa(getRequestToken()) // eslint-disable-line
-__webpack_public_path__ = linkTo('integration_gitlab', 'js/') // eslint-disable-line
+import { registerWidget } from '@nextcloud/vue/components/NcRichText'
 
 registerWidget('integration_gitlab', async (el, { richObjectType, richObject, accessible }) => {
-	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
-	Vue.mixin({ methods: { t, n } })
-	const { default: ReferenceGitlabWidget } = await import(/* webpackChunkName: "reference-lazy" */'./views/ReferenceGitlabWidget.vue')
-	const Widget = Vue.extend(ReferenceGitlabWidget)
-	new Widget({
-		propsData: {
+	const { createApp } = await import('vue')
+	const { default: ReferenceGitlabWidget } = await import('./views/ReferenceGitlabWidget.vue')
+
+	const app = createApp(
+		ReferenceGitlabWidget,
+		{
 			richObjectType,
 			richObject,
 			accessible,
 		},
-	}).$mount(el)
-})
+	)
+	app.mixin({ methods: { t, n } })
+	app.mount(el)
+}, () => {}, { hasInteractiveView: false })

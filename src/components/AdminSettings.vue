@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<div id="gitlab_prefs" class="section">
 		<h2>
@@ -70,8 +75,8 @@
 					@input="onInput">
 			</div>
 			<NcCheckboxRadioSwitch
-				:checked="state.link_preview_enabled"
-				@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
+				v-model="state.link_preview_enabled"
+				@update:model-value="onCheckboxChanged($event, 'link_preview_enabled')">
 				{{ t('integration_gitlab', 'Enable GitLab link previews') }}
 			</NcCheckboxRadioSwitch>
 		</div>
@@ -80,7 +85,7 @@
 
 <script>
 import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
-import KeyIcon from 'vue-material-design-icons/Key.vue'
+import KeyIcon from 'vue-material-design-icons/KeyOutline.vue'
 import EarthIcon from 'vue-material-design-icons/Earth.vue'
 
 import GitlabIcon from './icons/GitlabIcon.vue'
@@ -91,7 +96,7 @@ import axios from '@nextcloud/axios'
 import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import { confirmPassword } from '@nextcloud/password-confirmation'
 
 export default {

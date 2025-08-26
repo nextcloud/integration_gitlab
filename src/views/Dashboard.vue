@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NcDashboardWidget :items="items"
 		:show-more-url="config?.url?.replace(/\/+$/, '') + '/dashboard/todos'"
@@ -23,13 +28,13 @@ import GitlabIcon from '../components/icons/GitlabIcon.vue'
 
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
-import NcDashboardWidget from '@nextcloud/vue/dist/Components/NcDashboardWidget.js'
+import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
 import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import moment from '@nextcloud/moment'
 
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 export default {
 	name: 'Dashboard',
@@ -251,7 +256,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-::v-deep .connect-button {
+:deep(.connect-button) {
 	margin-top: 10px;
 }
 </style>

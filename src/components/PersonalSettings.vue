@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<div id="gitlab_prefs" class="section">
 		<h2>
@@ -111,23 +116,23 @@
 				<a href="https://apps.nextcloud.com/apps/external" target="_blank" rel="noopener">https://apps.nextcloud.com/apps/external</a>
 			</p>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.search_enabled"
-				@update:checked="onConfigChanged($event, 'search_enabled')">
+				v-model="userConfig.search_enabled"
+				@update:model-value="onConfigChanged($event, 'search_enabled')">
 				{{ t('integration_gitlab', 'Enable searching for repositories') }}
 			</NcCheckboxRadioSwitch>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.search_issues_enabled"
-				@update:checked="onConfigChanged($event, 'search_issues_enabled')">
+				v-model="userConfig.search_issues_enabled"
+				@update:model-value="onConfigChanged($event, 'search_issues_enabled')">
 				{{ t('integration_gitlab', 'Enable searching for issues') }}
 			</NcCheckboxRadioSwitch>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.search_mrs_enabled"
-				@update:checked="onConfigChanged($event, 'search_mrs_enabled')">
+				v-model="userConfig.search_mrs_enabled"
+				@update:model-value="onConfigChanged($event, 'search_mrs_enabled')">
 				{{ t('integration_gitlab', 'Enable searching for merge requests') }}
 			</NcCheckboxRadioSwitch>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.link_preview_enabled"
-				@update:checked="onConfigChanged($event, 'link_preview_enabled')">
+				v-model="userConfig.link_preview_enabled"
+				@update:model-value="onConfigChanged($event, 'link_preview_enabled')">
 				{{ t('integration_gitlab', 'Enable GitLab link previews') }}
 			</NcCheckboxRadioSwitch>
 			<br>
@@ -159,7 +164,7 @@
 
 <script>
 import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
-import KeyIcon from 'vue-material-design-icons/Key.vue'
+import KeyIcon from 'vue-material-design-icons/KeyOutline.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
@@ -173,11 +178,11 @@ import axios from '@nextcloud/axios'
 import { oauthConnect } from '../utils.js'
 import { showError, showSuccess } from '@nextcloud/dialogs'
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 import { confirmPassword } from '@nextcloud/password-confirmation'
-import '@nextcloud/password-confirmation/dist/style.css'
+import '@nextcloud/password-confirmation/style.css'
 
 export default {
 	name: 'PersonalSettings',
