@@ -228,8 +228,8 @@ class ConfigController extends Controller {
 					$account->setUserInfoDisplayName($userInfo['name']);
 				} catch (Exception $e) {
 					return new RedirectResponse(
-						$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-						'?gitlabToken=error&message=' . urlencode($e->getMessage())
+						$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+						. '?gitlabToken=error&message=' . urlencode($e->getMessage())
 					);
 				}
 				$this->accountMapper->insert($account);
@@ -239,8 +239,8 @@ class ConfigController extends Controller {
 				$this->config->deleteUserOauthOrigin($this->userId);
 				if ($oauthOrigin === 'settings') {
 					return new RedirectResponse(
-						$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-						'?gitlabToken=success'
+						$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+						. '?gitlabToken=success'
 					);
 				}
 				if ($oauthOrigin === 'dashboard') {
@@ -249,8 +249,8 @@ class ConfigController extends Controller {
 					);
 				}
 				return new RedirectResponse(
-					$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-					'?gitlabToken=success'
+					$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+					. '?gitlabToken=success'
 				);
 			}
 			$result = $this->l->t('Error getting OAuth access token. ' . $result['error']);
@@ -258,8 +258,8 @@ class ConfigController extends Controller {
 			$result = $this->l->t('Error during OAuth exchanges');
 		}
 		return new RedirectResponse(
-			$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-			'?gitlabToken=error&message=' . urlencode($result)
+			$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+			. '?gitlabToken=error&message=' . urlencode($result)
 		);
 	}
 

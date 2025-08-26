@@ -34,12 +34,13 @@ use OCP\App\IAppManager;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\Search\IExternalProvider;
 use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 
-class GitlabSearchReposProvider implements IProvider {
+class GitlabSearchReposProvider implements IProvider, IExternalProvider {
 
 	public function __construct(
 		private IAppManager $appManager,
@@ -166,5 +167,9 @@ class GitlabSearchReposProvider implements IProvider {
 		return $avatarUrl
 			? $this->urlGenerator->linkToRoute('integration_gitlab.gitlabAPI.getProjectAvatar', ['accountId' => $account->getId(), 'projectId' => (string)$projectId])
 			: '';
+	}
+
+	public function isExternalProvider(): bool {
+		return true;
 	}
 }
