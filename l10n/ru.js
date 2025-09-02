@@ -29,6 +29,7 @@ OC.L10N.register(
     "Account deleted" : "Аккаунт удален",
     "GitLab options saved" : "Параметры GitLab сохранены",
     "Failed to save GitLab options" : "Не удалось сохранить параметры GitLab",
+    "Selected account filters updated" : "Фильтры выбранных аккаунтов обновлены",
     "GitLab instance address" : "Адрес сервера GitLab",
     "Personal access token" : "Личный токен доступа",
     "GitLab personal access token" : "Токен личного доступа GitLab",
