@@ -1,7 +1,22 @@
 <?php
 
-require_once __DIR__ . '/../../../tests/bootstrap.php';
+declare(strict_types=1);
+
+/**
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+use OCP\App\IAppManager;
+use OCP\Server;
+
+if (!defined('PHPUNIT_RUN')) {
+	define('PHPUNIT_RUN', 1);
+}
+
+require_once __DIR__ . '/../../../lib/base.php';
+require_once __DIR__ . '/../../../tests/autoload.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
-\OC_App::loadApp(OCA\Gitlab\AppInfo\Application::APP_ID);
-OC_Hook::clear();
+Server::get(IAppManager::class)->loadApp(OCA\Gitlab\AppInfo\Application::APP_ID);
