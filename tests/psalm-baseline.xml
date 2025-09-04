@@ -1,3 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.17.0@c620f6e80d0abfca532b00bda366062aaedf6e5d">
+<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+  <file src="lib/AppInfo/Application.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function boot(IBootContext $context): void {]]></code>
+      <code><![CDATA[public function register(IRegistrationContext $context): void {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Dashboard/GitlabWidget.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getIconClass(): string {]]></code>
+      <code><![CDATA[public function getId(): string {]]></code>
+      <code><![CDATA[public function getOrder(): int {]]></code>
+      <code><![CDATA[public function getTitle(): string {]]></code>
+      <code><![CDATA[public function getUrl(): ?string {]]></code>
+      <code><![CDATA[public function load(): void {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Db/GitlabAccount.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function jsonSerialize(): array {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Listener/GitlabReferenceListener.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function handle(Event $event): void {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Migration/MultiAccountRepairStep.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getName() {]]></code>
+      <code><![CDATA[public function run(IOutput $output) {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Migration/Version030103Date20241017150114.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function postSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Migration/Version3000Date20240718103726.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Migration/Version3200Date20250519170623.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Reference/GitlabReferenceProvider.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getCacheKey(string $referenceId): ?string {]]></code>
+      <code><![CDATA[public function getCachePrefix(string $referenceId): string {]]></code>
+      <code><![CDATA[public function getIconUrl(): string {]]></code>
+      <code><![CDATA[public function getId(): string {]]></code>
+      <code><![CDATA[public function getOrder(): int {]]></code>
+      <code><![CDATA[public function getSupportedSearchProviderIds(): array {]]></code>
+      <code><![CDATA[public function getTitle(): string {]]></code>
+      <code><![CDATA[public function matchReference(string $referenceText): bool {]]></code>
+      <code><![CDATA[public function resolveReference(string $referenceText): ?IReference {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Search/GitlabSearchIssuesProvider.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getId(): string {]]></code>
+      <code><![CDATA[public function getName(): string {]]></code>
+      <code><![CDATA[public function getOrder(string $route, array $routeParameters): int {]]></code>
+      <code><![CDATA[public function search(IUser $user, ISearchQuery $query): SearchResult {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Search/GitlabSearchMergeRequestsProvider.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getId(): string {]]></code>
+      <code><![CDATA[public function getName(): string {]]></code>
+      <code><![CDATA[public function getOrder(string $route, array $routeParameters): int {]]></code>
+      <code><![CDATA[public function search(IUser $user, ISearchQuery $query): SearchResult {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Search/GitlabSearchReposProvider.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getId(): string {]]></code>
+      <code><![CDATA[public function getName(): string {]]></code>
+      <code><![CDATA[public function getOrder(string $route, array $routeParameters): int {]]></code>
+      <code><![CDATA[public function search(IUser $user, ISearchQuery $query): SearchResult {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Settings/Admin.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getForm(): TemplateResponse {]]></code>
+      <code><![CDATA[public function getPriority(): int {]]></code>
+      <code><![CDATA[public function getSection(): string {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Settings/AdminSection.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getID(): string {]]></code>
+      <code><![CDATA[public function getIcon(): string {]]></code>
+      <code><![CDATA[public function getName(): string {]]></code>
+      <code><![CDATA[public function getPriority(): int {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Settings/Personal.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getForm(): TemplateResponse {]]></code>
+      <code><![CDATA[public function getPriority(): int {]]></code>
+      <code><![CDATA[public function getSection(): string {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Settings/PersonalSection.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getID(): string {]]></code>
+      <code><![CDATA[public function getIcon(): string {]]></code>
+      <code><![CDATA[public function getName(): string {]]></code>
+      <code><![CDATA[public function getPriority(): int {]]></code>
+    </MissingOverrideAttribute>
+  </file>
 </files>

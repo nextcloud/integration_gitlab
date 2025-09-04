@@ -74,7 +74,7 @@ class GitlabAPIService {
 		if (($offset % $limit) === 0) {
 			$perPage = $limit;
 			// page number starts at 1
-			$page = ($offset / $limit) + 1;
+			$page = ((int)($offset / $limit)) + 1;
 			return [$perPage, $page, 0];
 		} else {
 			$firstIndex = $offset;

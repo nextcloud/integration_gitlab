@@ -203,7 +203,7 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 					return $reference;
 				}
 			} catch (Exception $e) {
-				$this->logger->error('Failed to resolve reference for url ' . $baseUrl . ' with account id ' . $account?->getId(), ['exception' => $e]);
+				$this->logger->error('Failed to resolve reference for url ' . $baseUrl . ' with account id ' . ((string)$account?->getId()), ['exception' => $e]);
 			}
 		}
 
