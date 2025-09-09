@@ -311,13 +311,13 @@ class GitlabAPIService {
 				return json_decode($body, true);
 			}
 		} catch (ServerException|ClientException $e) {
-			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->info('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			if ($e->getCode() == 401) {
 				return ['error' => $this->l10n->t('Bad credentials'), 'code' => 401];
 			}
 			return ['error' => 'Gitlab API error, please check the server logs for more details', 'code' => $e->getCode()];
 		} catch (ConnectException $e) {
-			$this->logger->warning('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
+			$this->logger->info('GitLab API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => 'Connection error, please check the server logs for more details', 'code' => 500];
 		}
 	}
