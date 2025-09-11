@@ -11,17 +11,15 @@
  * @copyright Julien Veyssier 2020
  */
 
-import Vue from 'vue'
-import './bootstrap.js'
+import { createApp } from 'vue'
 import Dashboard from './views/Dashboard.vue'
 
 document.addEventListener('DOMContentLoaded', function() {
 
 	OCA.Dashboard.register('gitlab_todos', (el, { widget }) => {
-		const View = Vue.extend(Dashboard)
-		new View({
-			propsData: { title: widget.title },
-		}).$mount(el)
+		const app = createApp(Dashboard, { widget })
+		app.mixin({ methods: { t, n } })
+		app.mount(el)
 	})
 
 })

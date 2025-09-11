@@ -85,7 +85,7 @@
 								})
 							}}
 						</label>
-						<NcButton type="tertiary" @click="()=> deleteAccount(account.id)">
+						<NcButton variant="tertiary" @click="()=> deleteAccount(account.id)">
 							<template #icon>
 								<CloseIcon :size="20" />
 							</template>
@@ -111,47 +111,47 @@
 				<a href="https://apps.nextcloud.com/apps/external" target="_blank" rel="noopener">https://apps.nextcloud.com/apps/external</a>
 			</p>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.search_enabled"
-				@update:checked="onConfigChanged($event, 'search_enabled')">
+				:model-value="userConfig.search_enabled"
+				@update:model-value="onConfigChanged($event, 'search_enabled')">
 				{{ t('integration_gitlab', 'Enable searching for repositories') }}
 			</NcCheckboxRadioSwitch>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.search_issues_enabled"
-				@update:checked="onConfigChanged($event, 'search_issues_enabled')">
+				:model-value="userConfig.search_issues_enabled"
+				@update:model-value="onConfigChanged($event, 'search_issues_enabled')">
 				{{ t('integration_gitlab', 'Enable searching for issues') }}
 			</NcCheckboxRadioSwitch>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.search_mrs_enabled"
-				@update:checked="onConfigChanged($event, 'search_mrs_enabled')">
+				:model-value="userConfig.search_mrs_enabled"
+				@update:model-value="onConfigChanged($event, 'search_mrs_enabled')">
 				{{ t('integration_gitlab', 'Enable searching for merge requests') }}
 			</NcCheckboxRadioSwitch>
 			<NcCheckboxRadioSwitch
-				:checked="userConfig.link_preview_enabled"
-				@update:checked="onConfigChanged($event, 'link_preview_enabled')">
+				:model-value="userConfig.link_preview_enabled"
+				@update:model-value="onConfigChanged($event, 'link_preview_enabled')">
 				{{ t('integration_gitlab', 'Enable GitLab link previews') }}
 			</NcCheckboxRadioSwitch>
 			<br>
 			<div v-if="accounts.length > 0">
 				<NcSelect
-					:value="selectedAccount"
+					:model-value="selectedAccount"
 					:input-label="t('integration_gitlab', 'Gitlab Account for Dashboard widget')"
 					:options="selectableAccounts"
-					@input="(value) => onConfigChanged(value?.id ?? 0, 'widget_account_id')" />
+					@update:model-value="(value) => onConfigChanged(value?.id ?? 0, 'widget_account_id')" />
 
 				<NcSelect
-					:value="selectedProjectsFilter"
+					:model-value="selectedProjectsFilter"
 					:input-label="t('integration_gitlab', 'Projects filter for widget')"
 					:placeholder="t('integration_gitlab', 'Projects filter for widget')"
 					:multiple="true"
 					:options="widgetProjectOptions"
-					@input="(value) => onSelectedProjectChange(value)" />
+					@update:model-value="(value) => onSelectedProjectChange(value)" />
 
 				<NcSelect
-					:value="selectedGroupsFilter"
+					:model-value="selectedGroupsFilter"
 					:input-label="t('integration_gitlab', 'Groups filter for widget')"
 					:placeholder="t('integration_gitlab', 'Groups filter for widget')"
 					:options="widgetGroupOptions"
-					@input="(value) => onSelectedGroupChange(value)" />
+					@update:model-value="(value) => onSelectedGroupChange(value)" />
 			</div>
 		</div>
 	</div>
@@ -173,11 +173,10 @@ import axios from '@nextcloud/axios'
 import { oauthConnect } from '../utils.js'
 import { showError, showSuccess } from '@nextcloud/dialogs'
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 import { confirmPassword } from '@nextcloud/password-confirmation'
-import '@nextcloud/password-confirmation/dist/style.css'
 
 export default {
 	name: 'PersonalSettings',
