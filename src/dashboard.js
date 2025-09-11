@@ -12,6 +12,7 @@
  */
 
 import { createApp } from 'vue'
+import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 import Dashboard from './views/Dashboard.vue'
 
 document.addEventListener('DOMContentLoaded', function() {
