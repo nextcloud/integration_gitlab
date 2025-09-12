@@ -43,7 +43,7 @@
 			<div class="issue-pr-info">
 				<div class="line">
 					<component :is="iconComponent"
-						v-tooltip.top="{ content: stateTooltip }"
+						:title="stateTooltip"
 						:size="16"
 						class="icon"
 						:fill-color="iconColor" />
@@ -66,7 +66,7 @@
 						{{ t('integration_gitlab', 'by {creator}', { creator: richObject.author.username }) }}
 					</a>
 					<span
-						v-tooltip.top="{ content: createdAtFormatted }"
+						:title="createdAtFormatted"
 						class="date-with-tooltip">
 						{{ createdAtText }}
 					</span>
@@ -74,7 +74,7 @@
 						{{ prSubText }}
 					</span>
 					<a v-if="richObject.milestone"
-						v-tooltip.top="{ content: richObject.milestone.description }"
+						:title="richObject.milestone.description"
 						:href="richObject.milestone.web_url"
 						target="_blank"
 						class="milestone">
@@ -83,7 +83,7 @@
 					</a>
 					<div v-for="label in labels"
 						:key="label.id"
-						v-tooltip.top="{ content: label.description }"
+						:title="label.description"
 						class="label"
 						:style="{
 							background: label.color,
@@ -111,30 +111,30 @@
 							:url="getAssigneeAvatarUrl(assignee)" />
 					</div>
 					<div v-if="richObject.upvotes > 0"
-						v-tooltip.top="{ content: t('integration_gitlab', 'Upvotes') }"
+						:title="t('integration_gitlab', 'Upvotes')"
 						class="comments-count">
 						<UpVoteIcon :size="16" class="icon" />
 						{{ richObject.upvotes }}
 					</div>
 					<div v-if="richObject.downvotes > 0"
-						v-tooltip.top="{ content: t('integration_gitlab', 'Downvotes') }"
+						:title="t('integration_gitlab', 'Downvotes')"
 						class="comments-count">
 						<DownVoteIcon :size="16" class="icon" />
 						{{ richObject.downvotes }}
 					</div>
-					<div v-tooltip.top="{ content: t('integration_gitlab', 'Comments') }"
+					<div :title="t('integration_gitlab', 'Comments')"
 						class="comments-count">
 						<CommentIcon :size="16" class="icon" />
 						{{ richObject.user_notes_count }}
 					</div>
 				</div>
 				<div v-if="richObject.closed_at"
-					v-tooltip.top="{ content: closedAtFormatted }"
+					:title="closedAtFormatted"
 					class="closed-at date-with-tooltip">
 					{{ closedAtText }}
 				</div>
 				<div v-else-if="richObject.updated_at"
-					v-tooltip.top="{ content: updatedAtFormatted }"
+					:title="updatedAtFormatted"
 					class="updated-at date-with-tooltip">
 					{{ updatedAtText }}
 				</div>
@@ -156,7 +156,7 @@
 						</a>
 						&nbsp;·&nbsp;
 						<span
-							v-tooltip.top="{ content: commentUpdatedAtTooltip }"
+							:title="commentUpdatedAtTooltip"
 							class="date-with-tooltip">
 							{{ commentUpdatedAtText }}
 						</span>
@@ -173,7 +173,7 @@
 						'short-comment': shortComment,
 					}">
 						<NcRichText
-							v-tooltip.top="{ content: shortComment ? t('integration_gitlab', 'Click to expand comment') : undefined }"
+							:title="shortComment ? t('integration_gitlab', 'Click to expand comment') : undefined"
 							:text="richObject.gitlab_comment.body"
 							:use-markdown="true"
 							@click.native="shortComment = !shortComment" />
@@ -201,11 +201,8 @@ import MergedMergeRequestIcon from '../components/icons/MergedMergeRequestIcon.v
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
 
-import { NcRichText } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
-import Vue from 'vue'
-Vue.directive('tooltip', Tooltip)
+import { NcRichText } from '@nextcloud/vue/components/NcRichText'
+import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 
 export default {
 	name: 'ReferenceGitlabWidget',

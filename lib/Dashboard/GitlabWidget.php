@@ -95,6 +95,7 @@ class GitlabWidget implements IWidget {
 			$userConfig['widget_projects'] = [];
 			$userConfig['widget_groups'] = [];
 		}
+		$userConfig['url'] = $this->config->getUserUrl($this->userId);
 
 		$this->initialStateService->provideInitialState('user-config', $userConfig);
 		Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');

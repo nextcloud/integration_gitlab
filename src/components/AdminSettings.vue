@@ -70,8 +70,8 @@
 					@input="onInput">
 			</div>
 			<NcCheckboxRadioSwitch
-				:checked="state.link_preview_enabled"
-				@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
+				:model-value="state.link_preview_enabled"
+				@update:model-value="onCheckboxChanged($event, 'link_preview_enabled')">
 				{{ t('integration_gitlab', 'Enable GitLab link previews') }}
 			</NcCheckboxRadioSwitch>
 		</div>
@@ -91,7 +91,7 @@ import axios from '@nextcloud/axios'
 import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import { confirmPassword } from '@nextcloud/password-confirmation'
 
 export default {

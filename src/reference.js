@@ -19,23 +19,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { registerWidget } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { linkTo } from '@nextcloud/router'
-import { getRequestToken } from '@nextcloud/auth'
-
-__webpack_nonce__ = btoa(getRequestToken()) // eslint-disable-line
-__webpack_public_path__ = linkTo('integration_gitlab', 'js/') // eslint-disable-line
+import { registerWidget } from '@nextcloud/vue/components/NcRichText'
 
 registerWidget('integration_gitlab', async (el, { richObjectType, richObject, accessible }) => {
-	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
-	Vue.mixin({ methods: { t, n } })
+	const { createApp } = await import(/* webpackChunkName: "reference-lazy" */'vue')
 	const { default: ReferenceGitlabWidget } = await import(/* webpackChunkName: "reference-lazy" */'./views/ReferenceGitlabWidget.vue')
-	const Widget = Vue.extend(ReferenceGitlabWidget)
-	new Widget({
-		propsData: {
-			richObjectType,
-			richObject,
-			accessible,
-		},
-	}).$mount(el)
+	const app = createApp(ReferenceGitlabWidget, {
+		richObjectType,
+		richObject,
+		accessible,
+	})
+	app.mixin({ methods: { t, n } })
+	app.mount(el)
 })

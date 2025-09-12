@@ -11,15 +11,13 @@
  * @copyright Julien Veyssier 2020
  */
 
-import Vue from 'vue'
-import './bootstrap.js'
+import { createApp } from 'vue'
 import PersonalSettings from './components/PersonalSettings.vue'
+import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 
 // eslint-disable-next-line
 'use strict'
 
-// eslint-disable-next-line
-new Vue({
-	el: '#gitlab_prefs',
-	render: h => h(PersonalSettings),
-})
+const app = createApp(PersonalSettings)
+app.mixin({ methods: { t, n } })
+app.mount('#gitlab_prefs')

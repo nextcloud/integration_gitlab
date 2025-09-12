@@ -1,8 +1,11 @@
 <template>
 	<NcDashboardWidget :items="items"
 		:show-more-url="config?.url?.replace(/\/+$/, '') + '/dashboard/todos'"
-		:show-more-text="title"
+		:show-more-label="title"
 		:loading="state === 'loading'">
+		<template #default="{ item }">
+			<NcDashboardWidgetItem v-bind="item" />
+		</template>
 		<template #empty-content>
 			<NcEmptyContent v-if="emptyContentMessage"
 				:title="emptyContentMessage">
@@ -23,18 +26,20 @@ import GitlabIcon from '../components/icons/GitlabIcon.vue'
 
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
-import NcDashboardWidget from '@nextcloud/vue/dist/Components/NcDashboardWidget.js'
+import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
+import NcDashboardWidgetItem from '@nextcloud/vue/components/NcDashboardWidgetItem'
 import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import moment from '@nextcloud/moment'
 
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 export default {
 	name: 'Dashboard',
 
 	components: {
+		NcDashboardWidgetItem,
 		NcDashboardWidget,
 		NcEmptyContent,
 		NcButton,
@@ -120,7 +125,7 @@ export default {
 		},
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		document.removeEventListener('visibilitychange', this.changeWindowVisibility)
 	},
 
