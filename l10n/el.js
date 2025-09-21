@@ -35,6 +35,7 @@ OC.L10N.register(
     "No GitLab notifications!" : "Χωρίς ειδοποιήσεις GitLab!",
     "Failed to get GitLab notifications" : "Αποτυχία λήψης ειδοποιήσεων GitLab",
     "Unknown error" : "Άγνωστο σφάλμα",
+    "by {creator}" : "από {creator}",
     "Comments" : "Σχόλια",
     "Author" : "Δημιουργός",
     "Owner" : "Κάτοχος",
