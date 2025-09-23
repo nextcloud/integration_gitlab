@@ -1,4 +1,10 @@
 { "translations": {
+    "Error getting OAuth access token. " : "Памылка атрымання токена доступу OAuth.",
+    "OAuth access token refused" : "Токен доступу OAuth адхілены",
+    "Personal access token" : "Асабісты токен доступу",
+    "GitLab personal access token" : "Асабісты токен доступу GitLab",
+    "Give the token the \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Дайце токену дазволы \"read_user\", \"read_api\" і \"read_repository\".",
+    "Connect to GitLab using Personal Access Token" : "Падключыцеся да GitLab з дапамогай асабістага токена доступу",
     "Remove account" : "Выдаліць уліковы запіс",
     "Unknown error" : "Невядомая памылка",
     "Comments" : "Каментарыі",
