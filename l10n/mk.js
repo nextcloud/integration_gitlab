@@ -8,6 +8,7 @@ OC.L10N.register(
     "Unknown error" : "Непозната грешка",
     "Comments" : "Коментари",
     "Author" : "Автор",
-    "Owner" : "Сопственик"
+    "Owner" : "Сопственик",
+    "Click to expand comment" : "Кликнни за проширување на коментарот"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
