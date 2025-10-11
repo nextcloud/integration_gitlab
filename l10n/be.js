@@ -2,6 +2,7 @@ OC.L10N.register(
     "integration_gitlab",
     {
     "Error getting OAuth access token. " : "Памылка атрымання токена доступу OAuth.",
+    "GitLab To-Dos" : "Задачы GitLab",
     "OAuth access token refused" : "Токен доступу OAuth адхілены",
     "Personal access token" : "Асабісты токен доступу",
     "GitLab personal access token" : "Асабісты токен доступу GitLab",
