@@ -1,62 +1,62 @@
 {
-	"name": "integration_gitlab",
-	"version": "1.1.0",
-	"description": "GitLab integration",
-	"main": "index.js",
-	"directories": {
-		"test": "tests"
-	},
-	"scripts": {
-        "build": "NODE_ENV=production vite --mode production build",
-        "dev": "NODE_ENV=development vite --mode development build",
-        "watch": "NODE_ENV=development vite --mode development build --watch",
-		"lint": "eslint --ext .js,.vue src",
-		"lint:fix": "eslint --ext .js,.vue src --fix",
-		"stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
-		"stylelint:fix": "stylelint src/**/*.vue src/**/*.scss src/**/*.css --fix"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/nextcloud/integration_gitlab"
-	},
-	"keywords": [
-		"gitlab"
-	],
-    "type": "module",
-	"author": "Julien Veyssier",
-	"license": "AGPL-3.0",
-	"bugs": {
-		"url": "https://github.com/nextcloud/integration_gitlab/issues"
-	},
-	"homepage": "https://github.com/nextcloud/integration_gitlab",
-	"browserslist": [
-		"extends @nextcloud/browserslist-config"
-	],
-	"engines": {
-		"node": "^22.0.0",
-		"npm": "^10.0.0"
-	},
-	"dependencies": {
-		"@nextcloud/auth": "2.x",
-		"@nextcloud/axios": "2.x",
-        "@nextcloud/dialogs": "^7.0.0-rc.1",
-		"@nextcloud/initial-state": "2.x",
-		"@nextcloud/l10n": "3.3.0",
-		"@nextcloud/moment": "1.x",
-		"@nextcloud/password-confirmation": "^6.0.0-rc.0",
-		"@nextcloud/router": "3.x",
-		"@nextcloud/vue": "^9.0.0-rc.8",
-		"@nextcloud/vue-dashboard": "2.x",
-		"vue": "3.x",
-		"vue-material-design-icons": "5.x"
-	},
-	"devDependencies": {
-		"@nextcloud/babel-config": "^1.2.0",
-		"@nextcloud/browserslist-config": "^3.0.1",
-		"@nextcloud/eslint-config": "^8.4.2",
-		"@nextcloud/stylelint-config": "^3.1.0",
-		"@nextcloud/vite-config": "2.x",
-        "vite-plugin-eslint": "^1.8.1",
-        "vite-plugin-stylelint": "^6.0.0"
-	}
+  "name": "integration_gitlab",
+  "version": "1.1.0",
+  "description": "GitLab integration",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production vite --mode production build",
+    "dev": "NODE_ENV=development vite --mode development build",
+    "watch": "NODE_ENV=development vite --mode development build --watch",
+    "lint": "eslint --ext .js,.vue src",
+    "lint:fix": "eslint --ext .js,.vue src --fix",
+    "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
+    "stylelint:fix": "stylelint src/**/*.vue src/**/*.scss src/**/*.css --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nextcloud/integration_gitlab"
+  },
+  "keywords": [
+    "gitlab"
+  ],
+  "type": "module",
+  "author": "Julien Veyssier",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nextcloud/integration_gitlab/issues"
+  },
+  "homepage": "https://github.com/nextcloud/integration_gitlab",
+  "browserslist": [
+    "extends @nextcloud/browserslist-config"
+  ],
+  "engines": {
+    "node": "^24.0.0",
+    "npm": "^11.3.0"
+  },
+  "dependencies": {
+    "@nextcloud/auth": "2.x",
+    "@nextcloud/axios": "2.x",
+    "@nextcloud/dialogs": "^7.0.0-rc.1",
+    "@nextcloud/initial-state": "2.x",
+    "@nextcloud/l10n": "3.3.0",
+    "@nextcloud/moment": "1.x",
+    "@nextcloud/password-confirmation": "^6.0.0-rc.0",
+    "@nextcloud/router": "3.x",
+    "@nextcloud/vue": "^9.0.0-rc.8",
+    "@nextcloud/vue-dashboard": "2.x",
+    "vue": "3.x",
+    "vue-material-design-icons": "5.x"
+  },
+  "devDependencies": {
+    "@nextcloud/babel-config": "^1.2.0",
+    "@nextcloud/browserslist-config": "^3.0.1",
+    "@nextcloud/eslint-config": "^8.4.2",
+    "@nextcloud/stylelint-config": "^3.1.0",
+    "@nextcloud/vite-config": "2.x",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-stylelint": "^6.0.0"
+  }
 }
