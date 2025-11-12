@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2025-11-12
+
+### Breaking changes
+
+- Drop support for nextcloud 29
+- Drop support for nextcloud 30
+
+### New
+
+- Support Nextcloud 33
+- Upgrade to Vue 3
+
+### Fixed
+
+- fix: Lazy load app config values Marcel Klehr 9/11/25, 11:34 AM
+- fix(l10n): Update translations from Transifex
+
 ## 3.2.0 - 2025-05-20
 
 Maintenance update
