@@ -34,6 +34,8 @@ OC.L10N.register(
     "Projects filter for widget" : "Projektide filter vidina jaoks",
     "Groups filter for widget" : "Gruppide filter vidina jaoks",
     "Failed to get GitLab notifications" : "GitLabi teavituse laadimine ei õnnestunud",
+    "Open issue" : "Ava veateade",
+    "Unknown state" : "Teadmata olek",
     "created {relativeDate}" : "loodud {relativeDate}",
     "closed {relativeDate}" : "suletud {relativeDate}",
     "updated {relativeDate}" : "uuendatud {relativeDate}",
