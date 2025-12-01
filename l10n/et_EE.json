@@ -28,6 +28,7 @@
     "Personal access token" : "Isiklik tunnusluba ligipääsuks",
     "Connected to {url} as {displayname} ({name})" : "Ühendatud teenusega {url} kasutajana {displayname} ({name})",
     "Remove account" : "Eemalda kasutajakonto",
+    "Enable searching for repositories" : "Luba lähtekoodihoidlate otsimist",
     "Gitlab Account for Dashboard widget" : "Gitlabi kasutajakonto Juhtpaneeli vidina jaoks",
     "Projects filter for widget" : "Projektide filter vidina jaoks",
     "Groups filter for widget" : "Gruppide filter vidina jaoks",
