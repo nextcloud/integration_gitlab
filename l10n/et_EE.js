@@ -8,6 +8,7 @@ OC.L10N.register(
     "OAuth access token refused" : "OAuthi tunnusluba pole õige.",
     "Connected accounts" : "Ühendatud kasutajakontod",
     "GitLab integration" : "Lõiming GitLabiga",
+    "OAuth app instance address" : "OAuthi rakenduse serveria aadress",
     "Instance address" : "Serveri aadress",
     "Restrict GitLab instance URL" : "Piira kasutatavaid GitLabi serveri aadresse",
     "Application ID" : "Rakenduse tunnus",
