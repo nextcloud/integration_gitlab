@@ -44,7 +44,6 @@ class GitlabAccount extends Entity implements JsonSerializable {
 	private ICrypto $crypto;
 
 	public function __construct() {
-		$this->addType('id', 'integer');
 		$this->addType('url', 'string');
 		$this->addType('token', 'string');
 		$this->addType('token_type', 'string');
