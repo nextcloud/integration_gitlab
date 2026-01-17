@@ -153,6 +153,8 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 					$projectLabels = $account !== null ? $this->gitlabAPIService->getProjectLabels($account, $baseUrl, $projectInfo['id']) : [];
 					$commentInfo = $this->getIssueCommentInfo($account, $baseUrl, $projectInfo['id'], $issueId, $end);
 					$issueInfo = $this->gitlabAPIService->getIssueInfo($account, $baseUrl, $projectInfo['id'], $issueId);
+					// Ensure all issue labels are in projectLabels (some may be group-level labels not returned by project labels API)
+					$projectLabels = $this->ensureLabelsExist($projectLabels, $issueInfo['labels'] ?? []);
 					$reference = new Reference($referenceText);
 					$reference->setRichObject(
 						Application::APP_ID,
@@ -183,6 +185,8 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 					$projectLabels = $account !== null ? $this->gitlabAPIService->getProjectLabels($account, $baseUrl, $projectInfo['id']) : [];
 					$commentInfo = $this->getPrCommentInfo($account, $baseUrl, $projectInfo['id'], $prId, $end);
 					$prInfo = $this->gitlabAPIService->getPrInfo($account, $baseUrl, $projectInfo['id'], $prId);
+					// Ensure all PR labels are in projectLabels (some may be group-level labels not returned by project labels API)
+					$projectLabels = $this->ensureLabelsExist($projectLabels, $prInfo['labels'] ?? []);
 					$reference = new Reference($referenceText);
 					$reference->setRichObject(
 						Application::APP_ID,
@@ -317,6 +321,34 @@ class GitlabReferenceProvider extends ADiscoverableReferenceProvider implements 
 		}
 
 		return $info;
+	}
+
+	/**
+	 * Ensure all labels from the issue/PR exist in the project labels array.
+	 * This is needed because some labels may be group-level labels that are not returned
+	 * by the project labels API, causing frontend errors when trying to find them.
+	 *
+	 * @param array $projectLabels
+	 * @param array $itemLabels
+	 * @return array
+	 */
+	private function ensureLabelsExist(array $projectLabels, array $itemLabels): array {
+		$existingLabelNames = array_map(static fn (array $label) => $label['name'], $projectLabels);
+
+		foreach ($itemLabels as $labelName) {
+			if (!in_array($labelName, $existingLabelNames, true)) {
+				// Add a minimal label entry for labels not found in project labels
+				$projectLabels[] = [
+					'id' => null,
+					'name' => $labelName,
+					'color' => '#808080',
+					'text_color' => '#FFFFFF',
+					'description' => null,
+				];
+			}
+		}
+
+		return $projectLabels;
 	}
 
 	/**
