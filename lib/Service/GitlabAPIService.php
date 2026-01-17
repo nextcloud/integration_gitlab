@@ -214,9 +214,10 @@ class GitlabAPIService {
 	public function getUserAvatar(GitlabAccount $account, string $baseUrl, int $gitlabUserId): array {
 		$userInfo = $this->request($account, $baseUrl, 'users/' . $gitlabUserId);
 		if (!isset($userInfo['error']) && isset($userInfo['avatar_url'])) {
-			$avatarContent = $this->fetchAvatarContent($account, $userInfo['avatar_url']);
-			if ($avatarContent !== null) {
-				return ['avatarContent' => $avatarContent];
+			try {
+				return ['avatarContent' => $this->client->get($userInfo['avatar_url'])->getBody()];
+			} catch (Exception $e) {
+				$this->logger->debug('Failed to fetch GitLab user avatar: ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			}
 		}
 		return ['userInfo' => $userInfo];
@@ -225,36 +226,13 @@ class GitlabAPIService {
 	public function getProjectAvatar(GitlabAccount $account, string $baseUrl, int $projectId): array {
 		$projectInfo = $this->request($account, $baseUrl, 'projects/' . $projectId);
 		if (!isset($projectInfo['error']) && isset($projectInfo['avatar_url'])) {
-			$avatarContent = $this->fetchAvatarContent($account, $projectInfo['avatar_url']);
-			if ($avatarContent !== null) {
-				return ['avatarContent' => $avatarContent];
+			try {
+				return ['avatarContent' => $this->client->get($projectInfo['avatar_url'])->getBody()];
+			} catch (Exception $e) {
+				$this->logger->debug('Failed to fetch GitLab project avatar: ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			}
 		}
 		return ['projectInfo' => $projectInfo];
-	}
-
-	/**
-	 * Fetch avatar content with authentication if needed (for private GitLab instances)
-	 */
-	private function fetchAvatarContent(GitlabAccount $account, string $avatarUrl): ?string {
-		$options = [
-			'headers' => [
-				'User-Agent' => 'Nextcloud GitLab integration',
-			],
-		];
-
-		// Add authentication for private GitLab instances
-		$accessToken = $account->getClearToken();
-		if ($accessToken !== '') {
-			$options['headers']['Authorization'] = 'Bearer ' . $accessToken;
-		}
-
-		try {
-			return $this->client->get($avatarUrl, $options)->getBody();
-		} catch (ClientException $e) {
-			$this->logger->warning('Failed to fetch GitLab avatar: ' . $e->getMessage(), ['app' => Application::APP_ID]);
-			return null;
-		}
 	}
 
 	public function getProjectInfo(?GitlabAccount $account, string $baseUrl, string $owner, string $repo): array {
