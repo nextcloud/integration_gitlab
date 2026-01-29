@@ -34,12 +34,13 @@ use OCP\App\IAppManager;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\Search\IExternalProvider;
 use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 
-class GitlabSearchIssuesProvider implements IProvider {
+class GitlabSearchIssuesProvider implements IProvider, IExternalProvider {
 
 	public function __construct(
 		private IAppManager $appManager,
@@ -49,6 +50,10 @@ class GitlabSearchIssuesProvider implements IProvider {
 		private GitlabAPIService $service,
 		private GitlabAccountMapper $accountMapper,
 	) {
+	}
+
+	public function isExternalProvider(): bool {
+		return true;
 	}
 
 	/**

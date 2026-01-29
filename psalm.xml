@@ -6,6 +6,7 @@
 	findUnusedCode="false"
 	resolveFromConfigFile="true"
 	phpVersion="8.1"
+	ensureOverrideAttribute="false"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="https://getpsalm.org/schema/config"
 	xsi:schemaLocation="https://getpsalm.org/schema/config vendor-bin/psalm/vendor/vimeo/psalm/config.xsd">
@@ -23,20 +24,5 @@
 		<LessSpecificReturnType errorLevel="error"/>
 		<LessSpecificImplementedReturnType errorLevel="error"/>
 		<MoreSpecificReturnType errorLevel="error"/>
-		<UndefinedClass>
-			<errorLevel type="suppress">
-				<referencedClass name="OC\Collaboration\Reference\ReferenceManager" />
-				<referencedClass name="Symfony\Component\Console\Command\Command" />
-				<referencedClass name="GuzzleHttp\Exception\ServerException" />
-				<referencedClass name="GuzzleHttp\Exception\ClientException" />
-				<referencedClass name="GuzzleHttp\Exception\ConnectException" />
-				<referencedClass name="OC" />
-			</errorLevel>
-		</UndefinedClass>
-		<UndefinedDocblockClass>
-			<errorLevel type="suppress">
-				<referencedClass name="Doctrine\DBAL\Schema\Table" />
-			</errorLevel>
-		</UndefinedDocblockClass>
 	</issueHandlers>
 </psalm>
