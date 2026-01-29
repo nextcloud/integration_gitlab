@@ -214,7 +214,11 @@ class GitlabAPIService {
 	public function getUserAvatar(GitlabAccount $account, string $baseUrl, int $gitlabUserId): array {
 		$userInfo = $this->request($account, $baseUrl, 'users/' . $gitlabUserId);
 		if (!isset($userInfo['error']) && isset($userInfo['avatar_url'])) {
-			return ['avatarContent' => $this->client->get($userInfo['avatar_url'])->getBody()];
+			try {
+				return ['avatarContent' => $this->client->get($userInfo['avatar_url'])->getBody()];
+			} catch (Exception $e) {
+				$this->logger->debug('Failed to fetch GitLab user avatar: ' . $e->getMessage(), ['app' => Application::APP_ID]);
+			}
 		}
 		return ['userInfo' => $userInfo];
 	}
@@ -222,7 +226,11 @@ class GitlabAPIService {
 	public function getProjectAvatar(GitlabAccount $account, string $baseUrl, int $projectId): array {
 		$projectInfo = $this->request($account, $baseUrl, 'projects/' . $projectId);
 		if (!isset($projectInfo['error']) && isset($projectInfo['avatar_url'])) {
-			return ['avatarContent' => $this->client->get($projectInfo['avatar_url'])->getBody()];
+			try {
+				return ['avatarContent' => $this->client->get($projectInfo['avatar_url'])->getBody()];
+			} catch (Exception $e) {
+				$this->logger->debug('Failed to fetch GitLab project avatar: ' . $e->getMessage(), ['app' => Application::APP_ID]);
+			}
 		}
 		return ['projectInfo' => $projectInfo];
 	}
