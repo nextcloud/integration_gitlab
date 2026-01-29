@@ -1,262 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
-  <file src="lib/AppInfo/Application.php">
-    <UndefinedClass>
-      <code><![CDATA[App]]></code>
-      <code><![CDATA[IBootstrap]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Controller/ConfigController.php">
-    <UndefinedClass>
-      <code><![CDATA[Controller]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Controller/GitlabAPIController.php">
-    <UndefinedClass>
-      <code><![CDATA[Controller]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Dashboard/GitlabWidget.php">
-    <UndefinedClass>
-      <code><![CDATA[IWidget]]></code>
-    </UndefinedClass>
-  </file>
+<files psalm-version="6.14.3@d0b040a91f280f071c1abcb1b77ce3822058725a">
   <file src="lib/Db/GitlabAccount.php">
     <UndefinedClass>
-      <code><![CDATA[Entity]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Db/GitlabAccountMapper.php">
-    <UndefinedClass>
-      <code><![CDATA[QBMapper]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Listener/GitlabReferenceListener.php">
-    <UndefinedClass>
-      <code><![CDATA[IEventListener]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Migration/MultiAccountRepairStep.php">
-    <UndefinedClass>
-      <code><![CDATA[IRepairStep]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Migration/Version030103Date20241017150114.php">
-    <UndefinedClass>
-      <code><![CDATA[SimpleMigrationStep]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Migration/Version040000Date20250911150115.php">
-    <UndefinedClass>
-      <code><![CDATA[SimpleMigrationStep]]></code>
+      <code><![CDATA[\OC]]></code>
     </UndefinedClass>
   </file>
   <file src="lib/Migration/Version3000Date20240718103726.php">
-    <UndefinedClass>
-      <code><![CDATA[SimpleMigrationStep]]></code>
-    </UndefinedClass>
+    <UndefinedDocblockClass>
+      <code><![CDATA[$schema->createTable('gitlab_accounts')]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+    </UndefinedDocblockClass>
   </file>
   <file src="lib/Migration/Version3200Date20250519170623.php">
-    <UndefinedClass>
-      <code><![CDATA[SimpleMigrationStep]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Model/UserConfig.php">
     <UndefinedDocblockClass>
-      <code><![CDATA[PreConditionNotMetException|InvalidArgumentException]]></code>
+      <code><![CDATA[$schema->getTable('gitlab_accounts')]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
+      <code><![CDATA[$table]]></code>
     </UndefinedDocblockClass>
   </file>
   <file src="lib/Reference/GitlabReferenceProvider.php">
     <UndefinedClass>
-      <code><![CDATA[ADiscoverableReferenceProvider]]></code>
-      <code><![CDATA[ISearchableReferenceProvider]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Search/GitlabSearchIssuesProvider.php">
-    <UndefinedClass>
-      <code><![CDATA[IProvider]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Search/GitlabSearchMergeRequestsProvider.php">
-    <UndefinedClass>
-      <code><![CDATA[IProvider]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Search/GitlabSearchReposProvider.php">
-    <UndefinedClass>
-      <code><![CDATA[IProvider]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Service/ConfigService.php">
-    <MissingDependency>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[Application]]></code>
-    </MissingDependency>
-    <UndefinedClass>
-      <code><![CDATA[$this->appConfig]]></code>
-      <code><![CDATA[$this->appConfig]]></code>
-      <code><![CDATA[$this->appConfig]]></code>
-      <code><![CDATA[$this->appConfig]]></code>
-      <code><![CDATA[$this->appConfig]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->config]]></code>
-      <code><![CDATA[$this->crypto]]></code>
-      <code><![CDATA[$this->crypto]]></code>
-      <code><![CDATA[private]]></code>
-      <code><![CDATA[private]]></code>
+      <code><![CDATA[$this->referenceManager]]></code>
       <code><![CDATA[private]]></code>
     </UndefinedClass>
-    <UndefinedDocblockClass>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-      <code><![CDATA[PreConditionNotMetException]]></code>
-    </UndefinedDocblockClass>
   </file>
   <file src="lib/Service/GitlabAPIService.php">
-    <MissingDependency>
-      <code><![CDATA[?GitlabAccount]]></code>
-      <code><![CDATA[?GitlabAccount]]></code>
-      <code><![CDATA[?GitlabAccount]]></code>
-      <code><![CDATA[?GitlabAccount]]></code>
-      <code><![CDATA[?GitlabAccount]]></code>
-      <code><![CDATA[?GitlabAccount]]></code>
-      <code><![CDATA[Application]]></code>
-      <code><![CDATA[GitLabAccount]]></code>
-      <code><![CDATA[GitLabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[GitlabAccount]]></code>
-      <code><![CDATA[private]]></code>
-    </MissingDependency>
     <UndefinedClass>
-      <code><![CDATA[$clientService]]></code>
-      <code><![CDATA[$this->client]]></code>
-      <code><![CDATA[$this->client]]></code>
-      <code><![CDATA[$this->client]]></code>
-      <code><![CDATA[$this->client]]></code>
-      <code><![CDATA[$this->l10n]]></code>
-      <code><![CDATA[$this->l10n]]></code>
-      <code><![CDATA[IClient]]></code>
-      <code><![CDATA[IClientService]]></code>
-      <code><![CDATA[private]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Settings/Admin.php">
-    <UndefinedClass>
-      <code><![CDATA[ISettings]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Settings/AdminSection.php">
-    <UndefinedClass>
-      <code><![CDATA[IIconSection]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Settings/Personal.php">
-    <UndefinedClass>
-      <code><![CDATA[ISettings]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Settings/PersonalSection.php">
-    <UndefinedClass>
-      <code><![CDATA[IIconSection]]></code>
+      <code><![CDATA[$e]]></code>
+      <code><![CDATA[$e]]></code>
+      <code><![CDATA[$e]]></code>
+      <code><![CDATA[$e]]></code>
+      <code><![CDATA[$e]]></code>
+      <code><![CDATA[$e]]></code>
+      <code><![CDATA[$e]]></code>
+      <code><![CDATA[ClientException]]></code>
+      <code><![CDATA[ConnectException]]></code>
+      <code><![CDATA[ServerException]]></code>
     </UndefinedClass>
   </file>
 </files>
