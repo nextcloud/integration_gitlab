@@ -36,6 +36,7 @@ OC.L10N.register(
     "No GitLab notifications!" : "Nema GitLab obavijesti!",
     "Failed to get GitLab notifications" : "Dohvaćanje GitLab obavijesti nije uspjelo",
     "Unknown error" : "Nepoznata pogreška",
+    "by {creator}" : "objavio je {creator}",
     "Comments" : "Komentari",
     "Author" : "Autor",
     "Owner" : "Vlasnik",
