@@ -16,6 +16,7 @@ OC.L10N.register(
     "Enable searching for repositories" : "Įjungti saugyklų paiešką",
     "Unknown state" : "Nežinoma būsena",
     "Unknown error" : "Nežinoma klaida",
+    "by {creator}" : "autorius {creator}",
     "Comments" : "Komentarai",
     "Author" : "Autorius",
     "Owner" : "Savininkas",
