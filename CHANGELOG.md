@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2026-04-08
+
+### Breaking changes
+
+- Drop support for nextcloud 31
+
+### New
+
+- Add support for nc 34
+
+### Fixed
+* fix(search): Mark providers as external
+* refactor: Simplify avatar fetching in GitLabAPIService (thanks to Andrey Druz)
+* fix: Enhance GitLab integration by ensuring all issue and PR labels exist in project labels (thanks to Andrey Druz)
+* fix: do not declare the id column type
+* fix(l10n): Update translations from Transifex
+
 ## [4.0.0] - 2025-11-12
 
 ### Breaking changes
@@ -18,7 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- fix: Lazy load app config values Marcel Klehr 9/11/25, 11:34 AM
+- fix: Lazy load app config values
 - fix(l10n): Update translations from Transifex
 
 ## 3.2.0 - 2025-05-20
