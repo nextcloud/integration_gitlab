@@ -38,6 +38,7 @@ OC.L10N.register(
     "Failed to get GitLab notifications" : "GitLabi teavituse laadimine ei õnnestunud",
     "Open issue" : "Ava veateade",
     "Unknown state" : "Teadmata olek",
+    "Review requested" : "Taotlus ülevaatamiseks",
     "created {relativeDate}" : "loodud {relativeDate}",
     "closed {relativeDate}" : "suletud {relativeDate}",
     "updated {relativeDate}" : "uuendatud {relativeDate}",
