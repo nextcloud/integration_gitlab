@@ -5,6 +5,7 @@ OC.L10N.register(
     "Bad HTTP method" : "Método HTTP incorreto",
     "Bad credentials" : "Credenciais inválidas",
     "Unknown error" : "Erro desconhecido",
+    "by {creator}" : "por {creator}",
     "Comments" : "Comentários",
     "Author" : "Autor",
     "Owner" : "Proprietário"
