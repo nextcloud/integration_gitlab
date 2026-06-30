@@ -9,6 +9,7 @@ OC.L10N.register(
     "OAuth access token refused" : "Token de acesso OAuth recusado",
     "Connected accounts" : "Contas conectadas",
     "GitLab admin options saved" : "Opções de administração do GitLab salvas",
+    "Application ID" : "ID do aplicativo",
     "Account added" : "Conta adicionada",
     "Account deleted" : "Conta excluída",
     "Failed to get GitLab projects" : "Falha ao obter projetos GitLab",
