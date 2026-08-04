@@ -38,7 +38,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.2']
+        php-versions: ['8.3']
         server-versions: ['master']
 
     services:
@@ -131,7 +131,7 @@ jobs:
         if: steps.check_integration.outcome == 'success'
         working-directory: apps/${{ env.APP_NAME }}
         run: composer run test:integration
-      
+
       - name: Print logs
         if: always()
         run: |
