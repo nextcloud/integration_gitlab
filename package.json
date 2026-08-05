@@ -1,6 +1,6 @@
 {
 	"name": "integration_gitlab",
-	"version": "4.0.0",
+	"version": "6.0.0",
 	"description": "GitLab integration",
 	"main": "index.js",
 	"directories": {
