@@ -91,11 +91,12 @@ class GitlabWidget implements IWidget {
 			$account = $this->accountMapper->findById($this->userId, $userConfig['widget_account_id'])->jsonSerialize();
 			$userConfig['widget_projects'] = $account['widgetProjects'];
 			$userConfig['widget_groups'] = $account['widgetGroups'];
+			$userConfig['url'] = $account['url'];
 		} catch (\Exception) {
 			$userConfig['widget_projects'] = [];
 			$userConfig['widget_groups'] = [];
+			$userConfig['url'] = $this->config->getUserUrl($this->userId);
 		}
-		$userConfig['url'] = $this->config->getUserUrl($this->userId);
 
 		$this->initialStateService->provideInitialState('user-config', $userConfig);
 		Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');
