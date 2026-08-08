@@ -40,6 +40,7 @@ OC.L10N.register(
     "Failed to save GitLab options" : "Impossible d'enregistrer les options GitLab",
     "Failed to get GitLab projects" : "Échec de la récupération des projets GitLab",
     "Failed to get GitLab groups" : "Échec de la récupération des groupes GitLab",
+    "Selected account filters updated" : "Filtres du compte sélectionné mis à jour",
     "Failed to update GitLab filters" : "Impossible de mettre à jour les filtres GitLab",
     "Connect to GitLab using OAuth" : "Connectez-vous à GitLab à l'aide d'OAuth",
     "OAuth instance URL" : "URL de l'instance OAuth",
