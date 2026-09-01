@@ -8,6 +8,8 @@ OC.L10N.register(
     "Bad credentials" : "Forkerte legitimationsoplysninger",
     "OAuth access token refused" : "OAuth adgangsnøgle afvist",
     "Connected accounts" : "Forbundne konti",
+    "Application ID" : "AnsøgningsID",
+    "Application secret" : "Ansøgningshemmelighed",
     "Personal access token" : "Personligt adgangstoken",
     "Unknown error" : "Ukendt fejl",
     "by {creator}" : "af {creator}",
