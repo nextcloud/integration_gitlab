@@ -73,7 +73,7 @@ OC.L10N.register(
     "Review requested" : "Vyžadovaná revízia",
     "created {relativeDate}" : "vytvorené {relativeDate}",
     "closed {relativeDate}" : "zatvorené {relativeDate}",
-    "updated {relativeDate}" : "upravené {relativeDate}",
+    "updated {relativeDate}" : "Aktualizované {relativeDate}",
     "Comment from @{username}" : "Komentár od @{username}",
     "Assigned to {username}" : "Priradené k {username}",
     "GitLab API error" : "Chyba GitLab API",
