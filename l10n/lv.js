@@ -11,6 +11,7 @@ OC.L10N.register(
     "Account added" : "Konts pievienots",
     "Failed to add account" : "Neizdevās pievienot kontu",
     "Failed to delete account" : "Neizdevās izdzēst kontu",
+    "Remove account" : "Noņemt kontu",
     "No GitLab account connected" : "Nav sasaistītu GitLab kontu",
     "Unknown error" : "Nezināma kļūda",
     "GitLab connected accounts settings" : "Sasaistīto GitLab kontu iestatījumi",
