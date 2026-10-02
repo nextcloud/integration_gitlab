@@ -47,7 +47,7 @@
     "Personal access token" : "Osobný prístupový token",
     "GitLab personal access token" : "GitLab osobný prístupový token",
     "Give the token the \"read_user\", \"read_api\" and \"read_repository\" permissions." : "Povoľte pre token práva \"read_user\", \"read_api\" a \"read_repository\".",
-    "Connect to GitLab using Personal Access Token" : "Pripojiť ku GitLabu pomocou Osobného Prístupového Tokenu",
+    "Connect to GitLab using Personal Access Token" : "Pripojiť sa k GitLabu pomocou osobného prístupového tokenu",
     "Connected to {url} as {displayname} ({name})" : "Pripojené k {url} ako {displayname} ({name})",
     "Remove account" : "Odstrániť účet",
     "Warning, everything you type in the search bar will be sent to GitLab." : "Varovanie, všetko čo napíšete do vyhľadávania bude odoslané do GitLabu.",
