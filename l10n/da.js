@@ -15,6 +15,7 @@ OC.L10N.register(
     "by {creator}" : "af {creator}",
     "Comments" : "Kommentarer",
     "Author" : "Forfatter",
-    "Owner" : "Ejer"
+    "Owner" : "Ejer",
+    "Click to expand comment" : "Klik for at udvide kommentaren"
 },
 "nplurals=2; plural=(n != 1);");

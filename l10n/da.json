@@ -13,6 +13,7 @@
     "by {creator}" : "af {creator}",
     "Comments" : "Kommentarer",
     "Author" : "Forfatter",
-    "Owner" : "Ejer"
+    "Owner" : "Ejer",
+    "Click to expand comment" : "Klik for at udvide kommentaren"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
