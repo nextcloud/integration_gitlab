@@ -7,6 +7,7 @@ OC.L10N.register(
     "OAuth access token refused" : "Token-ul OAuth a fost refuzat",
     "Connected accounts" : "Conturile conectate",
     "Unknown error" : "Eroare necunoscută",
+    "by {creator}" : "de {creator}",
     "Comments" : "Comentarii",
     "Author" : "Autor",
     "Owner" : "Proprietar",
