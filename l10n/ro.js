@@ -6,6 +6,7 @@ OC.L10N.register(
     "Bad credentials" : "Credențiale greșite",
     "OAuth access token refused" : "Token-ul OAuth a fost refuzat",
     "Connected accounts" : "Conturile conectate",
+    "Remove account" : "Elimină contul",
     "Unknown error" : "Eroare necunoscută",
     "by {creator}" : "de {creator}",
     "Comments" : "Comentarii",
