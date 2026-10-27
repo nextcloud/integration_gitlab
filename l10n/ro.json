@@ -4,6 +4,7 @@
     "Bad credentials" : "Credențiale greșite",
     "OAuth access token refused" : "Token-ul OAuth a fost refuzat",
     "Connected accounts" : "Conturile conectate",
+    "Personal access token" : "Token de acces personal",
     "Remove account" : "Elimină contul",
     "Unknown error" : "Eroare necunoscută",
     "by {creator}" : "de {creator}",

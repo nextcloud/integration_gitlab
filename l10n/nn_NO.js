@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Connected accounts" : "Tilkopla kontoar",
     "Application ID" : "Program-ID",
+    "Personal access token" : "Personleg tilgangstoken",
     "Unknown error" : "Ukjend feil",
     "Comments" : "Kommentarar",
     "Owner" : "Owner"

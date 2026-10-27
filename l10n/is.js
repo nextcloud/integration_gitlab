@@ -5,6 +5,7 @@ OC.L10N.register(
     "Bad credentials" : "Gölluð auðkenni",
     "OAuth access token refused" : "OAuth-aðgangsteikni hafnað",
     "Connected accounts" : "Tengdir aðgangar",
+    "Personal access token" : "Persónulegt aðgangsteikn",
     "Remove account" : "Fjarlægja notandaaðgang",
     "Unknown error" : "Óþekkt villa",
     "Comments" : "Athugasemdir",

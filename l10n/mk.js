@@ -5,6 +5,7 @@ OC.L10N.register(
     "Bad credentials" : "Неточни акредитиви",
     "OAuth access token refused" : "Одбиен OAuth пристапен токен ",
     "Connected accounts" : "Поврзани сметки",
+    "Personal access token" : "Личен токен за пристап",
     "Unknown error" : "Непозната грешка",
     "Comments" : "Коментари",
     "Author" : "Автор",

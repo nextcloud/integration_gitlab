@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_gitlab",
     {
+    "Personal access token" : "Token de acceso personal",
     "Remove account" : "Cerrar sesión",
     "Unknown error" : "Se presentó un error desconocido",
     "Comments" : "Comentarios",
