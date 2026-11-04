@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Bad credentials" : "Marrits identificants",
     "Connected accounts" : "Comptes connectats",
+    "Connected to {url} as {displayname} ({name})" : "Connectat a {url} coma {displayname} ({name})",
     "Unknown error" : "Error desconeguda",
     "Comments" : "Comentaris",
     "Owner" : "Owner"
