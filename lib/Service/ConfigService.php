@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace OCA\Gitlab\Service;
 
 use OCA\Gitlab\AppInfo\Application;
+use OCA\Gitlab\AuditLog\AuditLogger;
+use OCA\Gitlab\AuditLog\Operation;
 use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\PreConditionNotMetException;
@@ -15,6 +17,7 @@ class ConfigService {
 		private IConfig $config,
 		private IAppConfig $appConfig,
 		private ICrypto $crypto,
+		private readonly AuditLogger $auditLogger,
 	) {
 	}
 
@@ -33,6 +36,9 @@ class ConfigService {
 			$encryptedValue = $this->crypto->encrypt($value);
 			$this->appConfig->setValueString(Application::APP_ID, $key, $encryptedValue, lazy: $lazy);
 		}
+		$this->auditLogger->log(Operation::AdminConfigUpdated, 'Admin setting %s was changed', [
+			'config_key' => $key
+		]);
 	}
 
 	public function getAdminClientId(): string {
@@ -61,6 +67,10 @@ class ConfigService {
 
 	public function setAdminOauthUrl(string $url): void {
 		$this->appConfig->setValueString(Application::APP_ID, 'oauth_instance_url', $url, lazy: true);
+		$this->auditLogger->log(Operation::AdminConfigUpdated, 'Admin setting %s was changed to %s', [
+			'config_key' => 'oauth_instance_url',
+			'config_value' => $url,
+		]);
 	}
 
 	public function getAdminLinkPreviewEnabled(): bool {
@@ -69,6 +79,11 @@ class ConfigService {
 
 	public function setAdminLinkPreviewEnabled(bool $enabled): void {
 		$this->config->setAppValue(Application::APP_ID, 'link_preview_enabled', $enabled ? '1' : '0');
+		$this->auditLogger->log(Operation::AdminConfigUpdated, 'Admin setting %s was changed to %s', [
+			'config_key' => 'link_preview_enabled',
+			'config_value' => $enabled,
+
+		]);
 	}
 
 	public function getAdminForceGitlabInstanceUrl(): string {
@@ -77,6 +92,11 @@ class ConfigService {
 
 	public function setAdminForceGitlabInstanceUrl(string $url): void {
 		$this->config->setAppValue(Application::APP_ID, 'force_gitlab_instance_url', $url);
+		$this->auditLogger->log(Operation::AdminConfigUpdated, 'Admin setting %s was changed to %s', [
+			'config_key' => 'force_gitlab_instance_url',
+			'config_value' => $url,
+
+		]);
 	}
 
 	public function getUserUrl(string $userId): string {
