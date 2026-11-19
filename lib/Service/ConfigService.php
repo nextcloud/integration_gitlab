@@ -82,7 +82,6 @@ class ConfigService {
 		$this->auditLogger->log(Operation::AdminConfigUpdated, 'Admin setting %s was changed to %s', [
 			'config_key' => 'link_preview_enabled',
 			'config_value' => $enabled,
-
 		]);
 	}
 
@@ -95,7 +94,6 @@ class ConfigService {
 		$this->auditLogger->log(Operation::AdminConfigUpdated, 'Admin setting %s was changed to %s', [
 			'config_key' => 'force_gitlab_instance_url',
 			'config_value' => $url,
-
 		]);
 	}
 
