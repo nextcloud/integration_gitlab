@@ -13,6 +13,8 @@
 namespace OCA\Gitlab\Controller;
 
 use DateTime;
+use OCA\Gitlab\AuditLog\AuditLogger;
+use OCA\Gitlab\AuditLog\Operation;
 use OCA\Gitlab\Db\GitlabAccount;
 use OCA\Gitlab\Db\GitlabAccountMapper;
 use OCA\Gitlab\Model\AdminConfig;
@@ -47,6 +49,7 @@ class ConfigController extends Controller {
 		private string $userId,
 		private GitlabAccountMapper $accountMapper,
 		private LoggerInterface $logger,
+		private readonly AuditLogger $auditLogger,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -79,6 +82,11 @@ class ConfigController extends Controller {
 			$userInfo = $this->getUserInfo($account);
 			$account->setUserInfoName($userInfo['username']);
 			$account->setUserInfoDisplayName($userInfo['name']);
+
+			$this->auditLogger->log(Operation::AccountConnected, 'User connected a Gitlab account', [
+				'url' => $url,
+				'token_type' => 'personal',
+			]);
 		} catch (Exception $e) {
 			return new DataResponse(['error' => $e->getMessage()], $e->getCode());
 		}
@@ -122,6 +130,9 @@ class ConfigController extends Controller {
 			$this->accountMapper->delete($account);
 
 			$this->updateAccountsConfig();
+
+			$this->auditLogger->log(Operation::AccountDisconnected, 'User disconnected a Gitlab account', [
+			]);
 
 			return new DataResponse([
 				'config' => UserConfig::loadConfig($this->userId, $this->config)->toArray(),
@@ -234,6 +245,11 @@ class ConfigController extends Controller {
 				}
 				$this->accountMapper->insert($account);
 				$this->updateAccountsConfig();
+
+				$this->auditLogger->log(Operation::AccountConnected, 'User connected a Gitlab account', [
+					'url' => $adminOauthUrl,
+					'token_type' => 'oauth',
+				]);
 
 				$oauthOrigin = $this->config->getUserOauthOrigin($this->userId);
 				$this->config->deleteUserOauthOrigin($this->userId);

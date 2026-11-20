@@ -5,30 +5,6 @@
       <code><![CDATA[\OC]]></code>
     </UndefinedClass>
   </file>
-  <file src="lib/Migration/Version3000Date20240718103726.php">
-    <UndefinedDocblockClass>
-      <code><![CDATA[$schema->createTable('gitlab_accounts')]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-    </UndefinedDocblockClass>
-  </file>
-  <file src="lib/Migration/Version3200Date20250519170623.php">
-    <UndefinedDocblockClass>
-      <code><![CDATA[$schema->getTable('gitlab_accounts')]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-      <code><![CDATA[$table]]></code>
-    </UndefinedDocblockClass>
-  </file>
   <file src="lib/Reference/GitlabReferenceProvider.php">
     <UndefinedClass>
       <code><![CDATA[$this->referenceManager]]></code>
