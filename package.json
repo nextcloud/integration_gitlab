@@ -57,6 +57,6 @@
 		"@nextcloud/stylelint-config": "^3.1.0",
 		"@nextcloud/vite-config": "2.x",
         "vite-plugin-eslint": "^1.8.1",
-        "vite-plugin-stylelint": "^6.0.0"
+        "vite-plugin-stylelint": "^6.3.0"
 	}
 }
