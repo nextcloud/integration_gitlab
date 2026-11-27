@@ -19,6 +19,7 @@
     "GitLab instance address" : "GitLab-instanssin osoite",
     "Personal access token" : "Henkilökohtainen käyttöpoletti",
     "GitLab personal access token" : "GitLabin henkilökohtainen käyttöpoletti",
+    "Remove account" : "Poista käyttäjä",
     "Enable searching for repositories" : "Ota käyttöön tietovarastojen haku",
     "No GitLab account connected" : "GitLab-tiliä ei ole yhdistetty",
     "Error connecting to GitLab" : "Virhe yhdistäessä GitLabiin",
